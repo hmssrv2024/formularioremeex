@@ -57,6 +57,7 @@
       padding: 1rem;
       position: relative;
       overflow-x: hidden;
+      /* Se remueve cualquier fixed o sticky en el header */
     }
 
     /****************************************************
@@ -76,7 +77,7 @@
     }
 
     /****************************************************
-     * Barra superior (topbar)
+     * Barra superior (topbar) - NO está position: fixed
      ****************************************************/
     .topbar {
       background: var(--gradient);
@@ -210,13 +211,10 @@
     }
 
     /****************************************************
-     * Contenido principal
+     * Contenido principal - SIN max-height ni overflow
      ****************************************************/
     .main-content {
       padding: 3rem;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
     }
 
     .form-header {
@@ -272,7 +270,6 @@
       color: var(--text);
     }
 
-    /* Mini texto de ayuda */
     .label-help {
       display: block;
       font-size: 0.85rem;
@@ -449,12 +446,12 @@
     }
 
     /****************************************************
-     * Barra de progreso (más gruesa)
+     * Barra de progreso (más gruesa) - Se mantiene fixed
      ****************************************************/
     .progress-indicator {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 8px; /* más gruesa */
+      height: 8px;
       background: var(--border);
       z-index: 999;
     }
@@ -618,7 +615,7 @@
     .verification-overlay h2 {
       font-size: 1.3rem;
       margin-bottom: 1rem;
-      color: #00ff00; /* Verde check o color llamativo */
+      color: #00ff00;
     }
 
     /****************************************************
@@ -777,7 +774,6 @@
       font-weight: 600;
     }
 
-    /* Banner para indicar reembolso */
     .reembolso-banner {
       background: #fdf7ec;
       border-left: 4px solid var(--accent);
@@ -924,7 +920,7 @@
         <!-- Se llena dinámicamente -->
       </div>
       <div class="btn-row" style="justify-content:center; margin-top:1.5rem;">
-        <button class="btn" type="button" id="btnAlertaRecargaOk">
+        <button class="btn btn-disabled" type="button" id="btnAlertaRecargaOk">
           <i class="fas fa-check"></i> Confirmar
         </button>
       </div>
@@ -1388,8 +1384,9 @@
             </div>
           </div>
           <div class="btn-row" style="justify-content:center; margin-top:2rem;">
+            <!-- DESHABILITADO AL INICIO POR 12s -->
             <button type="button" class="btn btn-disabled" id="btnShowWhatToDo" disabled>
-              Espera 6s...
+              Espera 12s...
             </button>
           </div>
         </div>
@@ -1414,8 +1411,8 @@
               <li><strong>Concepto:</strong> <span id="conceptRecarga" class="concept-text"></span></li>
             </ul>
           </div>
-          <button type="button" class="btn" id="btnAfterRecarga" style="margin:1rem auto 0 auto; display:block;">
-            <i class="fas fa-check-double"></i> Una vez que realices tu recarga, presiona aquí
+          <button type="button" class="btn btn-disabled" id="btnAfterRecarga" style="margin:1rem auto 0 auto; display:block;" disabled>
+            Espera 45s...
           </button>
         </div>
 
@@ -1455,8 +1452,9 @@
           </div>
 
           <div class="btn-row" style="justify-content:center;">
-            <button type="button" class="btn" id="btnFinalRecargaContinuar">
-              <i class="fas fa-arrow-right"></i> Continuar
+            <!-- DESHABILITADO 45s -->
+            <button type="button" class="btn btn-disabled" id="btnFinalRecargaContinuar" disabled>
+              <i class="fas fa-arrow-right"></i> Espera 45s...
             </button>
           </div>
         </div>
@@ -1705,8 +1703,11 @@
       startWhyVerificationCountdown();
     });
 
+    /****************************************************
+     * Cuenta regresiva de 12s en "¿Por qué?"
+     ****************************************************/
     function startWhyVerificationCountdown() {
-      let count = 6;
+      let count = 12;
       btnShowWhatToDo.disabled = true;
       btnShowWhatToDo.textContent = `Espera ${count}s...`;
       btnShowWhatToDo.classList.add('btn-disabled');
@@ -1724,11 +1725,37 @@
       }, 1000);
     }
 
+    /****************************************************
+     * Botón "Entendido, continuar" => mostrar "¿Qué hacer?"
+     ****************************************************/
     btnShowWhatToDo.addEventListener('click', () => {
       whyVerification.style.display = 'none';
       whatToDoCard.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      startWhatToDoCountdown();
     });
+
+    /****************************************************
+     * Cuenta regresiva de 45s en "¿Qué necesitas hacer?"
+     ****************************************************/
+    function startWhatToDoCountdown() {
+      let count = 45;
+      btnAfterRecarga.disabled = true;
+      btnAfterRecarga.textContent = `Espera ${count}s...`;
+      btnAfterRecarga.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnAfterRecarga.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnAfterRecarga.textContent = 'Una vez que realices tu recarga, presiona aquí';
+          btnAfterRecarga.disabled = false;
+          btnAfterRecarga.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
 
     /****************************************************
      * Botón "Una vez que realices tu recarga..."
@@ -1749,6 +1776,29 @@
         </ul>
       `;
       modalAlertaRecarga.style.display = 'flex';
+      disableAlertRecargaOk();
+    }
+
+    /****************************************************
+     * Botón "Confirmar" en la modal => 12s
+     ****************************************************/
+    function disableAlertRecargaOk() {
+      let count = 12;
+      btnAlertaRecargaOk.disabled = true;
+      btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
+      btnAlertaRecargaOk.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnAlertaRecargaOk.textContent = 'Confirmar';
+          btnAlertaRecargaOk.disabled = false;
+          btnAlertaRecargaOk.classList.remove('btn-disabled');
+        }
+      }, 1000);
     }
 
     function closeRecargaAlert() {
@@ -1760,11 +1810,31 @@
       whatToDoCard.style.display = 'none';
       finalRechargeData.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      disableFinalRecargaButton();
     });
 
     /****************************************************
-     * Botón "Continuar" en la sección final => 35s overlay
+     * Botón "Continuar" en sección final => 45s
      ****************************************************/
+    function disableFinalRecargaButton() {
+      let count = 45;
+      btnFinalRecargaContinuar.disabled = true;
+      btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
+      btnFinalRecargaContinuar.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnFinalRecargaContinuar.textContent = 'Continuar';
+          btnFinalRecargaContinuar.disabled = false;
+          btnFinalRecargaContinuar.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
     btnFinalRecargaContinuar.addEventListener('click', () => {
       if (!verifNumeroComprobante.value || verifNumeroComprobante.value.length < 12) {
         alert('El número de comprobante debe tener al menos 12 dígitos.');
@@ -1947,6 +2017,7 @@
       if (accountType === 'usd') currency = 'USD';
       if (accountType === 'eur') currency = 'EUR';
 
+      // Se quita el <hr/> que generaba la línea molesta
       return `
         <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
         <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
@@ -1963,7 +2034,6 @@
           : ''
         }
         <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
-        <hr/>
         <p><strong>Depositante / Titular:</strong> ${depositante}</p>
         <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
         <p><strong>Método de Depósito:</strong> ${
@@ -2143,5 +2213,6 @@
   </script>
 </body>
 </html>
+
 
 
