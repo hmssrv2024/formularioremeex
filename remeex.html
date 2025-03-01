@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Visa Remeex - Saldo</title>
+  <!-- Se desactiva el zoom en móviles agregando maximum-scale y user-scalable -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Visa Remeex: Tu saldo y transacciones"/>
+  
+  <!-- Fuentes e íconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" 
+    rel="stylesheet"
+  />
+  <link 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    rel="stylesheet"
+  />
+
+  <style>
+    /**************************************************************
+      VARIABLES Y ANIMACIONES PRINCIPALES (Unificadas con estilo Glow)
+    **************************************************************/
+    :root {
+      /* Paleta de colores */
+      --primary: #1434CB;  /* Azul principal */
+      --primary-light: #2347E2;
+      --secondary: #142C8E;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      
+      /* Fondo y tarjetas */
+      --background: #EEF2FF;
+      --background-dark: #E0E7FF;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      
+      /* Texto */
+      --text-primary: #1E293B;
+      --text-secondary: #64748B;
+      
+      /* Bordes y sombras */
+      --border-radius-xl: 28px;
+      --border-radius-lg: 24px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --transition: all 0.4s ease;
+      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      
+      /* Animación de glow */
+      --aurora-gradient: linear-gradient(
+        120deg, 
+        rgba(20,52,203,0.35), 
+        rgba(20,52,203,0.2), 
+        rgba(20,52,203,0.25),
+        rgba(20,52,203,0.15)
+      );
+    }
+
+    /* Glow mejorado */
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 60px rgba(20,52,203,0.55), 0 0 110px rgba(20,52,203,0.4);
+      }
+      50% {
+        box-shadow: 0 0 100px rgba(20,52,203,0.85), 0 0 140px rgba(20,52,203,0.65);
+      }
+    }
+
+    /* Animación para parpadear el borde */
+    @keyframes border-blink {
+      0%   { border-color: #ffffff; }
+      33%  { border-color: #d1d5db; }
+      66%  { border-color: #60a5fa; }
+      100% { border-color: #ffffff; }
+    }
+
+    /* Animación "slideDown" (usada en modales) */
+    @keyframes slideDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Animación "flash" en la tarjeta de saldo */
+    @keyframes flash {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* Animación para el glow dinámico en modales */
+    @keyframes modalGlow {
+      from {
+        box-shadow: 0 0 30px rgba(20,52,203,0.5);
+      }
+      to {
+        box-shadow: 0 0 50px rgba(20,52,203,1);
+      }
+    }
+
+    /**************************************************************
+      RESETEO BÁSICO
+    **************************************************************/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, var(--background) 0%, var(--background-dark) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /**************************************************************
+      ANIMACIÓN INICIAL DE ÉXITO
+    **************************************************************/
+    #animation-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    #explosion-canvas,
+    #vortex-canvas,
+    #confetti-canvas,
+    #flash-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #explosion-canvas { z-index: 1; }
+    #vortex-canvas   { z-index: 2; }
+    #confetti-canvas { z-index: 20; }
+    #flash-canvas    { z-index: 25; }
+    
+    /* CONTENEDOR DEL MENSAJE */
+    .message-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      transition: transform 0.5s ease-out, background-color 3s ease;
+      text-align: center;
+      z-index: 30;
+      background-color: rgba(255,255,255,0);
+      padding: 1.5rem;
+      border-radius: var(--border-radius-xl);
+      border: 2px solid #ffffff;
+      animation: cardGlow 3s linear infinite, borderBlink 6s linear infinite;
+    }
+    .message-container.card-white {
+      background-color: rgba(255,255,255,0.95);
+    }
+    @keyframes cardGlow {
+      0%   { box-shadow: 0 0 30px #ff0000, 0 0 60px #ff7f00, 0 0 90px #ffff00; }
+      50%  { box-shadow: 0 0 30px #00ff00, 0 0 60px #00ffff, 0 0 90px #0000ff; }
+      100% { box-shadow: 0 0 30px #ff0000, 0 0 60px #ff7f00, 0 0 90px #ffff00; }
+    }
+    @keyframes borderBlink {
+      0%   { border-color: #ffffff; }
+      33%  { border-color: #d1d5db; }
+      66%  { border-color: #60a5fa; }
+      100% { border-color: #ffffff; }
+    }
+
+    .checkmark {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--success);
+      margin: 0 auto 1.25rem;
+      position: relative;
+      opacity: 0;
+      transition: opacity 0.5s;
+      overflow: visible;
+    }
+    .checkmark::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, 
+        rgba(255, 0, 0, 0.5), 
+        rgba(255, 165, 0, 0.5), 
+        rgba(255, 255, 0, 0.5), 
+        rgba(0, 255, 0, 0.5), 
+        rgba(0, 255, 255, 0.5), 
+        rgba(0, 0, 255, 0.5), 
+        rgba(128, 0, 128, 0.5)
+      );
+      z-index: -1;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50%  { transform: translate(-50%, -50%) scale(1.5); opacity: 0.3; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    }
+    .checkmark::after {
+      content: "\2713";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      font-weight: 700;
+      color: #fff;
+    }
+    @keyframes circleExpand {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(50); opacity: 0; }
+    }
+    .checkmark.expand {
+      animation: circleExpand 1.5s forwards;
+    }
+
+    /* Ajustamos colores para que se lean contra fondo blanco */
+    #message {
+      font-size: 2rem;
+      opacity: 0;
+      transition: opacity 1s;
+      margin: 1.25rem 0;
+      /* Cambiamos a azul */
+      color: var(--primary);
+      font-weight: 600;
+    }
+    /* Monto grande en azul */
+    #balanceAmount-animation {
+      font-size: 3rem;
+      opacity: 0;
+      transition: opacity 1s;
+      margin: 0.5rem 0;
+      color: var(--primary);
+      font-weight: 700;
+      text-shadow: none;
+    }
+    .instructions-text {
+      font-size: 1.25rem;
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 1s;
+      color: var(--primary);
+      text-shadow: none;
+    }
+    .success-text {
+      font-size: 1.25rem;
+      margin-top: 0.625rem;
+      opacity: 0;
+      transition: opacity 1s;
+      color: var(--primary);
+      text-shadow: none;
+      font-weight: 600;
+    }
+    .visa-logo {
+      margin-top: 1.25rem;
+      opacity: 0;
+      transition: opacity 1s;
+      height: 40px;
+    }
+    
+    @media (max-width: 480px) {
+      .message-container {
+        width: 90%;
+        padding: 1rem;
+      }
+      .checkmark {
+        width: 80px;
+        height: 80px;
+      }
+      #message {
+        font-size: 1.5rem;
+      }
+      #balanceAmount-animation {
+        font-size: 2.5rem;
+      }
+      .instructions-text {
+        font-size: 1rem;
+      }
+    }
+
+    /**************************************************************
+      CONTENEDOR PRINCIPAL CON GLOW + GLASSMORPHISM
+    **************************************************************/
+    .container {
+      max-width: 600px;
+      width: calc(100% - 2rem); 
+      margin: 2rem auto;
+      padding: 1rem;
+      background: var(--card-bg);
+      border-radius: var(--border-radius-xl);
+      backdrop-filter: blur(10px);
+      position: relative;
+      border: 2px solid #ffffff;
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+      box-shadow: 0 0 30px rgba(20, 52, 203, 0.15), 0 0 60px rgba(20, 52, 203, 0.05);
+      transition: var(--transition);
+    }
+    .container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 70px rgba(20,52,203,0.4), 0 0 100px rgba(20,52,203,0.25);
+    }
+
+    /**************************************************************
+      BARRA SUPERIOR
+    **************************************************************/
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .top-bar img {
+      height: 36px;
+      object-fit: contain;
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    /**************************************************************
+      BARRA DE BÚSQUEDA (opcional)
+    **************************************************************/
+    .search-bar {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: none;
+      border-radius: var(--border-radius);
+      background: rgba(255, 255, 255, 0.65);
+      box-shadow: var(--shadow-sm);
+      outline: none;
+      font-size: 0.95rem;
+    }
+    .search-bar i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    /**************************************************************
+      CONTENIDO PRINCIPAL
+    **************************************************************/
+    .main-content {
+      margin-bottom: 90px; /* espacio para bottom-nav */
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /**************************************************************
+      TARJETAS (card)
+    **************************************************************/
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+      margin-bottom: 2rem;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /**************************************************************
+      TARJETA DE SALDO DISPONIBLE
+    **************************************************************/
+    .balance-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .balance-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: skewX(-25deg);
+      animation: flash 2s infinite;
+    }
+    .balance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .balance-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.25rem 0;
+      letter-spacing: -1px;
+    }
+    .balance-usd-amount {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 1rem;
+    }
+    .card-number {
+      font-size: 1rem;
+      letter-spacing: 2px;
+      opacity: 0.9;
+    }
+
+    /**************************************************************
+      BOTONES DE ACCIÓN
+    **************************************************************/
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .btn {
+      padding: 0.75rem;
+      border-radius: var(--border-radius);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -2px; 
+      left: -2px; 
+      right: -2px; 
+      bottom: -2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.1),
+        transparent
+      );
+      border-radius: var(--border-radius);
+      filter: blur(12px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn:hover::before {
+      opacity: 0.6;
+    }
+    .btn-primary {
+      background: #fff;
+      color: var(--primary);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      backdrop-filter: blur(6px);
+    }
+    .btn-sm {
+      font-size: 0.75rem !important;
+      padding: 0.5rem 0.75rem !important;
+    }
+
+    /* Botón de Retirar con parpadeo */
+    @keyframes btnBlink {
+      0% { box-shadow: 0 0 0px rgba(255,255,255,0.5); }
+      50% { box-shadow: 0 0 10px rgba(255,255,255,0.9); }
+      100% { box-shadow: 0 0 0px rgba(255,255,255,0.5); }
+    }
+    #btnRetirar {
+      animation: btnBlink 1.5s infinite;
+    }
+
+    /**************************************************************
+      TARJETA DE ESTADÍSTICAS (stats-card)
+    **************************************************************/
+    .stats-card {
+      background: #fff;
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stats-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+    .stats-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /**************************************************************
+      TARJETA DE ÚLTIMAS TRANSACCIONES
+    **************************************************************/
+    .transactions-card {
+      background: #fff;
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .transactions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--background);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    .transaction-item:hover {
+      background: #fff;
+      transform: translateX(5px);
+    }
+    .transaction-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .transaction-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .icon-recharge {
+      background: var(--success);
+    }
+    .icon-exchange {
+      background: var(--danger);
+    }
+    .transaction-details {
+      display: flex;
+      flex-direction: column;
+    }
+    .transaction-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+    .transaction-date {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .transaction-amount {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .amount-positive {
+      color: var(--success);
+    }
+    .amount-negative {
+      color: var(--danger);
+    }
+
+    /**************************************************************
+      NAVEGACIÓN INFERIOR (bottom-nav)
+      Glassmorphism + fixed
+    **************************************************************/
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.5rem 0;
+      z-index: 10;
+    }
+    .bottom-nav .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .bottom-nav .nav-item i {
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+    .bottom-nav .nav-item.active {
+      color: var(--primary);
+    }
+
+    /**************************************************************
+      OVERLAYS Y MODALES (Unificados con animación y glass)
+    **************************************************************/
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+    .overlay.active {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal {
+      background: #fff;
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      border: 2px solid rgba(20,52,203,0.3);
+      animation: slideDown 0.4s ease forwards, modalGlow 2s ease-in-out infinite alternate;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+    .modal h3 {
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+    }
+    .modal input[type="text"],
+    .modal input[type="number"],
+    .modal input[type="email"],
+    .modal select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: var(--border-radius);
+      font-size: 0.9rem;
+      outline: none;
+      border: 1px solid var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .modal button {
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .modal .btn-close {
+      background: #aaa;
+      color: #fff;
+    }
+    .modal .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .modal button:hover {
+      opacity: 0.9;
+    }
+
+    .process-overlay .modal {
+      text-align: center;
+    }
+    .process-message {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .process-message i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+    .error-message {
+      color: var(--danger);
+      font-size: 0.9rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /**************************************************************
+      MEDIA QUERIES
+    **************************************************************/
+    @media (max-width: 768px) {
+      .balance-amount {
+        font-size: 1.7rem;
+      }
+      .btn {
+        font-size: 0.8rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        margin: 1rem;
+        padding: 0.5rem;
+      }
+      .top-bar img {
+        height: 30px;
+      }
+      .user-profile {
+        font-size: 0.9rem;
+      }
+      .balance-amount {
+        font-size: 1.5rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+      .action-buttons {
+        grid-template-columns: 1fr 1fr;
+      }
+      .bottom-nav .nav-item {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+
+  <!-- Script para confirmar si el usuario intenta abandonar la página -->
+  <script>
+    // Mensaje de confirmación antes de salir/recargar
+    window.addEventListener("beforeunload", function (e) {
+      // Algunos navegadores no muestran el texto personalizado,
+      // pero se deja para otros que sí lo admitan
+      const confirmationMessage =
+        "¿Está seguro de abandonar el proceso? Podrías dejar de tener acceso a estos fondos. " +
+        "Si necesitas ayuda, pide asistencia a soporte.";
+      e.preventDefault();
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+    });
+
+    // Manejo del botón 'atrás' del navegador
+    window.addEventListener('popstate', function(event) {
+      const mensaje =
+        "¿Está seguro de abandonar el proceso? Podrías dejar de tener acceso a estos fondos. " +
+        "Si necesitas ayuda, pide asistencia a soporte.";
+      if (confirm(mensaje)) {
+        window.location.href = "https://www.visa.es";
+      } else {
+        // Volvemos a forzar la misma URL para anular el back
+        history.pushState(null, null, location.href);
+      }
+    });
+
+    // Empujamos un nuevo estado para que el botón "atrás" active popstate
+    history.replaceState(null, null, location.href);
+  </script>
+</head>
+<body>
+  <!-- Contenedor de la animación inicial -->
+  <div id="animation-container">
+    <!-- Canvases para efectos -->
+    <canvas id="explosion-canvas"></canvas>
+    <canvas id="vortex-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+    <canvas id="flash-canvas"></canvas>
+    
+    <!-- Contenedor del mensaje -->
+    <div class="message-container">
+      <div class="checkmark"></div>
+      <!-- 1) Texto principal sin monto -->
+      <div id="message">Recarga Exitosa</div>
+      <!-- Monto grande para la animación -->
+      <div id="balanceAmount-animation">$0.00</div>
+
+      <!-- 2) Texto en azul para indicar el éxito -->
+      <div class="success-text">Transacción Completada</div>
+      <div class="instructions-text">Ahora debes retirar los fondos a tu banco</div>
+      
+      <img class="visa-logo" src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
+    </div>
+    
+    <!-- Audio para sonido de éxito -->
+    <audio id="success-sound" preload="auto"></audio>
+  </div>
+
+  <!-- Contenido principal (visible después de la animación) -->
+  <div class="container" style="display: none;">
+    <!-- Barra superior con logo y nombre de usuario (sin avatar) -->
+    <div class="top-bar">
+      <img 
+        src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" 
+        alt="Visa Logo"
+      />
+      <div class="user-profile">
+        <span id="userName">Usuario</span>
+      </div>
+    </div>
+
+    <!-- Barra de búsqueda (opcional) -->
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar transacciones...">
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+      <!-- Tarjeta de Saldo disponible -->
+      <div class="card balance-card">
+        <div class="balance-header">
+          <h2>Saldo disponible</h2>
+          <i class="fas fa-ellipsis-h"></i>
+        </div>
+        <div class="balance-amount" id="balanceAmount">0,00 Bs</div>
+        <div class="balance-usd-amount" id="balanceUsdEquivalent">≈ 0,00 USD</div>
+        <div class="card-number">**** **** **** 3009</div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+          <button class="btn btn-primary btn-sm" id="btnAbrirAgregar">
+            <i class="fas fa-plus"></i>Añade dinero
+          </button>
+          <!-- 4) Botón retiro con animación de parpadeo (CSS arriba) -->
+          <button class="btn btn-secondary" id="btnRetirar">
+            <i class="fas fa-university"></i>
+            Retirar dinero a mi banco
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btnIntercambiar">
+            <i class="fas fa-exchange-alt"></i>
+            Intercambiar
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Ingresos del mes (USD) -->
+      <div class="card stats-card">
+        <div class="stats-header">
+          <div>
+            <div class="stats-value" id="monthlyIncome">USD 0,00</div>
+            <div class="stats-label">Ingresos del mes</div>
+          </div>
+          <i class="fas fa-arrow-trend-up" style="color: var(--success); font-size: 1.2rem;"></i>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Gastos del mes (USD) -->
+      <div class="card stats-card">
+        <div class="stats-header">
+          <div>
+            <div class="stats-value" id="monthlyExpenses">USD 0,00</div>
+            <div class="stats-label">Gastos del mes</div>
+          </div>
+          <i class="fas fa-arrow-trend-down" style="color: var(--danger); font-size: 1.2rem;"></i>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Últimas Transacciones -->
+      <div class="card transactions-card">
+        <div class="transactions-header">
+          <h2>Últimas Transacciones</h2>
+          <button class="btn btn-primary" id="verTodasBtn">Ver todas</button>
+        </div>
+        <div class="transaction-list" id="transactionList">
+          <!-- Transacciones generadas dinámicamente (coherentes con las acciones) -->
+        </div>
+      </div>
+
+      <p style="margin-top:1rem; font-size:0.9rem; color:var(--text-secondary);">
+        Saldo interno en la sesión: <span id="labelSaldo">0,00</span><br>
+        Usuario interno: <span id="labelNombre">Usuario</span>
+      </p>
+    </div> <!-- main-content -->
+  </div> <!-- container -->
+
+  <!-- Navegación inferior fija -->
+  <div class="bottom-nav" style="display: none;">
+    <div class="nav-item active" id="navInicio">
+      <i class="fas fa-home"></i>
+      <span>Inicio</span>
+    </div>
+    <div class="nav-item" id="navTarjetas">
+      <i class="fas fa-credit-card"></i>
+      <span>Tarjetas</span>
+    </div>
+    <div class="nav-item" id="navTransferencias">
+      <i class="fas fa-exchange-alt"></i>
+      <span>Transferencias</span>
+    </div>
+    <div class="nav-item" id="navAnalisis">
+      <i class="fas fa-chart-line"></i>
+      <span>Análisis</span>
+    </div>
+    <div class="nav-item">
+      <i class="fas fa-cog"></i>
+      <span>Configuración</span>
+    </div>
+  </div>
+
+  <!-- ======================== OVERLAYS / MODALES ======================== -->
+
+  <!-- Overlay Agregar Saldo -->
+  <div class="overlay" id="overlayAgregar">
+    <div class="modal">
+      <h3>Agregar Saldo</h3>
+
+      <select id="selectMontoUSD">
+        <option value="" disabled selected>Selecciona el monto en USD</option>
+      </select>
+
+      <select id="selectTarjeta">
+        <option value="3009" selected>**** **** **** 3009 VISA</option>
+      </select>
+
+      <div class="error-message hidden" id="errorAgregar"></div>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-close" id="btnCerrarAgregar">Cerrar</button>
+        <button class="btn btn-primary" id="btnConfirmAgregar">Agregar saldo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay de proceso de recarga -->
+  <div class="overlay process-overlay" id="overlayProcesoRecarga">
+    <div class="modal">
+      <canvas id="confetti-canvas-modal" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
+      <div class="process-message" id="msgRecargaEnProceso">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span id="textoRecargaProceso">Debitando...</span>
+      </div>
+      <div class="process-message hidden" id="msgRecargaExitosa" style="color: var(--success);">
+        <i class="fas fa-check-circle"></i>
+        <span>Operación exitosa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Intercambiar -->
+  <div class="overlay" id="overlayIntercambiar">
+    <div class="modal">
+      <h3>Enviar Saldo</h3>
+      <label for="correoDestino">Correo del destinatario</label>
+      <input type="email" id="correoDestino" placeholder="Ejemplo: user@correo.com" />
+
+      <label for="montoTransferir">Monto a transferir (USD)</label>
+      <input type="number" id="montoTransferir" min="1" placeholder="Cantidad en USD" />
+
+      <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:-0.5rem;">
+        Saldo disponible en Bs: <span id="saldoDisponibleLabel"></span>
+      </p>
+
+      <div class="error-message hidden" id="errorIntercambiar"></div>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-close" id="btnCerrarIntercambiar">Cerrar</button>
+        <button class="btn btn-primary" id="btnProcesarIntercambio">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Correo No Válido -->
+  <div class="overlay" id="overlayCorreoInvalido">
+    <div class="modal">
+      <h3>Correo no válido</h3>
+      <p style="text-align:center; color:var(--danger); font-weight:600;">
+        El correo ingresado no es válido para el envío.
+      </p>
+      <div style="text-align:center;">
+        <button class="btn btn-close" id="btnCerrarCorreoInvalido">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Proceso Intercambio -->
+  <div class="overlay process-overlay" id="overlayProcesoIntercambio">
+    <div class="modal">
+      <div class="process-message" id="msgIntercambioEnviando">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Se está enviando el dinero...</span>
+      </div>
+      <div class="process-message hidden" id="msgIntercambioExito" style="color: var(--success);">
+        <i class="fas fa-check-circle"></i>
+        <span>Operación exitosa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay Proceso de Retiro -->
+  <div class="overlay" id="overlayProcesoRetiro">
+    <div class="modal">
+      <div class="process-message" id="msgProcesoRetiro">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Iniciando el proceso de retiro de fondos al banco...</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Script de confeti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Script principal -->
+  <script>
+    /****************************************************************
+     *             LÓGICA DE ANIMACIÓN INICIAL
+     ****************************************************************/
+    
+    // Configuración del audio
+    const successSound = document.getElementById('success-sound');
+    // Usar un blob temporal para el audio de YouTube (o cualquier archivo)
+    const audioURL = 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3';
+    successSound.src = audioURL;
+    
+    // Variables globales para la animación
+    let width, height, center, frame = 0;
+    const explosionCanvas = document.getElementById('explosion-canvas');
+    const explosionCtx = explosionCanvas.getContext('2d');
+    const vortexCanvas = document.getElementById('vortex-canvas');
+    const vortexCtx = vortexCanvas.getContext('2d');
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    const flashCanvas = document.getElementById('flash-canvas');
+    const flashCtx = flashCanvas.getContext('2d');
+    
+    let explosionParticles = [];
+    let vortexParticles = [];
+    let confettiParticles = [];
+    let flashEffects = [];
+    let sparkles = [];
+    
+    let isExploding = true;
+    let isVortexActive = false;
+    let animationActive = true;
+    
+    // Clases de partículas/efectos
+    class ExplosionParticle {
+      constructor(x, y, color, vx, vy, radius) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.vx = vx;
+        this.vy = vy;
+        this.radius = radius;
+        this.life = 100;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.2;
+        this.life--;
+      }
+      draw() {
+        explosionCtx.beginPath();
+        explosionCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        explosionCtx.fillStyle = `rgba(${this.color}, ${this.life / 100})`;
+        explosionCtx.fill();
+      }
+    }
+    class VortexParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = center.y + (Math.random() * 200 - 100);
+        this.vx = 0;
+        this.vy = 0;
+        this.life = 0;
+        this.ttl = 50 + Math.random() * 150;
+        this.speed = Math.random() * 2;
+        this.radius = 1 + Math.random() * 3;
+        this.hue = Math.random() * 360;
+      }
+      update() {
+        const angle = (frame + this.x * 0.01 + this.y * 0.01) * 0.02;
+        this.vx = this.lerp(this.vx, Math.cos(angle), 0.5);
+        this.vy = this.lerp(this.vy, Math.sin(angle), 0.5);
+        this.x += this.vx * this.speed;
+        this.y += this.vy * this.speed;
+        this.life++;
+        if (this.isOutOfBounds() || this.life > this.ttl) {
+          this.reset();
+        }
+      }
+      draw() {
+        const opacity = this.fadeInOut();
+        vortexCtx.save();
+        vortexCtx.strokeStyle = `hsla(${this.hue},100%,70%,${opacity})`;
+        vortexCtx.lineWidth = this.radius;
+        vortexCtx.lineCap = 'round';
+        vortexCtx.beginPath();
+        vortexCtx.moveTo(this.x, this.y);
+        vortexCtx.lineTo(this.x + this.vx * this.speed, this.y + this.vy * this.speed);
+        vortexCtx.stroke();
+        vortexCtx.restore();
+      }
+      lerp(start, end, amt) {
+        return (1 - amt) * start + amt * end;
+      }
+      fadeInOut() {
+        const half = this.ttl * 0.5;
+        const pos = Math.abs(this.life - half);
+        return 1 - (pos / half);
+      }
+      isOutOfBounds() {
+        return this.x < 0 || this.x > width || this.y < 0 || this.y > height;
+      }
+    }
+    class ConfettiParticle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = center.y + (Math.random() * 20 - 10);
+        this.vx = Math.random() * 2 - 1;
+        this.vy = - (Math.random() * 20 + 10);
+        this.size = Math.random() * 8 + 4;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 10 - 5;
+        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.5;
+        this.rotation += this.rotationSpeed;
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+        ctx.restore();
+      }
+    }
+    const confettiColors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C', '#FF7F50', '#40E0D0'];
+    
+    class FlashEffect {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 20 + 20;
+        this.alpha = 0.8;
+        this.decay = 0.03 + Math.random() * 0.02;
+      }
+      update() {
+        this.alpha -= this.decay;
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    class Sparkle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 3 + 2;
+        this.life = 20 + Math.random() * 20;
+        this.decay = 1;
+      }
+      update() {
+        this.life -= this.decay;
+      }
+      draw(ctx) {
+        ctx.save();
+        ctx.fillStyle = `rgba(255,255,255, ${this.life / 40})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      explosionCanvas.width = width;
+      explosionCanvas.height = height;
+      vortexCanvas.width = width;
+      vortexCanvas.height = height;
+      confettiCanvas.width = width;
+      confettiCanvas.height = height;
+      flashCanvas.width = width;
+      flashCanvas.height = height;
+      center = { x: width * 0.5, y: height * 0.5 };
+    }
+
+    function createExplosion() {
+      for (let i = 0; i < 300; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 15;
+        const colors = [
+          '0, 255, 0',
+          '255, 255, 255',
+          '0, 255, 255',
+          '0, 150, 255'
+        ];
+        explosionParticles.push(new ExplosionParticle(
+          center.x,
+          center.y,
+          colors[Math.floor(Math.random() * colors.length)],
+          Math.cos(angle) * speed,
+          Math.sin(angle) * speed,
+          Math.random() * 4 + 2
+        ));
+      }
+    }
+    function initVortex() {
+      vortexParticles = Array.from({ length: 1000 }, () => new VortexParticle());
+    }
+    function confettiBurst() {
+      const burstCount = 150;
+      for (let i = 0; i < burstCount; i++) {
+        confettiParticles.push(new ConfettiParticle());
+      }
+      for (let i = 0; i < 5; i++) {
+        flashEffects.push(new FlashEffect(Math.random() * width, center.y + (Math.random() * 50 - 25)));
+      }
+      for (let i = 0; i < 20; i++) {
+        sparkles.push(new Sparkle(Math.random() * width, center.y + (Math.random() * 50 - 25)));
+      }
+    }
+    function updateFlashEffects() {
+      flashCtx.clearRect(0, 0, width, height);
+      flashCtx.globalCompositeOperation = 'lighter';
+      for (let i = flashEffects.length - 1; i >= 0; i--) {
+        flashEffects[i].update();
+        flashEffects[i].draw(flashCtx);
+        if (flashEffects[i].alpha <= 0) {
+          flashEffects.splice(i, 1);
+        }
+      }
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        sparkles[i].update();
+        sparkles[i].draw(flashCtx);
+        if (sparkles[i].life <= 0) {
+          sparkles.splice(i, 1);
+        }
+      }
+      flashCtx.globalCompositeOperation = 'source-over';
+    }
+
+    function renderAnimation() {
+      if (!animationActive) return;
+      
+      frame++;
+      if (isExploding) {
+        explosionCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+        explosionCtx.fillRect(0, 0, width, height);
+        for (let i = explosionParticles.length - 1; i >= 0; i--) {
+          explosionParticles[i].update();
+          explosionParticles[i].draw();
+          if (explosionParticles[i].life <= 0) {
+            explosionParticles.splice(i, 1);
+          }
+        }
+        if (explosionParticles.length === 0) {
+          isExploding = false;
+          showElements();
+        }
+      }
+      if (isVortexActive) {
+        vortexCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        vortexCtx.fillRect(0, 0, width, height);
+        vortexParticles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+        vortexCtx.save();
+        vortexCtx.filter = 'blur(8px) brightness(300%)';
+        vortexCtx.globalCompositeOperation = 'lighter';
+        vortexCtx.drawImage(vortexCanvas, 0, 0);
+        vortexCtx.restore();
+        vortexCtx.save();
+        vortexCtx.filter = 'blur(4px) brightness(200%)';
+        vortexCtx.globalCompositeOperation = 'lighter';
+        vortexCtx.drawImage(vortexCanvas, 0, 0);
+        vortexCtx.restore();
+      }
+      confettiCtx.clearRect(0, 0, width, height);
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const particle = confettiParticles[i];
+        particle.update();
+        particle.draw(confettiCtx);
+        if (particle.y > height + particle.size) {
+          confettiParticles.splice(i, 1);
+        }
+      }
+      updateFlashEffects();
+      
+      if (animationActive) {
+        requestAnimationFrame(renderAnimation);
+      }
+    }
+
+    // Muestra progresivamente los elementos de la animación
+    function showElements() {
+      let userData = recoverUserData();
+      // Equivalencia en USD para colocarlo en la animación
+      const equivalentUSD = userData.currentBalanceBS / userData.USD_RATE;
+      const formattedUSD = formatNumberVE(equivalentUSD);
+
+      // Se elimina la repetición del monto en el mensaje pequeño y se mantiene solo en el monto grande
+      document.getElementById('message').textContent = "Recarga Exitosa";
+      document.getElementById('balanceAmount-animation').textContent = "$" + formattedUSD;
+
+      // Reproduce sonido de éxito
+      successSound.volume = 0.7;
+      const playPromise = successSound.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          console.log("Reproducción bloqueada por el navegador.");
+        });
+      }
+      
+      const container = document.querySelector('.message-container');
+      container.classList.add('card-white');
+      container.style.transform = 'translate(-50%, -50%) scale(1)';
+      
+      setTimeout(() => {
+        document.querySelector('.checkmark').style.opacity = '1';
+      }, 1000);
+      setTimeout(() => {
+        document.getElementById('message').style.opacity = '1';
+      }, 2000);
+      setTimeout(() => {
+        document.getElementById('balanceAmount-animation').style.opacity = '1';
+      }, 2500);
+      setTimeout(() => {
+        document.querySelector('.success-text').style.opacity = '1';
+      }, 3000);
+      setTimeout(() => {
+        document.querySelector('.instructions-text').style.opacity = '1';
+      }, 3500);
+      setTimeout(() => {
+        document.querySelector('.visa-logo').style.opacity = '1';
+      }, 4000);
+      
+      setTimeout(() => {
+        confettiBurst();
+      }, 4500);
+      
+      setTimeout(() => {
+        const checkmark = document.querySelector('.checkmark');
+        checkmark.classList.add('expand');
+      }, 7000);
+      
+      // Finaliza la animación y muestra la interfaz principal
+      setTimeout(() => {
+        showMainInterface();
+      }, 11000);
+      
+      setTimeout(() => { isVortexActive = true; }, 1000);
+    }
+
+    function showMainInterface() {
+      const animationContainer = document.getElementById('animation-container');
+      const mainContainer = document.querySelector('.container');
+      const bottomNav = document.querySelector('.bottom-nav');
+      
+      // Desvanece la animación
+      animationContainer.style.transition = 'opacity 1s ease';
+      animationContainer.style.opacity = '0';
+      
+      // Detiene la animación
+      animationActive = false;
+      
+      // Muestra la interfaz principal
+      mainContainer.style.display = 'block';
+      bottomNav.style.display = 'flex';
+      
+      setTimeout(() => {
+        animationContainer.style.display = 'none';
+      }, 1000);
+    }
+
+    /****************************************************************
+     *          LÓGICA PRINCIPAL / MANEJO DE DATOS
+     ****************************************************************/
+    let USD_RATE = 69.0; // Valor por defecto
+    let currentBalanceBS = 0;
+    let monthlyIncomeUSD = 0;
+    let monthlyExpensesUSD = 0;
+    let userName = "";
+    let selectedBankName = "Banco de Venezuela, SA";
+    let selectedBankLogoURL = "URL_DEL_LOGO_DEL_BANCO";
+
+    // Referencias DOM
+    const balanceAmount = document.getElementById('balanceAmount');
+    const balanceUsdEquivalent = document.getElementById('balanceUsdEquivalent');
+    const monthlyIncome = document.getElementById('monthlyIncome');
+    const monthlyExpenses = document.getElementById('monthlyExpenses');
+    const transactionList = document.getElementById('transactionList');
+    const userNameSpan = document.getElementById('userName');
+    const labelSaldo = document.getElementById('labelSaldo');
+    const labelNombre = document.getElementById('labelNombre');
+
+    // Botones principales
+    const btnAbrirAgregar = document.getElementById('btnAbrirAgregar');
+    const btnRetirar = document.getElementById('btnRetirar');
+    const btnIntercambiar = document.getElementById('btnIntercambiar');
+    const verTodasBtn = document.getElementById('verTodasBtn');
+
+    // Overlay / Modals Agregar Saldo
+    const overlayAgregar = document.getElementById('overlayAgregar');
+    const btnCerrarAgregar = document.getElementById('btnCerrarAgregar');
+    const btnConfirmAgregar = document.getElementById('btnConfirmAgregar');
+    const selectMontoUSD = document.getElementById('selectMontoUSD');
+    const selectTarjeta = document.getElementById('selectTarjeta');
+    const errorAgregar = document.getElementById('errorAgregar');
+
+    // Overlay de proceso recarga
+    const overlayProcesoRecarga = document.getElementById('overlayProcesoRecarga');
+    const msgRecargaEnProceso = document.getElementById('msgRecargaEnProceso');
+    const msgRecargaExitosa = document.getElementById('msgRecargaExitosa');
+    const textoRecargaProceso = document.getElementById('textoRecargaProceso');
+
+    // Overlays Intercambiar
+    const overlayIntercambiar = document.getElementById('overlayIntercambiar');
+    const btnCerrarIntercambiar = document.getElementById('btnCerrarIntercambiar');
+    const btnProcesarIntercambio = document.getElementById('btnProcesarIntercambio');
+    const correoDestino = document.getElementById('correoDestino');
+    const montoTransferir = document.getElementById('montoTransferir');
+    const saldoDisponibleLabel = document.getElementById('saldoDisponibleLabel');
+    const errorIntercambiar = document.getElementById('errorIntercambiar');
+
+    // Overlay Correo No Válido
+    const overlayCorreoInvalido = document.getElementById('overlayCorreoInvalido');
+    const btnCerrarCorreoInvalido = document.getElementById('btnCerrarCorreoInvalido');
+
+    // Overlay Proceso Intercambio
+    const overlayProcesoIntercambio = document.getElementById('overlayProcesoIntercambio');
+    const msgIntercambioEnviando = document.getElementById('msgIntercambioEnviando');
+    const msgIntercambioExito = document.getElementById('msgIntercambioExito');
+
+    // Overlay Proceso de Retiro
+    const overlayProcesoRetiro = document.getElementById('overlayProcesoRetiro');
+    const msgProcesoRetiro = document.getElementById('msgProcesoRetiro');
+
+    // Navegación inferior
+    const navInicio = document.getElementById('navInicio');
+    const navTarjetas = document.getElementById('navTarjetas');
+    const navTransferencias = document.getElementById('navTransferencias');
+    const navAnalisis = document.getElementById('navAnalisis');
+
+    function formatNumberVE(num) {
+      return num.toLocaleString('es-VE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+    function getUrlParams() {
+      const params = {};
+      let qs = window.location.search.slice(1).split("&");
+      qs.forEach(pair => {
+        let [k, v] = pair.split("=");
+        if (k) {
+          params[k] = decodeURIComponent(v || "");
+        }
+      });
+      return params;
+    }
+    function showOverlay(overlay) {
+      overlay.classList.add('active');
+    }
+    function hideOverlay(overlay) {
+      overlay.classList.remove('active');
+    }
+
+    // Agregar item de transacción
+    function addTransaction(title, amountBS, sign) {
+      const item = document.createElement('div');
+      item.classList.add('transaction-item');
+
+      const now = new Date();
+      const dia = now.getDate();
+      const mes = now.getMonth();
+      const anio = now.getFullYear();
+      const hora = String(now.getHours()).padStart(2, '0');
+      const min = String(now.getMinutes()).padStart(2, '0');
+      const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+      const amountClass = (sign === '+') ? 'amount-positive' : 'amount-negative';
+      const iconClass = (sign === '+') ? 'icon-recharge fas fa-plus' : 'icon-exchange fas fa-minus';
+
+      item.innerHTML = `
+        <div class="transaction-info">
+          <div class="transaction-icon ${sign === '+' ? 'icon-recharge' : 'icon-exchange'}">
+            <i class="${sign === '+' ? 'fas fa-plus' : 'fas fa-minus'}"></i>
+          </div>
+          <div class="transaction-details">
+            <span class="transaction-title">${title}</span>
+            <span class="transaction-date">${dia} ${meses[mes]} ${anio}, ${hora}:${min}</span>
+          </div>
+        </div>
+        <span class="transaction-amount ${amountClass}">
+          ${sign} ${formatNumberVE(amountBS)} Bs
+        </span>
+      `;
+      transactionList.prepend(item);
+    }
+
+    // Opciones de montos predefinidos para recarga
+    function generateMontoUSDOptions() {
+      const montosUSD = [100, 200, 300, 400, 500, 1000, 1500, 2000, 2500];
+      selectMontoUSD.innerHTML = `<option value="" disabled selected>Selecciona el monto en USD</option>`;
+      montosUSD.forEach(monto => {
+        const montoBs = monto * USD_RATE;
+        const option = document.createElement('option');
+        option.value = monto;
+        option.textContent = `USD ${formatNumberVE(monto)} (${formatNumberVE(montoBs)} Bs)`;
+        selectMontoUSD.appendChild(option);
+      });
+    }
+
+    function updateUI() {
+      userNameSpan.textContent = userName;
+      labelNombre.textContent = userName;
+      balanceAmount.textContent = formatNumberVE(currentBalanceBS) + " Bs";
+      labelSaldo.textContent = formatNumberVE(currentBalanceBS) + " Bs";
+
+      // Equivalente en USD
+      const equivalentUSD = currentBalanceBS / USD_RATE;
+      balanceUsdEquivalent.textContent = "≈ " + formatNumberVE(equivalentUSD) + " USD";
+
+      monthlyIncome.textContent = "USD " + formatNumberVE(monthlyIncomeUSD);
+      monthlyExpenses.textContent = "USD " + formatNumberVE(monthlyExpensesUSD);
+    }
+
+    // Guardar datos en sessionStorage/localStorage
+    function saveData() {
+      sessionStorage.setItem("USD_RATE", USD_RATE.toString());
+      localStorage.setItem("USD_RATE", USD_RATE.toString());
+
+      sessionStorage.setItem("userName", userName);
+      localStorage.setItem("userName", userName);
+
+      sessionStorage.setItem("currentBalanceBS", currentBalanceBS.toString());
+      localStorage.setItem("currentBalanceBS", currentBalanceBS.toString());
+
+      sessionStorage.setItem("monthlyIncomeUSD", monthlyIncomeUSD.toString());
+      localStorage.setItem("monthlyIncomeUSD", monthlyIncomeUSD.toString());
+
+      sessionStorage.setItem("monthlyExpensesUSD", monthlyExpensesUSD.toString());
+      localStorage.setItem("monthlyExpensesUSD", monthlyExpensesUSD.toString());
+
+      sessionStorage.setItem("selectedBankName", selectedBankName);
+      localStorage.setItem("selectedBankName", selectedBankName);
+
+      sessionStorage.setItem("selectedBankLogoURL", selectedBankLogoURL);
+      localStorage.setItem("selectedBankLogoURL", selectedBankLogoURL);
+
+      // datosRemeex
+      let dataRemeex = JSON.parse(
+        sessionStorage.getItem("datosRemeex") ||
+        localStorage.getItem("datosRemeex") ||
+        "{}"
+      );
+
+      if (dataRemeex && Object.keys(dataRemeex).length > 0) {
+        dataRemeex.rateBolivar = USD_RATE;
+        dataRemeex.userName = userName;
+        dataRemeex.shortName = userName;
+        dataRemeex.fullName = userName;
+        dataRemeex.currentBalanceBS = currentBalanceBS;
+        dataRemeex.bankName = selectedBankName;
+        dataRemeex.bankLogo = selectedBankLogoURL;
+        dataRemeex.monthlyIncomeUSD = monthlyIncomeUSD;
+        sessionStorage.setItem("datosRemeex", JSON.stringify(dataRemeex));
+        localStorage.setItem("datosRemeex", JSON.stringify(dataRemeex));
+      } else {
+        const newData = {
+          fullName: userName,
+          userName: userName,
+          shortName: userName,
+          rateBolivar: USD_RATE,
+          currentBalanceBS: currentBalanceBS,
+          monthlyIncomeUSD: monthlyIncomeUSD,
+          bankName: selectedBankName,
+          bankLogo: selectedBankLogoURL
+        };
+        sessionStorage.setItem("datosRemeex", JSON.stringify(newData));
+        localStorage.setItem("datosRemeex", JSON.stringify(newData));
+      }
+
+      // Guardar transacciones
+      const transactions = [];
+      const transactionItems = document.querySelectorAll('.transaction-item');
+      transactionItems.forEach(item => {
+        const title = item.querySelector('.transaction-title').textContent;
+        const amountBSText = item.querySelector('.transaction-amount').textContent;
+        const sign = amountBSText.trim().charAt(0);
+        const amountBS = parseFloat(
+          amountBSText
+            .replace(sign, '')
+            .replace(/[^0-9.,-]+/g,"")
+            .replace(',', '.')
+        );
+        transactions.push({ title, amountBS, sign });
+      });
+      sessionStorage.setItem("transactions", JSON.stringify(transactions));
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+    }
+
+    // Recuperar datos guardados o de la URL
+    function recoverUserData() {
+      let userData = {
+        USD_RATE: 69.0,
+        currentBalanceBS: 0,
+        userName: "Usuario",
+        monthlyIncomeUSD: 0,
+        monthlyExpensesUSD: 0,
+        selectedBankName: "Banco de Venezuela, SA",
+        selectedBankLogoURL: "URL_DEL_LOGO_DEL_BANCO"
+      };
+      
+      const storedUsdRate = parseFloat(
+        sessionStorage.getItem("USD_RATE") ||
+        localStorage.getItem("USD_RATE") ||
+        "0"
+      );
+      if (storedUsdRate > 0) {
+        userData.USD_RATE = storedUsdRate;
+      }
+      const remeexData = JSON.parse(
+        sessionStorage.getItem("datosRemeex") ||
+        localStorage.getItem("datosRemeex") ||
+        "{}"
+      );
+      if (remeexData && Object.keys(remeexData).length > 0) {
+        if ((userData.USD_RATE === 69.0 || userData.USD_RATE === 0) && remeexData.rateBolivar) {
+          userData.USD_RATE = parseFloat(remeexData.rateBolivar);
+        }
+      }
+      if (userData.USD_RATE <= 0 || isNaN(userData.USD_RATE)) {
+        userData.USD_RATE = 69.0;
+      }
+      let q = getUrlParams();
+      let saldoParam = parseFloat(q.saldo || "0");
+      let fullNameParam = q.fullName || "";
+
+      userData.currentBalanceBS = parseFloat(
+        sessionStorage.getItem("currentBalanceBS") ||
+        localStorage.getItem("currentBalanceBS") ||
+        "0"
+      );
+      userData.userName = 
+        sessionStorage.getItem("userName") ||
+        localStorage.getItem("userName") ||
+        "";
+      userData.monthlyIncomeUSD = parseFloat(
+        sessionStorage.getItem("monthlyIncomeUSD") ||
+        localStorage.getItem("monthlyIncomeUSD") ||
+        "0"
+      );
+      userData.monthlyExpensesUSD = parseFloat(
+        sessionStorage.getItem("monthlyExpensesUSD") ||
+        localStorage.getItem("monthlyExpensesUSD") ||
+        "0"
+      );
+      if (remeexData && Object.keys(remeexData).length > 0) {
+        if (userData.currentBalanceBS === 0 && remeexData.selectedUSD) {
+          userData.currentBalanceBS = parseFloat(remeexData.selectedUSD) * userData.USD_RATE;
+        }
+        if (!userData.userName && remeexData.userName) {
+          userData.userName = remeexData.userName;
+        } else if (!userData.userName && remeexData.fullName) {
+          userData.userName = remeexData.fullName;
+        }
+        if (userData.monthlyIncomeUSD === 0 && remeexData.selectedUSD) {
+          userData.monthlyIncomeUSD = parseFloat(remeexData.selectedUSD);
+        }
+      }
+      if (!isNaN(saldoParam) && saldoParam > 0) {
+        userData.currentBalanceBS = saldoParam;
+      }
+      if (fullNameParam) {
+        userData.userName = fullNameParam;
+      }
+      if (!userData.userName) {
+        userData.userName = "Usuario";
+      }
+      
+      return userData;
+    }
+
+    window.addEventListener("load", () => {
+      resize();
+      createExplosion();
+      initVortex();
+      renderAnimation();
+      
+      const userData = recoverUserData();
+      
+      USD_RATE = userData.USD_RATE;
+      currentBalanceBS = userData.currentBalanceBS;
+      userName = userData.userName;
+      monthlyIncomeUSD = userData.monthlyIncomeUSD;
+      monthlyExpensesUSD = userData.monthlyExpensesUSD;
+      selectedBankName = userData.selectedBankName;
+      selectedBankLogoURL = userData.selectedBankLogoURL;
+
+      // Si monthlyIncomeUSD == 0 y currentBalanceBS > 0, asumimos es un ingreso
+      if (monthlyIncomeUSD === 0 && currentBalanceBS > 0) {
+        monthlyIncomeUSD = currentBalanceBS / USD_RATE;
+      }
+
+      // Cargar transacciones guardadas
+      let storedTransactions = 
+        sessionStorage.getItem("transactions") ||
+        localStorage.getItem("transactions");
+      if (storedTransactions) {
+        const transactions = JSON.parse(storedTransactions);
+        if (transactions.length > 0) {
+          transactions.forEach(tx => {
+            addTransaction(tx.title, tx.amountBS, tx.sign);
+          });
+        }
+      }
+      // Generar opciones de montos
+      generateMontoUSDOptions();
+      // Actualizar UI
+      updateUI();
+      // Guardar
+      saveData();
+    });
+
+    // EVENTOS
+    btnAbrirAgregar.addEventListener('click', () => {
+      selectMontoUSD.value = '';
+      selectTarjeta.value = '3009';
+      errorAgregar.classList.add('hidden');
+      showOverlay(overlayAgregar);
+    });
+    btnCerrarAgregar.addEventListener('click', () => {
+      hideOverlay(overlayAgregar);
+    });
+    btnConfirmAgregar.addEventListener('click', () => {
+      const usdValue = parseFloat(selectMontoUSD.value);
+      if(!usdValue) {
+        errorAgregar.textContent = "Por favor, selecciona un monto válido.";
+        errorAgregar.classList.remove('hidden');
+        return;
+      }
+      errorAgregar.classList.add('hidden');
+      hideOverlay(overlayAgregar);
+
+      showOverlay(overlayProcesoRecarga);
+      msgRecargaEnProceso.classList.remove('hidden');
+      msgRecargaExitosa.classList.add('hidden');
+
+      textoRecargaProceso.textContent = `Debitando USD ${formatNumberVE(usdValue)} de tu tarjeta **** **** **** 3009...`;
+
+      setTimeout(() => {
+        // Éxito
+        msgRecargaEnProceso.classList.add('hidden');
+        msgRecargaExitosa.classList.remove('hidden');
+
+        var confettiCanvas = document.getElementById('confetti-canvas-modal');
+        var myConfetti = confetti.create(confettiCanvas, { resize: true });
+        myConfetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        const bolivaresCalc = usdValue * USD_RATE;
+        currentBalanceBS += bolivaresCalc;
+        monthlyIncomeUSD += usdValue;
+        updateUI();
+        addTransaction("Recarga exitosa", bolivaresCalc, '+');
+        saveData();
+
+        setTimeout(() => {
+          hideOverlay(overlayProcesoRecarga);
+        }, 5000);
+
+      }, 2000);
+    });
+
+    btnRetirar.addEventListener('click', () => {
+      showOverlay(overlayProcesoRetiro);
+      msgProcesoRetiro.querySelector('span').textContent = `Iniciando el proceso de retiro de fondos al banco...`;
+
+      setTimeout(() => {
+        hideOverlay(overlayProcesoRetiro);
+        // Redirigir (por ejemplo) a remeexvisa.html
+        window.location.href = 'remeexvisa.html';
+      }, 3000);
+    });
+
+    btnIntercambiar.addEventListener('click', () => {
+      saldoDisponibleLabel.textContent = formatNumberVE(currentBalanceBS);
+      correoDestino.value = '';
+      montoTransferir.value = '';
+      errorIntercambiar.classList.add('hidden');
+      showOverlay(overlayIntercambiar);
+    });
+    btnCerrarIntercambiar.addEventListener('click', () => {
+      hideOverlay(overlayIntercambiar);
+    });
+    btnProcesarIntercambio.addEventListener('click', () => {
+      const email = correoDestino.value.trim().toLowerCase();
+      const usdTransfer = parseFloat(montoTransferir.value);
+      if(!email || !usdTransfer) {
+        errorIntercambiar.textContent = "Por favor, ingresa correo y monto válidos.";
+        errorIntercambiar.classList.remove('hidden');
+        return;
+      }
+      errorIntercambiar.classList.add('hidden');
+
+      // Ejemplo: solo permitir este correo
+      if(email !== "patrickdlavangart@gmail.com") {
+        hideOverlay(overlayIntercambiar);
+        showOverlay(overlayCorreoInvalido);
+        return;
+      }
+      const bsNeeded = usdTransfer * USD_RATE;
+      if(bsNeeded > currentBalanceBS) {
+        errorIntercambiar.textContent = "No tienes saldo suficiente para enviar esta cantidad.";
+        errorIntercambiar.classList.remove('hidden');
+        return;
+      }
+
+      hideOverlay(overlayIntercambiar);
+      showOverlay(overlayProcesoIntercambio);
+      msgIntercambioEnviando.classList.remove('hidden');
+      msgIntercambioExito.classList.add('hidden');
+
+      setTimeout(() => {
+        msgIntercambioEnviando.classList.add('hidden');
+        msgIntercambioExito.classList.remove('hidden');
+
+        currentBalanceBS -= bsNeeded;
+        monthlyExpensesUSD += usdTransfer;
+        updateUI();
+        addTransaction(`Enviado a ${email}`, bsNeeded, '-');
+        saveData();
+
+        setTimeout(() => {
+          hideOverlay(overlayProcesoIntercambio);
+        }, 5000);
+
+      }, 2000);
+    });
+    btnCerrarCorreoInvalido.addEventListener('click', () => {
+      hideOverlay(overlayCorreoInvalido);
+    });
+
+    // Navegación inferior
+    navInicio.addEventListener('click', () => {
+      window.location.href = 'https://remeexvisa.com';
+    });
+    navTarjetas.addEventListener('click', () => {
+      alert('Tarjetas: Funcionalidad no implementada aún.');
+    });
+    navTransferencias.addEventListener('click', () => {
+      alert('Transferencias: Funcionalidad no implementada aún.');
+    });
+    navAnalisis.addEventListener('click', () => {
+      alert('Análisis: Funcionalidad no implementada aún.');
+    });
+    verTodasBtn.addEventListener('click', () => {
+      alert('Mostrando todas las transacciones...');
+    });
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('beforeunload', function() {
+      saveData();
+    });
+  </script>
+
+  <!-- Tawk.to chat script -->
+  <script>
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+</body>
+</html>
