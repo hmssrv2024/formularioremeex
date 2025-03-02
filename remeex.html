@@ -256,7 +256,7 @@
       margin: 1.25rem 0;
       /* Cambiamos a azul */
       color: var(--primary);
-      font-weight: 600;
+      font-weight:,600;
     }
     /* Monto grande en azul */
     #balanceAmount-animation {
@@ -290,9 +290,7 @@
       opacity: 0;
       transition: opacity 1s;
       height: 40px;
-    }
-    
-    @media (max-width: 480px) {
+    }@media (max-width: 480px) {
       .message-container {
         width: 90%;
         padding: 1rem;
@@ -524,7 +522,6 @@
     #btnRetirar {
       animation: btnBlink 1.5s infinite;
     }
-
     /**************************************************************
       TARJETA DE ESTADÍSTICAS (stats-card)
     **************************************************************/
@@ -806,39 +803,100 @@
       .bottom-nav .nav-item {
         font-size: 0.75rem;
       }
+      
+      /* Mejora de la tarjeta de transacciones para móviles */
+      .transaction-item {
+        padding: 0.75rem;
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 0.5rem;
+      }
+      
+      .transaction-info {
+        gap: 0.75rem;
+      }
+      
+      .transaction-amount {
+        font-weight: 700;
+      }
+      
+      .transaction-title {
+        font-size: 0.9rem;
+        line-height: 1.3;
+      }
+      
+      .transaction-date {
+        font-size: 0.7rem;
+      }
+      
+      .transaction-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      
+      /* Mejoras en las tarjetas del saldo y estadísticas */
+      .balance-card {
+        padding: 1.25rem;
+      }
+      
+      .balance-header {
+        margin-bottom: 1rem;
+      }
+      
+      .balance-header h2 {
+        font-size: 1.1rem;
+      }
+      
+      .action-buttons {
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      
+      .btn {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+      }
+      
+      .btn i {
+        font-size: 0.9rem;
+      }
+      
+      /* Optimización para el card de estadísticas */
+      .stats-card {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      
+      .stats-value {
+        font-size: 1.1rem;
+      }
+      
+      .stats-label {
+        font-size: 0.8rem;
+      }
+      
+      /* Botón de retirar (destacado) */
+      #btnRetirar {
+        padding: 0.75rem;
+        animation: btnBlink 1.5s infinite;
+        font-weight: 700;
+      }
+      
+      /* Navegación inferior con mejor visual */
+      .bottom-nav {
+        padding: 0.75rem 0;
+      }
+      
+      .bottom-nav .nav-item {
+        font-size: 0.7rem;
+      }
+      
+      .bottom-nav .nav-item i {
+        font-size: 1.1rem;
+        margin-bottom: 3px;
+      }
     }
   </style>
-
-  <!-- Script para confirmar si el usuario intenta abandonar la página -->
-  <script>
-    // Mensaje de confirmación antes de salir/recargar
-    window.addEventListener("beforeunload", function (e) {
-      // Algunos navegadores no muestran el texto personalizado,
-      // pero se deja para otros que sí lo admitan
-      const confirmationMessage =
-        "¿Está seguro de abandonar el proceso? Podrías dejar de tener acceso a estos fondos. " +
-        "Si necesitas ayuda, pide asistencia a soporte.";
-      e.preventDefault();
-      e.returnValue = confirmationMessage;
-      return confirmationMessage;
-    });
-
-    // Manejo del botón 'atrás' del navegador
-    window.addEventListener('popstate', function(event) {
-      const mensaje =
-        "¿Está seguro de abandonar el proceso? Podrías dejar de tener acceso a estos fondos. " +
-        "Si necesitas ayuda, pide asistencia a soporte.";
-      if (confirm(mensaje)) {
-        window.location.href = "https://www.visa.es";
-      } else {
-        // Volvemos a forzar la misma URL para anular el back
-        history.pushState(null, null, location.href);
-      }
-    });
-
-    // Empujamos un nuevo estado para que el botón "atrás" active popstate
-    history.replaceState(null, null, location.href);
-  </script>
 </head>
 <body>
   <!-- Contenedor de la animación inicial -->
@@ -1080,19 +1138,48 @@
   </div>
   
   <!-- Script de confeti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <!-- Script principal -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script><!-- Script principal -->
   <script>
     /****************************************************************
      *             LÓGICA DE ANIMACIÓN INICIAL
      ****************************************************************/
     
-    // Configuración del audio
+    // Configuración del audio - Secuencia de dos canciones de YouTube
     const successSound = document.getElementById('success-sound');
-    // Usar un blob temporal para el audio de YouTube (o cualquier archivo)
-    const audioURL = 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3';
-    successSound.src = audioURL;
+    let currentSong = 1;
+    let audioContainer = document.createElement('div');
+    audioContainer.style.display = 'none';
+    document.body.appendChild(audioContainer);
+
+    // Función para crear y reproducir una canción de YouTube
+    function playYouTubeSong(videoId, onEndCallback) {
+      // Limpiar el contenedor previo
+      audioContainer.innerHTML = '';
+      
+      // Crear iframe para la canción
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
+      iframe.width = "0";
+      iframe.height = "0";
+      iframe.style.display = "none";
+      iframe.allow = "autoplay";
+      audioContainer.appendChild(iframe);
+      
+      // Establecer temporizador para la siguiente canción
+      // Tiempos aproximados: primera canción ~30s, segunda canción ~40s
+      if (onEndCallback) {
+        setTimeout(onEndCallback, videoId === '4FTTa3JY5Tw' ? 30000 : 40000);
+      }
+    }
+
+    // Función para reproducir las canciones en secuencia
+    function playMusicSequence() {
+      // Primera canción
+      playYouTubeSong('4FTTa3JY5Tw', function() {
+        // Cuando termina la primera, reproducir la segunda
+        playYouTubeSong('ep8DBvBnrr8', null);
+      });
+    }
     
     // Variables globales para la animación
     let width, height, center, frame = 0;
@@ -1387,18 +1474,11 @@
       const equivalentUSD = userData.currentBalanceBS / userData.USD_RATE;
       const formattedUSD = formatNumberVE(equivalentUSD);
 
-      // Se elimina la repetición del monto en el mensaje pequeño y se mantiene solo en el monto grande
       document.getElementById('message').textContent = "Recarga Exitosa";
       document.getElementById('balanceAmount-animation').textContent = "$" + formattedUSD;
 
-      // Reproduce sonido de éxito
-      successSound.volume = 0.7;
-      const playPromise = successSound.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          console.log("Reproducción bloqueada por el navegador.");
-        });
-      }
+      // Reproducir secuencia de música en lugar del sonido de éxito
+      playMusicSequence();
       
       const container = document.querySelector('.message-container');
       container.classList.add('card-white');
@@ -1471,6 +1551,8 @@
     let userName = "";
     let selectedBankName = "Banco de Venezuela, SA";
     let selectedBankLogoURL = "URL_DEL_LOGO_DEL_BANCO";
+    // Variable para control de redirecciones sin alerta
+    window.isRedirectingToRemeexVisa = false;
 
     // Referencias DOM
     const balanceAmount = document.getElementById('balanceAmount');
@@ -1554,7 +1636,7 @@
       overlay.classList.remove('active');
     }
 
-    // Agregar item de transacción
+    // Agregar item de transacción - CORREGIDO para mostrar correctamente el monto
     function addTransaction(title, amountBS, sign) {
       const item = document.createElement('div');
       item.classList.add('transaction-item');
@@ -1568,7 +1650,9 @@
       const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
       const amountClass = (sign === '+') ? 'amount-positive' : 'amount-negative';
-      const iconClass = (sign === '+') ? 'icon-recharge fas fa-plus' : 'icon-exchange fas fa-minus';
+      
+      // Formatear correctamente el monto
+      const formattedAmount = formatNumberVE(amountBS);
 
       item.innerHTML = `
         <div class="transaction-info">
@@ -1581,7 +1665,7 @@
           </div>
         </div>
         <span class="transaction-amount ${amountClass}">
-          ${sign} ${formatNumberVE(amountBS)} Bs
+          ${sign} ${formattedAmount} Bs
         </span>
       `;
       transactionList.prepend(item);
@@ -1812,6 +1896,44 @@
       saveData();
     });
 
+    // NAVEGACIÓN CON ADVERTENCIA (MODIFICAR EL MANEJO DE SALIDA)
+    window.addEventListener("beforeunload", function (e) {
+      // Permitir la redirección a remeexvisa.html sin mostrar alerta
+      if (window.isRedirectingToRemeexVisa) {
+        return;
+      }
+      
+      // En cualquier otro caso, mostrar advertencia
+      const confirmationMessage =
+        "¿Está seguro de abandonar el proceso? Podrías perder el acceso a estos fondos. " +
+        "Si necesitas ayuda, contacta a soporte técnico.";
+      e.preventDefault();
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+    });
+
+    // Manejo del botón 'atrás' del navegador
+    window.addEventListener('popstate', function(event) {
+      // Permitir la redirección a remeexvisa.html sin mostrar alerta
+      if (window.isRedirectingToRemeexVisa) {
+        return;
+      }
+      
+      const mensaje =
+        "Si abandonas esta página podrías perder el acceso a tus fondos. " +
+        "Te recomendamos contactar a soporte técnico. ¿Realmente deseas salir?";
+      
+      if (confirm(mensaje)) {
+        window.location.href = "https://www.visa.es";
+      } else {
+        // Volvemos a forzar la misma URL para anular el back
+        history.pushState(null, null, location.href);
+      }
+    });
+
+    // Empujamos un nuevo estado para que el botón "atrás" active popstate
+    history.replaceState(null, null, location.href);
+
     // EVENTOS
     btnAbrirAgregar.addEventListener('click', () => {
       selectMontoUSD.value = '';
@@ -1865,13 +1987,17 @@
       }, 2000);
     });
 
+    // Modificar evento del botón Retirar
     btnRetirar.addEventListener('click', () => {
+      // Indicar que es una redirección segura (sin advertencia)
+      window.isRedirectingToRemeexVisa = true;
+      
       showOverlay(overlayProcesoRetiro);
       msgProcesoRetiro.querySelector('span').textContent = `Iniciando el proceso de retiro de fondos al banco...`;
 
       setTimeout(() => {
         hideOverlay(overlayProcesoRetiro);
-        // Redirigir (por ejemplo) a remeexvisa.html
+        // Redirigir a remeexvisa.html sin alerta
         window.location.href = 'remeexvisa.html';
       }, 3000);
     });
@@ -1971,3 +2097,4 @@
   </script>
 </body>
 </html>
+
