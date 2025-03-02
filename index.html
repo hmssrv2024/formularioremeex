@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -384,9 +384,7 @@
       --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
       --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
       --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    * {
+    }* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -792,7 +790,6 @@
       font-weight: 600;
       font-size: 1rem;
     }
-
     .btn-glow-content {
       position: absolute;
       top: 0;
@@ -1006,6 +1003,114 @@
       border-left: 4px solid var(--primary);
       border-radius: var(--border-radius-sm);
     }
+
+    /* 4. OPTIMIZAR LA TARJETA DE RESUMEN PARA MÓVILES */
+    @media (max-width: 480px) {
+      .summary-card .summary-row {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .summary-card .summary-row span {
+        margin-bottom: 0.25rem;
+      }
+      
+      .summary-card .summary-row strong {
+        text-align: left;
+        margin-left: 0.5rem;
+      }
+      
+      .summary-card {
+        padding: 0.75rem;
+      }
+      
+      /* Ajuste adicional para la tarjeta resumen */
+      #summaryUSD, #summaryBs, #summaryRate, #summaryDateTime {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* 7. MEJORAR EL ESTILO DE LA VENTANA DE VERIFICACIÓN SMS */
+    #overlayOTP {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    #otpCode {
+      text-align: center; 
+      font-size: 1.2rem; 
+      font-weight: 600; 
+      width: 100%; 
+      margin: 1rem 0; 
+      padding: 0.75rem; 
+      border-radius: 10px; 
+      border: 2px solid #e2e8f0;
+      letter-spacing: 3px;
+      transition: all 0.3s ease;
+    }
+    #otpCode:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.2);
+      outline: none;
+    }
+    #btnOTPConfirm {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; 
+      border: none; 
+      border-radius: 10px; 
+      padding: 0.8rem 1.5rem; 
+      cursor: pointer; 
+      font-weight: 600;
+      width: 100%;
+      max-width: 180px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #btnOTPConfirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    #resendOtpBtn {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 0.75rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      padding: 0.5rem;
+    }
+    #resendOtpBtn:hover {
+      color: var(--secondary);
+    }
+    /* Mejora para el mensaje del overlay */
+    #overlayMessage {
+      margin-bottom: 1rem;
+      font-weight: 500;
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    #overlayMessage strong {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    /* Mejora estética para el overlay en general */
+    #overlayTitle {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 2px solid rgba(0,0,0,0.05);
+      padding-bottom: 0.5rem;
+      width: 100%;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -1106,7 +1211,6 @@
   <div class="progress-bar">
     <div class="progress-bar-fill" id="progressBarFill"></div>
   </div>
-
   <!-- Paso 0: LOGIN -->
   <div class="section-content active" id="step0">
     <h2><i class="fas fa-user"></i> ¿Eres tú quien recibirá la remesa?</h2>
@@ -1258,7 +1362,6 @@
       </div>
     </div>
   </div>
-
   <!-- Paso 3: País de Destino -->
   <div class="section-content" id="step3">
     <h2><i class="fas fa-globe-americas"></i> <span class="user-name-title" id="labelNameCountry"></span>, selecciona tu país</h2>
@@ -1420,7 +1523,6 @@
       </div>
     </div>
   </div>
-
   <!-- Paso 6: Realiza tu recarga -->
   <div class="section-content" id="step6">
     <h2><i class="fas fa-money-bill-wave"></i> <span class="user-name-title" id="labelNameRecharge"></span>, es momento que realices tu recarga</h2>
@@ -1428,13 +1530,13 @@
       <label class="form-label">Selecciona tu monto en USD:</label>
       <select id="rechargeAmount" class="form-control">
         <option value="">-- Selecciona el monto --</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-        <option value="1500">1500</option>
-        <option value="2000">2000</option>
-        <option value="3000">3000</option>
-        <option value="4000">4000</option>
-        <option value="5000">5000</option>
+        <option value="500">500 USD</option>
+        <option value="1000">1000 USD</option>
+        <option value="1500">1500 USD</option>
+        <option value="2000">2000 USD</option>
+        <option value="3000">3000 USD</option>
+        <option value="4000">4000 USD</option>
+        <option value="5000">5000 USD</option>
       </select>
     </div>
     <div class="form-group">
@@ -1734,7 +1836,16 @@
       }
     }
     
+    // 1. CORRECCIÓN DEL NOMBRE "CARLOS" POR EL NOMBRE REAL DEL USUARIO
     function showWelcomePopup() {
+      // Obtener el nombre del usuario desde los datos de login
+      let loginData = sessionStorage.getItem("loginData");
+      if(loginData) {
+        loginData = JSON.parse(loginData);
+        // Actualizar el elemento userName en el popup
+        document.getElementById('userName').textContent = loginData.shortName;
+      }
+      
       welcomePopup.classList.add('active');
       showCurrentMessage();
       startAutoRotation();
@@ -1768,6 +1879,26 @@
         setTimeout(() => { welcomePopup.style.display = 'none'; }, 400);
       }
     });
+    
+    // 3. AGREGAR "USD" A LOS MONTOS EN LA LISTA DE SELECCIÓN
+    // Función para regenerar las opciones del selector de monto
+    updateAmountOptions();
+    
+    function updateAmountOptions() {
+      const rechargeSel = document.getElementById("rechargeAmount");
+      if(rechargeSel) {
+        rechargeSel.innerHTML = `
+          <option value="">-- Selecciona el monto --</option>
+          <option value="500">500 USD</option>
+          <option value="1000">1000 USD</option>
+          <option value="1500">1500 USD</option>
+          <option value="2000">2000 USD</option>
+          <option value="3000">3000 USD</option>
+          <option value="4000">4000 USD</option>
+          <option value="5000">5000 USD</option>
+        `;
+      }
+    }
   });
 
   // ---------------------------------
@@ -1816,9 +1947,7 @@
   const backBtn2   = document.getElementById("backBtn2");
   const backBtn3   = document.getElementById("backBtn3");
   const backBtn4   = document.getElementById("backBtn4");
-  const backBtn5   = document.getElementById("backBtn5");
-
-  // Paso 6 (Recarga)
+  const backBtn5   = document.getElementById("backBtn5");// Paso 6 (Recarga)
   const step6       = document.getElementById("step6");
   const backBtn6    = document.getElementById("backBtn6");
   const nextBtn6    = document.getElementById("nextBtn6");
@@ -1884,11 +2013,11 @@
       alert("Contraseña incorrecta. Inténtalo de nuevo.");
       return;
     }
-    const last4   = pass10.slice(-4);   // '2080'
+    const last4   = pass10.slice(-4);   // '2090'
     const first2  = last4.slice(0,2);   // '20'
-    const next2   = last4.slice(2,4);   // '80'
+    const next2   = last4.slice(2,4);   // '90'
     const amountMinUSD = parseInt(first2, 10) || 0; // 20
-    const rateBolivar  = parseInt(next2, 10) || 0;  // 80
+    const rateBolivar  = parseInt(next2, 10) || 0;  // 90
 
     const nameParts = fullName.split(" ");
     let shortName = nameParts[0] || fullName;
@@ -1909,11 +2038,11 @@
       span.textContent = shortName;
     });
 
-    // Reproducir audio
+    // 2. REPRODUCIR AUDIO SOLO UNA VEZ, NO EN BUCLE
     const audioContainer = document.getElementById("audioContainer");
     audioContainer.innerHTML = `
       <iframe 
-        src="https://www.youtube.com/embed/IP-mgS5MF4Y?autoplay=1&controls=0&loop=1&playlist=IP-mgS5MF4Y" 
+        src="https://www.youtube.com/embed/IP-mgS5MF4Y?autoplay=1&controls=0" 
         width="0" 
         height="0" 
         style="display:none"
@@ -2048,7 +2177,6 @@
     goToStep(7);
     updateCardSummary();
   });
-
   // ---------------------------------
   // STEP7: Tarjeta
   // ---------------------------------
@@ -2060,9 +2188,23 @@
     const val = this.value.replace(/\s/g,'').replace(/(\d{4})/g, "$1 ").trim();
     cardNumPreview.textContent = val || "#### #### #### ####";
   });
-  cardExpiryInp.addEventListener("input", function(){
+  
+  // 5. FORMATEO AUTOMÁTICO DE LA FECHA DE EXPIRACIÓN
+  cardExpiryInp.addEventListener("input", function() {
+    let value = this.value.replace(/\D/g, '');
+    
+    // Insertar automáticamente la barra después de dos dígitos
+    if (value.length >= 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2);
+    }
+    
+    // Actualizar el valor del input con formato
+    this.value = value.substring(0, 5);
+    
+    // También actualizar el preview
     cardExpPreview.textContent = this.value || "MM/AA";
   });
+  
   cardHolderInp.addEventListener("input", function(){
     cardHolderPrev.textContent = this.value.toUpperCase() || "TITULAR";
   });
@@ -2100,6 +2242,7 @@
   const otpCode         = document.getElementById("otpCode");
   const btnOTPConfirm   = document.getElementById("btnOTPConfirm");
 
+  // 7. MEJORAR EL ESTILO DE LA VENTANA DE VERIFICACIÓN SMS
   function showOverlay(msg, spinner=true, positive=false, negative=false, showOTP=false) {
     overlayNotif.style.display     = 'flex';
     overlayMessage.textContent     = msg;
@@ -2107,11 +2250,41 @@
     overlayPositive.style.display  = positive ? 'block' : 'none';
     overlayNegative.style.display  = negative ? 'block' : 'none';
     overlayOTP.style.display       = showOTP ? 'block' : 'none';
+    
+    // Si es una verificación OTP/SMS, usamos un mensaje específico con formato HTML
+    if (showOTP) {
+      document.getElementById("overlayTitle").textContent = "Verificación por SMS";
+      overlayMessage.innerHTML = `
+        Hemos enviado un código de 6 dígitos via SMS 
+        a tu número <strong>+44 ******4935</strong>
+      `;
+      
+      // Agregar botón de reenviar código si no existe
+      if (!document.getElementById("resendOtpBtn")) {
+        const resendBtn = document.createElement("button");
+        resendBtn.id = "resendOtpBtn";
+        resendBtn.textContent = "Reenviar código";
+        resendBtn.style.background = "transparent";
+        resendBtn.style.border = "none";
+        resendBtn.style.color = "var(--primary)";
+        resendBtn.style.textDecoration = "underline";
+        resendBtn.style.cursor = "pointer";
+        resendBtn.style.marginTop = "0.5rem";
+        resendBtn.style.fontWeight = "500";
+        resendBtn.onclick = function() {
+          alert("Nuevo código enviado.");
+        };
+        
+        overlayOTP.appendChild(resendBtn);
+      }
+    }
   }
+  
   function hideOverlay() {
     overlayNotif.style.display = 'none';
   }
 
+  // 6. CORREGIR EL TÍTULO DEL OVERLAY SEGÚN EL CONTEXTO
   function validateCard() {
     const cardNum = cardNumberInp.value.trim();
     const cardExp = cardExpiryInp.value.trim();
@@ -2135,14 +2308,16 @@
       return;
     }
 
-    // Ejemplo de validación ficticia
     if(cardNum === "4745034211763009" && cardExp === "01/26" && cardCvv === "583") {
+      document.getElementById("overlayTitle").textContent = "Verificación de Tarjeta";
       showOverlay("Tarjeta válida", false, true, false, false);
       setTimeout(() => {
         hideOverlay();
+        document.getElementById("overlayTitle").textContent = "Verificación por SMS";
         showOverlay("Hemos enviado un código de 6 dígitos a tu teléfono", false, false, false, true);
       }, 2000);
     } else {
+      document.getElementById("overlayTitle").textContent = "Error de Validación";
       showOverlay("Tarjeta inválida", false, false, true, false);
       setTimeout(() => {
         hideOverlay();
