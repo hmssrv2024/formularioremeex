@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>VISA REMEEX Premium - Verificación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Beneficiario Receptor, Datos Bancarios, Documento de Identidad, Firma Digital y Planilla de Retiro. VISA REMEEX Premium." />
+
+  <link rel="icon" href="https://w7.pngwing.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png" />
+
+  <!-- Fuentes e Iconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- Librerías adicionales -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #1a1f71; /* Azul oscuro de Visa */
+      --primary-dark: #0d153e; /* Azul más oscuro */
+      --secondary: #3b82f6;
+      --accent: #60a5fa;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+
+      --border-white: #ffffff;
+      --border-gray: #d1d5db; 
+      --border-light-blue: #93c5fd; 
+
+      --background: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+
+      --border-radius-xl: 28px;
+      --border-radius-lg: 24px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+
+      --aurora-gradient: linear-gradient(
+        120deg,
+        rgba(26, 31, 113, 0.4),
+        rgba(25, 35, 102, 0.3),
+        rgba(30, 40, 120, 0.3),
+        rgba(26, 31, 113, 0.2)
+      );
+      background-size: 400% 400%;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 650px;
+      width: 100%;
+      margin-top: 2rem;
+      background: var(--card-bg);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border-white);
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+    }
+    .container.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 40px rgba(26, 31, 113, 0.5), 0 0 80px rgba(26, 31, 113, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 70px rgba(26, 31, 113, 0.8), 0 0 100px rgba(26, 31, 113, 0.6);
+      }
+    }
+    @keyframes border-blink {
+      0%   { border-color: var(--border-white); }
+      33%  { border-color: var(--border-gray); }
+      66%  { border-color: var(--border-light-blue); }
+      100% { border-color: var(--border-white); }
+    }
+
+    .header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-top-left-radius: var(--border-radius-xl);
+      border-top-right-radius: var(--border-radius-xl);
+      background-image: var(--aurora-gradient);
+      animation: aurora-animation 15s ease infinite;
+    }
+    @keyframes aurora-animation {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+      transform: skewX(-20deg);
+      opacity: 0;
+      z-index: 1;
+      animation: header-flash 3s infinite;
+    }
+    @keyframes header-flash {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+      10% {
+        left: -50%;
+        opacity: 1;
+      }
+      50% {
+        left: 100%;
+        opacity: 1;
+      }
+      60% {
+        left: 100%;
+        opacity: 0;
+      }
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+    .header-logo {
+      display: block;
+      margin: 0 auto 1rem auto;
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+      position: relative;
+      z-index: 2;
+    }
+    .header p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Tarjeta de Saldo Disponible */
+    .balance-card {
+      background: linear-gradient(135deg, #1434CB 0%, #142C8E 100%);
+      color: white;
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin: -2rem 1.5rem 1.5rem 1.5rem; 
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+    .balance-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .balance-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--aurora-gradient);
+      animation: aurora-animation 15s ease infinite;
+      z-index: 0;
+    }
+    .balance-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: radial-gradient(ellipse at bottom, rgba(255,255,255,0.5), transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .balance-card > * {
+      position: relative;
+      z-index: 2;
+    }
+    .balance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .balance-amount {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0.5rem 0 1rem 0;
+      letter-spacing: -1px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Partículas animadas (flujo de dinero) */
+    .particle-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .particle {
+      position: absolute;
+      bottom: 20px;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #4ade80 0%, #1A1F71 100%);
+      border-radius: 50%;
+      opacity: 0.9;
+      animation: floatParticles 3s linear infinite;
+    }
+    @keyframes floatParticles {
+      0% {
+        transform: translateX(0) translateY(0) scale(0.8);
+        opacity: 0.8;
+      }
+      25% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(120%) translateY(-100%) scale(0.3);
+        opacity: 0;
+      }
+    }
+
+    /* Brillo lateral */
+    .lateral-glow {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 10px;
+      height: 100%;
+      background: linear-gradient(to right, rgba(80, 255, 120, 0) 0%, rgba(80, 255, 120, 0.5) 50%, rgba(80, 255, 120, 0) 100%);
+      animation: pulseGlow 2s infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes pulseGlow {
+      0% {
+        opacity: 0.4;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0.4;
+      }
+    }
+
+    /* Flechas de flujo en el lado derecho */
+    .flow-arrows {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 3;
+    }
+    .flow-arrows .arrow {
+      color: #4ade80; 
+      font-size: 1rem;
+      opacity: 0;
+    }
+    @keyframes arrowBlink {
+      0%, 100% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+    }
+    .arrow1 {
+      animation: arrowBlink 2s infinite;
+      animation-delay: 0s;
+    }
+    .arrow2 {
+      animation: arrowBlink 2s infinite;
+      animation-delay: 0.5s;
+    }
+    .arrow3 {
+      animation: arrowBlink 2s infinite;
+      animation-delay: 1s;
+    }
+
+    /* LED verde parpadeante: señal OK */
+    .led-green {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      margin-left: 6px;
+      animation: blinkGreen 1s infinite;
+      vertical-align: middle;
+    }
+    @keyframes blinkGreen {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    /* Indicador de procesamiento */
+    #processingIndicator {
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.9;
+    }
+    .dots {
+      display: inline-block;
+      width: 1em;
+      text-align: left;
+      overflow: hidden;
+    }
+    @keyframes dotsAnimation {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
+    .dots::before {
+      content: "";
+      animation: dotsAnimation 1s steps(1, end) infinite;
+    }
+
+    /* Status banner inferior */
+    .status-banner {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      transition: opacity 0.5s;
+    }
+    @keyframes blinkEffect {
+      0%   { color: #10B981; }
+      50%  { color: #ffffff; }
+      100% { color: #10B981; }
+    }
+    .blink {
+      animation: blinkEffect 1.2s infinite;
+      font-weight: 700;
+    }
+
+    /* Rotación de info adicional */
+    #rotatingInfo {
+      color: #fff;
+      font-size: 0.88rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+      transition: opacity 0.5s;
+      min-height: 1.2em;
+    }
+
+    /* Barra de progreso */
+    .progress-bar {
+      height: 16px;
+      background-color: #e2e8f0;
+      border-radius: var(--border-radius);
+      margin: 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 40%; /* Progreso inicial */
+      transition: width 0.6s ease-in-out;
+      border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-45deg);
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      0% { left: -50%; }
+      100% { left: 100%; }
+    }
+    .progress-text {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      font-weight: bold;
+      color: #fff;
+      z-index: 3;
+    }
+
+    /* Secciones con transición */
+    .section-content {
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease-out;
+      display: none;
+    }
+    .section-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section-content h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--primary);
+    }
+    .section-content h2 i {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+    .form-group {
+      margin-bottom: 1.75rem;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      background: #fff;
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+    .form-control:hover {
+      border-color: #cbd5e1;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(26, 31, 113, 0.2);
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: var(--border-radius);
+      border: 1px solid #e2e8f0;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 4px;
+      border: 2px solid var(--primary);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .checkbox-group input[type="checkbox"]:checked {
+      background: var(--primary);
+    }
+    .checkbox-group a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .checkbox-group a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Botones y efectos */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+      background-size: 200% 100%;
+      border-radius: var(--border-radius-sm);
+      animation: border-glow 3s ease infinite;
+      filter: blur(12px);
+      opacity: 0.7;
+      z-index: -1;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      position: relative;
+      z-index: 1;
+    }
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+      background-size: 200% 100%;
+      border-radius: var(--border-radius-sm);
+      animation: border-glow 3s ease infinite;
+      filter: blur(12px);
+      opacity: 0.7;
+      z-index: -1;
+    }
+    .btn-outline:hover {
+      background: rgba(20, 52, 203, 0.05);
+    }
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      position: relative;
+      width: 100%;
+    }
+    .btn-container2 {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      gap: 1rem;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .btn-glow-effect {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+      background-size: 200% 100%;
+      border-radius: 30px;
+      animation: border-glow 3s ease infinite;
+      filter: blur(15px);
+      opacity: 0.7;
+      z-index: 0;
+    }
+    @keyframes border-glow {
+      0%   { background-position: -100% 0; }
+      50%  { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .btn-glow {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3), inset 0 -4px 8px rgba(255,255,255,0.3);
+      transition: all 0.3s ease, transform 0.2s ease-in-out;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .btn-glow:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    .btn-glow-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .btn-glow-initial {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .btn-glow:hover .btn-glow-initial {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .btn-glow-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(-100%);
+      color: white;
+    }
+    .btn-glow:hover .btn-glow-hover {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .btn-glow-icon {
+      margin-left: 10px;
+    }
+
+    /* Sección Upload y vista previa */
+    .preview-container {
+      border: 1px dashed var(--primary);
+      padding: 1rem;
+      border-radius: var(--border-radius-sm);
+      margin-bottom: 1rem;
+      display: none;
+      position: relative;
+      text-align: center;
+      background-color: #fff;
+    }
+    .preview-container.active {
+      display: block;
+    }
+    .preview-container img {
+      max-width: 100%;
+      border-radius: var(--border-radius-sm);
+    }
+
+    /* Canvas de firma */
+    .signature-canvas {
+      border: 2px dashed var(--primary);
+      border-radius: var(--border-radius-sm);
+      width: 100%;
+      height: 220px;
+      background: #fff;
+      margin-bottom: 1rem;
+      position: relative;
+      cursor: crosshair;
+    }
+
+    /* Overlay y Modal */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 1rem;
+    }
+    .overlay.active {
+      display: flex;
+      backdrop-filter: blur(5px);
+    }
+    .modal {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      backdrop-filter: blur(8px);
+      border: 2px solid #fff;
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+    }
+    .modal h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .modal p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Cuenta regresiva */
+    .countdown {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    /* Resumen final (Planilla de Retiro) */
+    .data-summary {
+      margin-top: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: var(--border-radius-sm);
+      padding: 1rem;
+      background: #fff;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+    .data-summary h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .data-item {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* Firma análisis */
+    .firma-analyzing {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Barra de progreso para overlay final */
+    .overlay-progress-bar {
+      height: 10px;
+      background-color: #e2e8f0;
+      border-radius: var(--border-radius);
+      margin: 1rem 0;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .overlay-progress-fill {
+      height: 100%;
+      background: var(--success);
+      width: 0%; /* Inicia en 0 */
+      transition: width 0.3s linear;
+      border-radius: var(--border-radius);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 2rem 1rem;
+      }
+      .header-logo {
+        width: 70%;
+        max-width: 300px;
+      }
+      .balance-card {
+        margin: -2rem 1rem 1.5rem 1rem;
+      }
+      .progress-bar {
+        margin: 1.5rem 1rem;
+      }
+      .btn-container {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .btn-container2 {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Encabezado principal -->
+  <div class="header">
+    <img 
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png"
+      alt="REMEEX VISA Logo" class="header-logo"
+    >
+    <p>Envía dinero al instante sin comisiones</p>
+  </div>
+
+  <!-- Tarjeta con Saldo disponible -->
+  <div class="balance-card">
+    <!-- Contenedor de partículas -->
+    <div class="particle-container" id="particleContainer"></div>
+    <!-- Brillo lateral -->
+    <div class="lateral-glow"></div>
+    <!-- Flechas de flujo -->
+    <div class="flow-arrows">
+      <i class="fas fa-arrow-right arrow arrow1"></i>
+      <i class="fas fa-arrow-right arrow arrow2"></i>
+      <i class="fas fa-arrow-right arrow arrow3"></i>
+    </div>
+
+    <div class="balance-header">
+      <h2>Saldo disponible</h2>
+      <!-- Tasa de cambio y bandera -->
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <span id="exchangeRateText" style="font-size: 0.85rem;">Tasa: --</span>
+        <img src="https://flagcdn.com/w20/ve.png" alt="Bandera de Venezuela" style="width:20px; height:auto;">
+      </div>
+    </div>
+    <div class="balance-amount" id="balanceAmount">0,00 Bs.</div>
+
+    <!-- Rotación de info -->
+    <div id="rotatingInfo"></div>
+
+    <!-- Indicador de procesamiento -->
+    <div id="processingIndicator">
+      Procesando transferencia<span class="dots"></span>
+      <span class="led-green"></span>
+    </div>
+
+    <div class="status-banner" id="statusBanner"></div>
+  </div>
+
+  <!-- Barra de progreso con texto -->
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressBarFill"></div>
+    <span class="progress-text" id="progressText">Paso 2 de 5</span>
+  </div>
+
+  <!-- STEP 2: Beneficiario Receptor -->
+  <div class="section-content active" id="step2">
+    <h2><i class="fas fa-user"></i> Beneficiario Receptor</h2>
+    <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--text-secondary);">
+      ¿Eres tú quien recibirás los fondos en tu cuenta o va para alguien más?<br>
+      <span style="font-weight: 500; color: var(--primary);">Es importante que la información coincida con tu documento de identidad para garantizar la seguridad de la transacción y evitar rechazos.</span>
+    </p>
+    <div class="form-group">
+      <label class="form-label" for="fullName">Nombres y Apellidos</label>
+      <input type="text" class="form-control" id="fullName" placeholder="Ej.: Juan Pérez" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="phonePrefix">Teléfono</label>
+      <div style="display:flex; gap:0.5rem;">
+        <select class="form-control" id="phonePrefix" style="max-width:150px;">
+          <option value="">-- Prefijo --</option>
+          <option value="0414">0414</option>
+          <option value="0424">0424</option>
+          <option value="0412">0412</option>
+          <option value="0416">0416</option>
+          <option value="0426">0426</option>
+        </select>
+        <input type="text" class="form-control" id="phoneNumber" placeholder="7 dígitos" maxlength="7" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="docType">Tipo de Documento</label>
+      <select class="form-control" id="docType">
+        <option value="">-- Selecciona --</option>
+        <option value="Cédula de Identidad">Cédula de Identidad</option>
+        <option value="Pasaporte Vigente">Pasaporte Vigente</option>
+        <option value="Licencia de Conducir">Licencia de Conducir</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="nationality">Nacionalidad</label>
+      <select class="form-control" id="nationality">
+        <option value="">-- Selecciona --</option>
+        <option value="Nacional">Nacional</option>
+        <option value="Extranjero">Extranjero</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="docNumber">Número de documento</label>
+      <input type="text" class="form-control" id="docNumber" placeholder="8 a 10 dígitos" maxlength="10" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="birthDate">Fecha de nacimiento</label>
+      <input type="date" class="form-control" id="birthDate" max="9999-12-31" />
+    </div>
+    <div class="form-group checkbox-group">
+      <input type="checkbox" id="isAdult" />
+      <label for="isAdult">Declaro que soy mayor de edad</label>
+    </div>
+
+    <div class="btn-container">
+      <!-- Botón para ir a remeex.html -->
+      <div style="position: relative; width: 140px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backToSaldoBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Ir a Saldo
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Ir a Saldo
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Botón Continuar -->
+      <div style="position: relative; width: 140px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="continueBtnStep2">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Datos Bancarios -->
+  <div class="section-content" id="step3">
+    <h2><i class="fas fa-university"></i> Datos Bancarios del Beneficiario</h2>
+    <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--text-secondary);">
+      <span id="userNameStep3">Usuario</span>, indícanos tus datos bancarios donde realizaremos el depósito:
+    </p>
+    <div class="form-group">
+      <label class="form-label" for="bankSelect">Banco</label>
+      <select class="form-control" id="bankSelect">
+        <option value="">-- Selecciona un banco --</option>
+        <option value="Banco Central de Venezuela">Banco Central de Venezuela</option>
+        <option value="Banco de Venezuela, S.A.">Banco de Venezuela, S.A.</option>
+        <option value="Banco Venezolano de Crédito, S.A.">Banco Venezolano de Crédito, S.A.</option>
+        <option value="Banco Mercantil, C.A.">Banco Mercantil, C.A.</option>
+        <option value="Banco Provincial, S.A.">Banco Provincial, S.A.</option>
+        <option value="Banco del Caribe C.A., Bancaribe">Banco del Caribe C.A., Bancaribe</option>
+        <option value="Banco Exterior C.A., Banco Universal">Banco Exterior C.A., Banco Universal</option>
+        <option value="Banco Caroní C.A., Banco Universal">Banco Caroní C.A., Banco Universal</option>
+        <option value="Banesco Banco Universal, C.A.">Banesco Banco Universal, C.A.</option>
+        <option value="Banco Sofitasa Banco Universal, C.A.">Banco Sofitasa Banco Universal, C.A.</option>
+        <option value="Banco Plaza, Banco Universal">Banco Plaza, Banco Universal</option>
+        <option value="Banco de la Gente Emprendedora C.A.">Banco de la Gente Emprendedora C.A.</option>
+        <option value="Banco Fondo Común, C.A.">Banco Fondo Común, C.A.</option>
+        <option value="100% Banco, Banco Comercial, C.A.">100% Banco, Banco Comercial, C.A.</option>
+        <option value="DelSur, Banco Universal C.A.">DelSur, Banco Universal C.A.</option>
+        <option value="Banco del Tesoro C.A., Banco Universal">Banco del Tesoro C.A., Banco Universal</option>
+        <option value="Banco Agrícola de Venezuela C.A., Banco Universal">Banco Agrícola de Venezuela C.A., Banco Universal</option>
+        <option value="Bancrecer S.A., Banco Microfinanciero">Bancrecer S.A., Banco Microfinanciero</option>
+        <option value="Mi Banco, Banco Microfinanciero, C.A.">Mi Banco, Banco Microfinanciero, C.A.</option>
+        <option value="Banco Activo C.A., Banco Universal">Banco Activo C.A., Banco Universal</option>
+        <option value="Bancamiga Banco Universal, C.A.">Bancamiga Banco Universal, C.A.</option>
+        <option value="Banco Internacional de Desarrollo C.A., Banco Universal">Banco Internacional de Desarrollo C.A., Banco Universal</option>
+        <option value="Banplus Banco Universal, C.A.">Banplus Banco Universal, C.A.</option>
+        <option value="Banco Bicentenario del Pueblo, Banco Universal C.A.">Banco Bicentenario del Pueblo, Banco Universal C.A.</option>
+        <option value="Banco de la Fuerza Armada Nacional Bolivariana, B.U.">Banco de la Fuerza Armada Nacional Bolivariana, B.U.</option>
+        <option value="Banco Nacional de Crédito C.A., Banco Universal">Banco Nacional de Crédito C.A., Banco Universal</option>
+        <option value="Instituto Municipal de Crédito Popular">Instituto Municipal de Crédito Popular</option>
+      </select>
+    </div>
+    <div class="form-group" id="accountContainer" style="display:none;">
+      <label class="form-label" for="accountNumber">Número de cuenta</label>
+      <div style="display:flex; gap:0.5rem;">
+        <input type="text" class="form-control" id="bankCode" style="max-width:100px;" readonly />
+        <input type="text" class="form-control" id="restAccountDigits"
+               placeholder="16 dígitos restantes" maxlength="16" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="accountType">Tipo de cuenta</label>
+      <select class="form-control" id="accountType">
+        <option value="">-- Selecciona --</option>
+        <option value="Ahorro (Bs)">Ahorro (Bs)</option>
+        <option value="Corriente (Bs)">Corriente (Bs)</option>
+        <option value="Divisa Dólares (USD)">Divisa Dólares (USD)</option>
+        <option value="Divisa Euros (EUR)">Divisa Euros (EUR)</option>
+      </select>
+    </div>
+
+    <!-- Botones para Step2 <---> Step4 -->
+    <div class="btn-container2">
+      <!-- Botón Regresar a Step2 -->
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtnStep3">
+          <div class="btn-glow-content btn-glow-initial">
+            Regresar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Regresar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Botón Continuar a Step4 -->
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="continueBtnStep3">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Documento de Identidad -->
+  <div class="section-content" id="step4">
+    <h2><i class="fas fa-id-card"></i> Documento de Identidad de quien recibe los fondos</h2>
+    <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--text-secondary);">
+      Carga tu documento de identidad para verificar tu información. Asegúrate de que sea válido y legible.
+    </p>
+    
+    <label for="idDocument" style="display:block; margin-bottom:0.5rem; font-weight: 500; color: var(--text-secondary);">
+      Seleccionar archivo (solo imágenes)
+    </label>
+    <input type="file" id="idDocument" accept="image/*" style="margin-bottom: 1.5rem;" />
+
+    <div class="preview-container" id="previewContainer">
+      <img id="docPreview" src="#" alt="Vista Previa" />
+      <div style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">
+        <strong>Requisitos:</strong>
+        <ul style="padding-left: 20px; margin-top: 5px;">
+          <li>Documento vigente</li>
+          <li>Imagen legible</li>
+          <li>Firma y datos visibles</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botones Step3 <---> Step5 -->
+    <div class="btn-container2">
+      <!-- Botón Regresar a Step3 -->
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtnStep4">
+          <div class="btn-glow-content btn-glow-initial">
+            Regresar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Regresar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Botón Continuar -->
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow btn-disabled" id="confirmDocBtn" disabled>
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+      <div class="countdown" id="countdownDocBtn"></div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Firma Digital -->
+  <div class="section-content" id="step5">
+    <h2><i class="fas fa-file-signature"></i> Firma Digital</h2>
+    <p style="font-size:0.93rem; line-height:1.4;">
+      <span id="userNameStep5">Usuario</span>, firma como lo haces en tu documento de identidad.<br/>
+      <i class="fas fa-shield-alt" style="color:var(--primary);"></i>
+      Tu firma debe coincidir con la de tu documento para comprobar que eres el titular y evitar cualquier suplantación.<br/>
+      <i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i>
+      Si no coincide, se te solicitará verificación adicional.
+    </p>
+
+    <!-- Canvas de firma -->
+    <canvas class="signature-canvas" id="signatureCanvas"></canvas>
+
+    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="clearSignatureBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Limpiar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Limpiar
+            <i class="fas fa-eraser btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="saveSignatureBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Guardar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Guardar
+            <i class="fas fa-save btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Botón para regresar a step4 -->
+    <div style="text-align:left; margin-top:1rem;">
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtnStep5">
+          <div class="btn-glow-content btn-glow-initial">
+            Regresar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Regresar
+            <i class="fas fa-arrow-left btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: Planilla de Retiro (Resumen Final) -->
+  <div class="section-content" id="step6">
+    <h2><i class="fas fa-file-alt"></i> Planilla de Retiro</h2>
+
+    <p style="font-size:0.93rem; line-height:1.4; color: var(--text-secondary);">
+      Selecciona el método de retiro que deseas:
+    </p>
+
+    <div class="form-group">
+      <label class="form-label" for="pagoMethodSelect">Método de Retiro</label>
+      <select class="form-control" id="pagoMethodSelect">
+        <option value="">-- Selecciona --</option>
+        <option value="Pago Móvil">Pago Móvil (hasta 100.000 Bs)</option>
+        <option value="Transferencia Bancaria">Transferencia Bancaria (hasta 950.000 Bs)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="montoRetiro">Monto a Retirar (Bs)</label>
+      <input type="text" class="form-control" id="montoRetiro" placeholder="Ej.: 50.000" />
+    </div>
+    <p style="font-size:0.9rem; color: var(--warning); margin-top:-1rem;">
+      Monto máximo: 100.000 Bs (Pago Móvil) / 950.000 Bs (Transferencia).
+    </p>
+
+    <div class="data-summary" style="margin-top:2rem;">
+      <h3>Datos del Beneficiario</h3>
+      <div id="benefSummary" class="data-item"></div>
+    </div>
+
+    <div class="data-summary">
+      <h3>
+        Datos Bancarios
+        <img id="bankLogoSummary" src="" alt="" style="height: 30px; width: auto; margin-left: auto; display: none;">
+      </h3>
+      <div id="bankSummary" class="data-item"></div>
+    </div>
+
+    <div class="data-summary">
+      <h3>Firma Digital</h3>
+      <div style="text-align:center; position: relative;">
+        <img id="firmaSummary" src="#" alt="Firma del Usuario" style="max-width:200px; border:1px solid #ccc; padding:5px;"/>
+        <div id="firmaAnalyzing" class="firma-analyzing" style="display: none;">
+          <span>Analizando firma</span>
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container2">
+      <!-- Botón Regresar a Step5 -->
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtnStep6">
+          <div class="btn-glow-content btn-glow-initial">
+            Regresar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Regresar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Botón Retirar a mi banco (inicialmente deshabilitado) -->
+      <div style="position: relative; width: 180px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow btn-disabled" id="finalConfirmBtn" disabled>
+          <div class="btn-glow-content btn-glow-initial">
+            Retirar a mi banco
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Retirar <span id="retirarMonto"></span>
+            <i class="fas fa-money-bill-wave btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+      <div class="countdown" id="countdownRetiroBtn"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlays: confirmaciones y procesos -->
+<!-- Overlay: Confirmar Firma -->
+<div class="overlay" id="overlayConfirmFirma">
+  <div class="modal">
+    <h3>¿Estás seguro de tu firma?</h3>
+    <p>
+      La firma debe coincidir con la de tu documento de identidad. <br/>
+      Si no coincide, se solicitará verificación adicional. <br/>
+      ¿Deseas continuar con esta firma?
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="editarFirmaBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Editar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Editar
+            <i class="fas fa-edit btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+      <div style="position: relative; width: 120px; height: 50px;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="continuarFirmaBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <i class="fas fa-forward btn-glow-icon"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay: Analizando documento -->
+<div class="overlay" id="overlayDocumento">
+  <div class="modal">
+    <h3 id="overlayDocumentoTitulo">Analizando documento de identidad</h3>
+    <p id="overlayDocumentoTexto">Por favor, espera mientras verificamos tu documento.</p>
+    <img id="overlayDocumentoLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
+    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
+  </div>
+</div>
+
+<!-- Overlay Secuencial POST-FIRMA (Conexión, Análisis, etc.) -->
+<div class="overlay" id="overlaySecuenciaFirma">
+  <div class="modal">
+    <h3 id="secuenciaFirmaTitulo">Conectando con tu banco...</h3>
+    <p id="secuenciaFirmaTexto">Espere un momento, por favor.</p>
+    <img id="secuenciaFirmaLogo" src="" alt="Banco" style="max-height:50px; margin:0.5rem 0;" />
+    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
+  </div>
+</div>
+
+<!-- Overlay: Aviso Proceso de Retiro -->
+<div class="overlay" id="overlayInicioRetiro">
+  <div class="modal">
+    <h3>Importante</h3>
+    <p>El proceso de retiro está a punto de iniciarse. No cierres esta página mientras el proceso esté en curso, de lo contrario, la transacción podría verse interrumpida.</p>
+    <img id="logoInicioRetiro" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
+    <div style="position: relative; width: 140px; height: 50px; margin: 1rem auto 0;">
+      <div class="btn-glow-effect"></div>
+      <button class="btn-glow" id="entendidoRetiroBtn">
+        <div class="btn-glow-content btn-glow-initial">
+          Entendido
+        </div>
+        <div class="btn-glow-content btn-glow-hover">
+          Entendido
+          <i class="fas fa-check btn-glow-icon"></i>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay: Proceso de Retiro en curso -->
+<div class="overlay" id="overlayProcesoRetiro">
+  <div class="modal">
+    <h3 id="procesoRetiroTitulo">Iniciando retiro</h3>
+    <p id="procesoRetiroTexto">Procesando tu solicitud...</p>
+    <img id="procesoRetiroLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
+    
+    <!-- Barra de progreso -->
+    <div class="overlay-progress-bar">
+      <div class="overlay-progress-fill" id="procesoRetiroProgress"></div>
+    </div>
+    
+    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary); margin-top: 0.5rem;"></i>
+  </div>
+</div>
+
+<!-- Overlay: Firma no coincide -->
+<div class="overlay" id="overlayFirmaNoCoincide">
+  <div class="modal">
+    <h3>Verificación adicional requerida</h3>
+    <p id="firmaNoCoincideTexto">Tu firma no coincide con la registrada en el banco. Necesitamos que vuelvas a firmar para continuar con el proceso de retiro.</p>
+    <img id="firmaNoCoincideLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
+    <div class="overlay-progress-bar">
+      <div class="overlay-progress-fill" id="redirectProgressBar" style="width: 0%;"></div>
+    </div>
+    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Serás redirigido en <span id="redirectCountdown">10</span> segundos...</p>
+  </div>
+</div>
+
+<!-- Overlay final secuencia -->
+<div class="overlay" id="overlaySecuenciaFinal">
+  <div class="modal">
+    <h3 id="secFinalTitulo"></h3>
+    <p id="secFinalTexto"></p>
+    <img id="secFinalLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
+    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
+  </div>
+</div>
+
+<!-- Overlay: Final del proceso -->
+<div class="overlay" id="overlayFinal">
+  <div class="modal">
+    <h3>Proceso Exitoso</h3>
+    <p>Tus datos han sido verificados correctamente y tu retiro está en proceso. En breve recibirás notificación de la operación.</p>
+    <div style="position: relative; width: 140px; height: 50px; margin: 1rem auto 0;">
+      <div class="btn-glow-effect"></div>
+      <button class="btn-glow" id="finalBtn">
+        <div class="btn-glow-content btn-glow-initial">
+          Entendido
+        </div>
+        <div class="btn-glow-content btn-glow-hover">
+          Entendido
+          <i class="fas fa-check btn-glow-icon"></i>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+    ---------------------------------------------------
+    Variables globales extra (para la nueva implementación)
+    ---------------------------------------------------
+  */
+  let nombreCompleto = "";
+  let documentoBeneficiario = "";
+  let fechaNacimiento = "";
+  let bancoUsuario = "";
+  let numeroCuenta = "";
+  let tipoCuenta = "";
+  let telefonoUsuario = "";
+  let logoBancoUsuario = "";
+  let saldoDisponible = 0;
+  let montoRetiro = 0;
+
+  /*
+    ---------------------------------------------------
+    Variables y Objetos de Estado (del flujo original)
+    ---------------------------------------------------
+  */
+  let exchangeRate = 37.40;      // Tasa por defecto
+  let isRedirecting = false;
+  let showingBs = true;
+  let signatureIsAnalyzing = false;
+  let redirectCountdownInterval = null;
+
+  // STEP 2
+  const fullNameInput = document.getElementById("fullName");
+  const phonePrefixSelect = document.getElementById("phonePrefix");
+  const phoneNumberInput = document.getElementById("phoneNumber");
+  const docTypeSelect = document.getElementById("docType");
+  const nationalitySelect = document.getElementById("nationality");
+  const docNumberInput = document.getElementById("docNumber");
+  const birthDateInput = document.getElementById("birthDate");
+  const isAdultCheckbox = document.getElementById("isAdult");
+  const continueBtnStep2 = document.getElementById("continueBtnStep2");
+  const backToSaldoBtn = document.getElementById("backToSaldoBtn");
+
+  // STEP 3
+  const userNameStep3 = document.getElementById("userNameStep3");
+  const bankSelect = document.getElementById("bankSelect");
+  const accountContainer = document.getElementById("accountContainer");
+  const bankCodeInput = document.getElementById("bankCode");
+  const restAccountDigitsInput = document.getElementById("restAccountDigits");
+  const accountTypeSelect = document.getElementById("accountType");
+  const continueBtnStep3 = document.getElementById("continueBtnStep3");
+  const backBtnStep3 = document.getElementById("backBtnStep3");
+
+  // STEP 4
+  const idDocument = document.getElementById("idDocument");
+  const previewContainer = document.getElementById("previewContainer");
+  const docPreview = document.getElementById("docPreview");
+  const confirmDocBtn = document.getElementById("confirmDocBtn");
+  const backBtnStep4 = document.getElementById("backBtnStep4");
+  const countdownDocBtn = document.getElementById("countdownDocBtn");
+  let confirmDocBtnCountdown = 5;
+
+  // STEP 5
+  const userNameStep5 = document.getElementById("userNameStep5");
+  const signatureCanvas = document.getElementById("signatureCanvas");
+  const clearSignatureBtn = document.getElementById("clearSignatureBtn");
+  const saveSignatureBtn = document.getElementById("saveSignatureBtn");
+  const backBtnStep5 = document.getElementById("backBtnStep5");
+  let ctx;
+  let isDrawing = false;
+  let signatureDataURL = null;
+
+  // STEP 6
+  const pagoMethodSelect = document.getElementById("pagoMethodSelect");
+  const montoRetiroInput = document.getElementById("montoRetiro");
+  const finalConfirmBtn = document.getElementById("finalConfirmBtn");
+  const backBtnStep6 = document.getElementById("backBtnStep6");
+  const benefSummary = document.getElementById("benefSummary");
+  const bankSummary = document.getElementById("bankSummary");
+  const bankLogoSummary = document.getElementById("bankLogoSummary");
+  const firmaSummary = document.getElementById("firmaSummary");
+  const firmaAnalyzing = document.getElementById("firmaAnalyzing");
+  const retirarMonto = document.getElementById("retirarMonto");
+  const countdownRetiroBtn = document.getElementById("countdownRetiroBtn");
+  let firmaAnalysisCountdown = 30;
+
+  // Overlays
+  const overlayConfirmFirma = document.getElementById("overlayConfirmFirma");
+  const editarFirmaBtn = document.getElementById("editarFirmaBtn");
+  const continuarFirmaBtn = document.getElementById("continuarFirmaBtn");
+  const overlayDocumento = document.getElementById("overlayDocumento");
+  const overlaySecuenciaFirma = document.getElementById("overlaySecuenciaFirma");
+  const overlayInicioRetiro = document.getElementById("overlayInicioRetiro");
+  const entendidoRetiroBtn = document.getElementById("entendidoRetiroBtn");
+  const logoInicioRetiro = document.getElementById("logoInicioRetiro");
+  const overlayProcesoRetiro = document.getElementById("overlayProcesoRetiro");
+  const procesoRetiroTitulo = document.getElementById("procesoRetiroTitulo");
+  const procesoRetiroTexto = document.getElementById("procesoRetiroTexto");
+  const procesoRetiroLogo = document.getElementById("procesoRetiroLogo");
+  const procesoRetiroProgress = document.getElementById("procesoRetiroProgress");
+  const overlayFirmaNoCoincide = document.getElementById("overlayFirmaNoCoincide");
+  const firmaNoCoincideTexto = document.getElementById("firmaNoCoincideTexto");
+  const firmaNoCoincideLogo = document.getElementById("firmaNoCoincideLogo");
+  const redirectProgressBar = document.getElementById("redirectProgressBar");
+  const redirectCountdown = document.getElementById("redirectCountdown");
+  const overlayFinal = document.getElementById("overlayFinal");
+  const finalBtn = document.getElementById("finalBtn");
+
+  // Barra de Progreso y elementos de saldo
+  const progressBarFill = document.getElementById("progressBarFill");
+  const progressText = document.getElementById("progressText");
+  const balanceAmountElem = document.getElementById("balanceAmount");
+  const statusBannerElem = document.getElementById("statusBanner");
+  const exchangeRateText = document.getElementById("exchangeRateText");
+  const rotatingInfoElem = document.getElementById("rotatingInfo");
+  const particleContainer = document.getElementById("particleContainer");
+
+
+  /*
+    ---------------------------------------------------
+    Mapeo de bancos -> códigos
+    ---------------------------------------------------
+  */
+  const bankMapping = {
+    "Banco Central de Venezuela": "0001",
+    "Banco de Venezuela, S.A.": "0102",
+    "Banco Venezolano de Crédito, S.A.": "0104",
+    "Banco Mercantil, C.A.": "0105",
+    "Banco Provincial, S.A.": "0108",
+    "Banco del Caribe C.A., Bancaribe": "0114",
+    "Banco Exterior C.A., Banco Universal": "0115",
+    "Banco Caroní C.A., Banco Universal": "0128",
+    "Banesco Banco Universal, C.A.": "0134",
+    "Banco Sofitasa Banco Universal, C.A.": "0137",
+    "Banco Plaza, Banco Universal": "0138",
+    "Banco de la Gente Emprendedora C.A.": "0146",
+    "Banco Fondo Común, C.A.": "0151",
+    "100% Banco, Banco Comercial, C.A.": "0156",
+    "DelSur, Banco Universal C.A.": "0157",
+    "Banco del Tesoro C.A., Banco Universal": "0163",
+    "Banco Agrícola de Venezuela C.A., Banco Universal": "0166",
+    "Bancrecer S.A., Banco Microfinanciero": "0168",
+    "Mi Banco, Banco Microfinanciero, C.A.": "0169",
+    "Banco Activo C.A., Banco Universal": "0171",
+    "Bancamiga Banco Universal, C.A.": "0172",
+    "Banco Internacional de Desarrollo C.A., Banco Universal": "0173",
+    "Banplus Banco Universal, C.A.": "0174",
+    "Banco Bicentenario del Pueblo, Banco Universal C.A.": "0175",
+    "Banco de la Fuerza Armada Nacional Bolivariana, B.U.": "0177",
+    "Banco Nacional de Crédito C.A., Banco Universal": "0191",
+    "Instituto Municipal de Crédito Popular": "0601"
+  };
+
+  /*
+    ---------------------------------------------------
+    DOMContentLoaded (Unificando lo nuevo y lo existente)
+    ---------------------------------------------------
+  */
+  document.addEventListener("DOMContentLoaded", function() {
+    // Mostrar contenedor
+    document.querySelector('.container').classList.add('active');
+
+    /*
+      1) Cargar datos de sessionStorage y localStorage (datosRemeex)
+    */
+    const datosRemeex = JSON.parse(
+      sessionStorage.getItem('datosRemeex') ||
+      localStorage.getItem('datosRemeex') ||
+      '{}'
+    );
+
+    // Llenar variables globales extra
+    if (datosRemeex.fullName) {
+      nombreCompleto = datosRemeex.fullName;
+    }
+    if (datosRemeex.docNumberCompleto) {
+      documentoBeneficiario = datosRemeex.docNumberCompleto;
+    } else if (datosRemeex.docNumber) {
+      documentoBeneficiario = datosRemeex.docNumber;
+    }
+    if (datosRemeex.birthDate) {
+      fechaNacimiento = datosRemeex.birthDate;
+    }
+    if (datosRemeex.bankName) {
+      bancoUsuario = datosRemeex.bankName;
+    }
+    if (datosRemeex.bankAccount) {
+      numeroCuenta = datosRemeex.bankAccount;
+    }
+    if (datosRemeex.bankType) {
+      tipoCuenta = datosRemeex.bankType;
+    }
+    if (datosRemeex.userPhone) {
+      telefonoUsuario = datosRemeex.userPhone;
+    }
+
+    // Determinar el logo del banco
+    if (datosRemeex.bankLogo) {
+      logoBancoUsuario = datosRemeex.bankLogo;
+    } else {
+      logoBancoUsuario = getBankLogoURL(bancoUsuario);
+    }
+
+    // 2) Obtenemos saldo en formato de texto (ej: "1.800,00 Bs")
+    let saldoData = sessionStorage.getItem("currentBalanceBS") ||
+                    localStorage.getItem("currentBalanceBS") ||
+                    "1.800,00 Bs";
+    // Convertimos a número flotante
+    saldoDisponible = parseFloat(
+      saldoData
+        .replace(/\./g, '')
+        .replace(',', '.')
+        .replace(/[^\d.]/g, '')
+    ) || 1800.00;
+
+    // 3) Ajustes básicos del front
+    exchangeRateText.textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+    
+    // Verificar si la contraseña aporta información para tasa y monto mínimo
+    if (datosRemeex.password) {
+      const pass = datosRemeex.password;
+      if (pass.length >= 10) {
+        const last4 = pass.slice(-4); // últimos 4 dígitos
+        // Los dos primeros de esos 4 => montoMinimo (no se usa directamente aquí, pero ajusta la lógica si deseas)
+        const possibleMin = parseInt(last4.slice(0, 2), 10);
+        // Los dos últimos => tasaCambio
+        const possibleRate = parseInt(last4.slice(2, 4), 10);
+
+        // Solo si son válidos...
+        if (!isNaN(possibleRate) && possibleRate > 0) {
+          exchangeRate = possibleRate;
+          exchangeRateText.textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+        }
+      }
+    }
+
+    // Actualizar nombres personalizados en secciones
+    if (nombreCompleto) {
+      // Extraer primer nombre
+      const primerNombre = nombreCompleto.split(' ')[0];
+      userNameStep3.textContent = primerNombre;
+      userNameStep5.textContent = primerNombre;
+    }
+
+    // Inicializar el resto del flujo original
+    loadSavedData();
+    initBalanceData();
+    setInterval(toggleBalanceCurrency, 20000);
+    startStatusBannerRotation();
+    startRotatingInfo();
+    startParticleGeneration();
+
+    setupStep2Listeners();
+    setupStep3Listeners();
+    setupStep4Listeners();
+    setupStep5Listeners();
+    setupStep6Listeners();
+    setupOverlayListeners();
+
+    // Prevenir uso del botón "back" del navegador
+    history.pushState({}, '', '');
+    window.addEventListener('popstate', function() {
+      if (!isRedirecting) {
+        window.location.href = "remeex.html";
+      }
+    });
+    window.addEventListener('beforeunload', function(e) {
+      if (!isRedirecting) {
+        e.preventDefault();
+        window.location.href = "remeex.html";
+        e.returnValue = '';
+      }
+    });
+  });
+
+  /*
+    ---------------------------------------------------
+    Funciones de carga de datos, inicialización y Steps
+    ---------------------------------------------------
+  */
+  function loadSavedData() {
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    if (datosRemeex.rateBolivar) {
+      exchangeRate = parseFloat(datosRemeex.rateBolivar);
+      exchangeRateText.textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+    }
+    // Step 2
+    loadSavedDataStep2();
+    // Step 3
+    loadSavedDataStep3();
+  }
+
+  function initBalanceData() {
+    let saldoData = formatNumberVE(saldoDisponible) + " Bs.";
+    sessionStorage.setItem("currentBalanceBS", saldoData);
+    localStorage.setItem("currentBalanceBS", saldoData);
+    balanceAmountElem.textContent = saldoData;
+  }
+
+  function toggleBalanceCurrency() {
+    const currentText = balanceAmountElem.textContent;
+    if (showingBs) {
+      const numericBs = parseFloat(
+        currentText
+          .replace(/\./g, '')
+          .replace(',', '.')
+          .replace(' Bs.', '')
+          .trim()
+      );
+      if (!isNaN(numericBs)) {
+        const usdValue = numericBs / exchangeRate;
+        balanceAmountElem.textContent = usdValue.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }) + " USD";
+      }
+    } else {
+      let saldoSessionStorage = sessionStorage.getItem("currentBalanceBS");
+      if (saldoSessionStorage) {
+        balanceAmountElem.textContent = saldoSessionStorage;
+      }
+    }
+    showingBs = !showingBs;
+  }
+
+  /*
+    STEP 2
+  */
+  function setupStep2Listeners() {
+    fullNameInput.addEventListener("input", guardarDatosStep2);
+    phonePrefixSelect.addEventListener("change", guardarDatosStep2);
+    phoneNumberInput.addEventListener("input", guardarDatosStep2);
+    docTypeSelect.addEventListener("change", guardarDatosStep2);
+    nationalitySelect.addEventListener("change", guardarDatosStep2);
+    docNumberInput.addEventListener("input", guardarDatosStep2);
+    birthDateInput.addEventListener("input", guardarDatosStep2);
+    isAdultCheckbox.addEventListener("change", guardarDatosStep2);
+
+    continueBtnStep2.addEventListener("click", () => {
+      if (validateStep2()) {
+        goToStep3();
+      }
+    });
+    
+    backToSaldoBtn.addEventListener("click", () => {
+      window.location.href = "remeex.html";
+    });
+  }
+  function loadSavedDataStep2() {
+    const savedData = JSON.parse(sessionStorage.getItem('beneficiaryData') || "{}");
+    if (Object.keys(savedData).length === 0) {
+      const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+      if (datosRemeex.fullName) {
+        fullNameInput.value = datosRemeex.fullName;
+        if (datosRemeex.userPhone && datosRemeex.userPhone.includes('-')) {
+          const [prefix, number] = datosRemeex.userPhone.split('-');
+          phonePrefixSelect.value = prefix;
+          phoneNumberInput.value = number;
+        }
+        if (datosRemeex.docType) docTypeSelect.value = datosRemeex.docType;
+        if (datosRemeex.nationality) nationalitySelect.value = datosRemeex.nationality;
+        if (datosRemeex.docNumber) docNumberInput.value = datosRemeex.docNumber;
+        if (datosRemeex.birthDate) birthDateInput.value = datosRemeex.birthDate;
+        guardarDatosStep2();
+        return;
+      }
+    }
+    // Recuperar si ya se guardó anteriormente
+    if (savedData.fullName) { fullNameInput.value = savedData.fullName; }
+    if (savedData.telefono) {
+      const [prefix, number] = savedData.telefono.split("-");
+      phonePrefixSelect.value = prefix || "";
+      phoneNumberInput.value = number || "";
+    }
+    if (savedData.docType) { docTypeSelect.value = savedData.docType; }
+    if (savedData.nationality) { nationalitySelect.value = savedData.nationality; }
+    if (savedData.docNumber) { docNumberInput.value = savedData.docNumber; }
+    if (savedData.birthDate) { birthDateInput.value = savedData.birthDate; }
+    if (savedData.isAdult) { isAdultCheckbox.checked = savedData.isAdult; }
+  }
+  function guardarDatosStep2() {
+    const data = {
+      fullName: fullNameInput.value,
+      telefono: `${phonePrefixSelect.value}-${phoneNumberInput.value}`,
+      docType: docTypeSelect.value,
+      nationality: nationalitySelect.value,
+      docNumber: docNumberInput.value,
+      birthDate: birthDateInput.value,
+      isAdult: isAdultCheckbox.checked
+    };
+    sessionStorage.setItem('beneficiaryData', JSON.stringify(data));
+    localStorage.setItem('beneficiaryData', JSON.stringify(data));
+
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    datosRemeex.fullName = data.fullName;
+    datosRemeex.userPhone = data.telefono;
+    datosRemeex.docType = data.docType;
+    datosRemeex.nationality = data.nationality;
+    datosRemeex.docNumber = data.docNumber;
+    datosRemeex.birthDate = data.birthDate;
+    sessionStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+    
+    // Actualizar nombre en secciones
+    if (data.fullName) {
+      nombreCompleto = data.fullName;
+      const primerNombre = data.fullName.split(' ')[0];
+      userNameStep3.textContent = primerNombre;
+      userNameStep5.textContent = primerNombre;
+    }
+  }
+  function validateStep2() {
+    const fullName = fullNameInput.value.trim();
+    const phonePrefix = phonePrefixSelect.value;
+    const phoneNumber = phoneNumberInput.value.trim();
+    const docType = docTypeSelect.value;
+    const nationality = nationalitySelect.value;
+    const docNumber = docNumberInput.value.trim();
+    const birthDate = birthDateInput.value;
+    const isAdult = isAdultCheckbox.checked;
+
+    const nameRegex = /^[a-zA-ZÀ-ÿ]+(\s[a-zA-ZÀ-ÿ]+)+$/;
+    if (!fullName || !nameRegex.test(fullName)) {
+      alert("Ingrese Nombres y Apellidos válidos (solo letras y al menos un espacio).");
+      return false;
+    }
+    if (!phonePrefix) {
+      alert("Seleccione el prefijo del teléfono.");
+      return false;
+    }
+    if (!/^\d{7}$/.test(phoneNumber)) {
+      alert("El número de teléfono debe tener 7 dígitos.");
+      return false;
+    }
+    if (!docType) {
+      alert("Seleccione el tipo de documento.");
+      return false;
+    }
+    if (!nationality) {
+      alert("Seleccione la nacionalidad.");
+      return false;
+    }
+    if (!/^\d{8,10}$/.test(docNumber)) {
+      alert("El número de documento debe contener entre 8 y 10 dígitos.");
+      return false;
+    }
+    if (!birthDate) {
+      alert("Seleccione la fecha de nacimiento.");
+      return false;
+    }
+    if (!isAdult) {
+      alert("Debe confirmar que es mayor de edad.");
+      return false;
+    }
+    return true;
+  }
+
+  /*
+    STEP 3
+  */
+  function setupStep3Listeners() {
+    bankSelect.addEventListener("change", handleBankChange);
+    restAccountDigitsInput.addEventListener("input", guardarDatosStep3);
+    accountTypeSelect.addEventListener("change", guardarDatosStep3);
+
+    continueBtnStep3.addEventListener("click", () => {
+      if (validateStep3()) {
+        goToStep4();
+      }
+    });
+    backBtnStep3.addEventListener("click", () => {
+      goToStep2();
+    });
+  }
+  function loadSavedDataStep3() {
+    const savedData = JSON.parse(sessionStorage.getItem("datosBancarios") || "{}");
+    if (Object.keys(savedData).length === 0) {
+      const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+      if (datosRemeex.bankName) {
+        bankSelect.value = datosRemeex.bankName;
+        if (datosRemeex.bankCode) {
+          bankCodeInput.value = datosRemeex.bankCode;
+          accountContainer.style.display = "block";
+        }
+        if (datosRemeex.bankAccount && datosRemeex.bankAccount.length > 4) {
+          const restDigits = datosRemeex.bankAccount.slice(-16);
+          restAccountDigitsInput.value = restDigits;
+        }
+        if (datosRemeex.bankType) accountTypeSelect.value = datosRemeex.bankType;
+        guardarDatosStep3();
+        return;
+      }
+    }
+    if (savedData.bank) {
+      bankSelect.value = savedData.bank;
+      if (savedData.bankCode) {
+        bankCodeInput.value = savedData.bankCode;
+        accountContainer.style.display = "block";
+      }
+      if (savedData.digitosCuenta) {
+        restAccountDigitsInput.value = savedData.digitosCuenta;
+      }
+      if (savedData.accountType) {
+        accountTypeSelect.value = savedData.accountType;
+      }
+    }
+  }
+  function handleBankChange() {
+    const selectedBank = bankSelect.value;
+    if (selectedBank) {
+      bancoUsuario = selectedBank;
+      logoBancoUsuario = getBankLogoURL(selectedBank);
+      const code = bankMapping[selectedBank];
+      bankCodeInput.value = code || "0000";
+      accountContainer.style.display = "block";
+    } else {
+      bankCodeInput.value = "";
+      accountContainer.style.display = "none";
+    }
+    restAccountDigitsInput.value = "";
+    guardarDatosStep3();
+  }
+  function guardarDatosStep3() {
+    const data = {
+      bank: bankSelect.value,
+      bankCode: bankCodeInput.value,
+      digitosCuenta: restAccountDigitsInput.value,
+      accountType: accountTypeSelect.value
+    };
+    sessionStorage.setItem("datosBancarios", JSON.stringify(data));
+    localStorage.setItem("datosBancarios", JSON.stringify(data));
+
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    datosRemeex.bankName = data.bank;
+    datosRemeex.bankCode = data.bankCode;
+    datosRemeex.bankAccount = data.bankCode + data.digitosCuenta;
+    datosRemeex.bankType = data.accountType;
+    sessionStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+    
+    // Actualizar variables globales
+    bancoUsuario = data.bank;
+    numeroCuenta = data.bankCode + data.digitosCuenta;
+    tipoCuenta = data.accountType;
+    logoBancoUsuario = getBankLogoURL(data.bank);
+  }
+  function validateStep3() {
+    const selectedBank = bankSelect.value;
+    const restDigits = restAccountDigitsInput.value.trim();
+    const acctType = accountTypeSelect.value;
+
+    if (!selectedBank) {
+      alert("Por favor, selecciona un banco.");
+      return false;
+    }
+    if (restDigits.length !== 16) {
+      alert("Completa los 16 dígitos restantes del número de cuenta.");
+      return false;
+    }
+    if (!acctType) {
+      alert("Por favor, selecciona el tipo de cuenta.");
+      return false;
+    }
+    return true;
+  }
+
+  /*
+    STEP 4
+  */
+  function setupStep4Listeners() {
+    idDocument.addEventListener("change", handleIDDocumentChange);
+    confirmDocBtn.addEventListener("click", () => {
+      startDocumentoOverlaySequence();
+    });
+    backBtnStep4.addEventListener("click", () => {
+      goToStep3();
+    });
+  }
+  function handleIDDocumentChange(e) {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        docPreview.src = ev.target.result;
+        previewContainer.classList.add("active");
+        startDocBtnCountdown();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  function startDocBtnCountdown() {
+    confirmDocBtn.disabled = true;
+    confirmDocBtn.classList.add("btn-disabled");
+    countdownDocBtn.textContent = `Disponible en ${confirmDocBtnCountdown} s...`;
+    
+    const interval = setInterval(() => {
+      confirmDocBtnCountdown--;
+      countdownDocBtn.textContent = `Disponible en ${confirmDocBtnCountdown} s...`;
+      if (confirmDocBtnCountdown <= 0) {
+        clearInterval(interval);
+        confirmDocBtn.disabled = false;
+        confirmDocBtn.classList.remove("btn-disabled");
+        countdownDocBtn.textContent = "";
+      }
+    }, 1000);
+  }
+  function startDocumentoOverlaySequence() {
+    showOverlay("overlayDocumento");
+    const titulo = document.getElementById("overlayDocumentoTitulo");
+    const texto = document.getElementById("overlayDocumentoTexto");
+    const logo = document.getElementById("overlayDocumentoLogo");
+
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    if (datosRemeex.bankName) {
+      const logoUrl = getBankLogoURL(datosRemeex.bankName);
+      if (logo) logo.src = logoUrl;
+    }
+
+    titulo.textContent = "Analizando documento de identidad...";
+    texto.textContent = "Por favor, espera mientras se verifica la información.";
+    
+    setTimeout(() => {
+      titulo.textContent = "Documento cargado con éxito";
+      texto.textContent = "Extrayendo datos...";
+      
+      setTimeout(() => {
+        titulo.textContent = "Extrayendo firma para comparar con la registrada en tu banco";
+        texto.textContent = "Preparando verificación final...";
+        
+        setTimeout(() => {
+          hideOverlay("overlayDocumento");
+          goToStep5();
+        }, 4000); // Tiempo ampliado
+      }, 4000);
+    }, 4000);
+  }
+
+  /*
+    STEP 5
+  */
+  function setupStep5Listeners() {
+    clearSignatureBtn.addEventListener("click", () => {
+      if (ctx) {
+        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+      }
+    });
+    saveSignatureBtn.addEventListener("click", () => {
+      showOverlay("overlayConfirmFirma");
+    });
+    backBtnStep5.addEventListener("click", () => {
+      goToStep4();
+    });
+  }
+  function initSignatureCanvas() {
+    if (!ctx) {
+      ctx = signatureCanvas.getContext("2d");
+      resizeSignatureCanvas();
+
+      // Eventos de mouse
+      signatureCanvas.addEventListener("mousedown", startDraw);
+      signatureCanvas.addEventListener("mousemove", draw);
+      signatureCanvas.addEventListener("mouseup", endDraw);
+      signatureCanvas.addEventListener("mouseleave", endDraw);
+
+      // Eventos táctiles
+      signatureCanvas.addEventListener("touchstart", startDrawTouch, { passive: false });
+      signatureCanvas.addEventListener("touchmove", drawTouch, { passive: false });
+      signatureCanvas.addEventListener("touchend", endDrawTouch);
+    }
+  }
+  function resizeSignatureCanvas() {
+    signatureCanvas.width = signatureCanvas.offsetWidth;
+    signatureCanvas.height = signatureCanvas.offsetHeight;
+  }
+  function startDraw(e) {
+    isDrawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  }
+  function draw(e) {
+    if (!isDrawing) return;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#000";
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+  }
+  function endDraw() {
+    isDrawing = false;
+    ctx.closePath();
+  }
+  function getTouchPos(e) {
+    const rect = signatureCanvas.getBoundingClientRect();
+    return {
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  }
+  function startDrawTouch(e) {
+    e.preventDefault();
+    isDrawing = true;
+    ctx.beginPath();
+    const pos = getTouchPos(e);
+    ctx.moveTo(pos.x, pos.y);
+  }
+  function drawTouch(e) {
+    e.preventDefault();
+    if (!isDrawing) return;
+    const pos = getTouchPos(e);
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#000";
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+  }
+  function endDrawTouch(e) {
+    e.preventDefault();
+    isDrawing = false;
+    ctx.closePath();
+  }
+
+  /*
+    STEP 6
+  */
+  function setupStep6Listeners() {
+    pagoMethodSelect.addEventListener("change", updateMontoRetiro);
+    montoRetiroInput.addEventListener("input", validateMontoRetiro);
+    finalConfirmBtn.addEventListener("click", handleFinalConfirm);
+    backBtnStep6.addEventListener("click", () => {
+      goToStep5();
+    });
+  }
+  
+  function updateMontoRetiro() {
+    // Establecer el saldo disponible como valor predeterminado
+    montoRetiroInput.value = formatNumberVE(saldoDisponible);
+    validateMontoRetiro();
+  }
+  
+  function validateMontoRetiro() {
+    const metodo = pagoMethodSelect.value;
+    const montoStr = montoRetiroInput.value.trim();
+    let isValid = false;
+    
+    if (metodo && montoStr) {
+      const montoNum = parseFloat(montoStr.replace(/\./g, '').replace(',', '.'));
+      if (!isNaN(montoNum) && montoNum > 0) {
+        // Verificar límites según método
+        if (metodo === "Pago Móvil" && montoNum <= 100000 && montoNum <= saldoDisponible) {
+          isValid = true;
+          montoRetiro = montoNum;
+          retirarMonto.textContent = formatNumberVE(montoNum) + " Bs";
+        } else if (metodo === "Transferencia Bancaria" && montoNum <= 950000 && montoNum <= saldoDisponible) {
+          isValid = true;
+          montoRetiro = montoNum;
+          retirarMonto.textContent = formatNumberVE(montoNum) + " Bs";
+        }
+      }
+    }
+    
+    return isValid;
+  }
+  
+  function renderFinalSummary() {
+    const step2Data = JSON.parse(sessionStorage.getItem("beneficiaryData")) || {};
+    const step3Data = JSON.parse(sessionStorage.getItem("datosBancarios")) || {};
+
+    let docPrefix = "";
+    if (step2Data.docType === "Cédula de Identidad") docPrefix = "V-";
+    else if (step2Data.docType === "Pasaporte Vigente") docPrefix = "P-";
+    else if (step2Data.docType === "Licencia de Conducir") docPrefix = "L-";
+
+    const benefHTML = `
+      <strong>Nombres y Apellidos:</strong> ${step2Data.fullName || "---"}<br/>
+      <strong>Teléfono:</strong> ${step2Data.telefono || "---"}<br/>
+      <strong>Tipo de Documento:</strong> ${step2Data.docType || "---"}<br/>
+      <strong>Nacionalidad:</strong> ${step2Data.nationality || "---"}<br/>
+      <strong>Número de Documento:</strong> ${docPrefix}${step2Data.docNumber || "---"}<br/>
+      <strong>Fecha de Nacimiento:</strong> ${step2Data.birthDate || "---"}<br/>
+    `;
+    benefSummary.innerHTML = benefHTML;
+
+    const fullAccount = (step3Data.bankCode || "") + (step3Data.digitosCuenta || "");
+    const bankHTML = `
+      <strong>Banco:</strong> ${step3Data.bank || "---"}<br/>
+      <strong>Número de Cuenta:</strong> ${fullAccount || "---"}<br/>
+      <strong>Tipo de Cuenta:</strong> ${step3Data.accountType || "---"}<br/>
+    `;
+    bankSummary.innerHTML = bankHTML;
+
+    if (signatureDataURL) {
+      firmaSummary.src = signatureDataURL;
+    } else {
+      firmaSummary.src = "https://via.placeholder.com/200x100?text=Sin+Firma";
+    }
+    
+    // Mostrar logo del banco
+    if (step3Data.bank) {
+      const logoUrl = getBankLogoURL(step3Data.bank);
+      bankLogoSummary.src = logoUrl;
+      bankLogoSummary.style.display = "block";
+    }
+    
+    // Iniciar análisis de firma
+    startFirmaAnalysis();
+    
+    // Preestablecer el monto de retiro
+    montoRetiroInput.value = formatNumberVE(saldoDisponible);
+  }
+  
+  function startFirmaAnalysis() {
+    firmaAnalyzing.style.display = "flex";
+    finalConfirmBtn.disabled = true;
+    finalConfirmBtn.classList.add("btn-disabled");
+    countdownRetiroBtn.textContent = `Analizando firma: ${firmaAnalysisCountdown} s...`;
+    
+    const interval = setInterval(() => {
+      firmaAnalysisCountdown--;
+      countdownRetiroBtn.textContent = `Analizando firma: ${firmaAnalysisCountdown} s...`;
+      
+      if (firmaAnalysisCountdown <= 0) {
+        clearInterval(interval);
+        firmaAnalyzing.style.display = "none";
+        finalConfirmBtn.disabled = false;
+        finalConfirmBtn.classList.remove("btn-disabled");
+        countdownRetiroBtn.textContent = "";
+      }
+    }, 1000);
+  }
+  
+  function handleFinalConfirm() {
+    if (!validateMontoRetiro()) {
+      alert("Por favor, verifica el monto a retirar.");
+      return;
+    }
+    
+    // Mostrar overlay de inicio de retiro
+    logoInicioRetiro.src = logoBancoUsuario;
+    showOverlay("overlayInicioRetiro");
+  }
+
+  /*
+    Secuencia de Retiro Final
+  */
+  function iniciarProcesoRetiro() {
+    hideOverlay("overlayInicioRetiro");
+    
+    // Mostrar overlay de proceso
+    procesoRetiroLogo.src = logoBancoUsuario;
+    showOverlay("overlayProcesoRetiro");
+    
+    // Primera etapa: Retirando fondos
+    procesoRetiroTitulo.textContent = `Retirando fondos a ${bancoUsuario}`;
+    procesoRetiroTexto.textContent = `Procesando transferencia de ${formatNumberVE(montoRetiro)} Bs`;
+    
+    let progreso = 0;
+    const intervaloProgreso = setInterval(() => {
+      progreso += 5;
+      procesoRetiroProgress.style.width = `${progreso}%`;
+      
+      if (progreso >= 100) {
+        clearInterval(intervaloProgreso);
+        // Pasar a la segunda etapa después de 20 segundos
+        setTimeout(() => {
+          // Segunda etapa: Firma no coincide
+          procesoRetiroTitulo.textContent = `Verificando firma`;
+          procesoRetiroTexto.textContent = `${bancoUsuario} indica que tu firma no coincide`;
+          procesoRetiroProgress.style.width = "0%";
+          
+          let progreso2 = 0;
+          const intervaloProgreso2 = setInterval(() => {
+            progreso2 += 6.67; // Para llegar a 100% en ~15s
+            procesoRetiroProgress.style.width = `${progreso2}%`;
+            
+            if (progreso2 >= 100) {
+              clearInterval(intervaloProgreso2);
+              // Pasar a la tercera etapa
+              setTimeout(() => {
+                // Tercera etapa: Verificación adicional
+                procesoRetiroTitulo.textContent = `Verificación requerida`;
+                procesoRetiroTexto.textContent = `Debes verificar tu firma para poder continuar y acreditar los fondos`;
+                procesoRetiroProgress.style.width = "0%";
+                
+                let progreso3 = 0;
+                const intervaloProgreso3 = setInterval(() => {
+                  progreso3 += 10; // Para llegar a 100% en 10s
+                  procesoRetiroProgress.style.width = `${progreso3}%`;
+                  
+                  if (progreso3 >= 100) {
+                    clearInterval(intervaloProgreso3);
+                    // Mostrar overlay Firma No Coincide
+                    mostrarOverlayFirmaNoCoincide();
+                  }
+                }, 1000);
+              }, 15000);
+            }
+          }, 1000);
+        }, 20000);
+      }
+    }, 1000);
+  }
+  
+  function mostrarOverlayFirmaNoCoincide() {
+    hideOverlay("overlayProcesoRetiro");
+    
+    // Configurar overlay de firma no coincide
+    firmaNoCoincideLogo.src = logoBancoUsuario;
+    firmaNoCoincideTexto.textContent = `Necesitamos que vuelvas a firmar para continuar con el proceso de retiro de ${formatNumberVE(montoRetiro)} Bs a tu cuenta en ${bancoUsuario}. Este paso es necesario para garantizar la seguridad de la transacción.`;
+    
+    showOverlay("overlayFirmaNoCoincide");
+    
+    // Iniciar cuenta regresiva para redirección
+    let tiempoRestante = 10;
+    redirectCountdown.textContent = tiempoRestante;
+    
+    redirectCountdownInterval = setInterval(() => {
+      tiempoRestante--;
+      redirectCountdown.textContent = tiempoRestante;
+      redirectProgressBar.style.width = `${(10 - tiempoRestante) * 10}%`;
+      
+      if (tiempoRestante <= 0) {
+        clearInterval(redirectCountdownInterval);
+        isRedirecting = true;
+        window.location.href = "retiroremeex.html";
+      }
+    }, 1000);
+  }
+
+  /*
+    Overlays
+  */
+  function setupOverlayListeners() {
+    editarFirmaBtn.addEventListener("click", () => {
+      hideOverlay("overlayConfirmFirma");
+    });
+    continuarFirmaBtn.addEventListener("click", () => {
+      hideOverlay("overlayConfirmFirma");
+      signatureDataURL = signatureCanvas.toDataURL("image/png");
+      startSecuenciaFirma();
+    });
+    entendidoRetiroBtn.addEventListener("click", () => {
+      iniciarProcesoRetiro();
+    });
+    finalBtn.addEventListener("click", () => {
+      hideOverlay("overlayFinal");
+      // Redirigir
+      isRedirecting = true;
+      window.location.href = "retiroremeex.html";
+    });
+  }
+  
+  function showOverlay(id) {
+    const overlay = document.getElementById(id);
+    if (overlay) overlay.classList.add("active");
+  }
+  
+  function hideOverlay(id) {
+    const overlay = document.getElementById(id);
+    if (overlay) overlay.classList.remove("active");
+    
+    // Si estamos ocultando el overlay de firma no coincide, limpiar el intervalo
+    if (id === "overlayFirmaNoCoincide" && redirectCountdownInterval) {
+      clearInterval(redirectCountdownInterval);
+      redirectCountdownInterval = null;
+    }
+  }
+
+  /*
+    Secuencia de firma
+  */
+  function startSecuenciaFirma() {
+    showOverlay("overlaySecuenciaFirma");
+    const titulo = document.getElementById("secuenciaFirmaTitulo");
+    const texto = document.getElementById("secuenciaFirmaTexto");
+    const logo = document.getElementById("secuenciaFirmaLogo");
+    
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    const banco = datosRemeex.bankName || "tu banco";
+    const logoUrl = getBankLogoURL(banco);
+    if (logo) logo.src = logoUrl;
+
+    titulo.textContent = `Conectando con ${banco}...`;
+    texto.textContent = "Por favor, espera...";
+
+    setTimeout(() => {
+      titulo.textContent = `Analizando tu firma registrada en ${banco}...`;
+      texto.textContent = "Comparando trazos y coincidencias...";
+      
+      setTimeout(() => {
+        titulo.textContent = "Verificación completada";
+        texto.textContent = "Tu firma ha sido procesada correctamente.";
+        
+        setTimeout(() => {
+          hideOverlay("overlaySecuenciaFirma");
+          goToStep6();
+        }, 4000);
+      }, 6000);
+    }, 6000);
+  }
+
+  /*
+    Navegación de pasos
+  */
+  function hideSteps() {
+    const steps = document.querySelectorAll(".section-content");
+    steps.forEach(step => {
+      step.classList.remove("active");
+    });
+  }
+  function goToStep2() {
+    hideSteps();
+    document.getElementById("step2").classList.add("active");
+    progressBarFill.style.width = "40%";
+    progressText.textContent = "Paso 2 de 5";
+  }
+  function goToStep3() {
+    hideSteps();
+    document.getElementById("step3").classList.add("active");
+    progressBarFill.style.width = "60%";
+    progressText.textContent = "Paso 3 de 5";
+  }
+  function goToStep4() {
+    hideSteps();
+    document.getElementById("step4").classList.add("active");
+    progressBarFill.style.width = "80%";
+    progressText.textContent = "Paso 4 de 5";
+  }
+  function goToStep5() {
+    hideSteps();
+    document.getElementById("step5").classList.add("active");
+    progressBarFill.style.width = "100%";
+    progressText.textContent = "Paso 5 de 5";
+    initSignatureCanvas();
+  }
+  function goToStep6() {
+    hideSteps();
+    document.getElementById("step6").classList.add("active");
+    // Barra llena, finalizado
+    progressBarFill.style.width = "100%";
+    progressText.textContent = "Planilla de Retiro";
+    renderFinalSummary();
+  }
+
+  /*
+    Utilidades
+  */
+  function formatNumberVE(num) {
+    return Number(num).toLocaleString("es-VE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  function startStatusBannerRotation() {
+    const statusMessages = [
+      "Todo listo",
+      "Preparando la entrega de fondos a tu cuenta",
+      "Completa los últimos pasos para retirar tus fondos",
+      "Sincronizando con tu banco",
+      "Tu retiro está en la fase final",
+      "Todo va perfecto",
+      "Tu banco ya está procesando el pago",
+      "Buenas noticias",
+      "Tu solicitud está confirmada"
+    ];
+    let currentIndex = 0;
+    statusBannerElem.textContent = statusMessages[currentIndex];
+
+    setInterval(() => {
+      statusBannerElem.style.opacity = 0;
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % statusMessages.length;
+        statusBannerElem.textContent = statusMessages[currentIndex];
+        statusBannerElem.style.opacity = 1;
+      }, 500);
+    }, 10000);
+  }
+  function startRotatingInfo() {
+    const infoMessages = [
+      "Usuarios activos: 347",
+      "Tiempo de actualización: 12:35:20",
+      "Tiempo estimado de disponibilidad: 15:45",
+      "Sistema OK <span class='led-green'></span>",
+      "Procesando datos del banco..."
+    ];
+    let infoIndex = 0;
+    rotatingInfoElem.innerHTML = infoMessages[infoIndex];
+
+    setInterval(() => {
+      rotatingInfoElem.style.opacity = 0;
+      setTimeout(() => {
+        infoIndex = (infoIndex + 1) % infoMessages.length;
+        rotatingInfoElem.innerHTML = infoMessages[infoIndex];
+        rotatingInfoElem.style.opacity = 1;
+      }, 500);
+    }, 8000);
+  }
+  function startParticleGeneration() {
+    setInterval(() => {
+      createParticle();
+    }, 600);
+  }
+  function createParticle() {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    const yOffset = Math.random() * particleContainer.offsetHeight;
+    const size = Math.random() * 8 + 5;
+    particle.style.width = size + "px";
+    particle.style.height = size + "px";
+    particle.style.bottom = "-10px";
+    particle.style.left = "-10px";
+    particle.style.transform = `translateY(${(particleContainer.offsetHeight - yOffset)}px)`;
+    particleContainer.appendChild(particle);
+    particle.addEventListener("animationend", () => {
+      particle.remove();
+    });
+  }
+  function getBankLogoURL(bankName) {
+    if (!bankName) return "https://via.placeholder.com/100x50?text=Banco";
+    const bankLogos = {
+      "Banco de Venezuela": "https://www.bancodevenezuela.com/wp-content/uploads/2023/03/logonuevo.png",
+      "Banco Provincial": "https://upload.wikimedia.org/wikipedia/commons/d/d4/BBVAprovinciallogo.svg",
+      "Banesco": "https://banesco-prod-2020.s3.amazonaws.com/wp-content/themes/banescocontigo/assets/images/header/logo.svg.gzip",
+      "Banco Mercantil": "https://www.mercantilbanco.com/mercprod/images/comunes/logo_popups.gif",
+      "Banco del Tesoro": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_Banco_del_Tesoro.jpg/320px-Logo_Banco_del_Tesoro.jpg",
+      "Banco Venezolano de Crédito": "https://www.venezolano.com/images/galeria/108_1.png"
+    };
+    const normalizedBankName = bankName.toLowerCase();
+    for (const [key, url] of Object.entries(bankLogos)) {
+      if (normalizedBankName.includes(key.toLowerCase())) {
+        return url;
+      }
+    }
+    return "https://via.placeholder.com/100x50?text=Banco";
+  }
+</script>
+
+<!-- Integración de Tawk.to para soporte en vivo -->
+<script>
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+</script>
+
+</body>
+</html>
