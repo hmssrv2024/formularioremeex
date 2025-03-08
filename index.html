@@ -793,6 +793,7 @@
             box-shadow: var(--shadow-lg);
             margin: 0 auto;
             max-width: 1000px;
+            min-height: 24rem; /* Altura mínima para evitar saltos */
         }
         
         .hero-slide {
@@ -807,9 +808,25 @@
         .slide-content {
             display: flex;
             flex-direction: column;
-            padding: 3rem 2rem;
+            padding: 4rem 3rem;
             background-color: var(--white);
             height: 100%;
+            min-height: 24rem; /* Altura fija para todas las slides */
+        }
+        
+        .slide-text {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+        }
+        
+        .slide-text h3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .slide-text p {
+            margin-bottom: 2.5rem;
         }
         
         .slider-controls {
@@ -955,6 +972,11 @@
             box-shadow: var(--shadow-md);
             width: 100%;
             transition: all 0.3s var(--ease);
+            min-height: 20rem; /* Altura mínima para evitar saltos */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
         
         .step-card:hover {
@@ -1008,15 +1030,25 @@
         }
         
         .subtitle.light {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--white);
         }
         
         .map-container {
             position: relative;
             margin-top: 4rem;
+            padding: 4rem 2rem;
             border-radius: 1.6rem;
-            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
             box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+        
+        .map-text {
+            color: var(--white);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.8rem;
         }
         
         .map-stats {
@@ -1098,6 +1130,10 @@
             margin: 0 auto;
             max-width: 800px;
             position: relative;
+            min-height: 30rem; /* Altura mínima fija */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .testimonial-card::before {
@@ -1235,15 +1271,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5rem;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .app-content {
             text-align: center;
+            width: 100%;
         }
         
         .app-features {
-            max-width: 500px;
+            max-width: 600px;
             margin: 3rem auto;
             text-align: left;
         }
@@ -1303,11 +1342,6 @@
         .app-btn-name {
             font-size: 1.8rem;
             font-weight: 600;
-        }
-        
-        .app-image {
-            max-width: 300px;
-            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
         }
         
         /* CTA Section */
@@ -1547,14 +1581,10 @@
             flex-wrap: wrap;
         }
         
-        .security-badge {
-            height: 40px;
-            opacity: 0.8;
-            transition: all 0.2s var(--ease);
-        }
-        
-        .security-badge:hover {
-            opacity: 1;
+        .security-text {
+            color: var(--white);
+            opacity: 0.7;
+            text-align: center;
         }
         
         .copyright {
@@ -1624,18 +1654,16 @@
             
             .slide-content {
                 flex-direction: row;
-                align-items: center;
                 padding: 4rem;
-                gap: 4rem;
             }
             
             .slide-text {
                 flex: 1;
-                text-align: left;
+                text-align: center;
             }
             
-            .slide-image {
-                flex: 1;
+            .hero-slider {
+                min-height: 20rem;
             }
             
             /* Steps */
@@ -1668,27 +1696,20 @@
             
             /* App Section */
             .app-container {
-                flex-direction: row;
+                flex-direction: column;
                 align-items: center;
             }
             
             .app-content {
-                flex: 1;
-                text-align: left;
+                text-align: center;
             }
             
             .app-features {
-                margin-left: 0;
-                margin-right: 0;
+                margin: 3rem auto;
+                max-width: 600px;
             }
             
             .app-download {
-                justify-content: flex-start;
-            }
-            
-            .app-image-container {
-                flex: 1;
-                display: flex;
                 justify-content: center;
             }
             
@@ -1853,9 +1874,6 @@
                             <p>Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
                             <a href="#" class="btn btn-primary">Comenzar ahora</a>
                         </div>
-                        <div class="slide-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Transferencias globales" loading="lazy">
-                        </div>
                     </div>
                 </div>
                 <div class="hero-slide">
@@ -1865,9 +1883,6 @@
                             <p>Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
                             <a href="#" class="btn btn-primary">Ver tarifas</a>
                         </div>
-                        <div class="slide-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Mejores tarifas" loading="lazy">
-                        </div>
                     </div>
                 </div>
                 <div class="hero-slide">
@@ -1876,9 +1891,6 @@
                             <h3>Recarga con tarjeta de crédito</h3>
                             <p>Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
                             <a href="#" class="btn btn-primary">Recargar ahora</a>
-                        </div>
-                        <div class="slide-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Recarga con tarjeta" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1999,7 +2011,7 @@
                 <p class="subtitle light">Alcance internacional con presencia en más de 200 países y territorios</p>
             </div>
             <div class="map-container fade-in delay-1">
-                <img src="https://via.placeholder.com/1200x600" alt="Mapa mundial" loading="lazy">
+                <p class="map-text">Contamos con una extensa red de partners y alianzas estratégicas que nos permiten ofrecer servicios de transferencia en prácticamente cualquier lugar del mundo. Ya sea que envíes dinero a las grandes ciudades o a las zonas rurales más remotas, nosotros te conectamos con tus seres queridos.</p>
             </div>
             <div class="map-stats">
                 <div class="stat-card fade-in delay-1">
@@ -2033,16 +2045,17 @@
             <div class="testimonials-slider fade-in delay-1">
                 <div class="testimonial-slide active">
                     <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        <div class="testimonial-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
                         </div>
-                        <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
                         <div class="client-info">
-                            <img src="https://via.placeholder.com/150x150" alt="María Rodríguez" class="client-photo" loading="lazy">
                             <h4 class="client-name">María Rodríguez</h4>
                             <p class="client-position">Madrid, España</p>
                         </div>
@@ -2050,16 +2063,17 @@
                 </div>
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        <div class="testimonial-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
                         </div>
-                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
                         <div class="client-info">
-                            <img src="https://via.placeholder.com/150x150" alt="Carlos Mendoza" class="client-photo" loading="lazy">
                             <h4 class="client-name">Carlos Mendoza</h4>
                             <p class="client-position">Londres, Reino Unido</p>
                         </div>
@@ -2067,16 +2081,17 @@
                 </div>
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
+                        <div class="testimonial-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
                         </div>
-                        <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
                         <div class="client-info">
-                            <img src="https://via.placeholder.com/150x150" alt="Anna Lee" class="client-photo" loading="lazy">
                             <h4 class="client-name">Anna Lee</h4>
                             <p class="client-position">Toronto, Canadá</p>
                         </div>
@@ -2146,9 +2161,6 @@
                             </div>
                         </a>
                     </div>
-                </div>
-                <div class="app-image-container fade-in delay-3">
-                    <img src="https://via.placeholder.com/300x600" alt="Aplicación móvil Remeex VISA" class="app-image" loading="lazy">
                 </div>
             </div>
         </div>
@@ -2295,10 +2307,8 @@
                         <option value="de">Deutsch</option>
                     </select>
                 </div>
-                <div class="security-badges">
-                    <img src="https://via.placeholder.com/100x40" alt="SSL Secured" class="security-badge" loading="lazy">
-                    <img src="https://via.placeholder.com/100x40" alt="PCI Compliant" class="security-badge" loading="lazy">
-                    <img src="https://via.placeholder.com/100x40" alt="VISA Verified" class="security-badge" loading="lazy">
+                <div class="security-text">
+                    Certificaciones de seguridad: SSL Secured | PCI Compliant | VISA Verified
                 </div>
                 <div class="copyright">
                     <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
@@ -2385,7 +2395,9 @@
                 link.addEventListener('click', () => {
                     toggleMenu();
                 });
-            });// Slider Hero
+            });
+            
+            // Slider Hero
             const heroSlides = document.querySelectorAll('.hero-slide');
             const sliderDots = document.querySelectorAll('.slider-dot');
             let currentSlide = 0;
@@ -2555,103 +2567,85 @@
                     threshold: 0.1
                 };
                 
-                const handleIntersection = (entries, observer) => {
+                const fadeObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                };
-                
-                const observer = new IntersectionObserver(handleIntersection, observerOptions);
-                
-                // Observar todos los elementos con clase fade-in que no tienen delay
-                document.querySelectorAll('.fade-in:not(.delay-1):not(.delay-2):not(.delay-3):not(.delay-4)').forEach(element => {
-                    observer.observe(element);
-                });
-                
-                // Observar elementos con delay después de que aparezcan los principales
-                const delayedObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // Obtener el contenedor y todas sus animaciones con delay
-                            const container = entry.target;
-                            const delayedItems = container.querySelectorAll('.delay-1, .delay-2, .delay-3, .delay-4');
-                            
-                            // Mostrar los elementos con delay de forma escalonada
-                            delayedItems.forEach((item, index) => {
-                                setTimeout(() => {
-                                    item.classList.add('visible');
-                                }, 150 * index);
-                            });
-                            
-                            delayedObserver.unobserve(container);
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            fadeObserver.unobserve(entry.target);
                         }
                     });
                 }, observerOptions);
                 
-                // Observar contenedores que tienen elementos con delay
-                document.querySelectorAll('section').forEach(section => {
-                    if (section.querySelectorAll('.delay-1, .delay-2, .delay-3, .delay-4').length > 0) {
-                        delayedObserver.observe(section);
+                // Observar todos los elementos con clase fade-in
+                document.querySelectorAll('.fade-in').forEach(element => {
+                    // Asegurarse de que los elementos tienen el estilo inicial correcto
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                    element.style.transition = 'opacity 0.6s var(--ease), transform 0.6s var(--ease)';
+                    
+                    // Añadir delays si es necesario
+                    if (element.classList.contains('delay-1')) {
+                        element.style.transitionDelay = '0.1s';
+                    } else if (element.classList.contains('delay-2')) {
+                        element.style.transitionDelay = '0.2s';
+                    } else if (element.classList.contains('delay-3')) {
+                        element.style.transitionDelay = '0.3s';
+                    } else if (element.classList.contains('delay-4')) {
+                        element.style.transitionDelay = '0.4s';
                     }
+                    
+                    fadeObserver.observe(element);
                 });
             } else {
                 // Fallback para navegadores que no soportan Intersection Observer
-                document.querySelectorAll('.fade-in, .delay-1, .delay-2, .delay-3, .delay-4').forEach(element => {
-                    element.classList.add('visible');
+                document.querySelectorAll('.fade-in').forEach(element => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
                 });
             }
             
             // Animación de números en las estadísticas
-            const animateCounters = () => {
-                const stats = document.querySelectorAll('.stat-number');
+            function animateCounters() {
+                const counters = document.querySelectorAll('.stat-number');
                 
-                stats.forEach(stat => {
-                    const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-                    const duration = 2000; // 2 segundos
-                    const step = target / (duration / 30); // 30fps
-                    let current = 0;
-                    
-                    // Remover formato existente
-                    stat.textContent = '0';
-                    
-                    const updateCounter = () => {
-                        current += step;
-                        
-                        if (current < target) {
-                            stat.textContent = Math.ceil(current).toString();
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            // Formato final
-                            if (target >= 1000000) {
-                                stat.textContent = (target / 1000000).toFixed(1) + 'M+';
-                            } else if (target >= 1000) {
-                                stat.textContent = (target / 1000).toFixed(0) + 'K+';
-                            } else {
-                                stat.textContent = target.toString() + '+';
-                            }
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            const target = parseInt(counter.textContent.replace(/\D/g, ''));
+                            let count = 0;
+                            const duration = 2000; // ms
+                            const increment = Math.ceil(target / (duration / 16)); // Para 60fps aproximadamente
+                            
+                            // Reset counter
+                            counter.textContent = '0';
+                            counter.style.visibility = 'visible';
+                            
+                            // Start counting
+                            const updateCount = () => {
+                                count += increment;
+                                if (count < target) {
+                                    counter.textContent = count;
+                                    requestAnimationFrame(updateCount);
+                                } else {
+                                    counter.textContent = `${target}+`;
+                                }
+                            };
+                            
+                            requestAnimationFrame(updateCount);
+                            counterObserver.unobserve(counter);
                         }
-                    };
-                    
-                    // Animación solo si está visible
-                    const statsObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                requestAnimationFrame(updateCounter);
-                                statsObserver.unobserve(entry.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.5
                     });
-                    
-                    statsObserver.observe(stat);
+                }, { threshold: 0.5 });
+                
+                counters.forEach(counter => {
+                    counter.style.visibility = 'hidden';
+                    counterObserver.observe(counter);
                 });
-            };
+            }
             
-            // Iniciar animación de contadores cuando esté disponible
+            // Ejecutar animación de contadores si Intersection Observer está disponible
             if ('IntersectionObserver' in window) {
                 animateCounters();
             }
@@ -2665,173 +2659,82 @@
             
             if (isTouchDevice()) {
                 document.body.classList.add('touch-device');
-            }
-            
-            // Detección de modo oscuro del sistema
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('prefers-dark');
-            }
-            
-            // Precarga diferida de imágenes
-            function preloadImages() {
-                const imagesToPreload = [
-                    'https://via.placeholder.com/600x400',
-                    'https://via.placeholder.com/1200x600',
-                    'https://via.placeholder.com/300x600',
-                    'https://via.placeholder.com/150x150'
-                ];
                 
-                if ('requestIdleCallback' in window) {
-                    requestIdleCallback(() => {
-                        imagesToPreload.forEach(src => {
-                            const img = new Image();
-                            img.src = src;
-                        });
-                    });
-                } else {
-                    setTimeout(() => {
-                        imagesToPreload.forEach(src => {
-                            const img = new Image();
-                            img.src = src;
-                        });
-                    }, 1000);
-                }
-            }
-            
-            preloadImages();
-            
-            // Añadir características de avance táctil para el slider
-            if (isTouchDevice()) {
-                const sliders = [
-                    {
-                        container: document.querySelector('.hero-slider'),
-                        slides: heroSlides,
-                        currentIndex: 0,
-                        showSlide: showSlide,
-                        interval: slideInterval,
-                        startInterval: startSlider
-                    },
-                    {
-                        container: document.querySelector('.testimonials-slider'),
-                        slides: testimonialSlides,
-                        currentIndex: 0,
-                        showSlide: showTestimonial,
-                        interval: testimonialInterval,
-                        startInterval: startTestimonialSlider
-                    }
-                ];
+                // Funcionalidad de deslizar para sliders
+                const heroSlider = document.querySelector('.hero-slider');
+                const testimonialSlider = document.querySelector('.testimonials-slider');
                 
-                sliders.forEach(slider => {
-                    if (!slider.container) return;
-                    
+                // Función para manejar deslizamientos
+                const handleSwipe = (element, nextFunc, prevFunc) => {
                     let startX, endX;
                     const minSwipeDistance = 50;
                     
-                    slider.container.addEventListener('touchstart', e => {
+                    element.addEventListener('touchstart', (e) => {
                         startX = e.touches[0].clientX;
-                        clearInterval(slider.interval);
                     }, { passive: true });
                     
-                    slider.container.addEventListener('touchend', e => {
+                    element.addEventListener('touchend', (e) => {
                         endX = e.changedTouches[0].clientX;
-                        handleSwipe(slider);
-                        slider.startInterval();
-                    }, { passive: true });
-                    
-                    function handleSwipe(sliderObj) {
                         const distance = endX - startX;
                         
-                        if (Math.abs(distance) < minSwipeDistance) return;
-                        
-                        if (distance > 0) {
-                            // Swipe derecha (anterior)
-                            let prevIndex = (sliderObj.currentIndex - 1 + sliderObj.slides.length) % sliderObj.slides.length;
-                            sliderObj.showSlide(prevIndex);
-                        } else {
-                            // Swipe izquierda (siguiente)
-                            let nextIndex = (sliderObj.currentIndex + 1) % sliderObj.slides.length;
-                            sliderObj.showSlide(nextIndex);
+                        if (Math.abs(distance) >= minSwipeDistance) {
+                            if (distance > 0) {
+                                // Deslizamiento a la derecha - anterior
+                                prevFunc();
+                            } else {
+                                // Deslizamiento a la izquierda - siguiente
+                                nextFunc();
+                            }
                         }
+                    }, { passive: true });
+                };
+                
+                // Aplicar funcionalidad de deslizamiento a los sliders
+                if (heroSlider) {
+                    handleSwipe(heroSlider, nextSlide, () => {
+                        clearInterval(slideInterval);
+                        let prev = (currentSlide - 1 + heroSlides.length) % heroSlides.length;
+                        showSlide(prev);
+                        startSlider();
+                    });
+                }
+                
+                if (testimonialSlider) {
+                    handleSwipe(testimonialSlider, nextTestimonial, prevTestimonial);
+                }
+            }
+            
+            // Actualizar navegación activa al hacer scroll
+            function updateActiveNavOnScroll() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('#nav ul li a');
+                
+                const scrollPosition = window.scrollY + window.innerHeight / 3;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - document.querySelector('#header').offsetHeight;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
                     }
                 });
             }
             
-            // Actualizar navegación activa al hacer scroll
-            const updateActiveNavigation = () => {
-                const sections = document.querySelectorAll('section[id]');
-                const navLinks = document.querySelectorAll('#nav ul li a');
-                
-                window.addEventListener('scroll', () => {
-                    let current = '';
-                    const scrollPosition = window.scrollY + window.innerHeight / 3;
-                    
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop - document.querySelector('#header').offsetHeight;
-                        const sectionHeight = section.offsetHeight;
-                        
-                        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                            current = '#' + section.getAttribute('id');
-                        }
-                    });
-                    
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === current) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
-            };
+            window.addEventListener('scroll', updateActiveNavOnScroll);
             
-            updateActiveNavigation();
-            
-            // Inicializar tooltips personalizados
-            document.querySelectorAll('[data-tooltip]').forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'tooltip';
-                    tooltip.textContent = this.getAttribute('data-tooltip');
-                    document.body.appendChild(tooltip);
-                    
-                    const rect = this.getBoundingClientRect();
-                    tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
-                    tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-                    tooltip.style.opacity = '1';
-                    
-                    this.addEventListener('mouseleave', function() {
-                        tooltip.remove();
-                    }, { once: true });
-                });
-            });
-            
-            // Gestión de formularios
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Simulación de envío de formulario
-                    const submitButton = form.querySelector('[type="submit"]');
-                    const originalText = submitButton.textContent;
-                    
-                    submitButton.disabled = true;
-                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-                    
-                    setTimeout(() => {
-                        submitButton.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
-                        form.reset();
-                        
-                        setTimeout(() => {
-                            submitButton.disabled = false;
-                            submitButton.textContent = originalText;
-                        }, 2000);
-                    }, 1500);
-                });
-            });
+            // Inicializar la página con las clases activas correctas
+            updateActiveNavOnScroll();
         });
     </script>
 </body>
 </html>
-
-
 
 
 
