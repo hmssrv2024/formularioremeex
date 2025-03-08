@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Remeex VISA - Transferencias internacionales sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
-    <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales, recarga bancaria">
+    <meta name="description" content="Remeex VISA - Transferencias internacionales y remesas sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica. Ahora con recarga bancaria instantánea.">
+    <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales, recarga bancaria, envío de dinero">
     <meta name="theme-color" content="#1A1F71">
-    <title>Remeex VISA | Transferencias internacionales sin fronteras</title>
+    <title>Remeex VISA | Transferencias y Remesas Internacionales Sin Fronteras</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://remeexvisa.com/">
+    <meta property="og:title" content="Remeex VISA | Transferencias Internacionales Sin Fronteras">
+    <meta property="og:description" content="Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica con Remeex VISA. Recarga bancaria instantánea disponible.">
+    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://remeexvisa.com/">
+    <meta property="twitter:title" content="Remeex VISA | Transferencias Internacionales Sin Fronteras">
+    <meta property="twitter:description" content="Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica con Remeex VISA. Recarga bancaria instantánea disponible.">
+    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png">
     
     <!-- Precargar fuentes críticas -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
@@ -576,18 +593,14 @@
         }
         
         .logo {
-            font-size: 2.2rem;
-            font-weight: 700;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         
-        .logo span {
-            color: var(--visa-blue);
-        }
-        
-        .logo-icon {
-            display: none;
+        .logo img {
+            height: 50px;
+            width: auto;
         }
         
         #nav {
@@ -1471,12 +1484,19 @@
             margin-bottom: 5rem;
         }
         
+        .footer-logo {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        
         .footer-logo a {
             display: inline-block;
-            font-size: 2.4rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--white);
+        }
+        
+        .footer-logo img {
+            height: 50px;
+            width: auto;
         }
         
         .footer-about {
@@ -1626,6 +1646,96 @@
             transform: translateY(-5px);
         }
         
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 3rem;
+            left: 3rem;
+            width: 6rem;
+            height: 6rem;
+            background-color: #25D366;
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            z-index: 99;
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Promotional Overlay */
+        .promo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .promo-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .promo-content {
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            background-color: var(--white);
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: fadeIn 0.5s var(--ease) forwards;
+        }
+        
+        .promo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .promo-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--gray-900);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s var(--ease);
+            z-index: 10;
+        }
+        
+        .promo-close:hover {
+            background-color: var(--white);
+            transform: scale(1.1);
+        }
+        
         /* Media Queries */
         @media (min-width: 768px) {
             /* Typography */
@@ -1743,11 +1853,6 @@
                 gap: 1.5rem;
             }
             
-            .logo-icon {
-                display: inline-block;
-                margin-right: 1rem;
-            }
-            
             /* Testimonials */
             .testimonial-card {
                 padding: 5rem;
@@ -1780,7 +1885,7 @@
         <div class="loader-content">
             <div class="loader-spinner"></div>
             <div class="loader-logo">
-                <span>Remeex</span><span>VISA</span>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 50px; width: auto;">
             </div>
             <div class="loader-progress">
                 <div class="loader-bar" id="loader-bar"></div>
@@ -1795,22 +1900,21 @@
             <div class="header-container">
                 <div class="logo">
                     <a href="#hero">
-                        <i class="fab fa-cc-visa logo-icon"></i>
-                        <span>Remeex</span><span>VISA</span>
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
                     </a>
                 </div>
                 <nav id="nav">
                     <ul>
                         <li><a href="#hero" class="active">Inicio</a></li>
-                        <li><a href="#features">Servicios</a></li>
-                        <li><a href="#how-it-works">Cómo Funciona</a></li>
-                        <li><a href="#global-coverage">Cobertura Global</a></li>
-                        <li><a href="#support">Soporte</a></li>
+                        <li><a href="https://remeexvisa.com/servicios">Servicios</a></li>
+                        <li><a href="https://remeexvisa.com/comofunciona">Cómo Funciona</a></li>
+                        <li><a href="https://remeexvisa.com/coberturaglobal">Cobertura Global</a></li>
+                        <li><a href="https://remeexvisa.com/soporte">Soporte</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
                     <a href="#" class="btn btn-secondary">Acceder</a>
-                    <a href="#" class="btn btn-primary">Recibir remesa ya!</a>
+                    <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recibir remesa ya!</a>
                 </div>
                 <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
                     <i class="fas fa-bars"></i>
@@ -1824,8 +1928,7 @@
         <div class="mobile-menu-header">
             <div class="logo">
                 <a href="#hero">
-                    <i class="fab fa-cc-visa logo-icon"></i>
-                    <span>Remeex</span><span>VISA</span>
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 40px; width: auto;">
                 </a>
             </div>
             <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
@@ -1836,17 +1939,17 @@
             <nav class="mobile-nav">
                 <ul>
                     <li><a href="#hero" class="active">Inicio</a></li>
-                    <li><a href="#features">Servicios</a></li>
-                    <li><a href="#how-it-works">Cómo Funciona</a></li>
-                    <li><a href="#global-coverage">Cobertura Global</a></li>
-                    <li><a href="#support">Soporte</a></li>
+                    <li><a href="https://remeexvisa.com/servicios">Servicios</a></li>
+                    <li><a href="https://remeexvisa.com/comofunciona">Cómo Funciona</a></li>
+                    <li><a href="https://remeexvisa.com/coberturaglobal">Cobertura Global</a></li>
+                    <li><a href="https://remeexvisa.com/soporte">Soporte</a></li>
                 </ul>
             </nav>
         </div>
         <div class="mobile-menu-footer">
             <div class="mobile-actions">
                 <a href="#" class="btn btn-secondary">Acceder</a>
-                <a href="#" class="btn btn-primary">Recibir remesa ya!</a>
+                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recibir remesa ya!</a>
             </div>
         </div>
     </div>
@@ -1862,8 +1965,8 @@
                 <h1 class="hero-title">Transferencias globales sin fronteras</h1>
                 <p class="hero-subtitle">Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica</p>
                 <div class="hero-cta">
-                    <a href="#" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
-                    <a href="#how-it-works" class="btn btn-secondary btn-lg"><i class="fas fa-info-circle"></i>Cómo funciona</a>
+                    <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
+                    <a href="https://remeexvisa.com/comofunciona" class="btn btn-secondary btn-lg"><i class="fas fa-info-circle"></i>Cómo funciona</a>
                 </div>
             </div>
             <div class="hero-slider fade-in delay-2">
@@ -1872,7 +1975,7 @@
                         <div class="slide-text">
                             <h3>Envía dinero a todo el mundo</h3>
                             <p>Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
-                            <a href="#" class="btn btn-primary">Comenzar ahora</a>
+                            <a href="https://remeexvisa.com/index1" class="btn btn-primary">Comenzar ahora</a>
                         </div>
                     </div>
                 </div>
@@ -1881,7 +1984,7 @@
                         <div class="slide-text">
                             <h3>Las mejores tarifas del mercado</h3>
                             <p>Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
-                            <a href="#" class="btn btn-primary">Ver tarifas</a>
+                            <a href="https://remeexvisa.com/servicios" class="btn btn-primary">Ver tarifas</a>
                         </div>
                     </div>
                 </div>
@@ -1890,7 +1993,7 @@
                         <div class="slide-text">
                             <h3>Recarga con tarjeta de crédito</h3>
                             <p>Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
-                            <a href="#" class="btn btn-primary">Recargar ahora</a>
+                            <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recargar ahora</a>
                         </div>
                     </div>
                 </div>
@@ -2146,14 +2249,14 @@
                         </div>
                     </div>
                     <div class="app-download">
-                        <a href="#" class="app-btn fade-in delay-1">
+                        <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-1">
                             <i class="fab fa-apple"></i>
                             <div class="app-btn-content">
                                 <span class="app-btn-text">Descarga en la</span>
                                 <span class="app-btn-name">App Store</span>
                             </div>
                         </a>
-                        <a href="#" class="app-btn fade-in delay-2">
+                        <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-2">
                             <i class="fab fa-google-play"></i>
                             <div class="app-btn-content">
                                 <span class="app-btn-text">Disponible en</span>
@@ -2173,7 +2276,7 @@
             <div class="cta-content">
                 <h2 class="cta-title fade-in">Comienza a conectar sin fronteras</h2>
                 <p class="cta-subtitle fade-in delay-1">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
-                <a href="#" class="btn btn-secondary btn-lg fade-in delay-2"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
+                <a href="https://remeexvisa.com/index1" class="btn btn-secondary btn-lg fade-in delay-2"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
             </div>
         </div>
     </section>
@@ -2192,23 +2295,23 @@
                     </div>
                     <h3 class="support-title">Chat en vivo</h3>
                     <p class="support-description">Habla con un asesor en tiempo real a través de nuestra web o aplicación móvil.</p>
-                    <a href="#" class="btn btn-primary">Iniciar chat</a>
+                    <a href="#" id="open-chat" class="btn btn-primary">Iniciar chat</a>
                 </div>
                 <div class="support-card fade-in delay-2">
                     <div class="support-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3 class="support-title">Correo electrónico</h3>
-                    <p class="support-description">Envíanos tus consultas a support@remeexvisa.com y te responderemos en menos de 24 horas.</p>
-                    <a href="mailto:support@remeexvisa.com" class="btn btn-primary">Enviar correo</a>
+                    <p class="support-description">Envíanos tus consultas y te responderemos en menos de 24 horas.</p>
+                    <a href="https://wa.me/+17373018059" class="btn btn-primary">Enviar consulta</a>
                 </div>
                 <div class="support-card fade-in delay-3">
                     <div class="support-icon">
                         <i class="fas fa-phone-alt"></i>
                     </div>
                     <h3 class="support-title">Teléfono</h3>
-                    <p class="support-description">Llámanos al +1 800-REMEEX para hablar directamente con un asesor especializado.</p>
-                    <a href="tel:+18007363399" class="btn btn-primary">Llamar ahora</a>
+                    <p class="support-description">Llámanos para hablar directamente con un asesor especializado.</p>
+                    <a href="tel:+17373018059" class="btn btn-primary">Llamar ahora</a>
                 </div>
                 <div class="support-card fade-in delay-4">
                     <div class="support-icon">
@@ -2216,13 +2319,15 @@
                     </div>
                     <h3 class="support-title">Centro de ayuda</h3>
                     <p class="support-description">Consulta nuestras guías, tutoriales y preguntas frecuentes para resolver dudas comunes.</p>
-                    <a href="#" class="btn btn-primary">Visitar centro</a>
+                    <a href="https://wa.me/+17373018059" class="btn btn-primary">Visitar centro</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
+    <footer id="footer">
+        <!-- Footer -->
     <footer id="footer">
         <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 50">
             <path d="M0,32L48,37.3C96,43,192,53,288,50.7C384,48,480,32,576,21.3C672,11,768,5,864,10.7C960,16,1056,32,1152,37.3C1248,43,1344,37,1392,34.7L1440,32L1440,50L1392,50C1344,50,1248,50,1152,50C1056,50,960,50,864,50C768,50,672,50,576,50C480,50,384,50,288,50C192,50,96,50,48,50L0,50Z"></path>
@@ -2232,25 +2337,24 @@
                 <div>
                     <div class="footer-logo">
                         <a href="#hero">
-                            <i class="fab fa-cc-visa logo-icon"></i>
-                            <span>Remeex</span><span>VISA</span>
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 50px; width: auto;">
                         </a>
                     </div>
                     <p class="footer-about">Conectando familias alrededor del mundo con transferencias rápidas, seguras y económicas. Ahora con recarga instantánea de cuenta bancaria con tarjeta de crédito.</p>
                     <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Twitter">
+                        <a href="https://twitter.com/visa_es" class="social-icon" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="social-icon" aria-label="Instagram">
+                        <a href="https://www.facebook.com/visa_es" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/visa_es" class="social-icon" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/company/visa_es" class="social-icon" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="social-icon" aria-label="YouTube">
+                        <a href="https://www.youtube.com/user/visa_es" class="social-icon" aria-label="YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
@@ -2258,41 +2362,41 @@
                 <div>
                     <h4 class="footer-title">Empresa</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Sala de prensa</a></li>
-                        <li><a href="#">Responsabilidad social</a></li>
-                        <li><a href="#">Inversores</a></li>
+                        <li><a href="https://visa.es">Sobre nosotros</a></li>
+                        <li><a href="https://visa.es">Carreras</a></li>
+                        <li><a href="https://visa.es">Sala de prensa</a></li>
+                        <li><a href="https://visa.es">Responsabilidad social</a></li>
+                        <li><a href="https://visa.es">Inversores</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Servicios</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Transferencias internacionales</a></li>
-                        <li><a href="#">Recarga con tarjeta de crédito</a></li>
-                        <li><a href="#">Pagos recurrentes</a></li>
-                        <li><a href="#">Cambio de divisas</a></li>
-                        <li><a href="#">Tarjetas virtuales</a></li>
+                        <li><a href="https://visa.es">Transferencias internacionales</a></li>
+                        <li><a href="https://visa.es">Recarga con tarjeta de crédito</a></li>
+                        <li><a href="https://visa.es">Pagos recurrentes</a></li>
+                        <li><a href="https://visa.es">Cambio de divisas</a></li>
+                        <li><a href="https://visa.es">Tarjetas virtuales</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Ayuda</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Centro de ayuda</a></li>
-                        <li><a href="#">Contáctanos</a></li>
-                        <li><a href="#">Preguntas frecuentes</a></li>
-                        <li><a href="#">Seguridad</a></li>
-                        <li><a href="#">Reportar un problema</a></li>
+                        <li><a href="https://visa.es">Centro de ayuda</a></li>
+                        <li><a href="https://visa.es">Contáctanos</a></li>
+                        <li><a href="https://visa.es">Preguntas frecuentes</a></li>
+                        <li><a href="https://visa.es">Seguridad</a></li>
+                        <li><a href="https://visa.es">Reportar un problema</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-title">Legal</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Términos y condiciones</a></li>
-                        <li><a href="#">Política de privacidad</a></li>
-                        <li><a href="#">Política de cookies</a></li>
-                        <li><a href="#">Cumplimiento normativo</a></li>
-                        <li><a href="#">Licencias</a></li>
+                        <li><a href="https://visa.es">Términos y condiciones</a></li>
+                        <li><a href="https://visa.es">Política de privacidad</a></li>
+                        <li><a href="https://visa.es">Política de cookies</a></li>
+                        <li><a href="https://visa.es">Cumplimiento normativo</a></li>
+                        <li><a href="https://visa.es">Licencias</a></li>
                     </ul>
                 </div>
             </div>
@@ -2321,6 +2425,21 @@
     <button id="back-to-top" aria-label="Volver arriba">
         <i class="fas fa-chevron-up"></i>
     </button>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/+17373018059" class="whatsapp-button" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Promo Overlay -->
+    <div class="promo-overlay" id="promo-overlay">
+        <div class="promo-content">
+            <button class="promo-close" id="promo-close" aria-label="Cerrar promoción">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción especial" class="promo-image">
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script>
@@ -2355,6 +2474,11 @@
                         setTimeout(() => {
                             loader.style.display = 'none';
                             document.body.classList.add('loaded');
+                            
+                            // Mostrar la promoción después de 3 segundos
+                            setTimeout(() => {
+                                document.getElementById('promo-overlay').classList.add('active');
+                            }, 3000);
                         }, 300);
                     }, 400);
                 }
@@ -2371,6 +2495,24 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const overlay = document.getElementById('overlay');
             const backToTop = document.getElementById('back-to-top');
+            const promoOverlay = document.getElementById('promo-overlay');
+            const promoClose = document.getElementById('promo-close');
+            const openChat = document.getElementById('open-chat');
+            
+            // Cerrar promoción
+            promoClose.addEventListener('click', () => {
+                promoOverlay.classList.remove('active');
+            });
+            
+            // Abrir chat de Tawk.to
+            if (openChat) {
+                openChat.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (typeof Tawk_API !== 'undefined') {
+                        Tawk_API.maximize();
+                    }
+                });
+            }
             
             // Menú móvil
             function toggleMenu() {
@@ -2733,9 +2875,21 @@
             updateActiveNavOnScroll();
         });
     </script>
+
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/67cca8c614b1ee191063c36a/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
 </body>
 </html>
-
 
 
 
