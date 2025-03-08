@@ -1,2431 +1,2835 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>VISA REMEEX Premium - Configuración Inicial</title>
-  <!-- Se desactiva el zoom en móviles -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Selección de Idioma, Tipo de Tarjeta, País, Tipo de Transacción y Términos." />
-
-  <link rel="icon" href="https://w7.pngwing.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png" />
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-
-  <!-- ESTILOS PARA EL POPUP DE BIENVENIDA (Ventana emergente moderna) -->
-  <style>
-    /* Estilos para la ventana emergente de bienvenida */
-    .welcome-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.4s ease-out;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Remeex VISA - Transferencias internacionales sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
+    <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales, recarga bancaria">
+    <meta name="theme-color" content="#1A1F71">
+    <title>Remeex VISA | Transferencias internacionales sin fronteras</title>
     
-    .welcome-popup.active {
-      display: block;
-      opacity: 1;
-    }
+    <!-- Precargar fuentes críticas -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
     
-    .popup-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <!-- Preconectar con CDNs -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    .popup-container {
-      position: relative;
-      width: 95%;
-      max-width: 550px;
-      background: var(--card-bg);
-      border-radius: var(--border-radius-xl);
-      box-shadow: var(--shadow-lg);
-      padding: 2.5rem 2rem;
-      overflow: hidden;
-      animation: glow 6s ease infinite, border-blink 6s linear infinite;
-      border: 2px solid var(--border-white);
-      transform: translateY(30px);
-      animation: popup-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
+    <!-- Carga diferida para fuentes -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"></noscript>
     
-    @keyframes popup-enter {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    <!-- Precargar CSS crítico -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
-    /* Botón de cerrar */
-    .popup-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-      padding: 5px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-    
-    .popup-close:hover {
-      color: var(--danger);
-      background: rgba(239, 68, 68, 0.1);
-      transform: rotate(90deg);
-    }
-    
-    /* Botones de navegación lateral */
-    .popup-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.5);
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-    
-    .popup-container:hover .popup-nav {
-      opacity: 1;
-    }
-    
-    .popup-nav:hover {
-      background: rgba(255, 255, 255, 0.8);
-      transform: translateY(-50%) scale(1.1);
-    }
-    
-    .popup-nav-prev {
-      left: 15px;
-    }
-    
-    .popup-nav-next {
-      right: 15px;
-    }
-    
-    .popup-nav.disabled {
-      opacity: 0;
-      cursor: default;
-      pointer-events: none;
-    }
-    
-    .popup-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    
-    /* Sustituimos el círculo azul por un contenedor de imagen (Remeex Visa) */
-    .popup-logo {
-      width: 140px;
-      height: auto;
-      margin-bottom: 1.5rem;
-    }
-    .popup-logo img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Contenedor de mensajes */
-    .popup-message-container {
-      height: 80px;
-      width: 100%;
-      margin-bottom: 1.5rem;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .popup-message {
-      position: absolute;
-      width: 100%;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-align: center;
-      padding: 0 1rem;
-    }
-    
-    .popup-message.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    #userName {
-      color: var(--primary);
-      font-weight: 700;
-    }
-    
-    /* Spinner con 3 puntos, ajustamos distancias */
-    .popup-spinner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 1.5rem 0;
-      position: relative;
-    }
-    .spinner-circle {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      margin: 0 10px;
-      opacity: 0.8;
-      animation: spinner-orbit 2s infinite ease-in-out;
-    }
-    .circle1 {
-      background: var(--primary);
-      animation-delay: -0.4s;
-    }
-    .circle2 {
-      background: var(--accent);
-      animation-delay: -0.2s;
-    }
-    .circle3 {
-      background: var(--secondary);
-      animation-delay: 0s;
-    }
-    @keyframes spinner-orbit {
-      0%, 100% {
-        transform: scale(1) translateY(0);
-      }
-      25% {
-        transform: scale(1.3) translateY(-10px);
-      }
-      50% {
-        transform: scale(1) translateY(0);
-      }
-      75% {
-        transform: scale(0.7) translateY(10px);
-      }
-    }
-    
-    /* Indicadores de paso clicables */
-    .popup-steps {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 1rem 0 2rem;
-    }
-    
-    .step-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color: #e2e8f0;
-      transition: all 0.3s ease;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-    }
-    
-    .step-indicator:hover {
-      background-color: #cbd5e1;
-      width: 20px;
-      border-radius: 4px;
-    }
-    
-    .step-indicator.active {
-      width: 30px;
-      border-radius: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      cursor: default;
-    }
-    
-    /* Botón adaptado */
-    .popup-btn {
-      width: 180px;
-      margin: 0 auto;
-    }
-    
-    .popup-btn .btn-glow-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .popup-btn .btn-glow-icon {
-      margin-left: 10px;
-    }
-    
-    /* Media queries para dispositivos móviles */
-    @media (max-width: 768px) {
-      .popup-container {
-        padding: 2rem 1.5rem;
-        max-width: 500px;
-      }
-      
-      .popup-message {
-        font-size: 1.1rem;
-      }
-      
-      .popup-btn {
-        width: 150px;
-      }
-      
-      .popup-logo {
-        width: 110px;
-      }
-      
-      .popup-spinner {
-        margin: 1rem 0;
-      }
-      .spinner-circle {
-        width: 16px;
-        height: 16px;
-        margin: 0 7px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .popup-container {
-        padding: 1.8rem 1.2rem;
-        max-width: 400px;
-      }
-      
-      .popup-logo {
-        width: 100px;
-      }
-
-      .popup-message {
-        font-size: 1rem;
-      }
-      .popup-message-container {
-        height: 70px;
-      }
-      
-      .spinner-circle {
-        width: 14px;
-        height: 14px;
-        margin: 0 5px;
-      }
-      
-      .popup-btn {
-        width: 130px;
-      }
-      
-      .popup-nav {
-        display: none;
-      }
-    }
-  </style>
-
-  <!-- ESTILOS GENERALES DE LA PÁGINA -->
-  <style>
-    :root {
-      /* Colores modernos inspirados en Visa */
-      --primary: #1a1f71; /* Azul oscuro de Visa */
-      --primary-dark: #0d153e; 
-      --secondary: #3b82f6;
-      --accent: #60a5fa;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-
-      /* Colores para la animación del borde */
-      --border-white: #ffffff;
-      --border-gray: #d1d5db;
-      --border-light-blue: #93c5fd;
-
-      /* Fondos y texto */
-      --background: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.98);
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-
-      /* Diseño */
-      --border-radius-xl: 28px;
-      --border-radius-lg: 24px;
-      --border-radius: 16px;
-      --border-radius-sm: 12px;
-      
-      /* Efectos */
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
-      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      font-family: 'Inter', sans-serif;
-      color: var(--text-primary);
-      line-height: 1.6;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1rem;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 650px;
-      width: 100%;
-      margin-top: 2rem;
-      background: var(--card-bg);
-      border-radius: var(--border-radius-xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      border: 2px solid var(--border-white);
-      overflow: hidden;
-      position: relative;
-      transition: var(--transition);
-      animation: glow 6s ease infinite, border-blink 6s linear infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        box-shadow: 0 0 40px rgba(26, 31, 113, 0.5), 0 0 80px rgba(26, 31, 113, 0.3);
-      }
-      50% {
-        box-shadow: 0 0 70px rgba(26, 31, 113, 0.8), 0 0 100px rgba(26, 31, 113, 0.6);
-      }
-    }
-
-    @keyframes border-blink {
-      0% {
-        border-color: var(--border-white);
-      }
-      33% {
-        border-color: var(--border-gray);
-      }
-      66% {
-        border-color: var(--border-light-blue);
-      }
-      100% {
-        border-color: var(--border-white);
-      }
-    }
-
-    .container:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .header {
-      text-align: center;
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: #fff;
-      padding: 3rem 2rem;
-      position: relative;
-      overflow: hidden;
-      border-top-left-radius: var(--border-radius-xl);
-      border-top-right-radius: var(--border-radius-xl);
-      background-image: var(--aurora-gradient);
-      animation: aurora-animation 15s ease infinite;
-    }
-
-    @keyframes aurora-animation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    :root {
-      --aurora-gradient: linear-gradient(
-        120deg, 
-        rgba(26, 31, 113, 0.4), 
-        rgba(25, 35, 102, 0.3), 
-        rgba(30, 40, 120, 0.3), 
-        rgba(26, 31, 113, 0.2)
-      );
-      background-size: 400% 400%;
-    }
-
-    .header-logo {
-      width: 80%;
-      max-width: 400px;
-      height: auto;
-      margin-bottom: 1rem;
-    }
-
-    .header p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      max-width: 600px;
-      margin: 0 auto;
-      opacity: 0.95;
-      position: relative;
-      z-index: 2;
-    }
-
-    .header::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-      transform: skewX(-20deg);
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-      animation: flash 3s infinite;
-    }
-
-    @keyframes flash {
-      0% {
-        left: -100%;
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      50% {
-        left: 100%;
-        opacity: 1;
-      }
-      60% {
-        opacity: 0;
-      }
-      100% {
-        left: 100%;
-        opacity: 0;
-      }
-    }
-
-    .logo-bar {
-      background: var(--card-bg);
-      padding: 1.5rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-bar::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2), rgba(255,255,255,0.1));
-      animation: shimmer 3s linear infinite;
-    }
-
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-50%);
-      }
-      100% {
-        transform: translateX(50%);
-      }
-    }
-
-    .logo-bar img {
-      height: 36px;
-      filter: grayscale(20%);
-      opacity: 0.9;
-      transition: var(--transition);
-      position: relative;
-      z-index: 2;
-    }
-
-    .logo-bar img:hover {
-      filter: none;
-      opacity: 1;
-      transform: scale(1.08);
-    }
-
-    .progress-bar {
-      height: 16px;
-      background-color: #e2e8f0;
-      border-radius: var(--border-radius);
-      margin: 2rem;
-      overflow: hidden;
-      position: relative;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      width: 0%;
-      transition: width 0.6s ease-in-out;
-      border-radius: var(--border-radius);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: skewX(-45deg);
-      animation: move 2s linear infinite;
-    }
-
-    @keyframes move {
-      0% {
-        left: -50%;
-      }
-      100% {
-        left: 100%;
-      }
-    }
-
-    .section-content {
-      padding: 2rem;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease-out;
-      display: none;
-    }
-
-    .section-content.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-content h2 {
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      color: var(--primary);
-      display: inline-block;
-      line-height: 1.4;
-    }
-
-    .section-content h2 i {
-      color: var(--primary);
-      font-size: 1.3rem;
-      margin-right: 0.75rem;
-      vertical-align: middle;
-    }
-
-    .user-name-title {
-      font-weight: 600;
-      display: inline;
-    }
-
-    .form-group {
-      margin-bottom: 1.75rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.875rem 1.25rem;
-      border: 2px solid #e2e8f0;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      background: #fff;
-      transition: var(--transition);
-      color: var(--text-primary);
-    }
-
-    .form-control:hover {
-      border-color: #cbd5e1;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(26, 31, 113, 0.2);
-    }
-
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: #f8fafc;
-      border-radius: var(--border-radius);
-      border: 1px solid #e2e8f0;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: 1.2rem;
-      height: 1.2rem;
-      border-radius: 4px;
-      border: 2px solid var(--primary);
-      transition: var(--transition);
-    }
-
-    .checkbox-group a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .checkbox-group a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    .btn-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 2rem;
-      gap: 1rem;
-    }
-
-    .btn-container {
-      position: relative;
-      width: 180px;
-      height: 50px;
-    }
-
-    .btn-glow-effect {
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(
-        90deg, 
-        transparent, 
-        var(--primary), 
-        var(--secondary), 
-        transparent
-      );
-      background-size: 200% 100%;
-      border-radius: 30px;
-      animation: border-glow 3s ease infinite;
-      filter: blur(15px);
-      opacity: 0.7;
-      z-index: 0;
-    }
-
-    @keyframes border-glow {
-      0% {
-        background-position: -100% 0;
-      }
-      50% {
-        background-position: 100% 0;
-      }
-      100% {
-        background-position: -100% 0;
-      }
-    }
-
-    .btn-glow {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow: 
-          0 15px 25px rgba(0,0,0,0.3), 
-          inset 0 -4px 8px rgba(255,255,255,0.3);
-      transition: all 0.3s ease;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    .btn-glow-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .btn-glow-initial {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .btn-glow:hover .btn-glow-initial {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-
-    .btn-glow-hover {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transform: translateX(-100%);
-      color: white;
-    }
-
-    .btn-glow:hover .btn-glow-hover {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .btn-glow-icon {
-      margin-left: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        margin-top: 1.5rem;
-      }
-
-      .header {
-        padding: 2rem 1rem;
-      }
-
-      .header-logo {
-        width: 70%;
-        max-width: 300px;
-      }
-
-      .header p {
-        font-size: 1rem;
-      }
-
-      .logo-bar {
-        gap: 2rem;
-        padding: 1rem;
-      }
-
-      .logo-bar img {
-        height: 28px;
-      }
-
-      .section-content {
-        padding: 1.5rem;
-      }
-
-      .btn-container {
-        width: 150px;
-        height: 45px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header-logo {
-        width: 90%;
-        max-width: 250px;
-      }
-
-      .header p {
-        font-size: 0.95rem;
-      }
-
-      .logo-bar {
-        gap: 1.5rem;
-      }
-
-      .logo-bar img {
-        height: 24px;
-      }
-
-      .btn-container {
-        width: 130px;
-        height: 40px;
-      }
-
-      .btn-glow {
-        font-size: 0.85rem;
-      }
-    }
-
-    /* Diseño especial para la "tarjeta de crédito" en el paso 7 */
-    .credit-card-container {
-      margin-top: 1rem;
-      margin-bottom: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .credit-card-visual {
-      width: 320px;
-      height: 190px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: var(--border-radius-lg);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      padding: 1rem;
-      position: relative;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .credit-card-visual .chip {
-      width: 50px;
-      height: 35px;
-      background: linear-gradient(135deg, #f2f2f2, #cccccc);
-      border-radius: 6px;
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-    }
-    .credit-card-visual .card-number {
-      font-size: 1.2rem;
-      letter-spacing: 3px;
-      margin-top: 3rem;
-      text-align: center;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .credit-card-visual .card-holder {
-      font-size: 0.9rem;
-      margin-left: 1rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      width: 70%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .credit-card-visual .card-expiration {
-      font-size: 0.9rem;
-      text-align: right;
-      margin-bottom: 0.5rem;
-      margin-right: 1rem;
-    }
-    @media (max-width: 480px) {
-      .credit-card-visual {
-        width: 280px;
-        height: 170px;
-      }
-      .credit-card-visual .card-number {
-        font-size: 1rem;
-      }
-    }
-
-    /* Tarjeta de resumen (Paso 7) */
-    .summary-card {
-      background: #f0f4ff;
-      border: 2px solid #e3e7fb;
-      padding: 1rem;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 1.5rem;
-    }
-    .summary-card .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-    }
-    .summary-card .summary-row span {
-      font-weight: 500;
-      color: var(--primary-dark);
-    }
-    .summary-card .summary-row strong {
-      font-weight: 600;
-      text-align: right;
-    }
-    
-    /* Para la leyenda en Paso 6 */
-    #equivInfo {
-      font-size: 1rem; 
-      color: var(--primary-dark); 
-      font-weight: 600; 
-      display: none;
-      margin-top: -1rem;
-      margin-bottom: 2rem;
-      padding: 0.75rem;
-      background: #f9fafb;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--border-radius-sm);
-    }
-
-    /* 4. OPTIMIZAR LA TARJETA DE RESUMEN PARA MÓVILES */
-    @media (max-width: 480px) {
-      .summary-card .summary-row {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 0.8rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-      }
-      
-      .summary-card .summary-row span {
-        margin-bottom: 0.25rem;
-      }
-      
-      .summary-card .summary-row strong {
-        text-align: left;
-        margin-left: 0.5rem;
-      }
-      
-      .summary-card {
-        padding: 0.75rem;
-      }
-      
-      /* Ajuste adicional para la tarjeta resumen */
-      #summaryUSD, #summaryBs, #summaryRate, #summaryDateTime {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* 7. MEJORAR EL ESTILO DE LA VENTANA DE VERIFICACIÓN SMS */
-    #overlayOTP {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    #otpCode {
-      text-align: center; 
-      font-size: 1.2rem; 
-      font-weight: 600; 
-      width: 100%; 
-      margin: 1rem 0; 
-      padding: 0.75rem; 
-      border-radius: 10px; 
-      border: 2px solid #e2e8f0;
-      letter-spacing: 3px;
-      transition: all 0.3s ease;
-    }
-    #otpCode:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.2);
-      outline: none;
-    }
-    #btnOTPConfirm {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff; 
-      border: none; 
-      border-radius: 10px; 
-      padding: 0.8rem 1.5rem; 
-      cursor: pointer; 
-      font-weight: 600;
-      width: 100%;
-      max-width: 180px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    #btnOTPConfirm:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    }
-    #resendOtpBtn {
-      background: transparent;
-      border: none;
-      color: var(--primary);
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 0.75rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      padding: 0.5rem;
-    }
-    #resendOtpBtn:hover {
-      color: var(--secondary);
-    }
-    /* Mejora para el mensaje del overlay */
-    #overlayMessage {
-      margin-bottom: 1rem;
-      font-weight: 500;
-      text-align: center;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    #overlayMessage strong {
-      color: var(--primary-dark);
-      font-weight: 700;
-    }
-    /* Mejora estética para el overlay en general */
-    #overlayTitle {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      font-weight: 700;
-      border-bottom: 2px solid rgba(0,0,0,0.05);
-      padding-bottom: 0.5rem;
-      width: 100%;
-      text-align: center;
-    }
-  </style>
+    <style>
+        /* Variables y estilos base */
+        :root {
+            --visa-blue: #1A1F71;
+            --visa-blue-light: #293ca3;
+            --visa-blue-dark: #141850;
+            --visa-blue-transparent: rgba(26, 31, 113, 0.95);
+            --visa-blue-ghost: rgba(26, 31, 113, 0.07);
+            --light-blue: #E9EEFF;
+            --light-blue-alt: #f0f4ff;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        /* Reset y base */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: 1.6rem;
+            line-height: 1.7;
+            color: var(--gray-700);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+        }
+        
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        input, button, textarea, select {
+            font: inherit;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.2s var(--ease);
+        }
+        
+        ul, ol {
+            list-style: none;
+        }
+        
+        /* Componentes base */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .absolute {
+            position: absolute;
+        }
+        
+        .z-10 {
+            z-index: 10;
+        }
+        
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        
+        .bg-white {
+            background-color: var(--white);
+        }
+        
+        .bg-gray-50 {
+            background-color: var(--gray-50);
+        }
+        
+        .bg-visa-blue {
+            background-color: var(--visa-blue);
+        }
+        
+        .text-white {
+            color: var(--white);
+        }
+        
+        .text-visa-blue {
+            color: var(--visa-blue);
+        }
+        
+        .text-gray-500 {
+            color: var(--gray-500);
+        }
+        
+        .text-gray-600 {
+            color: var(--gray-600);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .rounded-full {
+            border-radius: 9999px;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.8rem;
+        }
+        
+        .rounded-xl {
+            border-radius: 1.2rem;
+        }
+        
+        .rounded-2xl {
+            border-radius: 1.6rem;
+        }
+        
+        .shadow-sm {
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .shadow {
+            box-shadow: var(--shadow);
+        }
+        
+        .shadow-md {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .shadow-lg {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Loader y animaciones */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s var(--ease) forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+        
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loader-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(26, 31, 113, 0.15);
+            border-radius: 50%;
+            border-top-color: var(--visa-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+        
+        .loader-logo {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        
+        .loader-progress {
+            width: 200px;
+            height: 4px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .loader-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--visa-blue);
+            transition: width 0.3s ease-out;
+        }
+        
+        .loader-text {
+            font-size: 1.4rem;
+            color: var(--gray-600);
+        }
+        
+        /* Tipografía */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 3.6rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: 3rem;
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-size: 2.4rem;
+            letter-spacing: -0.01em;
+        }
+        
+        h4 {
+            font-size: 2rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .large-text {
+            font-size: 1.8rem;
+        }
+        
+        .small-text {
+            font-size: 1.4rem;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 6rem;
+            height: 0.4rem;
+            background-color: var(--visa-blue);
+            border-radius: 9999px;
+        }
+        
+        .section-title.center {
+            text-align: center;
+        }
+        
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Etiquetas especiales */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border-radius: 10rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .badge-primary {
+            background-color: var(--visa-blue-ghost);
+            color: var(--visa-blue);
+        }
+        
+        .badge-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #1A1F71, #3949AB);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 10rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 1rem;
+            box-shadow: 0 4px 10px rgba(26, 31, 113, 0.3);
+        }
+        
+        .badge-new i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem 2.4rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            border-radius: 10rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn i {
+            margin-right: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--visa-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--visa-blue-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--visa-blue);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--visa-blue);
+            background-color: var(--light-blue-alt);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--visa-blue);
+            border: 2px solid var(--visa-blue);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-outline:active {
+            transform: translateY(0);
+        }
+        
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--visa-blue);
+            font-weight: 600;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+        
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+        
+        .btn-lg {
+            padding: 1.4rem 3rem;
+            font-size: 1.8rem;
+        }
+        
+        .btn-sm {
+            padding: 0.8rem 1.6rem;
+            font-size: 1.4rem;
+        }
+        
+        .btn-icon {
+            width: 4.8rem;
+            height: 4.8rem;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .btn-icon i {
+            margin-right: 0;
+            font-size: 1.8rem;
+        }
+        
+        /* Header y Navegación */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: transform 0.3s var(--ease), background-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+        }
+        
+        #header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 7rem;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--visa-blue);
+        }
+        
+        .logo-icon {
+            display: none;
+        }
+        
+        #nav {
+            display: none;
+        }
+        
+        #nav ul {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        #nav ul li a {
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
+        }
+        
+        #nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--visa-blue);
+            transition: width 0.2s var(--ease);
+        }
+        
+        #nav ul li a:hover, 
+        #nav ul li a.active {
+            color: var(--visa-blue);
+        }
+        
+        #nav ul li a:hover::after,
+        #nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .header-actions {
+            display: none;
+        }
+        
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--visa-blue);
+            font-size: 2.4rem;
+            cursor: pointer;
+            width: 4.2rem;
+            height: 4.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .menu-toggle:hover {
+            background-color: var(--light-blue-alt);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 36rem;
+            height: 100%;
+            background-color: var(--white);
+            z-index: 200;
+            transition: right 0.3s var(--ease);
+            box-shadow: var(--shadow-xl);
+            overflow: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .mobile-menu-body {
+            padding: 3rem 2rem;
+        }
+        
+        .mobile-menu-footer {
+            padding: 2rem;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .mobile-nav ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-nav ul li a {
+            display: block;
+            padding: 1.2rem 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            transition: all 0.2s var(--ease);
+        }
+        
+        .mobile-nav ul li a:hover,
+        .mobile-nav ul li a.active {
+            color: var(--visa-blue);
+            transform: translateX(5px);
+        }
+        
+        .mobile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-actions .btn {
+            width: 100%;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 199;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero Section */
+        #hero {
+            position: relative;
+            padding-top: 12rem;
+            padding-bottom: 6rem;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light-blue);
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a1f71' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 768px;
+            margin: 0 auto;
+            margin-bottom: 4rem;
+        }
+        
+        .hero-title {
+            margin-bottom: 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 2rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .hero-slider {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        
+        .hero-slide {
+            display: none;
+            height: 100%;
+        }
+        
+        .hero-slide.active {
+            display: block;
+        }
+        
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 2rem;
+            background-color: var(--white);
+            height: 100%;
+        }
+        
+        .slider-controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.8rem;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: rgba(26, 31, 113, 0.3);
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .slider-dot.active {
+            background-color: var(--visa-blue);
+            transform: scale(1.3);
+        }
+        
+        /* Features Grid */
+        #features {
+            padding: 8rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 1.6rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s var(--ease);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        .feature-icon {
+            width: 7rem;
+            height: 7rem;
+            background-color: var(--light-blue);
+            color: var(--visa-blue);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .feature-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-description {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+        
+        /* How It Works */
+        #how-it-works {
+            padding: 8rem 0;
+            background-color: var(--gray-50);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .how-it-works-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 30%, rgba(26, 31, 113, 0.03) 0%, transparent 400px), 
+                              radial-gradient(circle at 80% 70%, rgba(26, 31, 113, 0.03) 0%, transparent 400px);
+            z-index: -1;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            margin-top: 5rem;
+        }
+        
+        .step {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 6rem;
+            height: 6rem;
+            background-color: var(--visa-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .step-card {
+            background-color: var(--white);
+            border-radius: 1.6rem;
+            padding: 3.5rem;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .step-icon {
+            font-size: 4.5rem;
+            color: var(--visa-blue);
+            margin-bottom: 2rem;
+        }
+        
+        .step-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-description {
+            color: var(--gray-600);
+        }
+        
+        .step-connector {
+            display: none;
+        }
+        
+        /* Coverage Section */
+        #global-coverage {
+            padding: 8rem 0;
+            background-color: var(--visa-blue-transparent);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .global-coverage-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .section-title.light {
+            color: var(--white);
+        }
+        
+        .section-title.light::after {
+            background-color: var(--white);
+        }
+        
+        .subtitle.light {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .map-container {
+            position: relative;
+            margin-top: 4rem;
+            border-radius: 1.6rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .map-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1.6rem;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s var(--ease);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #e6e6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        
+        /* Testimonials */
+        #testimonials {
+            padding: 8rem 0;
+            background-color: var(--gray-50);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 31, 113, 0.03) 0%, transparent 300px),
+                radial-gradient(circle at 90% 80%, rgba(26, 31, 113, 0.03) 0%, transparent 300px);
+        }
+        
+        .testimonials-slider {
+            position: relative;
+            padding: 4rem 0;
+        }
+        
+        .testimonial-slide {
+            display: none;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+        }
+        
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 1.6rem;
+            padding: 4rem 3rem;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            margin: 0 auto;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 2rem;
+            left: 3rem;
+            font-size: 12rem;
+            font-family: 'Georgia', serif;
+            color: var(--visa-blue);
+            opacity: 0.1;
+            line-height: 0.5;
+        }
+        
+        .rating {
+            color: #FFC107;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .quote {
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--gray-700);
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        .client-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .client-photo {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--light-blue);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .client-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        
+        .client-position {
+            font-size: 1.6rem;
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-dot {
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 50%;
+            background-color: rgba(26, 31, 113, 0.3);
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .testimonial-dot.active {
+            background-color: var(--visa-blue);
+            transform: scale(1.3);
+        }
+        
+        .testimonial-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .testimonial-arrow {
+            width: 5rem;
+            height: 5rem;
+            background-color: var(--white);
+            color: var(--visa-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+            pointer-events: auto;
+            border: none;
+        }
+        
+        .testimonial-arrow:hover {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        /* App Section */
+        #app {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 20%, 100% 100%, 0% 100%);
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5rem;
+        }
+        
+        .app-content {
+            text-align: center;
+        }
+        
+        .app-features {
+            max-width: 500px;
+            margin: 3rem auto;
+            text-align: left;
+        }
+        
+        .app-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        
+        .app-feature i {
+            color: var(--visa-blue);
+            font-size: 2rem;
+            margin-right: 1.5rem;
+            margin-top: 0.3rem;
+        }
+        
+        .app-download {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .app-btn {
+            display: flex;
+            align-items: center;
+            background-color: var(--gray-900);
+            color: var(--white);
+            padding: 1.2rem 2.4rem;
+            border-radius: 1.2rem;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .app-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .app-btn i {
+            font-size: 3rem;
+            margin-right: 1.5rem;
+        }
+        
+        .app-btn-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .app-btn-text {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .app-btn-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .app-image {
+            max-width: 300px;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
+        }
+        
+        /* CTA Section */
+        #cta {
+            padding: 10rem 0;
+            background-color: var(--visa-blue);
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+        }
+        
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 400px),
+                radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 400px);
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            color: var(--white);
+            margin-bottom: 2.5rem;
+            font-size: 3.6rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 2rem;
+            margin-bottom: 4rem;
+            opacity: 0.9;
+        }
+        
+        /* Support Section */
+        #support {
+            padding: 8rem 0;
+            background-color: var(--gray-50);
+        }
+        
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .support-card {
+            background-color: var(--white);
+            border-radius: 1.6rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s var(--ease);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .support-card:hover .support-icon {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        .support-icon {
+            width: 7rem;
+            height: 7rem;
+            background-color: var(--light-blue);
+            color: var(--visa-blue);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .support-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .support-description {
+            color: var(--gray-600);
+            margin-bottom: 2.5rem;
+            flex-grow: 1;
+        }
+        
+        /* Footer */
+        #footer {
+            background-color: var(--gray-900);
+            color: var(--gray-400);
+            padding: 6rem 0 3rem;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            fill: var(--gray-900);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        
+        .footer-logo a {
+            display: inline-block;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--white);
+        }
+        
+        .footer-about {
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-icon {
+            width: 4rem;
+            height: 4rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .social-icon:hover {
+            background-color: var(--visa-blue);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+        }
+        
+        .footer-links li {
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-links li a {
+            opacity: 0.8;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .footer-links li a:hover {
+            opacity: 1;
+            color: var(--white);
+            padding-left: 0.5rem;
+        }
+        
+        .footer-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-selector select {
+            appearance: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: none;
+            padding: 1rem 4rem 1rem 1.5rem;
+            border-radius: 0.8rem;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .language-selector::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--white);
+        }
+        
+        .language-selector select:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .security-badges {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .security-badge {
+            height: 40px;
+            opacity: 0.8;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .security-badge:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            text-align: center;
+            font-size: 1.4rem;
+            opacity: 0.7;
+        }
+        
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 5rem;
+            height: 5rem;
+            background-color: var(--visa-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s var(--ease);
+            z-index: 99;
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        #back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        #back-to-top:hover {
+            background-color: var(--visa-blue-light);
+            transform: translateY(-5px);
+        }
+        
+        /* Media Queries */
+        @media (min-width: 768px) {
+            /* Typography */
+            h1 {
+                font-size: 4.8rem;
+            }
+            
+            h2 {
+                font-size: 3.6rem;
+            }
+            
+            h3 {
+                font-size: 2.8rem;
+            }
+            
+            /* Layout */
+            .container {
+                padding: 0 4rem;
+            }
+            
+            /* Hero */
+            #hero {
+                padding-top: 14rem;
+                padding-bottom: 8rem;
+            }
+            
+            .slide-content {
+                flex-direction: row;
+                align-items: center;
+                padding: 4rem;
+                gap: 4rem;
+            }
+            
+            .slide-text {
+                flex: 1;
+                text-align: left;
+            }
+            
+            .slide-image {
+                flex: 1;
+            }
+            
+            /* Steps */
+            .steps-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            
+            .step {
+                flex: 1;
+            }
+            
+            .step-connector {
+                display: block;
+                height: 3px;
+                background-color: var(--light-blue);
+                flex: 0.1;
+                margin-top: 3rem;
+            }
+            
+            /* Stats */
+            .map-stats {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .stat-card {
+                flex: 1;
+            }
+            
+            /* App Section */
+            .app-container {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .app-content {
+                flex: 1;
+                text-align: left;
+            }
+            
+            .app-features {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            .app-download {
+                justify-content: flex-start;
+            }
+            
+            .app-image-container {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+            }
+            
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            /* Header */
+            .header-container {
+                height: 8rem;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            #nav {
+                display: block;
+            }
+            
+            .header-actions {
+                display: flex;
+                gap: 1.5rem;
+            }
+            
+            .logo-icon {
+                display: inline-block;
+                margin-right: 1rem;
+            }
+            
+            /* Testimonials */
+            .testimonial-card {
+                padding: 5rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01s !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01s !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .fade-in {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+            
+            .float {
+                animation: none;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- VENTANA EMERGENTE DE BIENVENIDA -->
-<div class="welcome-popup" id="welcomePopup">
-  <div class="popup-overlay">
-    <div class="popup-container">
-      <button class="popup-close" id="popupClose" aria-label="Cerrar ventana emergente">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-      
-      <!-- Botones de navegación lateral -->
-      <button class="popup-nav popup-nav-prev" id="popupPrev" aria-label="Mensaje anterior">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      
-      <button class="popup-nav popup-nav-next" id="popupNext" aria-label="Mensaje siguiente">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-      
-      <div class="popup-content">
-        <!-- Logo Remeex Visa -->
-        <div class="popup-logo">
-          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="Remeex Visa Logo">
-        </div>
-        
-        <!-- Mensajes animados -->
-        <div class="popup-message-container">
-          <div class="popup-message" id="message1">
-            <span id="userName">Carlos</span>, Bienvenido a la experiencia de remesa más rápida y segura
-          </div>
-          <div class="popup-message" id="message2">
-            Recarga con tu tarjeta de crédito tu cuenta bancaria
-          </div>
-          <div class="popup-message" id="message3">
-            Completa tus datos
-          </div>
-          <div class="popup-message" id="message4">
-            Recibe tus fondos de inmediato
-          </div>
-        </div>
-        
-        <!-- Spinner -->
-        <div class="popup-spinner">
-          <div class="spinner-circle circle1"></div>
-          <div class="spinner-circle circle2"></div>
-          <div class="spinner-circle circle3"></div>
-        </div>
-        
-        <!-- Indicadores de pasos -->
-        <div class="popup-steps">
-          <button class="step-indicator active" data-step="0" aria-label="Ir al paso 1"></button>
-          <button class="step-indicator" data-step="1" aria-label="Ir al paso 2"></button>
-          <button class="step-indicator" data-step="2" aria-label="Ir al paso 3"></button>
-          <button class="step-indicator" data-step="3" aria-label="Ir al paso 4"></button>
-        </div>
-        
-        <!-- Botón de continuar -->
-        <div class="btn-container popup-btn">
-          <div class="btn-glow-effect"></div>
-          <button class="btn-glow" id="popupContinue">
-            <div class="btn-glow-content">
-              <span id="continueText">Continuar</span>
-              <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-logo">
+                <span>Remeex</span><span>VISA</span>
             </div>
-          </button>
+            <div class="loader-progress">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-text" id="loader-text">Cargando recursos...</div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-
-  <div class="header">
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="REMEEX Logo" class="header-logo">
-    <p>Envía dinero al instante sin comisiones</p>
-  </div>
-
-  <div class="logo-bar">
-    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
-    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg" alt="MasterCard Logo">
-    <img src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" alt="American Express Logo">
-  </div>
-
-  <!-- Barra de progreso para 8 pasos (0..7) -->
-  <div class="progress-bar">
-    <div class="progress-bar-fill" id="progressBarFill"></div>
-  </div>
-  <!-- Paso 0: LOGIN -->
-  <div class="section-content active" id="step0">
-    <h2><i class="fas fa-user"></i> ¿Eres tú quien recibirá la remesa?</h2>
-    <div class="form-group">
-      <label class="form-label" for="fullName">Escribe tu nombre y apellido</label>
-      <input type="text" class="form-control" id="fullName" placeholder="Ej: Juan Alberto Perez Rodriguez" />
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="password10">Busca tu contraseña dinámica de 10 dígitos en tu aplicación VISA</label>
-      <input type="password" class="form-control" id="password10" maxlength="10" placeholder="10 dígitos" />
-    </div>
-    <div class="btn-row">
-      <!-- Botón 'Atrás' oculto en este primer paso -->
-      <div class="btn-container" style="visibility: hidden;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="loginBtn">
-          <div class="btn-glow-content btn-glow-initial">
-            Iniciar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Iniciar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Paso 1: Idioma -->
-  <div class="section-content" id="step1">
-    <h2><i class="fas fa-language"></i> <span class="user-name-title" id="labelNameLang"></span>, ¿Cuál idioma prefieres?</h2>
-    <div class="form-group">
-      <label class="form-label" for="language">Idioma</label>
-      <select class="form-control" id="language">
-        <option value="">-- Elige un idioma --</option>
-        <option value="es">Español</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="pt">Português</option>
-        <option value="zh">中文</option>
-      </select>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn1">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="nextBtn1">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Paso 2: Tipo de Tarjeta -->
-  <div class="section-content" id="step2">
-    <h2><i class="fas fa-credit-card"></i> <span class="user-name-title" id="labelNameCard"></span>, ¿con qué tipo de tarjeta vas a recargar tu cuenta bancaria?</h2>
-    <div class="form-group">
-      <label class="form-label" for="cardType">Tipo de tarjeta</label>
-      <select class="form-control" id="cardType">
-        <option value="">-- Selecciona el tipo --</option>
-        <option value="credito_internacional">Crédito Internacional</option>
-        <option value="debito_internacional">Débito Internacional</option>
-      </select>
-    </div>
-    <div class="form-group" id="brandGroup" style="display: none;">
-      <label class="form-label" for="cardBrand">Marca de tarjeta</label>
-      <select class="form-control" id="cardBrand">
-        <option value="">-- Selecciona la marca --</option>
-        <option value="VISA">VISA</option>
-        <option value="MasterCard">MasterCard</option>
-        <option value="AmericanExpress">AmericanExpress</option>
-      </select>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn2">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="nextBtn2">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Paso 3: País de Destino -->
-  <div class="section-content" id="step3">
-    <h2><i class="fas fa-globe-americas"></i> <span class="user-name-title" id="labelNameCountry"></span>, selecciona tu país</h2>
-    <div class="form-group">
-      <label class="form-label" for="country">País Destino</label>
-      <select class="form-control" id="country">
-        <option value="">-- Selecciona un país --</option>
-        <option value="Alemania">Alemania</option>
-        <option value="Andorra">Andorra</option>
-        <option value="Argentina">Argentina</option>
-        <option value="Brasil">Brasil</option>
-        <option value="Chile">Chile</option>
-        <option value="Colombia">Colombia</option>
-        <option value="Costa Rica">Costa Rica</option>
-        <option value="Cuba">Cuba</option>
-        <option value="Ecuador">Ecuador</option>
-        <option value="El Salvador">El Salvador</option>
-        <option value="España">España</option>
-        <option value="Estados Unidos">Estados Unidos</option>
-        <option value="Francia">Francia</option>
-        <option value="Guatemala">Guatemala</option>
-        <option value="Honduras">Honduras</option>
-        <option value="Italia">Italia</option>
-        <option value="México">México</option>
-        <option value="Nicaragua">Nicaragua</option>
-        <option value="Panamá">Panamá</option>
-        <option value="Paraguay">Paraguay</option>
-        <option value="Perú">Perú</option>
-        <option value="Polonia">Polonia</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Reino Unido">Reino Unido</option>
-        <option value="República Dominicana">República Dominicana</option>
-        <option value="Uruguay">Uruguay</option>
-        <option value="Venezuela">Venezuela</option>
-      </select>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn3">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="nextBtn3">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Paso 4: Tipo de Transacción -->
-  <div class="section-content" id="step4">
-    <h2><i class="fas fa-exchange-alt"></i> <span class="user-name-title" id="labelNameTxn"></span>, ¿qué tipo de transacción vas a realizar?</h2>
-    <div class="form-group">
-      <label class="form-label" for="transactionType">Elige el tipo</label>
-      <select class="form-control" id="transactionType">
-        <option value="">-- Selecciona --</option>
-      </select>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn4">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="nextBtn4">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Paso 5: Términos y Condiciones -->
-  <div class="section-content" id="step5">
-    <h2><i class="fas fa-file-contract"></i> <span class="user-name-title" id="labelNameTerms"></span>, acepta los Términos y Condiciones</h2>
-    <div class="checkbox-group">
-      <input type="checkbox" id="acceptVisa" />
-      <label for="acceptVisa">
-        Acepto los
-        <a href="https://www.visa.es/terminos-de-uso.html" target="_blank">
-          Términos y Condiciones de Visa
-        </a>
-      </label>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn5">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="finishBtn">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Paso 6: Realiza tu recarga -->
-  <div class="section-content" id="step6">
-    <h2><i class="fas fa-money-bill-wave"></i> <span class="user-name-title" id="labelNameRecharge"></span>, es momento que realices tu recarga</h2>
-    <div class="form-group">
-      <label class="form-label">Selecciona tu monto en USD:</label>
-      <select id="rechargeAmount" class="form-control">
-        <option value="">-- Selecciona el monto --</option>
-        <option value="500">500 USD</option>
-        <option value="1000">1000 USD</option>
-        <option value="1500">1500 USD</option>
-        <option value="2000">2000 USD</option>
-        <option value="3000">3000 USD</option>
-        <option value="4000">4000 USD</option>
-        <option value="5000">5000 USD</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <div id="equivInfo"></div>
-    </div>
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn6">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="nextBtn6">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Paso 7: Ingresar Tarjeta y Confirmación -->
-  <div class="section-content" id="step7">
-    <h2><i class="fas fa-credit-card"></i> Ingresa los datos de tu tarjeta para recargar</h2>
-    
-    <!-- Resumen rápido de lo seleccionado -->
-    <div class="summary-card">
-      <div class="summary-row">
-        <span>Monto Seleccionado (USD):</span>
-        <strong id="summaryUSD">-</strong>
-      </div>
-      <div class="summary-row">
-        <span>Equivalente en Bolívares:</span>
-        <strong id="summaryBs">-</strong>
-      </div>
-      <div class="summary-row">
-        <span>Tasa de Cambio (Bs/USD):</span>
-        <strong id="summaryRate">-</strong>
-      </div>
-      <div class="summary-row">
-        <span>Fecha y Hora:</span>
-        <strong id="summaryDateTime">-</strong>
-      </div>
     </div>
 
-    <!-- Contenedor que muestra un estilo de tarjeta -->
-    <div class="credit-card-container">
-      <div class="credit-card-visual">
-        <div class="chip"></div>
-        <div class="card-number" id="cardNumberPreview">#### #### #### ####</div>
-        <div class="card-holder" id="cardHolderPreview">TITULAR</div>
-        <div class="card-expiration" id="cardExpPreview">MM/AA</div>
-      </div>
-      
-      <!-- Campos para la tarjeta -->
-      <div style="width:100%;">
-        <div class="form-group">
-          <label class="form-label" for="cardHolder">Nombre del Titular</label>
-          <input type="text" class="form-control" id="cardHolder" placeholder="Ej: JUAN PEREZ" />
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <a href="#hero">
+                        <i class="fab fa-cc-visa logo-icon"></i>
+                        <span>Remeex</span><span>VISA</span>
+                    </a>
+                </div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#hero" class="active">Inicio</a></li>
+                        <li><a href="#features">Servicios</a></li>
+                        <li><a href="#how-it-works">Cómo Funciona</a></li>
+                        <li><a href="#global-coverage">Cobertura Global</a></li>
+                        <li><a href="#support">Soporte</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-secondary">Acceder</a>
+                    <a href="#" class="btn btn-primary">Recibir remesa ya!</a>
+                </div>
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cardNumber">Número de Tarjeta</label>
-          <input type="text" class="form-control" id="cardNumber" placeholder="#### #### #### ####" maxlength="16" />
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <a href="#hero">
+                    <i class="fab fa-cc-visa logo-icon"></i>
+                    <span>Remeex</span><span>VISA</span>
+                </a>
+            </div>
+            <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cardExpiry">Fecha de Expiración (MM/AA)</label>
-          <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA" maxlength="5" />
+        <div class="mobile-menu-body">
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="#hero" class="active">Inicio</a></li>
+                    <li><a href="#features">Servicios</a></li>
+                    <li><a href="#how-it-works">Cómo Funciona</a></li>
+                    <li><a href="#global-coverage">Cobertura Global</a></li>
+                    <li><a href="#support">Soporte</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cardCVV">CVV</label>
-          <input type="password" class="form-control" id="cardCVV" maxlength="3" placeholder="3 dígitos" />
+        <div class="mobile-menu-footer">
+            <div class="mobile-actions">
+                <a href="#" class="btn btn-secondary">Acceder</a>
+                <a href="#" class="btn btn-primary">Recibir remesa ya!</a>
+            </div>
         </div>
-      </div>
     </div>
+    <div class="overlay" id="overlay"></div>
 
-    <!-- Botones de acción -->
-    <div class="btn-row">
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="backBtn7">
-          <div class="btn-glow-content btn-glow-initial">
-            Atrás
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Atrás
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 5 5 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-pattern"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <span class="badge badge-primary">Transfiere dinero con confianza</span>
+                <h1 class="hero-title">Transferencias globales sin fronteras</h1>
+                <p class="hero-subtitle">Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica</p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg"><i class="fas fa-info-circle"></i>Cómo funciona</a>
+                </div>
+            </div>
+            <div class="hero-slider fade-in delay-2">
+                <div class="hero-slide active">
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <h3>Envía dinero a todo el mundo</h3>
+                            <p>Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
+                            <a href="#" class="btn btn-primary">Comenzar ahora</a>
+                        </div>
+                        <div class="slide-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Transferencias globales" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide">
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <h3>Las mejores tarifas del mercado</h3>
+                            <p>Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
+                            <a href="#" class="btn btn-primary">Ver tarifas</a>
+                        </div>
+                        <div class="slide-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Mejores tarifas" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide">
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <h3>Recarga con tarjeta de crédito</h3>
+                            <p>Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
+                            <a href="#" class="btn btn-primary">Recargar ahora</a>
+                        </div>
+                        <div class="slide-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Recarga con tarjeta" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <span class="slider-dot active" data-slide="0"></span>
+                    <span class="slider-dot" data-slide="1"></span>
+                    <span class="slider-dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <div class="btn-container">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="confirmCardBtn">
-          <div class="btn-glow-content btn-glow-initial">
-            Confirmar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Confirmar
-            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title center fade-in">
+                <h2>¿Por qué elegir Remeex VISA?</h2>
+                <p class="subtitle">Descubre las ventajas que nos hacen líderes en transferencias internacionales</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Transferencias inmediatas</h3>
+                    <p class="feature-description">Tu dinero llega en minutos a cualquier parte del mundo, cuando más lo necesitan.</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Seguridad avanzada</h3>
+                    <p class="feature-description">Con el respaldo de VISA y la más avanzada tecnología de encriptación para proteger cada transacción.</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3 class="feature-title">Cobertura en 200+ países</h3>
+                    <p class="feature-description">Alcance global para llegar a tus seres queridos sin importar dónde se encuentren.</p>
+                </div>
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3 class="feature-title">Tarifas competitivas</h3>
+                    <p class="feature-description">Las mejores tasas de cambio y comisiones más bajas del mercado para que envíes más por menos.</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="feature-title">Recarga con tarjeta <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></h3>
+                    <p class="feature-description">Recarga tu cuenta bancaria directamente con tu tarjeta de crédito. ¡Servicio express, instantáneo y sin comisiones!</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Soporte 24/7</h3>
+                    <p class="feature-description">Atención al cliente disponible todos los días del año para resolver cualquier duda o incidencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</div> <!-- Fin .container -->
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="how-it-works-bg"></div>
+        <div class="container">
+            <div class="section-title center fade-in">
+                <h2>Cómo funciona</h2>
+                <p class="subtitle">Tres simples pasos para conectar con tus seres queridos en cualquier parte del mundo</p>
+            </div>
+            <div class="steps-container">
+                <div class="step fade-in delay-1">
+                    <div class="step-number">1</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus float"></i>
+                        </div>
+                        <h3 class="step-title">Regístrate y verifica tu identidad</h3>
+                        <p class="step-description">Crea tu cuenta en menos de 2 minutos y verifica tu identidad de forma segura para comenzar a operar de inmediato.</p>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step fade-in delay-2">
+                    <div class="step-number">2</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-money-bill-wave float"></i>
+                        </div>
+                        <h3 class="step-title">Selecciona destinatario y monto</h3>
+                        <p class="step-description">Elige a quién quieres enviar dinero, indica el monto y revisa nuestras competitivas tarifas en tiempo real. Ahora también puedes recargar con tarjeta.</p>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step fade-in delay-3">
+                    <div class="step-number">3</div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i class="fas fa-paper-plane float"></i>
+                        </div>
+                        <h3 class="step-title">Realiza la transferencia</h3>
+                        <p class="step-description">Confirma los detalles, elige tu método de pago preferido y ¡listo! Tu dinero llegará en minutos, con confirmación instantánea.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Contenedor oculto para audio en bucle -->
-<div id="audioContainer" style="display: none;"></div>
+    <!-- Global Coverage Section -->
+    <section id="global-coverage">
+        <div class="global-coverage-bg"></div>
+        <div class="container">
+            <div class="section-title center light fade-in">
+                <h2>Cobertura Global</h2>
+                <p class="subtitle light">Alcance internacional con presencia en más de 200 países y territorios</p>
+            </div>
+            <div class="map-container fade-in delay-1">
+                <img src="https://via.placeholder.com/1200x600" alt="Mapa mundial" loading="lazy">
+            </div>
+            <div class="map-stats">
+                <div class="stat-card fade-in delay-1">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Países</div>
+                </div>
+                <div class="stat-card fade-in delay-2">
+                    <div class="stat-number">20M+</div>
+                    <div class="stat-label">Usuarios</div>
+                </div>
+                <div class="stat-card fade-in delay-3">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Satisfacción</div>
+                </div>
+                <div class="stat-card fade-in delay-4">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Disponibilidad</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- OVERLAY DINÁMICO (para mostrar notificaciones) -->
-<div id="overlayNotif" style="
-  display: none;
-  position: fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  z-index: 99999;
-  justify-content: center;
-  align-items: center;
-  text-align:center;">
-  
-  <div style="
-       background: rgba(255,255,255,0.97);
-       color: #000;
-       padding:2rem;
-       border-radius:20px;
-       width:90%;
-       max-width:360px;
-       display:flex;
-       flex-direction:column;
-       align-items:center;
-       position:relative;
-       box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
-    
-    <!-- Título del Overlay (SMS) -->
-    <div id="overlayTitle" style="font-weight:700; font-size:1.1rem; margin-bottom:0.5rem;">
-      Verificación de SMS
-    </div>
-    <div id="overlayMessage" style="margin-bottom:1rem; font-weight:600; text-align:center; font-size:1rem;">
-      <!-- Mensaje dinámico -->
-    </div>
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="testimonials-bg"></div>
+        <div class="container">
+            <div class="section-title center fade-in">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p class="subtitle">Miles de personas confían en nosotros para sus transferencias internacionales</p>
+            </div>
+            <div class="testimonials-slider fade-in delay-1">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
+                        <div class="client-info">
+                            <img src="https://via.placeholder.com/150x150" alt="María Rodríguez" class="client-photo" loading="lazy">
+                            <h4 class="client-name">María Rodríguez</h4>
+                            <p class="client-position">Madrid, España</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
+                        <div class="client-info">
+                            <img src="https://via.placeholder.com/150x150" alt="Carlos Mendoza" class="client-photo" loading="lazy">
+                            <h4 class="client-name">Carlos Mendoza</h4>
+                            <p class="client-position">Londres, Reino Unido</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
+                        <div class="client-info">
+                            <img src="https://via.placeholder.com/150x150" alt="Anna Lee" class="client-photo" loading="lazy">
+                            <h4 class="client-name">Anna Lee</h4>
+                            <p class="client-position">Toronto, Canadá</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-arrows">
+                    <button class="testimonial-arrow" id="testimonial-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="testimonial-arrow" id="testimonial-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="testimonial-controls">
+                    <span class="testimonial-dot active" data-slide="0"></span>
+                    <span class="testimonial-dot" data-slide="1"></span>
+                    <span class="testimonial-dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Spinner -->
-    <div id="overlaySpinner" style="display:flex; margin:1rem 0;">
-      <div class="spinner-circle circle1"></div>
-      <div class="spinner-circle circle2"></div>
-      <div class="spinner-circle circle3"></div>
-    </div>
+    <!-- App Section -->
+    <section id="app">
+        <div class="app-bg"></div>
+        <div class="container">
+            <div class="app-container">
+                <div class="app-content fade-in">
+                    <span class="badge badge-success">Disponible 24/7</span>
+                    <h2>Lleva Remeex VISA siempre contigo</h2>
+                    <p class="large-text">Descarga nuestra aplicación móvil y gestiona tus transferencias desde cualquier lugar, en cualquier momento.</p>
+                    <div class="app-features">
+                        <div class="app-feature fade-in delay-1">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Interfaz intuitiva y fácil de usar</div>
+                        </div>
+                        <div class="app-feature fade-in delay-2">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Notificaciones en tiempo real</div>
+                        </div>
+                        <div class="app-feature fade-in delay-3">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Acceso rápido con huella digital o Face ID</div>
+                        </div>
+                        <div class="app-feature fade-in delay-4">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Recarga tu cuenta con tarjeta de crédito<span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></div>
+                        </div>
+                        <div class="app-feature fade-in delay-4">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Historial de transferencias detallado</div>
+                        </div>
+                    </div>
+                    <div class="app-download">
+                        <a href="#" class="app-btn fade-in delay-1">
+                            <i class="fab fa-apple"></i>
+                            <div class="app-btn-content">
+                                <span class="app-btn-text">Descarga en la</span>
+                                <span class="app-btn-name">App Store</span>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn fade-in delay-2">
+                            <i class="fab fa-google-play"></i>
+                            <div class="app-btn-content">
+                                <span class="app-btn-text">Disponible en</span>
+                                <span class="app-btn-name">Google Play</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="app-image-container fade-in delay-3">
+                    <img src="https://via.placeholder.com/300x600" alt="Aplicación móvil Remeex VISA" class="app-image" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Íconos de resultado -->
-    <div id="overlayPositive" style="font-size:2.5rem; color:green; display:none; margin:1rem 0;">
-      <i class="fas fa-check-circle"></i>
-    </div>
-    <div id="overlayNegative" style="font-size:2.5rem; color:red; display:none; margin:1rem 0;">
-      <i class="fas fa-times-circle"></i>
-    </div>
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="cta-bg"></div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title fade-in">Comienza a conectar sin fronteras</h2>
+                <p class="cta-subtitle fade-in delay-1">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
+                <a href="#" class="btn btn-secondary btn-lg fade-in delay-2"><i class="fas fa-paper-plane"></i>Recibir remesa ya!</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- Para pedir el código OTP -->
-    <div id="overlayOTP" style="display:none; width:100%;">
-      <label style="font-weight:500; font-size:0.95rem;">
-        Ingresa tu código de 6 dígitos:
-      </label>
-      <input type="password" id="otpCode" maxlength="6" style="
-             text-align:center; 
-             font-size:1.2rem; 
-             font-weight:600; 
-             width:100%; 
-             margin:1rem 0; 
-             padding:0.5rem; 
-             border-radius:6px; 
-             border:2px solid #ddd;">
-      <button id="btnOTPConfirm" style="
-              background: var(--primary); 
-              color:#fff; 
-              border:none; 
-              border-radius:6px; 
-              padding:0.6rem 1.25rem; 
-              cursor:pointer; 
-              font-weight:600;">
-        Confirmar
-      </button>
-    </div>
-  </div>
-</div>
+    <!-- Support Section -->
+    <section id="support">
+        <div class="container">
+            <div class="section-title center fade-in">
+                <h2>Estamos aquí para ayudarte</h2>
+                <p class="subtitle">Nuestro equipo de soporte está disponible 24/7 para resolver todas tus dudas</p>
+            </div>
+            <div class="support-grid">
+                <div class="support-card fade-in delay-1">
+                    <div class="support-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="support-title">Chat en vivo</h3>
+                    <p class="support-description">Habla con un asesor en tiempo real a través de nuestra web o aplicación móvil.</p>
+                    <a href="#" class="btn btn-primary">Iniciar chat</a>
+                </div>
+                <div class="support-card fade-in delay-2">
+                    <div class="support-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="support-title">Correo electrónico</h3>
+                    <p class="support-description">Envíanos tus consultas a support@remeexvisa.com y te responderemos en menos de 24 horas.</p>
+                    <a href="mailto:support@remeexvisa.com" class="btn btn-primary">Enviar correo</a>
+                </div>
+                <div class="support-card fade-in delay-3">
+                    <div class="support-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="support-title">Teléfono</h3>
+                    <p class="support-description">Llámanos al +1 800-REMEEX para hablar directamente con un asesor especializado.</p>
+                    <a href="tel:+18007363399" class="btn btn-primary">Llamar ahora</a>
+                </div>
+                <div class="support-card fade-in delay-4">
+                    <div class="support-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="support-title">Centro de ayuda</h3>
+                    <p class="support-description">Consulta nuestras guías, tutoriales y preguntas frecuentes para resolver dudas comunes.</p>
+                    <a href="#" class="btn btn-primary">Visitar centro</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-  // ---------------------------------
-  // POPUP DE BIENVENIDA
-  // ---------------------------------
-  document.addEventListener('DOMContentLoaded', function() {
-    const welcomePopup = document.getElementById('welcomePopup');
-    const popupClose = document.getElementById('popupClose');
-    const popupContinue = document.getElementById('popupContinue');
-    const popupPrev = document.getElementById('popupPrev');
-    const popupNext = document.getElementById('popupNext');
-    const continueText = document.getElementById('continueText');
-    const messages = document.querySelectorAll('.popup-message');
-    const stepButtons = document.querySelectorAll('.step-indicator');
-    
-    let currentMessageIndex = 0;
-    let messageInterval;
-    let isPaused = false;
-    
-    function showCurrentMessage() {
-      messages.forEach(msg => msg.classList.remove('active'));
-      messages[currentMessageIndex].classList.add('active');
-      
-      // Indicadores
-      stepButtons.forEach((btn, idx) => {
-        if(idx === currentMessageIndex) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-      
-      // Siempre "Continuar"
-      continueText.textContent = 'Continuar';
-      updateNavigationButtons();
-    }
-    
-    function updateNavigationButtons() {
-      if (currentMessageIndex === 0) {
-        popupPrev.classList.add('disabled');
-      } else {
-        popupPrev.classList.remove('disabled');
-      }
-      if (currentMessageIndex === messages.length - 1) {
-        popupNext.classList.add('disabled');
-      } else {
-        popupNext.classList.remove('disabled');
-      }
-    }
-    
-    function nextMessage() {
-      if(currentMessageIndex < messages.length - 1) {
-        currentMessageIndex++;
-        showCurrentMessage();
-      }
-    }
-    function prevMessage() {
-      if(currentMessageIndex > 0) {
-        currentMessageIndex--;
-        showCurrentMessage();
-      }
-    }
-    function goToMessage(index) {
-      currentMessageIndex = index;
-      showCurrentMessage();
-      pauseAutoRotation();
-    }
-    function pauseAutoRotation() {
-      isPaused = true;
-      clearInterval(messageInterval);
-      setTimeout(() => { 
-        isPaused = false; 
-        startAutoRotation(); 
-      }, 3000);
-    }
-    function startAutoRotation() {
-      if(!isPaused) {
-        messageInterval = setInterval(() => {
-          if(currentMessageIndex < messages.length - 1) {
-            currentMessageIndex++;
-            showCurrentMessage();
-          } else {
-            clearInterval(messageInterval);
-          }
-        }, 3000);
-      }
-    }
-    
-    // 1. CORRECCIÓN DEL NOMBRE "CARLOS" POR EL NOMBRE REAL DEL USUARIO
-    function showWelcomePopup() {
-      // Obtener el nombre del usuario desde los datos de login
-      let loginData = sessionStorage.getItem("loginData");
-      if(loginData) {
-        loginData = JSON.parse(loginData);
-        // Actualizar el elemento userName en el popup
-        document.getElementById('userName').textContent = loginData.shortName;
-      }
-      
-      welcomePopup.classList.add('active');
-      showCurrentMessage();
-      startAutoRotation();
-    }
-    window.showWelcomePopup = showWelcomePopup; // Global
+    <!-- Footer -->
+    <footer id="footer">
+        <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 50">
+            <path d="M0,32L48,37.3C96,43,192,53,288,50.7C384,48,480,32,576,21.3C672,11,768,5,864,10.7C960,16,1056,32,1152,37.3C1248,43,1344,37,1392,34.7L1440,32L1440,50L1392,50C1344,50,1248,50,1152,50C1056,50,960,50,864,50C768,50,672,50,576,50C480,50,384,50,288,50C192,50,96,50,48,50L0,50Z"></path>
+        </svg>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <a href="#hero">
+                            <i class="fab fa-cc-visa logo-icon"></i>
+                            <span>Remeex</span><span>VISA</span>
+                        </a>
+                    </div>
+                    <p class="footer-about">Conectando familias alrededor del mundo con transferencias rápidas, seguras y económicas. Ahora con recarga instantánea de cuenta bancaria con tarjeta de crédito.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Empresa</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">Carreras</a></li>
+                        <li><a href="#">Sala de prensa</a></li>
+                        <li><a href="#">Responsabilidad social</a></li>
+                        <li><a href="#">Inversores</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Transferencias internacionales</a></li>
+                        <li><a href="#">Recarga con tarjeta de crédito</a></li>
+                        <li><a href="#">Pagos recurrentes</a></li>
+                        <li><a href="#">Cambio de divisas</a></li>
+                        <li><a href="#">Tarjetas virtuales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Ayuda</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><a href="#">Seguridad</a></li>
+                        <li><a href="#">Reportar un problema</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                        <li><a href="#">Cumplimiento normativo</a></li>
+                        <li><a href="#">Licencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <div class="language-selector">
+                    <select aria-label="Seleccionar idioma">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="pt">Português</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+                <div class="security-badges">
+                    <img src="https://via.placeholder.com/100x40" alt="SSL Secured" class="security-badge" loading="lazy">
+                    <img src="https://via.placeholder.com/100x40" alt="PCI Compliant" class="security-badge" loading="lazy">
+                    <img src="https://via.placeholder.com/100x40" alt="VISA Verified" class="security-badge" loading="lazy">
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    // Botones
-    popupPrev.addEventListener('click', () => {
-      prevMessage();
-      pauseAutoRotation();
-    });
-    popupNext.addEventListener('click', () => {
-      nextMessage();
-      pauseAutoRotation();
-    });
-    stepButtons.forEach((button, i) => {
-      button.addEventListener('click', () => goToMessage(i));
-    });
-    popupClose.addEventListener('click', () => {
-      welcomePopup.classList.remove('active');
-      clearInterval(messageInterval);
-      setTimeout(() => { welcomePopup.style.display = 'none'; }, 400);
-    });
-    popupContinue.addEventListener('click', () => {
-      if(currentMessageIndex < messages.length - 1) {
-        nextMessage();
-        pauseAutoRotation();
-      } else {
-        welcomePopup.classList.remove('active');
-        clearInterval(messageInterval);
-        setTimeout(() => { welcomePopup.style.display = 'none'; }, 400);
-      }
-    });
-    
-    // 3. AGREGAR "USD" A LOS MONTOS EN LA LISTA DE SELECCIÓN
-    // Función para regenerar las opciones del selector de monto
-    updateAmountOptions();
-    
-    function updateAmountOptions() {
-      const rechargeSel = document.getElementById("rechargeAmount");
-      if(rechargeSel) {
-        rechargeSel.innerHTML = `
-          <option value="">-- Selecciona el monto --</option>
-          <option value="500">500 USD</option>
-          <option value="1000">1000 USD</option>
-          <option value="1500">1500 USD</option>
-          <option value="2000">2000 USD</option>
-          <option value="3000">3000 USD</option>
-          <option value="4000">4000 USD</option>
-          <option value="5000">5000 USD</option>
-        `;
-      }
-    }
-  });
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Volver arriba">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-  // ---------------------------------
-  // FORMULARIO MULTI-PASO
-  // ---------------------------------
-  let isRedirecting = false;
-  history.pushState({}, '', '');
-  window.addEventListener('popstate', function(event) {
-    window.location.href = "https://remeexvisa.com";
-  });
-  window.addEventListener('beforeunload', function(e) {
-    if(!isRedirecting) {
-      e.preventDefault();
-      window.location.href = "https://remeexvisa.com";
-      e.returnValue = '';
-    }
-  });
-
-  // Referencias
-  const progressBarFill       = document.getElementById("progressBarFill");
-  const sections              = document.querySelectorAll(".section-content");
-
-  // Login
-  const fullNameInput         = document.getElementById("fullName");
-  const passwordInput         = document.getElementById("password10");
-  const loginBtn              = document.getElementById("loginBtn");
-
-  // Steps
-  const languageSelect        = document.getElementById("language");
-  const cardTypeSelect        = document.getElementById("cardType");
-  const cardBrandSelect       = document.getElementById("cardBrand");
-  const brandGroup            = document.getElementById("brandGroup");
-  const countrySelect         = document.getElementById("country");
-  const transactionTypeSelect = document.getElementById("transactionType");
-  const acceptCheckbox        = document.getElementById("acceptVisa");
-
-  // Botones Siguientes
-  const nextBtn1   = document.getElementById("nextBtn1");
-  const nextBtn2   = document.getElementById("nextBtn2");
-  const nextBtn3   = document.getElementById("nextBtn3");
-  const nextBtn4   = document.getElementById("nextBtn4");
-  const finishBtn  = document.getElementById("finishBtn");
-
-  // Botones Atrás
-  const backBtn1   = document.getElementById("backBtn1");
-  const backBtn2   = document.getElementById("backBtn2");
-  const backBtn3   = document.getElementById("backBtn3");
-  const backBtn4   = document.getElementById("backBtn4");
-  const backBtn5   = document.getElementById("backBtn5");// Paso 6 (Recarga)
-  const step6       = document.getElementById("step6");
-  const backBtn6    = document.getElementById("backBtn6");
-  const nextBtn6    = document.getElementById("nextBtn6");
-  const rechargeSel = document.getElementById("rechargeAmount");
-  const equivInfo   = document.getElementById("equivInfo");
-
-  // Paso 7 (Tarjeta)
-  const step7          = document.getElementById("step7");
-  const backBtn7       = document.getElementById("backBtn7");
-  const confirmCardBtn = document.getElementById("confirmCardBtn");
-  const cardHolderInp  = document.getElementById("cardHolder");
-  const cardNumberInp  = document.getElementById("cardNumber");
-  const cardExpiryInp  = document.getElementById("cardExpiry");
-  const cardCVVInp     = document.getElementById("cardCVV");
-
-  // Preview en la tarjeta
-  const cardNumPreview = document.getElementById("cardNumberPreview");
-  const cardExpPreview = document.getElementById("cardExpPreview");
-  const cardHolderPrev = document.getElementById("cardHolderPreview");
-
-  // Summary fields
-  const summaryUSD     = document.getElementById("summaryUSD");
-  const summaryBs      = document.getElementById("summaryBs");
-  const summaryRate    = document.getElementById("summaryRate");
-  const summaryDateTime= document.getElementById("summaryDateTime");
-
-  // Función para formatear montos en estilo español: 1.234,56
-  function formatNumberES(num) {
-    return num.toLocaleString("es-ES", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-  }
-
-  let currentStep = 0; // 0..7
-
-  function goToStep(n) {
-    currentStep = n;
-    sections.forEach(s => s.classList.remove("active"));
-    document.getElementById("step" + n).classList.add("active");
-    updateProgressBar();
-  }
-  function updateProgressBar() {
-    // 8 pasos totales => 0..7
-    const totalSteps = 8;
-    const pct = ((currentStep + 1) / totalSteps) * 100;
-    progressBarFill.style.width = pct + "%";
-  }
-
-  // ---------------------------------
-  // LOGIN (Step0)
-  // ---------------------------------
-  loginBtn.addEventListener("click", () => {
-    const fullName = fullNameInput.value.trim();
-    const pass10   = passwordInput.value.trim();
-
-    if(!fullName || !pass10) {
-      alert("Por favor, ingresa tu nombre completo y la contraseña de 10 dígitos.");
-      return;
-    }
-    // Validar que sea la contraseña correcta (de ejemplo)
-    if(pass10 !== "0000002090") {
-      alert("Contraseña incorrecta. Inténtalo de nuevo.");
-      return;
-    }
-    const last4   = pass10.slice(-4);   // '2090'
-    const first2  = last4.slice(0,2);   // '20'
-    const next2   = last4.slice(2,4);   // '90'
-    const amountMinUSD = parseInt(first2, 10) || 0; // 20
-    const rateBolivar  = parseInt(next2, 10) || 0;  // 90
-
-    const nameParts = fullName.split(" ");
-    let shortName = nameParts[0] || fullName;
-
-    // Guardar en sessionStorage y localStorage
-    const loginData = {
-      fullName: fullName,
-      shortName: shortName,
-      password: pass10,
-      amountMinUSD: amountMinUSD,
-      rateBolivar: rateBolivar
-    };
-    sessionStorage.setItem("loginData", JSON.stringify(loginData));
-    localStorage.setItem("loginData", JSON.stringify(loginData));
-
-    // Actualizar todos los spans con clase user-name-title
-    document.querySelectorAll('.user-name-title').forEach(span => {
-      span.textContent = shortName;
-    });
-
-    // 2. REPRODUCIR AUDIO SOLO UNA VEZ, NO EN BUCLE
-    const audioContainer = document.getElementById("audioContainer");
-    audioContainer.innerHTML = `
-      <iframe 
-        src="https://www.youtube.com/embed/IP-mgS5MF4Y?autoplay=1&controls=0" 
-        width="0" 
-        height="0" 
-        style="display:none"
-        allow="autoplay">
-      </iframe>
-    `;
-    
-    // Mostrar popup de bienvenida
-    showWelcomePopup();
-
-    // Ir a step1
-    goToStep(1);
-  });
-
-  // ---------------------------------
-  // STEP1 -> STEP2
-  // ---------------------------------
-  nextBtn1.addEventListener("click", () => {
-    if(!languageSelect.value) {
-      alert("Por favor, selecciona un idioma.");
-      return;
-    }
-    goToStep(2);
-  });
-
-  // ---------------------------------
-  // STEP2 -> STEP3
-  // ---------------------------------
-  nextBtn2.addEventListener("click", () => {
-    if(!cardTypeSelect.value) {
-      alert("Por favor, selecciona el tipo de tarjeta.");
-      return;
-    }
-    if(!cardBrandSelect.value) {
-      alert("Por favor, selecciona la marca de tarjeta.");
-      return;
-    }
-    goToStep(3);
-  });
-  cardTypeSelect.addEventListener("change", () => {
-    if(cardTypeSelect.value) {
-      brandGroup.style.display = "block";
-    } else {
-      brandGroup.style.display = "none";
-      cardBrandSelect.value = "";
-    }
-  });
-
-  // ---------------------------------
-  // STEP3 -> STEP4
-  // ---------------------------------
-  nextBtn3.addEventListener("click", () => {
-    if(!countrySelect.value) {
-      alert("Por favor, selecciona un país de destino.");
-      return;
-    }
-    generateTransactionTypes();
-    goToStep(4);
-  });
-  function generateTransactionTypes() {
-    const country = countrySelect.value;
-    transactionTypeSelect.innerHTML = `
-      <option value="">-- Selecciona --</option>
-      <option value="envio_cuenta">Envío de dinero a cuenta bancaria en ${country}</option>
-      <option value="recarga">Recarga de móviles en ${country}</option>
-    `;
-  }
-
-  // ---------------------------------
-  // STEP4 -> STEP5
-  // ---------------------------------
-  nextBtn4.addEventListener("click", () => {
-    if(!transactionTypeSelect.value) {
-      alert("Por favor, selecciona el tipo de transacción.");
-      return;
-    }
-    goToStep(5);
-  });
-
-  // ---------------------------------
-  // STEP5 -> STEP6
-  // ---------------------------------
-  finishBtn.addEventListener("click", () => {
-    if(!acceptCheckbox.checked) {
-      alert("Debes aceptar los Términos y Condiciones de Visa.");
-      return;
-    }
-    goToStep(6);
-  });
-
-  // ---------------------------------
-  // STEP6: Realiza tu recarga
-  // ---------------------------------
-  backBtn6.addEventListener("click", () => goToStep(5));
-  rechargeSel.addEventListener("change", showEquiv);
-  function showEquiv() {
-    const val = rechargeSel.value;
-    if(!val) {
-      equivInfo.style.display = 'none';
-      return;
-    }
-    let loginData = sessionStorage.getItem("loginData");
-    if(!loginData) return;
-    loginData = JSON.parse(loginData);
-
-    const rate  = loginData.rateBolivar;
-    const eqBs  = parseInt(val,10) * rate;
-    equivInfo.textContent = "Recibirás en tu cuenta bancaria venezolana la cantidad de: " + formatNumberES(eqBs) + " Bs.";
-    equivInfo.style.display = 'block';
-  }
-  nextBtn6.addEventListener("click", () => {
-    if(!rechargeSel.value) {
-      alert("Selecciona un monto para tu recarga.");
-      return;
-    }
-    // Validar si es mayor al mínimo
-    let loginData = sessionStorage.getItem("loginData");
-    if(!loginData) loginData = "{}";
-    loginData = JSON.parse(loginData);
-
-    const minUSD = loginData.amountMinUSD || 0;
-    const selectedUSD = parseInt(rechargeSel.value, 10);
-    if(selectedUSD < minUSD) {
-      alert(`El monto mínimo de activación es ${minUSD} USD. Selecciona un monto mayor o igual.`);
-      return;
-    }
-
-    // Guardar la selección
-    loginData.selectedUSD = selectedUSD;
-    sessionStorage.setItem("loginData", JSON.stringify(loginData));
-
-    goToStep(7);
-    updateCardSummary();
-  });
-  // ---------------------------------
-  // STEP7: Tarjeta
-  // ---------------------------------
-  backBtn7.addEventListener("click", () => goToStep(6));
-  confirmCardBtn.addEventListener("click", validateCard);
-
-  // Actualización de campos en tiempo real
-  cardNumberInp.addEventListener("input", function(){
-    const val = this.value.replace(/\s/g,'').replace(/(\d{4})/g, "$1 ").trim();
-    cardNumPreview.textContent = val || "#### #### #### ####";
-  });
-  
-  // 5. FORMATEO AUTOMÁTICO DE LA FECHA DE EXPIRACIÓN
-  cardExpiryInp.addEventListener("input", function() {
-    let value = this.value.replace(/\D/g, '');
-    
-    // Insertar automáticamente la barra después de dos dígitos
-    if (value.length >= 2) {
-      value = value.substring(0, 2) + '/' + value.substring(2);
-    }
-    
-    // Actualizar el valor del input con formato
-    this.value = value.substring(0, 5);
-    
-    // También actualizar el preview
-    cardExpPreview.textContent = this.value || "MM/AA";
-  });
-  
-  cardHolderInp.addEventListener("input", function(){
-    cardHolderPrev.textContent = this.value.toUpperCase() || "TITULAR";
-  });
-
-  function updateCardSummary() {
-    let loginData = sessionStorage.getItem("loginData");
-    if(!loginData) loginData = "{}";
-    loginData = JSON.parse(loginData);
-
-    const rate = loginData.rateBolivar || 0;
-    const usd  = loginData.selectedUSD || 0;
-    const eqBs = usd * rate;
-
-    const usdFormatted = formatNumberES(usd) + " USD";
-    const bsFormatted  = formatNumberES(eqBs) + " Bs";
-    const rateFormatted= formatNumberES(rate) + " Bs/USD";
-
-    const now = new Date();
-    const fecha = now.toLocaleDateString();
-    const hora  = now.toLocaleTimeString();
-    
-    summaryUSD.textContent      = usdFormatted;
-    summaryBs.textContent       = bsFormatted;
-    summaryRate.textContent     = rateFormatted;
-    summaryDateTime.textContent = `${fecha} ${hora}`;
-  }
-
-  // Overlay
-  const overlayNotif    = document.getElementById("overlayNotif");
-  const overlayMessage  = document.getElementById("overlayMessage");
-  const overlaySpinner  = document.getElementById("overlaySpinner");
-  const overlayPositive = document.getElementById("overlayPositive");
-  const overlayNegative = document.getElementById("overlayNegative");
-  const overlayOTP      = document.getElementById("overlayOTP");
-  const otpCode         = document.getElementById("otpCode");
-  const btnOTPConfirm   = document.getElementById("btnOTPConfirm");
-
-  // 7. MEJORAR EL ESTILO DE LA VENTANA DE VERIFICACIÓN SMS
-  function showOverlay(msg, spinner=true, positive=false, negative=false, showOTP=false) {
-    overlayNotif.style.display     = 'flex';
-    overlayMessage.textContent     = msg;
-    overlaySpinner.style.display   = spinner ? 'flex' : 'none';
-    overlayPositive.style.display  = positive ? 'block' : 'none';
-    overlayNegative.style.display  = negative ? 'block' : 'none';
-    overlayOTP.style.display       = showOTP ? 'block' : 'none';
-    
-    // Si es una verificación OTP/SMS, usamos un mensaje específico con formato HTML
-    if (showOTP) {
-      document.getElementById("overlayTitle").textContent = "Verificación por SMS";
-      overlayMessage.innerHTML = `
-        Hemos enviado un código de 6 dígitos via SMS 
-        a tu número <strong>+44 ******4935</strong>
-      `;
-      
-      // Agregar botón de reenviar código si no existe
-      if (!document.getElementById("resendOtpBtn")) {
-        const resendBtn = document.createElement("button");
-        resendBtn.id = "resendOtpBtn";
-        resendBtn.textContent = "Reenviar código";
-        resendBtn.style.background = "transparent";
-        resendBtn.style.border = "none";
-        resendBtn.style.color = "var(--primary)";
-        resendBtn.style.textDecoration = "underline";
-        resendBtn.style.cursor = "pointer";
-        resendBtn.style.marginTop = "0.5rem";
-        resendBtn.style.fontWeight = "500";
-        resendBtn.onclick = function() {
-          alert("Nuevo código enviado.");
-        };
+    <!-- Scripts -->
+    <script>
+        // Simulador de carga
+        (function() {
+            const loader = document.getElementById('loader');
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderText = document.getElementById('loader-text');
+            
+            // Valores de carga
+            const loadSteps = [
+                { progress: 20, text: "Cargando recursos..." },
+                { progress: 40, text: "Inicializando componentes..." },
+                { progress: 60, text: "Cargando interfaz..." },
+                { progress: 80, text: "Optimizando experiencia..." },
+                { progress: 100, text: "¡Completado!" }
+            ];
+            
+            let currentStep = 0;
+            
+            function updateLoader() {
+                if (currentStep < loadSteps.length) {
+                    loaderBar.style.width = loadSteps[currentStep].progress + '%';
+                    loaderText.textContent = loadSteps[currentStep].text;
+                    currentStep++;
+                    
+                    const delay = currentStep === loadSteps.length - 1 ? 300 : 400;
+                    setTimeout(updateLoader, delay);
+                } else {
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            document.body.classList.add('loaded');
+                        }, 300);
+                    }, 400);
+                }
+            }
+            
+            setTimeout(updateLoader, 500);
+        })();
         
-        overlayOTP.appendChild(resendBtn);
-      }
-    }
-  }
-  
-  function hideOverlay() {
-    overlayNotif.style.display = 'none';
-  }
-
-  // 6. CORREGIR EL TÍTULO DEL OVERLAY SEGÚN EL CONTEXTO
-  function validateCard() {
-    const cardNum = cardNumberInp.value.trim();
-    const cardExp = cardExpiryInp.value.trim();
-    const cardCvv = cardCVVInp.value.trim();
-    const holder  = cardHolderInp.value.trim();
-
-    if(!holder) {
-      alert("Por favor, ingresa el nombre del titular de la tarjeta.");
-      return;
-    }
-    if(cardNum.length !== 16) {
-      alert("Número de tarjeta inválido. Debe tener 16 dígitos.");
-      return;
-    }
-    if(cardExp.length !== 5 || cardExp.indexOf('/') !== 2) {
-      alert("Fecha de expiración inválida. Formato MM/AA.");
-      return;
-    }
-    if(cardCvv.length !== 3) {
-      alert("CVV inválido. Debe tener 3 dígitos.");
-      return;
-    }
-
-    if(cardNum === "4745034211763009" && cardExp === "01/26" && cardCvv === "583") {
-      document.getElementById("overlayTitle").textContent = "Verificación de Tarjeta";
-      showOverlay("Tarjeta válida", false, true, false, false);
-      setTimeout(() => {
-        hideOverlay();
-        document.getElementById("overlayTitle").textContent = "Verificación por SMS";
-        showOverlay("Hemos enviado un código de 6 dígitos a tu teléfono", false, false, false, true);
-      }, 2000);
-    } else {
-      document.getElementById("overlayTitle").textContent = "Error de Validación";
-      showOverlay("Tarjeta inválida", false, false, true, false);
-      setTimeout(() => {
-        hideOverlay();
-      }, 3000);
-    }
-  }
-
-  // Confirmar OTP
-  btnOTPConfirm.addEventListener("click", () => {
-    const code = otpCode.value.trim();
-    // Ejemplo de códigos válidos
-    if(code !== "142536" && code !== "475869") {
-      alert("Código inválido.");
-      return;
-    }
-    // Código correcto
-    showOverlay("Debitando fondos de tu tarjeta...", true, false, false, false);
-    setTimeout(() => {
-      showOverlay("Operación exitosa", false, true, false, false);
-      // Luego de 5 segundos => redirigir
-      setTimeout(() => {
-        hideOverlay();
-        finalizeAndGo();
-      }, 5000);
-    }, 5000);
-  });
-
-  // Funciones Finalize:
-  // ---------------------------------
-  // Versión combinada que asegura la tasa como float con fallback
-  // y almacena los datos adicionales que se necesitan
-  // ---------------------------------
-  function finalizeAndGo() {
-    isRedirecting = true;
-    let loginData = sessionStorage.getItem("loginData");
-    if(!loginData) loginData = "{}";
-    loginData = JSON.parse(loginData);
-
-    // Asegurar que la tasa de cambio se preserve y sea numérica
-    const parsedRate = parseFloat(loginData.rateBolivar);
-    const rateBolivar = isNaN(parsedRate) ? 69.0 : parsedRate; // fallback 69.0
-    const selectedUSD = loginData.selectedUSD || 0;
-    const balanceBS   = selectedUSD * rateBolivar;
-
-    const data = {
-      fullName       : loginData.fullName,
-      userName       : loginData.shortName,
-      password       : loginData.password,
-      amountMinUSD   : loginData.amountMinUSD,
-      rateBolivar    : rateBolivar, 
-      selectedUSD    : selectedUSD,
-      language       : languageSelect.value,
-      cardType       : cardTypeSelect.value,
-      cardBrand      : cardBrandSelect.value,
-      country        : countrySelect.value,
-      transactionType: transactionTypeSelect.value
-    };
-    
-    // Almacenar el objeto completo
-    sessionStorage.setItem("datosRemeex", JSON.stringify(data));
-    localStorage.setItem("datosRemeex", JSON.stringify(data));
-    sessionStorage.setItem("datosIndex", JSON.stringify(data));
-    
-    // Almacenar también la tasa y el balance BS
-    sessionStorage.setItem("USD_RATE", rateBolivar.toString());
-    localStorage.setItem("USD_RATE", rateBolivar.toString());
-    sessionStorage.setItem("currentBalanceBS", balanceBS.toString());
-    localStorage.setItem("currentBalanceBS", balanceBS.toString());
-    
-    // Guardar el nombre del usuario también
-    sessionStorage.setItem("userName", loginData.shortName);
-    localStorage.setItem("userName", loginData.shortName);
-
-    // Guardar un banco predeterminado, etc.
-    sessionStorage.setItem("selectedBankName", "Banco de Venezuela, SA");
-    localStorage.setItem("selectedBankName", "Banco de Venezuela, SA");
-
-    // Registrar el ingreso mensual (igual a selectedUSD, por ejemplo)
-    sessionStorage.setItem("monthlyIncomeUSD", selectedUSD.toString());
-    localStorage.setItem("monthlyIncomeUSD", selectedUSD.toString());
-
-    window.location.href = "remeex.html";
-  }
-
-  // Botones atrás
-  backBtn1.addEventListener("click", () => goToStep(0));
-  backBtn2.addEventListener("click", () => goToStep(1));
-  backBtn3.addEventListener("click", () => goToStep(2));
-  backBtn4.addEventListener("click", () => goToStep(3));
-  backBtn5.addEventListener("click", () => goToStep(4));
-</script>
-
-<!-- Integración Tawk.to (opcional) -->
-<script>
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
-</script>
-
+        // Funcionalidad principal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias DOM
+            const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('overlay');
+            const backToTop = document.getElementById('back-to-top');
+            
+            // Menú móvil
+            function toggleMenu() {
+                mobileMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+                
+                if (mobileMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            menuToggle.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            
+            // Enlaces del menú móvil
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleMenu();
+                });
+            });// Slider Hero
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const sliderDots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            let slideInterval;
+            
+            function showSlide(index) {
+                heroSlides.forEach(slide => slide.classList.remove('active'));
+                sliderDots.forEach(dot => dot.classList.remove('active'));
+                
+                heroSlides[index].classList.add('active');
+                sliderDots[index].classList.add('active');
+                
+                currentSlide = index;
+            }
+            
+            function nextSlide() {
+                let next = (currentSlide + 1) % heroSlides.length;
+                showSlide(next);
+            }
+            
+            function startSlider() {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            sliderDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(slideInterval);
+                    showSlide(index);
+                    startSlider();
+                });
+            });
+            
+            // Iniciar slider automático
+            startSlider();
+            
+            // Slider de testimonios
+            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            const testimonialDots = document.querySelectorAll('.testimonial-dot');
+            const prevBtn = document.getElementById('testimonial-prev');
+            const nextBtn = document.getElementById('testimonial-next');
+            let currentTestimonial = 0;
+            let testimonialInterval;
+            
+            function showTestimonial(index) {
+                testimonialSlides.forEach(slide => slide.classList.remove('active'));
+                testimonialDots.forEach(dot => dot.classList.remove('active'));
+                
+                testimonialSlides[index].classList.add('active');
+                testimonialDots[index].classList.add('active');
+                
+                currentTestimonial = index;
+            }
+            
+            function nextTestimonial() {
+                let next = (currentTestimonial + 1) % testimonialSlides.length;
+                showTestimonial(next);
+            }
+            
+            function prevTestimonial() {
+                let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
+                showTestimonial(prev);
+            }
+            
+            function startTestimonialSlider() {
+                testimonialInterval = setInterval(nextTestimonial, 6000);
+            }
+            
+            testimonialDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    showTestimonial(index);
+                    startTestimonialSlider();
+                });
+            });
+            
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    prevTestimonial();
+                    startTestimonialSlider();
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    nextTestimonial();
+                    startTestimonialSlider();
+                });
+            }
+            
+            // Iniciar slider de testimonios
+            startTestimonialSlider();
+            
+            // Botón de volver arriba
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Navegación suave para enlaces de anclaje
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') !== "#") {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            const headerHeight = document.getElementById('header').offsetHeight;
+                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Actualizar clase active en la navegación
+                            document.querySelectorAll('#nav ul li a').forEach(navLink => {
+                                navLink.classList.remove('active');
+                            });
+                            
+                            document.querySelector(`#nav ul li a[href="${targetId}"]`)?.classList.add('active');
+                        }
+                    }
+                });
+            });
+            
+            // Header con efecto al hacer scroll
+            const header = document.getElementById('header');
+            let lastScrollPos = 0;
+            
+            window.addEventListener('scroll', () => {
+                let currentScrollPos = window.pageYOffset;
+                
+                // Cambiar apariencia del header cuando se hace scroll hacia abajo
+                if (currentScrollPos > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Ocultar/mostrar header al hacer scroll
+                if (currentScrollPos > lastScrollPos && currentScrollPos > 200) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollPos = currentScrollPos;
+            });
+            
+            // Animación de elementos al hacer scroll (Intersection Observer)
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+                
+                const handleIntersection = (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                };
+                
+                const observer = new IntersectionObserver(handleIntersection, observerOptions);
+                
+                // Observar todos los elementos con clase fade-in que no tienen delay
+                document.querySelectorAll('.fade-in:not(.delay-1):not(.delay-2):not(.delay-3):not(.delay-4)').forEach(element => {
+                    observer.observe(element);
+                });
+                
+                // Observar elementos con delay después de que aparezcan los principales
+                const delayedObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Obtener el contenedor y todas sus animaciones con delay
+                            const container = entry.target;
+                            const delayedItems = container.querySelectorAll('.delay-1, .delay-2, .delay-3, .delay-4');
+                            
+                            // Mostrar los elementos con delay de forma escalonada
+                            delayedItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('visible');
+                                }, 150 * index);
+                            });
+                            
+                            delayedObserver.unobserve(container);
+                        }
+                    });
+                }, observerOptions);
+                
+                // Observar contenedores que tienen elementos con delay
+                document.querySelectorAll('section').forEach(section => {
+                    if (section.querySelectorAll('.delay-1, .delay-2, .delay-3, .delay-4').length > 0) {
+                        delayedObserver.observe(section);
+                    }
+                });
+            } else {
+                // Fallback para navegadores que no soportan Intersection Observer
+                document.querySelectorAll('.fade-in, .delay-1, .delay-2, .delay-3, .delay-4').forEach(element => {
+                    element.classList.add('visible');
+                });
+            }
+            
+            // Animación de números en las estadísticas
+            const animateCounters = () => {
+                const stats = document.querySelectorAll('.stat-number');
+                
+                stats.forEach(stat => {
+                    const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+                    const duration = 2000; // 2 segundos
+                    const step = target / (duration / 30); // 30fps
+                    let current = 0;
+                    
+                    // Remover formato existente
+                    stat.textContent = '0';
+                    
+                    const updateCounter = () => {
+                        current += step;
+                        
+                        if (current < target) {
+                            stat.textContent = Math.ceil(current).toString();
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            // Formato final
+                            if (target >= 1000000) {
+                                stat.textContent = (target / 1000000).toFixed(1) + 'M+';
+                            } else if (target >= 1000) {
+                                stat.textContent = (target / 1000).toFixed(0) + 'K+';
+                            } else {
+                                stat.textContent = target.toString() + '+';
+                            }
+                        }
+                    };
+                    
+                    // Animación solo si está visible
+                    const statsObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                requestAnimationFrame(updateCounter);
+                                statsObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        threshold: 0.5
+                    });
+                    
+                    statsObserver.observe(stat);
+                });
+            };
+            
+            // Iniciar animación de contadores cuando esté disponible
+            if ('IntersectionObserver' in window) {
+                animateCounters();
+            }
+            
+            // Detección de soporte táctil
+            const isTouchDevice = () => {
+                return (('ontouchstart' in window) ||
+                        (navigator.maxTouchPoints > 0) ||
+                        (navigator.msMaxTouchPoints > 0));
+            };
+            
+            if (isTouchDevice()) {
+                document.body.classList.add('touch-device');
+            }
+            
+            // Detección de modo oscuro del sistema
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('prefers-dark');
+            }
+            
+            // Precarga diferida de imágenes
+            function preloadImages() {
+                const imagesToPreload = [
+                    'https://via.placeholder.com/600x400',
+                    'https://via.placeholder.com/1200x600',
+                    'https://via.placeholder.com/300x600',
+                    'https://via.placeholder.com/150x150'
+                ];
+                
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(() => {
+                        imagesToPreload.forEach(src => {
+                            const img = new Image();
+                            img.src = src;
+                        });
+                    });
+                } else {
+                    setTimeout(() => {
+                        imagesToPreload.forEach(src => {
+                            const img = new Image();
+                            img.src = src;
+                        });
+                    }, 1000);
+                }
+            }
+            
+            preloadImages();
+            
+            // Añadir características de avance táctil para el slider
+            if (isTouchDevice()) {
+                const sliders = [
+                    {
+                        container: document.querySelector('.hero-slider'),
+                        slides: heroSlides,
+                        currentIndex: 0,
+                        showSlide: showSlide,
+                        interval: slideInterval,
+                        startInterval: startSlider
+                    },
+                    {
+                        container: document.querySelector('.testimonials-slider'),
+                        slides: testimonialSlides,
+                        currentIndex: 0,
+                        showSlide: showTestimonial,
+                        interval: testimonialInterval,
+                        startInterval: startTestimonialSlider
+                    }
+                ];
+                
+                sliders.forEach(slider => {
+                    if (!slider.container) return;
+                    
+                    let startX, endX;
+                    const minSwipeDistance = 50;
+                    
+                    slider.container.addEventListener('touchstart', e => {
+                        startX = e.touches[0].clientX;
+                        clearInterval(slider.interval);
+                    }, { passive: true });
+                    
+                    slider.container.addEventListener('touchend', e => {
+                        endX = e.changedTouches[0].clientX;
+                        handleSwipe(slider);
+                        slider.startInterval();
+                    }, { passive: true });
+                    
+                    function handleSwipe(sliderObj) {
+                        const distance = endX - startX;
+                        
+                        if (Math.abs(distance) < minSwipeDistance) return;
+                        
+                        if (distance > 0) {
+                            // Swipe derecha (anterior)
+                            let prevIndex = (sliderObj.currentIndex - 1 + sliderObj.slides.length) % sliderObj.slides.length;
+                            sliderObj.showSlide(prevIndex);
+                        } else {
+                            // Swipe izquierda (siguiente)
+                            let nextIndex = (sliderObj.currentIndex + 1) % sliderObj.slides.length;
+                            sliderObj.showSlide(nextIndex);
+                        }
+                    }
+                });
+            }
+            
+            // Actualizar navegación activa al hacer scroll
+            const updateActiveNavigation = () => {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('#nav ul li a');
+                
+                window.addEventListener('scroll', () => {
+                    let current = '';
+                    const scrollPosition = window.scrollY + window.innerHeight / 3;
+                    
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - document.querySelector('#header').offsetHeight;
+                        const sectionHeight = section.offsetHeight;
+                        
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                            current = '#' + section.getAttribute('id');
+                        }
+                    });
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                });
+            };
+            
+            updateActiveNavigation();
+            
+            // Inicializar tooltips personalizados
+            document.querySelectorAll('[data-tooltip]').forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = this.getAttribute('data-tooltip');
+                    document.body.appendChild(tooltip);
+                    
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+                    tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+                    tooltip.style.opacity = '1';
+                    
+                    this.addEventListener('mouseleave', function() {
+                        tooltip.remove();
+                    }, { once: true });
+                });
+            });
+            
+            // Gestión de formularios
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Simulación de envío de formulario
+                    const submitButton = form.querySelector('[type="submit"]');
+                    const originalText = submitButton.textContent;
+                    
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                    
+                    setTimeout(() => {
+                        submitButton.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
+                        form.reset();
+                        
+                        setTimeout(() => {
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalText;
+                        }, 2000);
+                    }, 1500);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-
 
 
 
