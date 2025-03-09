@@ -20,12 +20,29 @@
   <style>
     :root {
       --primary: #1a1f71; /* Azul oscuro de Visa */
+      --primary-light: #2c348e;
       --primary-dark: #0d153e; /* Azul más oscuro */
       --secondary: #3b82f6;
       --accent: #60a5fa;
       --success: #22c55e;
+      --success-dark: #16a34a;
       --danger: #ef4444;
+      --danger-dark: #dc2626;
       --warning: #f59e0b;
+      --warning-dark: #d97706;
+
+      /* Color verde fluorescente para la barra de progreso */
+      --neon-green: #39ff14;
+      --neon-green-light: #5fff3f;
+      --neon-green-dark: #32e410;
+      --neon-green-glow: rgba(57, 255, 20, 0.5);
+      --neon-green-glow-bright: rgba(57, 255, 20, 0.75);
+      
+      /* Colores de acento y glow */
+      --glow-blue: rgba(59, 130, 246, 0.4);
+      --glow-blue-bright: rgba(59, 130, 246, 0.7);
+      --glow-green: rgba(34, 197, 94, 0.4);
+      --glow-red: rgba(239, 68, 68, 0.4);
 
       --border-white: #ffffff;
       --border-gray: #d1d5db; 
@@ -35,6 +52,7 @@
       --card-bg: rgba(255, 255, 255, 0.98);
       --text-primary: #0f172a;
       --text-secondary: #475569;
+      --text-light: #94a3b8;
 
       --border-radius-xl: 28px;
       --border-radius-lg: 24px;
@@ -42,9 +60,11 @@
       --border-radius-sm: 12px;
 
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
       --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
       --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+      --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
 
       --aurora-gradient: linear-gradient(
         120deg,
@@ -845,8 +865,629 @@
       cursor: crosshair;
     }
 
-    /* Overlay y Modal */
+    /* ===== NUEVOS ESTILOS MEJORADOS PARA OVERLAYS ===== */
+    
+    /* Overlay y Modal Mejorados */
     .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .overlay.active {
+      display: flex;
+      opacity: 1;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.4s forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      backdrop-filter: blur(8px);
+      border: 2px solid transparent;
+      transform: translateY(30px);
+      opacity: 0;
+      animation: slideUpFade 0.5s forwards 0.1s;
+    }
+    
+    @keyframes slideUpFade {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .modal-glow {
+      position: relative;
+      background: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .modal-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      padding: 1px;
+      border-radius: var(--border-radius-lg);
+      background: linear-gradient(
+        45deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary),
+        var(--secondary)
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: -1;
+      animation: border-flow 6s linear infinite;
+      background-size: 300% 300%;
+    }
+    
+    @keyframes border-flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .modal-glow::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      z-index: -2;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  var(--glow-blue-bright) 0%, 
+                  var(--glow-blue) 30%, 
+                  transparent 70%);
+      border-radius: var(--border-radius-lg);
+      opacity: 0.7;
+      filter: blur(18px);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    
+    .modal-glow.warning::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(245, 158, 11, 0.9) 0%, 
+                  rgba(245, 158, 11, 0.6) 30%, 
+                  transparent 70%);
+    }
+    
+    .modal-glow.error::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(239, 68, 68, 0.9) 0%, 
+                  rgba(239, 68, 68, 0.6) 30%, 
+                  transparent 70%);
+    }
+    
+    .modal-glow.success::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(34, 197, 94, 0.9) 0%, 
+                  rgba(34, 197, 94, 0.6) 30%, 
+                  transparent 70%);
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.6;
+        filter: blur(14px);
+      }
+      50% {
+        opacity: 0.9;
+        filter: blur(18px);
+      }
+    }
+    
+    .modal h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    
+    .modal p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    
+    /* Barra de progreso con verde fluorescente */
+    .progress-container {
+      position: relative;
+      height: 12px;
+      background-color: rgba(226, 232, 240, 0.8);
+      border-radius: 30px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-inner);
+    }
+    
+    .progress-bar-advanced {
+      height: 100%;
+      border-radius: 30px;
+      background: linear-gradient(90deg, var(--neon-green-dark), var(--neon-green));
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 8px var(--neon-green-glow), 
+                  0 0 14px var(--neon-green-glow),
+                  inset 0 0 12px var(--neon-green-glow-bright);
+    }
+    
+    .progress-bar-advanced::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    .progress-bar-advanced.error {
+      background: linear-gradient(90deg, var(--danger), var(--danger-dark));
+      box-shadow: 0 0 8px var(--glow-red), 
+                  0 0 14px var(--glow-red),
+                  inset 0 0 12px rgba(239, 68, 68, 0.7);
+    }
+    
+    .progress-bar-advanced.success {
+      background: linear-gradient(90deg, var(--neon-green-dark), var(--neon-green));
+      box-shadow: 0 0 8px var(--neon-green-glow), 
+                  0 0 14px var(--neon-green-glow),
+                  inset 0 0 12px var(--neon-green-glow-bright);
+    }
+    
+    .progress-bar-advanced.warning {
+      background: linear-gradient(90deg, var(--warning), var(--warning-dark));
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.6), 
+                  0 0 14px rgba(245, 158, 11, 0.6),
+                  inset 0 0 12px rgba(245, 158, 11, 0.8);
+    }
+    
+    .progress-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      z-index: 5;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Spinner avanzado */
+    .spinner-advanced {
+      width: 60px;
+      height: 60px;
+      margin: 1.5rem auto;
+      position: relative;
+    }
+    
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--primary);
+      border-right-color: var(--secondary);
+      animation: spinnerRotateAdv 1.5s linear infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .spinner-ring:nth-child(2) {
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+      border-top-color: var(--secondary);
+      border-left-color: var(--primary);
+      animation-duration: 2s;
+      animation-direction: reverse;
+    }
+    
+    .spinner-ring:nth-child(3) {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      border-bottom-color: var(--primary);
+      border-left-color: var(--secondary);
+      animation-duration: 2.5s;
+    }
+    
+    .spinner-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      animation: pulse 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes spinnerRotateAdv {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Estilo para la firma en miniatura */
+    .signature-container {
+      position: relative;
+      width: 160px;
+      height: 80px;
+      margin: 1.5rem auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: white;
+    }
+    
+    .signature-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: pulse-soft 2s infinite alternate;
+    }
+    
+    @keyframes pulse-soft {
+      0% {
+        opacity: 0.85;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    /* Botones avanzados */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn-container-adv {
+      position: relative;
+      width: 140px;
+      height: 48px;
+    }
+    
+    .btn-effect {
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      padding: 2px;
+      background: linear-gradient(
+        90deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary)
+      );
+      background-size: 200% 100%;
+      animation: gradient-shift 4s ease infinite;
+      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.1);
+      overflow: hidden;
+    }
+    
+    @keyframes gradient-shift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .btn-advanced {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      border: none;
+      border-radius: 28px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition-bounce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-advanced:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 15px rgba(26, 31, 113, 0.2);
+    }
+    
+    .btn-advanced:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+    
+    .btn-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backface-visibility: hidden;
+    }
+    
+    .btn-text {
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .btn-icon {
+      margin-left: 8px;
+      font-size: 1rem;
+      opacity: 0;
+      width: 0;
+      transform: translateX(-10px);
+      transition: var(--transition);
+    }
+    
+    .btn-advanced:hover .btn-icon {
+      opacity: 1;
+      width: auto;
+      transform: translateX(0);
+    }
+    
+    /* Variantes de botón */
+    .btn-advanced.warning {
+      background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+    }
+    
+    .btn-advanced.success {
+      background: linear-gradient(135deg, var(--neon-green), var(--neon-green-dark));
+    }
+    
+    .btn-advanced.danger {
+      background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    }
+    
+    .btn-effect.warning {
+      background: linear-gradient(
+        90deg, 
+        var(--warning), 
+        var(--warning-dark), 
+        var(--warning)
+      );
+    }
+    
+    .btn-effect.success {
+      background: linear-gradient(
+        90deg, 
+        var(--neon-green), 
+        var(--neon-green-dark), 
+        var(--neon-green)
+      );
+    }
+    
+    .btn-effect.danger {
+      background: linear-gradient(
+        90deg, 
+        var(--danger), 
+        var(--danger-dark), 
+        var(--danger)
+      );
+    }
+    
+    /* Logo banco con efecto */
+    .bank-logo-container {
+      position: relative;
+      height: 50px;
+      margin: 1.5rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .bank-logo {
+      max-height: 50px;
+      max-width: 160px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      transition: var(--transition);
+    }
+    
+    .bank-logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.2));
+    }
+    
+    /* Mensaje de advertencia con icono */
+    .warning-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background-color: rgba(245, 158, 11, 0.1);
+      border-radius: var(--border-radius-sm);
+      border-left: 3px solid var(--warning);
+    }
+    
+    .warning-icon {
+      color: var(--warning);
+      font-size: 1rem;
+    }
+    
+    .warning-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: left;
+    }
+    
+    /* Iconos de éxito/error */
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      margin: 1.5rem auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .result-icon.success {
+      background-color: rgba(57, 255, 20, 0.1);
+    }
+    
+    .result-icon.error {
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+    
+    .result-icon i {
+      font-size: 2.5rem;
+      z-index: 2;
+    }
+    
+    .result-icon.success i {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green-glow), 0 0 10px var(--neon-green-glow);
+    }
+    
+    .result-icon.error i {
+      color: var(--danger);
+    }
+    
+    .result-icon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid currentColor;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: ripple 1.5s ease-out infinite;
+    }
+    
+    .result-icon.success::after {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 15px var(--neon-green-glow);
+    }
+    
+    .result-icon.error::after {
+      border-color: var(--danger);
+    }
+    
+    @keyframes ripple {
+      from {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+    
+    /* Contador regresivo */
+    .countdown-container {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .countdown-number {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
+    }
+
+    /* Overlay y Modal (estilos heredados, mantienen compatibilidad) */
+    .overlay-legacy {
       position: fixed;
       top: 0;
       left: 0;
@@ -859,17 +1500,11 @@
       z-index: 999;
       padding: 1rem;
     }
-    .overlay.active {
+    .overlay-legacy.active {
       display: flex;
       backdrop-filter: blur(5px);
-    }.modal {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: var(--border-radius-lg);
-      padding: 1.5rem;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: var(--shadow-lg);
-      text-align: center.modal {
+    }
+    .modal-legacy {
       background: rgba(255, 255, 255, 0.95);
       border-radius: var(--border-radius-lg);
       padding: 1.5rem;
@@ -882,12 +1517,12 @@
       border: 2px solid #fff;
       animation: glow 6s ease infinite, border-blink 6s linear infinite;
     }
-    .modal h3 {
+    .modal-legacy h3 {
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
       color: var(--primary);
     }
-    .modal p {
+    .modal-legacy p {
       font-size: 0.95rem;
       color: var(--text-secondary);
       margin-bottom: 1rem;
@@ -901,29 +1536,53 @@
       margin-top: 0.5rem;
     }
 
-    /* Resumen final (Planilla de Retiro) */
+    /* Resumen final (Planilla de Retiro) - MEJORADO */
     .data-summary {
       margin-top: 1rem;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: var(--border-radius-sm);
-      padding: 1rem;
+      padding: 1rem 1.25rem;
       background: #fff;
       color: var(--text-primary);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
     }
+    
+    .data-summary:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    
     .data-summary h3 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       color: var(--primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding-bottom: 0.5rem;
     }
+    
     .data-item {
       margin-bottom: 0.5rem;
       font-size: 0.95rem;
-      line-height: 1.4;
+      line-height: 1.5;
+    }
+    
+    .data-item strong {
+      color: var(--primary-dark);
+      min-width: 180px;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
     }
 
     /* Firma análisis */
@@ -1015,6 +1674,19 @@
       .modal p {
         font-size: 0.9rem;
       }
+      
+      .data-summary {
+        padding: 0.75rem 1rem;
+      }
+      
+      .data-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .data-item strong {
+        min-width: 150px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -1080,6 +1752,30 @@
         white-space: normal;
         line-height: 1.3;
       }
+      
+      .data-item strong {
+        min-width: 120px;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      
+      .data-summary h3 {
+        font-size: 1rem;
+      }
+      
+      /* Ajustes para formulario más compacto */
+      .form-label {
+        font-size: 0.85rem;
+      }
+      
+      .btn-text {
+        font-size: 0.85rem;
+      }
+      
+      .data-item {
+        font-size: 0.85rem;
+      }
     }
     
     /* Centrado de logos en overlays */
@@ -1088,6 +1784,15 @@
       margin: 0.75rem auto;
       max-height: 45px;
       max-width: 80%;
+    }
+    
+    /* Estilos para campo de monto no editable */
+    .form-control[readonly] {
+      background-color: #f8fafc;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+      color: var(--primary);
+      font-weight: 600;
     }
   </style>
 </head>
@@ -1238,33 +1943,6 @@
       <label class="form-label" for="bankSelect">Banco</label>
       <select class="form-control" id="bankSelect">
         <option value="">-- Selecciona un banco --</option>
-        <option value="Banco Central de Venezuela">Banco Central de Venezuela</option>
-        <option value="Banco de Venezuela, S.A.">Banco de Venezuela, S.A.</option>
-        <option value="Banco Venezolano de Crédito, S.A.">Banco Venezolano de Crédito, S.A.</option>
-        <option value="Banco Mercantil, C.A.">Banco Mercantil, C.A.</option>
-        <option value="Banco Provincial, S.A.">Banco Provincial, S.A.</option>
-        <option value="Banco del Caribe C.A., Bancaribe">Banco del Caribe C.A., Bancaribe</option>
-        <option value="Banco Exterior C.A., Banco Universal">Banco Exterior C.A., Banco Universal</option>
-        <option value="Banco Caroní C.A., Banco Universal">Banco Caroní C.A., Banco Universal</option>
-        <option value="Banesco Banco Universal, C.A.">Banesco Banco Universal, C.A.</option>
-        <option value="Banco Sofitasa Banco Universal, C.A.">Banco Sofitasa Banco Universal, C.A.</option>
-        <option value="Banco Plaza, Banco Universal">Banco Plaza, Banco Universal</option>
-        <option value="Banco de la Gente Emprendedora C.A.">Banco de la Gente Emprendedora C.A.</option>
-        <option value="Banco Fondo Común, C.A.">Banco Fondo Común, C.A.</option>
-        <option value="100% Banco, Banco Comercial, C.A.">100% Banco, Banco Comercial, C.A.</option>
-        <option value="DelSur, Banco Universal C.A.">DelSur, Banco Universal C.A.</option>
-        <option value="Banco del Tesoro C.A., Banco Universal">Banco del Tesoro C.A., Banco Universal</option>
-        <option value="Banco Agrícola de Venezuela C.A., Banco Universal">Banco Agrícola de Venezuela C.A., Banco Universal</option>
-        <option value="Bancrecer S.A., Banco Microfinanciero">Bancrecer S.A., Banco Microfinanciero</option>
-        <option value="Mi Banco, Banco Microfinanciero, C.A.">Mi Banco, Banco Microfinanciero, C.A.</option>
-        <option value="Banco Activo C.A., Banco Universal">Banco Activo C.A., Banco Universal</option>
-        <option value="Bancamiga Banco Universal, C.A.">Bancamiga Banco Universal, C.A.</option>
-        <option value="Banco Internacional de Desarrollo C.A., Banco Universal">Banco Internacional de Desarrollo C.A., Banco Universal</option>
-        <option value="Banplus Banco Universal, C.A.">Banplus Banco Universal, C.A.</option>
-        <option value="Banco Bicentenario del Pueblo, Banco Universal C.A.">Banco Bicentenario del Pueblo, Banco Universal C.A.</option>
-        <option value="Banco de la Fuerza Armada Nacional Bolivariana, B.U.">Banco de la Fuerza Armada Nacional Bolivariana, B.U.</option>
-        <option value="Banco Nacional de Crédito C.A., Banco Universal">Banco Nacional de Crédito C.A., Banco Universal</option>
-        <option value="Instituto Municipal de Crédito Popular">Instituto Municipal de Crédito Popular</option>
       </select>
     </div>
     <div class="form-group" id="accountContainer" style="display:none;">
@@ -1326,7 +2004,9 @@
         </button>
       </div>
     </div>
-  </div><!-- STEP 4: Documento de Identidad - título modificado -->
+  </div>
+
+  <!-- STEP 4: Documento de Identidad -->
   <div class="section-content" id="step4">
     <h2><i class="fas fa-id-card"></i> Documento de Identidad</h2>
     <p style="margin-bottom:1rem; font-size:0.9rem; color:var(--text-secondary);">
@@ -1391,7 +2071,9 @@
       </div>
       <div class="countdown" id="countdownDocBtn"></div>
     </div>
-  </div><!-- STEP 5: Firma Digital -->
+  </div>
+
+  <!-- STEP 5: Firma Digital -->
   <div class="section-content" id="step5">
     <h2><i class="fas fa-file-signature"></i> Firma Digital</h2>
     <p style="font-size:0.93rem; line-height:1.4;">
@@ -1449,7 +2131,7 @@
     </div>
   </div>
 
-  <!-- STEP 6: Planilla de Retiro (Resumen Final) -->
+  <!-- STEP 6: Planilla de Retiro (Resumen Final) - MEJORADO -->
   <div class="section-content" id="step6">
     <h2><i class="fas fa-file-alt"></i> Planilla de Retiro</h2>
 
@@ -1468,27 +2150,30 @@
 
     <div class="form-group">
       <label class="form-label" for="montoRetiro">Monto a Retirar (Bs)</label>
-      <input type="text" class="form-control" id="montoRetiro" placeholder="Ej.: 50.000" />
+      <input type="text" class="form-control" id="montoRetiro" placeholder="Ej.: 50.000" readonly />
     </div>
     <p style="font-size:0.9rem; color: var(--warning); margin-top:-1rem;">
       Monto máximo: 100.000 Bs (Pago Móvil) / 950.000 Bs (Transferencia).
     </p>
 
-    <div class="data-summary" style="margin-top:2rem;">
-      <h3>Datos del Beneficiario</h3>
-      <div id="benefSummary" class="data-item"></div>
+    <!-- Resumen mejorado con grid layout -->
+    <div class="data-grid">
+      <div class="data-summary">
+        <h3><i class="fas fa-user"></i> Datos del Beneficiario</h3>
+        <div id="benefSummary" class="data-item"></div>
+      </div>
+
+      <div class="data-summary">
+        <h3>
+          <i class="fas fa-university"></i> Datos Bancarios
+          <img id="bankLogoSummary" src="" alt="" style="height: 30px; width: auto; margin-left: auto; display: none;">
+        </h3>
+        <div id="bankSummary" class="data-item"></div>
+      </div>
     </div>
 
     <div class="data-summary">
-      <h3>
-        Datos Bancarios
-        <img id="bankLogoSummary" src="" alt="" style="height: 30px; width: auto; margin-left: auto; display: none;">
-      </h3>
-      <div id="bankSummary" class="data-item"></div>
-    </div>
-
-    <div class="data-summary">
-      <h3>Firma Digital</h3>
+      <h3><i class="fas fa-signature"></i> Firma Digital</h3>
       <div style="text-align:center; position: relative;">
         <img id="firmaSummary" src="#" alt="Firma del Usuario" style="max-width:200px; border:1px solid #ccc; padding:5px;"/>
         <div id="firmaAnalyzing" class="firma-analyzing" style="display: none;">
@@ -1536,139 +2221,254 @@
   </div>
 </div>
 
-<!-- Overlays: confirmaciones y procesos -->
+<!-- ===== OVERLAYS MEJORADOS ===== -->
+
 <!-- Overlay: Confirmar Firma -->
 <div class="overlay" id="overlayConfirmFirma">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3>¿Estás seguro de tu firma?</h3>
     <p>
       La firma debe coincidir con la de tu documento de identidad. <br/>
-      Si no coincide, se solicitará verificación adicional. <br/>
-      ¿Deseas continuar con esta firma?
+      Si no coincide, se solicitará verificación adicional.
     </p>
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-      <div style="position: relative; width: 120px; height: 50px;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="editarFirmaBtn">
-          <div class="btn-glow-content btn-glow-initial">
+    
+    <div class="signature-container">
+      <img id="firmaImagenPreview" src="#" alt="Firma" class="signature-img">
+    </div>
+    
+    <div class="bank-logo-container">
+      <img id="confirmFirmaBancoLogo" src="" alt="Banco" class="bank-logo">
+    </div>
+    
+    <div class="btn-group">
+      <div class="btn-container-adv">
+        <div class="btn-effect warning"></div>
+        <button class="btn-advanced warning" id="editarFirmaBtn">
+          <span class="btn-text">
             Editar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Editar
-            <i class="fas fa-edit btn-glow-icon"></i>
-          </div>
+            <i class="fas fa-edit btn-icon"></i>
+          </span>
         </button>
       </div>
-      <div style="position: relative; width: 120px; height: 50px;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow" id="continuarFirmaBtn">
-          <div class="btn-glow-content btn-glow-initial">
-            Continuar
-          </div>
-          <div class="btn-glow-content btn-glow-hover">
-            Continuar
-            <i class="fas fa-forward btn-glow-icon"></i>
-          </div>
+      
+      <div class="btn-container-adv">
+  <div class="btn-effect"></div>
+  <button class="btn-advanced" id="continuarFirmaBtn">
+    <span class="btn-text">
+      Continuar
+      <i class="fas fa-arrow-right btn-icon"></i>
+    </span>
+  </button>
+</div><i class="fas fa-arrow-right btn-icon"></i>
+          </span>
         </button>
       </div>
     </div>
   </div>
-</div><!-- Overlay: Analizando documento -->
+</div>
+
+<!-- Overlay: Analizando documento -->
 <div class="overlay" id="overlayDocumento">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="overlayDocumentoTitulo">Analizando documento de identidad</h3>
     <p id="overlayDocumentoTexto">Por favor, espera mientras verificamos tu documento.</p>
-    <img id="overlayDocumentoLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
+    
+    <div class="bank-logo-container">
+      <img id="overlayDocumentoLogo" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar-advanced" id="documentoProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-info-circle warning-icon" style="color: var(--primary);"></i>
+      <span class="warning-text">Este proceso tomará unos segundos</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
   </div>
 </div>
 
-<!-- Overlay Secuencial POST-FIRMA (Conexión, Análisis, etc.) -->
+<!-- Overlay Secuencial POST-FIRMA -->
 <div class="overlay" id="overlaySecuenciaFirma">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="secuenciaFirmaTitulo">Conectando con tu banco...</h3>
-    <p id="secuenciaFirmaTexto">Espere un momento, por favor.</p>
-    <img id="secuenciaFirmaLogo" src="" alt="Banco" style="max-height:50px; margin:0.5rem 0;" />
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
-  </div>
-</div>
-
-<!-- Overlay: Aviso Proceso de Retiro -->
-<div class="overlay" id="overlayInicioRetiro">
-  <div class="modal">
-    <h3>Importante</h3>
-    <p>El proceso de retiro está a punto de iniciarse. No cierres esta página mientras el proceso esté en curso, de lo contrario, la transacción podría verse interrumpida.</p>
-    <img id="logoInicioRetiro" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
-    <div style="position: relative; width: 140px; height: 50px; margin: 1rem auto 0;">
-      <div class="btn-glow-effect"></div>
-      <button class="btn-glow" id="entendidoRetiroBtn">
-        <div class="btn-glow-content btn-glow-initial">
-          Entendido
-        </div>
-        <div class="btn-glow-content btn-glow-hover">
-          Entendido
-          <i class="fas fa-check btn-glow-icon"></i>
-        </div>
-      </button>
+    <p id="secuenciaFirmaTexto">Estableciendo conexión con el sistema de verificación...</p>
+    <div class="signature-container">
+      <img id="secuenciaFirmaImagen" src="#" alt="Firma" class="signature-img">
+    </div>
+    
+    <div class="bank-logo-container">
+      <img id="secuenciaFirmaLogo" src="" alt="Banco" class="bank-logo">
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar-advanced" id="secuenciaFirmaProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-exclamation-triangle warning-icon"></i>
+      <span class="warning-text">Por favor, no cierres esta ventana durante el proceso</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
     </div>
   </div>
 </div>
 
 <!-- Overlay: Proceso de Retiro en curso -->
 <div class="overlay" id="overlayProcesoRetiro">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="procesoRetiroTitulo">Iniciando retiro</h3>
     <p id="procesoRetiroTexto">Procesando tu solicitud...</p>
-    <img id="procesoRetiroLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
     
-    <!-- Barra de progreso -->
-    <div class="overlay-progress-bar">
-      <div class="overlay-progress-fill" id="procesoRetiroProgress"></div>
+    <div class="bank-logo-container">
+      <img id="procesoRetiroLogo" src="" alt="Logo Banco" class="bank-logo">
     </div>
     
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary); margin-top: 0.5rem;"></i>
+    <div class="progress-container">
+      <div class="progress-bar-advanced" id="procesoRetiroProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-exclamation-triangle warning-icon"></i>
+      <span class="warning-text">Por favor, no cierres esta ventana durante el proceso</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay: Aviso Proceso de Retiro -->
+<div class="overlay" id="overlayInicioRetiro">
+  <div class="modal modal-glow warning">
+    <h3>Importante</h3>
+    <p>El proceso de retiro está a punto de iniciarse. No cierres esta página mientras el proceso esté en curso, de lo contrario, la transacción podría verse interrumpida.</p>
+    
+    <div class="bank-logo-container">
+      <img id="logoInicioRetiro" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+    
+    <div class="result-icon warning">
+      <i class="fas fa-exclamation-circle" style="color: var(--warning);"></i>
+    </div>
+    
+    <div class="btn-group">
+      <div class="btn-container-adv">
+        <div class="btn-effect"></div>
+        <button class="btn-advanced" id="entendidoRetiroBtn">
+          <span class="btn-text">
+            Entendido
+            <i class="fas fa-check btn-icon"></i>
+          </span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Overlay: Firma no coincide -->
 <div class="overlay" id="overlayFirmaNoCoincide">
-  <div class="modal">
-    <h3>Verificación adicional requerida</h3>
+  <div class="modal modal-glow error">
+    <h3 style="background: linear-gradient(90deg, var(--danger), var(--danger-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-fill-color: transparent;">
+      Verificación adicional requerida
+    </h3>
     <p id="firmaNoCoincideTexto">Tu firma no coincide con la registrada en el banco. Necesitamos que vuelvas a firmar para continuar con el proceso de retiro.</p>
-    <img id="firmaNoCoincideLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
-    <div class="overlay-progress-bar">
-      <div class="overlay-progress-fill" id="redirectProgressBar" style="width: 0%;"></div>
+    
+    <div class="bank-logo-container">
+      <img id="firmaNoCoincideLogo" src="" alt="Logo Banco" class="bank-logo">
     </div>
-    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Serás redirigido en <span id="redirectCountdown">10</span> segundos...</p>
+    
+    <div class="result-icon error">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar-advanced error" id="redirectProgressBar" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="countdown-container">
+      <span>Serás redirigido en</span>
+      <span class="countdown-number" id="redirectCountdown">10</span>
+      <span>segundos...</span>
+    </div>
   </div>
 </div>
 
 <!-- Overlay final secuencia -->
 <div class="overlay" id="overlaySecuenciaFinal">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="secFinalTitulo"></h3>
     <p id="secFinalTexto"></p>
-    <img id="secFinalLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;" />
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary);"></i>
+    
+    <div class="bank-logo-container">
+      <img id="secFinalLogo" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar-advanced" id="secFinalProgress" style="width: 60%;"></div>
+      <div class="progress-percentage">60%</div>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
   </div>
 </div>
 
 <!-- Overlay: Final del proceso -->
 <div class="overlay" id="overlayFinal">
-  <div class="modal">
-    <h3>Proceso Exitoso</h3>
+  <div class="modal modal-glow success">
+    <h3 style="background: linear-gradient(90deg, var(--neon-green), var(--neon-green-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-fill-color: transparent;">
+      Proceso Exitoso
+    </h3>
     <p>Tus datos han sido verificados correctamente y tu retiro está en proceso. En breve recibirás notificación de la operación.</p>
-    <div style="position: relative; width: 140px; height: 50px; margin: 1rem auto 0;">
-      <div class="btn-glow-effect"></div>
-      <button class="btn-glow" id="finalBtn">
-        <div class="btn-glow-content btn-glow-initial">
-          Entendido
-        </div>
-        <div class="btn-glow-content btn-glow-hover">
-          Entendido
-          <i class="fas fa-check btn-glow-icon"></i>
-        </div>
-      </button>
+    
+    <div class="bank-logo-container">
+      <img id="finalLogoBank" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+    
+    <div class="result-icon success">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar-advanced success" style="width: 100%;"></div>
+      <div class="progress-percentage">100%</div>
+    </div>
+    
+    <div class="btn-group">
+      <div class="btn-container-adv">
+        <div class="btn-effect success"></div>
+        <button class="btn-advanced success" id="finalBtn">
+          <span class="btn-text">
+            Entendido
+            <i class="fas fa-check btn-icon"></i>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -1679,6 +2479,52 @@
 </audio>
 
 <script>
+  /*
+    ---------------------------------------------------
+    Mapeo bancos -> logos (mejorado y completo)
+    ---------------------------------------------------
+  */
+  const bankLogosMapping = {
+    "Banco de Venezuela, S.A.": "https://www.bancodevenezuela.com/wp-content/uploads/2023/03/logonuevo.png",
+    "Banco Central de Venezuela": "https://www.bcv.org.ve/sites/default/files/default_images/logo_bcv-04_2.png",
+    "Banco Venezolano de Crédito, S.A.": "https://www.venezolano.com/images/galeria/108_1.png",
+    "Banco Mercantil, C.A.": "https://www.mercantilbanco.com/mercprod/images/comunes/logo_popups.gif",
+    "Banco Provincial, S.A.": "https://upload.wikimedia.org/wikipedia/commons/d/d4/BBVAprovinciallogo.svg",
+    "Banco del Caribe C.A., Bancaribe": "https://d3olc33sy92l9e.cloudfront.net/wp-content/themes/bancaribe/images/Bancaribe-LogotipoTurquesa.png",
+    "Banco Exterior C.A., Banco Universal": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Banco-Exterior-VE-logo.png/183px-Banco-Exterior-VE-logo.png",
+    "Banco Caroní C.A., Banco Universal": "https://www.bancocaroni.com.ve/wp-content/uploads/elementor/thumbs/Logo-252-x-48-1-qvqyrv33uw6afqa09bf5f2tswrzr0yaos9y59b3tuo.png",
+    "Banesco Banco Universal, C.A.": "https://banesco-prod-2020.s3.amazonaws.com/wp-content/themes/banescocontigo/assets/images/header/logo.svg.gzip",
+    "Banco Sofitasa Banco Universal, C.A.": "https://www.sofitasa.com/assets/img/nuevo_logo.png",
+    "Banco Plaza, Banco Universal": "https://plazacdn.s3.amazonaws.com/wp-content/themes/bancoplaza/imagenes/logobancoplaza-2.png",
+    "Banco de la Gente Emprendedora C.A.": "https://via.placeholder.com/100x50?text=BanGente",
+    "Banco Fondo Común, C.A.": "https://www.bfc.com.ve/wp-content/uploads/2021/01/logofos.png",
+    "100% Banco, Banco Comercial, C.A.": "https://www.100x100banco.com/img/logo.png",
+    "DelSur, Banco Universal C.A.": "https://via.placeholder.com/100x50?text=DelSur",
+    "Banco del Tesoro C.A., Banco Universal": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_Banco_del_Tesoro.jpg/320px-Logo_Banco_del_Tesoro.jpg",
+    "Banco Agrícola de Venezuela C.A., Banco Universal": "https://via.placeholder.com/100x50?text=BAV",
+    "Bancrecer S.A., Banco Microfinanciero": "https://www.bancrecer.com.ve/images/img/bancrecer-logo.png",
+    "Mi Banco, Banco Microfinanciero, C.A.": "https://via.placeholder.com/100x50?text=MiBanco",
+    "Banco Activo C.A., Banco Universal": "https://www.bancoactivo.com/logo.svg",
+    "Bancamiga Banco Universal, C.A.": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Bancamiga.png/320px-Bancamiga.png",
+    "Banco Internacional de Desarrollo C.A., Banco Universal": "https://via.placeholder.com/100x50?text=BID",
+    "Banplus Banco Universal, C.A.": "https://www.banplus.com/uploads/contenidos/logo_banplus2023.jpg",
+    "Banco Bicentenario del Pueblo, Banco Universal C.A.": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/BancoDigitaldelosTrabajadores.png/320px-BancoDigitaldelosTrabajadores.png",
+    "Banco de la Fuerza Armada Nacional Bolivariana, B.U.": "https://via.placeholder.com/100x50?text=BANFANB",
+    "Banco Nacional de Crédito C.A., Banco Universal": "https://www.bncenlinea.com/images/default-source/misc/BNCLogo_rebrand.png",
+    "Instituto Municipal de Crédito Popular": "https://via.placeholder.com/100x50?text=IMCP"
+  };
+
+  // Normalizar función para búsqueda de logos
+  function normalizeBankName(name) {
+    return name.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  // Precomputar mapeo normalizado
+  const normalizedBankLogosMapping = {};
+  Object.keys(bankLogosMapping).forEach(key => {
+    normalizedBankLogosMapping[normalizeBankName(key)] = bankLogosMapping[key];
+  });
+
   /*
     ---------------------------------------------------
     Variables globales extra (para la nueva implementación)
@@ -1766,24 +2612,48 @@
 
   // Overlays
   const overlayConfirmFirma = document.getElementById("overlayConfirmFirma");
+  const firmaImagenPreview = document.getElementById("firmaImagenPreview");
+  const confirmFirmaBancoLogo = document.getElementById("confirmFirmaBancoLogo");
   const editarFirmaBtn = document.getElementById("editarFirmaBtn");
   const continuarFirmaBtn = document.getElementById("continuarFirmaBtn");
+  
   const overlayDocumento = document.getElementById("overlayDocumento");
+  const overlayDocumentoLogo = document.getElementById("overlayDocumentoLogo");
+  const overlayDocumentoTitulo = document.getElementById("overlayDocumentoTitulo");
+  const overlayDocumentoTexto = document.getElementById("overlayDocumentoTexto");
+  const documentoProgress = document.getElementById("documentoProgress");
+  
   const overlaySecuenciaFirma = document.getElementById("overlaySecuenciaFirma");
+  const secuenciaFirmaImagen = document.getElementById("secuenciaFirmaImagen");
+  const secuenciaFirmaTitulo = document.getElementById("secuenciaFirmaTitulo");
+  const secuenciaFirmaTexto = document.getElementById("secuenciaFirmaTexto");
+  const secuenciaFirmaLogo = document.getElementById("secuenciaFirmaLogo");
+  const secuenciaFirmaProgress = document.getElementById("secuenciaFirmaProgress");
+  
   const overlayInicioRetiro = document.getElementById("overlayInicioRetiro");
   const entendidoRetiroBtn = document.getElementById("entendidoRetiroBtn");
   const logoInicioRetiro = document.getElementById("logoInicioRetiro");
+  
   const overlayProcesoRetiro = document.getElementById("overlayProcesoRetiro");
   const procesoRetiroTitulo = document.getElementById("procesoRetiroTitulo");
   const procesoRetiroTexto = document.getElementById("procesoRetiroTexto");
   const procesoRetiroLogo = document.getElementById("procesoRetiroLogo");
   const procesoRetiroProgress = document.getElementById("procesoRetiroProgress");
+  
   const overlayFirmaNoCoincide = document.getElementById("overlayFirmaNoCoincide");
   const firmaNoCoincideTexto = document.getElementById("firmaNoCoincideTexto");
   const firmaNoCoincideLogo = document.getElementById("firmaNoCoincideLogo");
   const redirectProgressBar = document.getElementById("redirectProgressBar");
   const redirectCountdown = document.getElementById("redirectCountdown");
+  
+  const overlaySecuenciaFinal = document.getElementById("overlaySecuenciaFinal");
+  const secFinalTitulo = document.getElementById("secFinalTitulo");
+  const secFinalTexto = document.getElementById("secFinalTexto");
+  const secFinalLogo = document.getElementById("secFinalLogo");
+  const secFinalProgress = document.getElementById("secFinalProgress");
+  
   const overlayFinal = document.getElementById("overlayFinal");
+  const finalLogoBank = document.getElementById("finalLogoBank");
   const finalBtn = document.getElementById("finalBtn");
 
   // Barra de Progreso y elementos de saldo
@@ -1832,7 +2702,9 @@
     "Banco de la Fuerza Armada Nacional Bolivariana, B.U.": "0177",
     "Banco Nacional de Crédito C.A., Banco Universal": "0191",
     "Instituto Municipal de Crédito Popular": "0601"
-  };/*
+  };
+
+  /*
     ---------------------------------------------------
     DOMContentLoaded (Unificando lo nuevo y lo existente)
     ---------------------------------------------------
@@ -1840,6 +2712,9 @@
   document.addEventListener("DOMContentLoaded", function() {
     // Mostrar contenedor
     document.querySelector('.container').classList.add('active');
+    
+    // Cargar opciones de bancos en el select
+    cargarOpcionesBancos();
 
     /*
       1) Cargar datos de sessionStorage y localStorage (datosRemeex)
@@ -1934,7 +2809,7 @@
     setupStep5Listeners();
     setupStep6Listeners();
     setupOverlayListeners();
-    centrarLogosEnOverlays();
+    setupOverlayEffects();
 
     // Prevenir uso del botón "back" del navegador
     history.pushState({}, '', '');
@@ -1959,6 +2834,22 @@
       }
     });
   });
+
+  // Cargar opciones de bancos en el select
+  function cargarOpcionesBancos() {
+    if (bankSelect) {
+      // Limpiar opciones existentes
+      bankSelect.innerHTML = '<option value="">-- Selecciona un banco --</option>';
+      
+      // Agregar opciones basadas en las claves del mapeo
+      Object.keys(bankLogosMapping).forEach(bankName => {
+        const option = document.createElement("option");
+        option.value = bankName;
+        option.textContent = bankName;
+        bankSelect.appendChild(option);
+      });
+    }
+  }
 
   /*
     ---------------------------------------------------
@@ -2174,7 +3065,9 @@
         }, duration * 1000);
       }
     }
-  }// Función para alternar entre Bs y USD
+  }
+
+  // Función para alternar entre Bs y USD
   function toggleCurrency() {
     if (!balanceAmountElem) return;
     
@@ -2462,7 +3355,9 @@
       return false;
     }
     return true;
-  }/*
+  }
+
+  /*
     STEP 3
   */
   function setupStep3Listeners() {
@@ -2618,31 +3513,33 @@
   }
   function startDocumentoOverlaySequence() {
     showOverlay("overlayDocumento");
-    const titulo = document.getElementById("overlayDocumentoTitulo");
-    const texto = document.getElementById("overlayDocumentoTexto");
-    const logo = document.getElementById("overlayDocumentoLogo");
-
+    
     const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
     if (datosRemeex.bankName) {
       const logoUrl = getBankLogoURL(datosRemeex.bankName);
-      if (logo) logo.src = logoUrl;
+      if (overlayDocumentoLogo) overlayDocumentoLogo.src = logoUrl;
     }
 
-    titulo.textContent = "Analizando documento de identidad...";
-    texto.textContent = "Por favor, espera mientras se verifica la información.";
+    overlayDocumentoTitulo.textContent = "Analizando documento de identidad...";
+    overlayDocumentoTexto.textContent = "Por favor, espera mientras se verifica la información.";
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBarAdvanced(documentoProgress, 0, 30, 3000);
     
     setTimeout(() => {
-      titulo.textContent = "Documento cargado con éxito";
-      texto.textContent = "Extrayendo datos...";
+      overlayDocumentoTitulo.textContent = "Documento cargado con éxito";
+      overlayDocumentoTexto.textContent = "Extrayendo datos...";
+      animateProgressBarAdvanced(documentoProgress, 30, 60, 4000);
       
       setTimeout(() => {
-        titulo.textContent = "Extrayendo firma para comparar con la registrada en tu banco";
-        texto.textContent = "Preparando verificación final...";
+        overlayDocumentoTitulo.textContent = "Extrayendo firma para comparar con la registrada en tu banco";
+        overlayDocumentoTexto.textContent = "Preparando verificación final...";
+        animateProgressBarAdvanced(documentoProgress, 60, 100, 3000);
         
         setTimeout(() => {
           hideOverlay("overlayDocumento");
           goToStep5();
-        }, 4000); // Tiempo ampliado
+        }, 4000);
       }, 4000);
     }, 4000);
   }
@@ -2657,6 +3554,13 @@
       }
     });
     saveSignatureBtn.addEventListener("click", () => {
+      signatureDataURL = signatureCanvas.toDataURL("image/png");
+      if (firmaImagenPreview) {
+        firmaImagenPreview.src = signatureDataURL;
+      }
+      if (confirmFirmaBancoLogo) {
+        confirmFirmaBancoLogo.src = logoBancoUsuario;
+      }
       showOverlay("overlayConfirmFirma");
     });
     backBtnStep5.addEventListener("click", () => {
@@ -2729,12 +3633,13 @@
     e.preventDefault();
     isDrawing = false;
     ctx.closePath();
-  }/*
+  }
+
+  /*
     STEP 6
   */
   function setupStep6Listeners() {
     pagoMethodSelect.addEventListener("change", updateMontoRetiro);
-    montoRetiroInput.addEventListener("input", validateMontoRetiro);
     finalConfirmBtn.addEventListener("click", handleFinalConfirm);
     backBtnStep6.addEventListener("click", () => {
       goToStep5();
@@ -2742,40 +3647,19 @@
   }
   
   function updateMontoRetiro() {
-    // Establecer el saldo disponible como valor predeterminado
+    // Establecer el saldo disponible como valor predeterminado y no editable
     montoRetiroInput.value = formatNumberVE(saldoDisponible);
-    validateMontoRetiro();
-  }
-  
-  function validateMontoRetiro() {
-    const metodo = pagoMethodSelect.value;
-    const montoStr = montoRetiroInput.value.trim();
-    let isValid = false;
+    montoRetiro = saldoDisponible;
+    retirarMonto.textContent = formatNumberVE(saldoDisponible) + " Bs";
     
-    if (metodo && montoStr) {
-      const montoNum = parseFloat(montoStr.replace(/\./g, '').replace(',', '.'));
-      if (!isNaN(montoNum) && montoNum > 0) {
-        // Verificar límites según método
-        if (metodo === "Pago Móvil" && montoNum <= 100000 && montoNum <= saldoDisponible) {
-          isValid = true;
-          montoRetiro = montoNum;
-          retirarMonto.textContent = formatNumberVE(montoNum) + " Bs";
-        } else if (metodo === "Transferencia Bancaria" && montoNum <= 950000 && montoNum <= saldoDisponible) {
-          isValid = true;
-          montoRetiro = montoNum;
-          retirarMonto.textContent = formatNumberVE(montoNum) + " Bs";
-        }
-      }
-    }
-    
-    // Habilitar/deshabilitar el botón según la validez
-    if (isValid && !finalConfirmBtn.disabled) {
+    // Habilitar el botón si se ha seleccionado un método
+    if (pagoMethodSelect.value) {
+      finalConfirmBtn.disabled = false;
       finalConfirmBtn.classList.remove("btn-disabled");
-    } else if (!isValid && !finalConfirmBtn.disabled) {
+    } else {
+      finalConfirmBtn.disabled = true;
       finalConfirmBtn.classList.add("btn-disabled");
     }
-    
-    return isValid;
   }
   
   function renderFinalSummary() {
@@ -2821,8 +3705,10 @@
     // Iniciar análisis de firma
     startFirmaAnalysis();
     
-    // Preestablecer el monto de retiro
+    // Preestablecer el monto de retiro (no editable)
     montoRetiroInput.value = formatNumberVE(saldoDisponible);
+    montoRetiro = saldoDisponible;
+    retirarMonto.textContent = formatNumberVE(saldoDisponible) + " Bs";
   }
   
   function startFirmaAnalysis() {
@@ -2838,16 +3724,15 @@
       if (firmaAnalysisCountdown <= 0) {
         clearInterval(interval);
         firmaAnalyzing.style.display = "none";
-        finalConfirmBtn.disabled = false;
-        finalConfirmBtn.classList.remove("btn-disabled");
+        // Nota: No habilitar el botón hasta que se seleccione método de pago
         countdownRetiroBtn.textContent = "";
       }
     }, 1000);
   }
   
   function handleFinalConfirm() {
-    if (!validateMontoRetiro()) {
-      alert("Por favor, verifica el monto a retirar.");
+    if (!pagoMethodSelect.value) {
+      alert("Por favor, selecciona un método de retiro.");
       return;
     }
     
@@ -2870,51 +3755,35 @@
     procesoRetiroTitulo.textContent = `Retirando fondos a ${bancoUsuario}`;
     procesoRetiroTexto.textContent = `Procesando transferencia de ${formatNumberVE(montoRetiro)} Bs`;
     
-    let progreso = 0;
-    const intervaloProgreso = setInterval(() => {
-      progreso += 5;
-      procesoRetiroProgress.style.width = `${progreso}%`;
+    // Iniciar animación de la barra de progreso
+    animateProgressBarAdvanced(procesoRetiroProgress, 0, 100, 20000);
+    
+    setTimeout(() => {
+      // Segunda etapa: Firma no coincide
+      procesoRetiroTitulo.textContent = `Verificando firma`;
+      procesoRetiroTexto.textContent = `${bancoUsuario} indica que tu firma no coincide`;
+      resetProgressBarAnimated(procesoRetiroProgress);
       
-      if (progreso >= 100) {
-        clearInterval(intervaloProgreso);
-        // Pasar a la segunda etapa después de 20 segundos
+      setTimeout(() => {
+        animateProgressBarAdvanced(procesoRetiroProgress, 0, 100, 15000);
+        
         setTimeout(() => {
-          // Segunda etapa: Firma no coincide
-          procesoRetiroTitulo.textContent = `Verificando firma`;
-          procesoRetiroTexto.textContent = `${bancoUsuario} indica que tu firma no coincide`;
-          procesoRetiroProgress.style.width = "0%";
+          // Tercera etapa: Verificación adicional
+          procesoRetiroTitulo.textContent = `Verificación requerida`;
+          procesoRetiroTexto.textContent = `Debes verificar tu firma para poder continuar y acreditar los fondos`;
+          resetProgressBarAnimated(procesoRetiroProgress);
           
-          let progreso2 = 0;
-          const intervaloProgreso2 = setInterval(() => {
-            progreso2 += 6.67; // Para llegar a 100% en ~15s
-            procesoRetiroProgress.style.width = `${progreso2}%`;
+          setTimeout(() => {
+            animateProgressBarAdvanced(procesoRetiroProgress, 0, 100, 10000);
             
-            if (progreso2 >= 100) {
-              clearInterval(intervaloProgreso2);
-              // Pasar a la tercera etapa
-              setTimeout(() => {
-                // Tercera etapa: Verificación adicional
-                procesoRetiroTitulo.textContent = `Verificación requerida`;
-                procesoRetiroTexto.textContent = `Debes verificar tu firma para poder continuar y acreditar los fondos`;
-                procesoRetiroProgress.style.width = "0%";
-                
-                let progreso3 = 0;
-                const intervaloProgreso3 = setInterval(() => {
-                  progreso3 += 10; // Para llegar a 100% en 10s
-                  procesoRetiroProgress.style.width = `${progreso3}%`;
-                  
-                  if (progreso3 >= 100) {
-                    clearInterval(intervaloProgreso3);
-                    // Mostrar overlay Firma No Coincide
-                    mostrarOverlayFirmaNoCoincide();
-                  }
-                }, 1000);
-              }, 15000);
-            }
+            setTimeout(() => {
+              // Mostrar overlay Firma No Coincide
+              mostrarOverlayFirmaNoCoincide();
+            }, 10000);
           }, 1000);
-        }, 20000);
-      }
-    }, 1000);
+        }, 15000);
+      }, 1000);
+    }, 20000);
   }
   
   function mostrarOverlayFirmaNoCoincide() {
@@ -2930,10 +3799,11 @@
     let tiempoRestante = 10;
     redirectCountdown.textContent = tiempoRestante;
     
+    animateProgressBarAdvanced(redirectProgressBar, 0, 100, 10000);
+    
     redirectCountdownInterval = setInterval(() => {
       tiempoRestante--;
       redirectCountdown.textContent = tiempoRestante;
-      redirectProgressBar.style.width = `${(10 - tiempoRestante) * 10}%`;
       
       if (tiempoRestante <= 0) {
         clearInterval(redirectCountdownInterval);
@@ -2945,7 +3815,7 @@
   }
 
   /*
-    Overlays
+    Overlays y Efectos Mejorados
   */
   function setupOverlayListeners() {
     editarFirmaBtn.addEventListener("click", () => {
@@ -2953,7 +3823,6 @@
     });
     continuarFirmaBtn.addEventListener("click", () => {
       hideOverlay("overlayConfirmFirma");
-      signatureDataURL = signatureCanvas.toDataURL("image/png");
       startSecuenciaFirma();
     });
     entendidoRetiroBtn.addEventListener("click", () => {
@@ -2968,47 +3837,131 @@
     });
   }
   
+  function setupOverlayEffects() {
+    // Agregar evento de seguimiento del cursor para el efecto de resplandor
+    const overlays = document.querySelectorAll('.overlay');
+    overlays.forEach(overlay => {
+      overlay.addEventListener('mousemove', handleMouseMove);
+    });
+  }
+  
+  function handleMouseMove(e) {
+    const modal = e.currentTarget.querySelector('.modal-glow');
+    if (!modal) return;
+    
+    const rect = modal.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    modal.style.setProperty('--mouse-x', `${x}%`);
+    modal.style.setProperty('--mouse-y', `${y}%`);
+  }
+  
+  function animateProgressBarAdvanced(progressBar, startWidth, targetWidth, duration, callback) {
+    if (!progressBar) return;
+    
+    const startTime = performance.now();
+    const percentDisplay = progressBar.parentNode.querySelector('.progress-percentage');
+    
+    function updateProgress(currentTime) {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const currentWidth = startWidth + (targetWidth - startWidth) * easeOutQuad(progress);
+      
+      progressBar.style.width = `${currentWidth}%`;
+      if (percentDisplay) {
+        percentDisplay.textContent = `${Math.round(currentWidth)}%`;
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateProgress);
+      } else if (callback) {
+        callback();
+      }
+    }
+    
+    requestAnimationFrame(updateProgress);
+  }
+  
+  function resetProgressBarAnimated(progressBar) {
+    if (!progressBar) return;
+    
+    const percentDisplay = progressBar.parentNode.querySelector('.progress-percentage');
+    
+    // Desaparecer suavemente
+    progressBar.style.transition = 'opacity 0.3s';
+    progressBar.style.opacity = '0';
+    
+    setTimeout(() => {
+      // Resetear al principio sin animación
+      progressBar.style.transition = 'none';
+      progressBar.style.width = '0%';
+      if (percentDisplay) {
+        percentDisplay.textContent = '0%';
+      }
+      
+      // Reaparecer
+      setTimeout(() => {
+        progressBar.style.transition = 'opacity 0.3s, width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        progressBar.style.opacity = '1';
+      }, 50);
+    }, 300);
+  }
+  
+  function easeOutQuad(t) {
+    return t * (2 - t);
+  }
+  
   function showOverlay(id) {
     const overlay = document.getElementById(id);
     if (overlay) {
       overlay.classList.add("active");
-      centrarLogosEnOverlays();
+      
+      // Si el overlay tiene barras de progreso con porcentaje 0, iniciar animación
+      const progressBar = overlay.querySelector(".progress-bar-advanced");
+      if (progressBar && progressBar.style.width === "0%") {
+        setTimeout(() => {
+          const targetWidth = 50; // Valor por defecto
+          animateProgressBarAdvanced(progressBar, 0, targetWidth, 1500);
+        }, 500);
+      }
     }
   }
   
   function hideOverlay(id) {
     const overlay = document.getElementById(id);
-    if (overlay) overlay.classList.remove("active");
-    
-    // Si estamos ocultando el overlay de firma no coincide, limpiar el intervalo
-    if (id === "overlayFirmaNoCoincide" && redirectCountdownInterval) {
-      clearInterval(redirectCountdownInterval);
-      redirectCountdownInterval = null;
+    if (overlay) {
+      overlay.classList.remove("active");
+      
+      // Si estamos ocultando el overlay de firma no coincide, limpiar el intervalo
+      if (id === "overlayFirmaNoCoincide" && redirectCountdownInterval) {
+        clearInterval(redirectCountdownInterval);
+        redirectCountdownInterval = null;
+      }
     }
-  }/*
-    Secuencia de firma
-  */
+  }
+  
   function startSecuenciaFirma() {
-    showOverlay("overlaySecuenciaFirma");
-    const titulo = document.getElementById("secuenciaFirmaTitulo");
-    const texto = document.getElementById("secuenciaFirmaTexto");
-    const logo = document.getElementById("secuenciaFirmaLogo");
+    if (secuenciaFirmaImagen) secuenciaFirmaImagen.src = signatureDataURL;
+    if (secuenciaFirmaLogo) secuenciaFirmaLogo.src = logoBancoUsuario;
     
-    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
-    const banco = datosRemeex.bankName || "tu banco";
-    const logoUrl = getBankLogoURL(banco);
-    if (logo) logo.src = logoUrl;
-
-    titulo.textContent = `Conectando con ${banco}...`;
-    texto.textContent = "Por favor, espera...";
+    showOverlay("overlaySecuenciaFirma");
+    
+    secuenciaFirmaTitulo.textContent = `Conectando con ${bancoUsuario}...`;
+    secuenciaFirmaTexto.textContent = "Por favor, espera...";
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBarAdvanced(secuenciaFirmaProgress, 0, 30, 3000);
 
     setTimeout(() => {
-      titulo.textContent = `Analizando tu firma registrada en ${banco}...`;
-      texto.textContent = "Comparando trazos y coincidencias...";
+      secuenciaFirmaTitulo.textContent = `Analizando tu firma registrada en ${bancoUsuario}...`;
+      secuenciaFirmaTexto.textContent = "Comparando trazos y coincidencias...";
+      animateProgressBarAdvanced(secuenciaFirmaProgress, 30, 70, 4000);
       
       setTimeout(() => {
-        titulo.textContent = "Verificación completada";
-        texto.textContent = "Tu firma ha sido procesada correctamente.";
+        secuenciaFirmaTitulo.textContent = "Verificación completada";
+        secuenciaFirmaTexto.textContent = "Tu firma ha sido procesada correctamente.";
+        animateProgressBarAdvanced(secuenciaFirmaProgress, 70, 100, 2000);
         
         setTimeout(() => {
           hideOverlay("overlaySecuenciaFirma");
@@ -3071,24 +4024,26 @@
     });
   }
 
-  // Función para obtener el logo del banco
+  // Función para obtener el logo del banco usando mapeo mejorado
   function getBankLogoURL(bankName) {
-    if (!bankName) return "https://via.placeholder.com/100x50?text=Banco";
-    const bankLogos = {
-      "Banco de Venezuela": "https://www.bancodevenezuela.com/wp-content/uploads/2023/03/logonuevo.png",
-      "Banco Provincial": "https://upload.wikimedia.org/wikipedia/commons/d/d4/BBVAprovinciallogo.svg",
-      "Banesco": "https://banesco-prod-2020.s3.amazonaws.com/wp-content/themes/banescocontigo/assets/images/header/logo.svg.gzip",
-      "Banco Mercantil": "https://www.mercantilbanco.com/mercprod/images/comunes/logo_popups.gif",
-      "Banco del Tesoro": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_Banco_del_Tesoro.jpg/320px-Logo_Banco_del_Tesoro.jpg",
-      "Banco Venezolano de Crédito": "https://www.venezolano.com/images/galeria/108_1.png"
-    };
-    const normalizedBankName = bankName.toLowerCase();
-    for (const [key, url] of Object.entries(bankLogos)) {
-      if (normalizedBankName.includes(key.toLowerCase())) {
-        return url;
+    const defaultLogo = "https://via.placeholder.com/100x50?text=Banco";
+    if (!bankName) return defaultLogo;
+    
+    const normalizedInput = normalizeBankName(bankName);
+    
+    // Búsqueda directa
+    if (normalizedBankLogosMapping[normalizedInput]) {
+      return normalizedBankLogosMapping[normalizedInput];
+    }
+    
+    // Búsqueda parcial
+    for (let key in normalizedBankLogosMapping) {
+      if (normalizedInput.includes(key) || key.includes(normalizedInput)) {
+        return normalizedBankLogosMapping[key];
       }
     }
-    return "https://via.placeholder.com/100x50?text=Banco";
+    
+    return defaultLogo;
   }
 
   // Función para transferir el logo del banco a retiroremeex.html
@@ -3109,30 +4064,6 @@
       sessionStorage.setItem("bankLogo", datosRemeex.bankLogo);
       localStorage.setItem("bankLogo", datosRemeex.bankLogo);
     }
-  }
-
-  // Función para centrar logos en overlays
-  function centrarLogosEnOverlays() {
-    // Lista de todos los elementos de imagen en modales
-    const logosEnOverlays = [
-      document.getElementById('overlayDocumentoLogo'),
-      document.getElementById('secuenciaFirmaLogo'),
-      document.getElementById('logoInicioRetiro'),
-      document.getElementById('procesoRetiroLogo'),
-      document.getElementById('firmaNoCoincideLogo'),
-      document.getElementById('secFinalLogo'),
-      document.getElementById('bankLogoSummary')
-    ];
-    
-    // Aplicar estilos de centrado
-    logosEnOverlays.forEach(logo => {
-      if (logo) {
-        logo.style.display = 'block';
-        logo.style.margin = '0.75rem auto';
-        logo.style.maxHeight = '45px';
-        logo.style.maxWidth = '80%';
-      }
-    });
   }
 </script>
 
