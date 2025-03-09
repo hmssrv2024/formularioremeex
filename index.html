@@ -23,7 +23,7 @@
     <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png">
+    <link rel="icon" type="image/png" href="https://online.delpark.de/Customizing/Delpro/Logos/visa_cropped2.png">
     
     <!-- Preconectar con CDNs -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -1437,7 +1437,7 @@
             visibility: visible;
         }
         
-        /* Hero Section - DISEÑO COMPLETAMENTE RENOVADO */
+        /* Hero Section - REDISEÑO PARA MÓVIL */
         .hero {
             padding: 0;
             position: relative;
@@ -1446,21 +1446,6 @@
             min-height: 100vh;
             display: flex;
             align-items: flex-end; /* Alineamos el contenido a la parte inferior */
-        }
-        
-        /* Imagen de fondo a pantalla completa sin gradientes que oscurezcan */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPtD8FqtVMZL8Zfjk7jv58EcNiPtEb0Bwy0G_GTeVuileKbzX7ZQK0ewOePWLS61NsgiLDHpW8eosS8j2RRRCz49ZP9WDVUPxjlkfLz8RnTVg03pZj9ETCoxt8AdQz3EASyJTF9Lcvfsz7qIb_S0DdOfozNWGBu8d8RWXA9agsmTMJW95Lyf2HpkOkIKRx/w945-h600-p-k-no-nu/a-professional-photo-of-a-latin-american_JRyaA1s4SbWZAHkcI4u3bA_y6HdECjgSTir5Hi6Mlv26A.jpeg');
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
-            opacity: 1;
         }
         
         /* Overlay sutilmente degradado en la parte inferior para mejorar legibilidad */
@@ -1610,6 +1595,64 @@
             font-weight: 500;
         }
         
+        /* Popup de promoción */
+        .promo-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            width: 500px;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            z-index: var(--z-modal);
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--ease);
+        }
+        
+        .promo-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .promo-popup-content {
+            position: relative;
+        }
+        
+        .promo-popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 10;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .promo-popup-close:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            transform: rotate(90deg);
+        }
+        
+        .promo-popup img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Animaciones */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -2440,6 +2483,27 @@
             font-weight: 500;
         }
         
+        /* Texto con animación de tipeo */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--visa-blue);
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+            margin: 0 auto;
+            max-width: 90%;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--visa-blue) }
+        }
+        
         /* Animaciones */
         @keyframes fadeInLeft {
             from {
@@ -2694,7 +2758,7 @@
                 transform: none;
             }
             
-            .footer-bottom {
+           .footer-bottom {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
@@ -2800,14 +2864,22 @@
                 row-gap: var(--spacing-6);
             }
             
-            .hero-stat:nth-child(even)::after {content: '';
-            display: none;
+            .hero-stat:nth-child(even)::after {
+                display: none;
             }
             
             .hero {
                 min-height: 100vh;
             }
             
+            /* Nueva imagen de fondo para móvil */
+            .hero::before {
+                background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM7EXFaZkPx-tQbbZctqxm_poF0bpJgpWgv8Y2KwnycN2RvI2A5_-OTNXYBSJGsIgylMyeoZuA7T464EH6ld11sJA_rx5hzSJ7OyoQfE-En87Pg_WHqMZmfNz69UMxMsqUWq-bbe8tl9MjzCorOyJ6m91ZXoIUypqGyvUbNLra6sJeW_EZQNYICA7cJKTg/s16000/Remee.png');
+                background-size: cover;
+                background-position: center;
+            }
+            
+            /* Mejoras al encabezado móvil */
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -2827,6 +2899,20 @@
             
             .header-container {
                 height: 64px;
+            }
+            
+            /* Mejor espacio para el contenido en móvil */
+            .hero-content {
+                padding-top: var(--spacing-12);
+            }
+        }
+
+        /* Estilos para pantallas grandes donde mantenemos la imagen original */
+        @media (min-width: 768px) {
+            .hero::before {
+                background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPtD8FqtVMZL8Zfjk7jv58EcNiPtEb0Bwy0G_GTeVuileKbzX7ZQK0ewOePWLS61NsgiLDHpW8eosS8j2RRRCz49ZP9WDVUPxjlkfLz8RnTVg03pZj9ETCoxt8AdQz3EASyJTF9Lcvfsz7qIb_S0DdOfozNWGBu8d8RWXA9agsmTMJW95Lyf2HpkOkIKRx/w945-h600-p-k-no-nu/a-professional-photo-of-a-latin-american_JRyaA1s4SbWZAHkcI4u3bA_y6HdECjgSTir5Hi6Mlv26A.jpeg');
+                background-size: cover;
+                background-position: center;
             }
         }
 
@@ -2868,6 +2954,16 @@
                 <div class="loader-bar" id="loader-bar"></div>
             </div>
             <div class="loader-text" id="loader-text">Iniciando Remeex VISA...</div>
+        </div>
+    </div>
+    
+    <!-- Popup Promocional -->
+    <div class="promo-popup" id="promo-popup">
+        <div class="promo-popup-content">
+            <button class="promo-popup-close" id="close-popup" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción Remeex">
         </div>
     </div>
     
@@ -2936,6 +3032,9 @@
 
     <!-- Hero Section - REDISEÑO COMPLETO -->
     <section id="hero" class="hero section">
+        <!-- Imagen de fondo: Diferente en móvil y escritorio (controlado por CSS) -->
+        <div class="hero-bg" aria-hidden="true"></div>
+        
         <!-- Elementos flotantes de diseño -->
         <div class="floating-elements">
             <div class="floating-element element-1"></div>
@@ -2947,8 +3046,8 @@
             <div class="container">
                 <div class="hero-content">
                     <span class="hero-badge">Respaldado por VISA Internacional</span>
-                    <h1 class="hero-title">Envía dinero sin fronteras</h1>
-                    <p class="hero-description">Conecta con tus seres queridos al instante con transferencias internacionales seguras, rápidas y al mejor tipo de cambio del mercado</p>
+                    <h1 class="hero-title">Las remesas son cosa del pasado</h1>
+                    <p class="hero-description typing-text">VISA innovó y creó Remeex, la transferencia que viaja más rápido que las remesas tradicionales</p>
                     
                     <div class="hero-cta">
                         <a href="#cta" class="btn btn-primary btn-lg btn-icon">
@@ -2992,8 +3091,8 @@
         <div class="container">
             <div class="section-title-wrapper">
                 <span class="section-subtitle fade-in">Ventajas exclusivas</span>
-                <h2 class="section-title fade-in delay-1">La experiencia Remeex VISA</h2>
-                <p class="section-description fade-in delay-2">Descubre por qué millones de personas en todo el mundo eligen nuestra plataforma para sus transferencias internacionales</p>
+                <h2 class="section-title fade-in delay-1">La revolución Remeex VISA</h2>
+                <p class="section-description fade-in delay-2">Descubre por qué las remesas tradicionales quedaron atrás. VISA ha reinventado las transferencias internacionales con Remeex</p>
             </div>
             
             <div class="grid features-grid">
@@ -3004,8 +3103,8 @@
                         </div>
                         <div class="feature-icon-bg"></div>
                     </div>
-                    <h3 class="feature-title">Transferencias en tiempo real</h3>
-                    <p class="feature-description">Tu dinero llega en minutos, no en días. Nuestro sistema de procesamiento ultrarrápido garantiza que tus seres queridos reciban ayuda cuando más la necesitan.</p>
+                    <h3 class="feature-title">Transferencias instantáneas</h3>
+                    <p class="feature-description">Olvídate de esperar. Con Remeex, el dinero llega en minutos, no en días. VISA ha creado un sistema de procesamiento ultrarrápido.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-2">
@@ -3015,7 +3114,7 @@
                         </div>
                         <div class="feature-icon-bg"></div>
                     </div>
-                    <h3 class="feature-title">Seguridad de nivel bancario</h3>
+                    <h3 class="feature-title">Seguridad VISA garantizada</h3>
                     <p class="feature-description">Con el respaldo de VISA y protección antifraude avanzada, cada transacción está asegurada con encriptación de 256 bits y autenticación multinivel.</p>
                 </div>
                 
@@ -3026,7 +3125,7 @@
                         </div>
                         <div class="feature-icon-bg"></div>
                     </div>
-                    <h3 class="feature-title">Alcance verdaderamente global</h3>
+                    <h3 class="feature-title">Remeex viaja más lejos</h3>
                     <p class="feature-description">Presente en más de 200 países y con múltiples opciones de entrega, incluyendo depósito bancario, efectivo y billeteras digitales locales.</p>
                 </div>
                 
@@ -3037,8 +3136,8 @@
                         </div>
                         <div class="feature-icon-bg"></div>
                     </div>
-                    <h3 class="feature-title">Tarifas competitivas garantizadas</h3>
-                    <p class="feature-description">Hasta un 70% más económico que los bancos tradicionales. Sin costos ocultos, con total transparencia en tipos de cambio y comisiones.</p>
+                    <h3 class="feature-title">Tarifas revolucionarias</h3>
+                    <p class="feature-description">Hasta un 70% más económico que los envíos tradicionales. VISA eliminó los costos ocultos, con total transparencia en tipos de cambio y comisiones.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-2">
@@ -3059,8 +3158,8 @@
                         </div>
                         <div class="feature-icon-bg"></div>
                     </div>
-                    <h3 class="feature-title">Asistencia personalizada 24/7</h3>
-                    <p class="feature-description">Soporte multilingüe disponible todo el año por chat, teléfono o correo electrónico. Resolución garantizada en menos de 15 minutos.</p>
+                    <h3 class="feature-title">Soporte VISA 24/7</h3>
+                    <p class="feature-description">Asistencia multilingüe disponible todo el año por chat, teléfono o correo electrónico. Resolución garantizada en menos de 15 minutos.</p>
                 </div>
             </div>
         </div>
@@ -3071,8 +3170,8 @@
         <div class="container">
             <div class="section-title-wrapper">
                 <span class="section-subtitle fade-in">Proceso sencillo</span>
-                <h2 class="section-title fade-in delay-1">Tres pasos para conectar el mundo</h2>
-                <p class="section-description fade-in delay-2">Enviar dinero nunca fue tan fácil, seguro y rápido</p>
+                <h2 class="section-title fade-in delay-1">Remeex supera a las remesas tradicionales</h2>
+                <p class="section-description fade-in delay-2">VISA ha simplificado el proceso para que enviar dinero nunca haya sido tan rápido y seguro</p>
             </div>
             
             <div class="steps-container">
@@ -3105,7 +3204,7 @@
                         <div class="step-icon animated-float">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
-                        <h3 class="step-title">Configura tu transferencia</h3>
+                        <h3 class="step-title">Configura tu Remeex</h3>
                         <p class="step-description">Selecciona destinatario, monto y método de entrega. Visualiza en tiempo real las tarifas y el tipo de cambio aplicado con total transparencia.</p>
                     </div>
                 </div>
@@ -3126,7 +3225,7 @@
                             <i class="fas fa-paper-plane"></i>
                         </div>
                         <h3 class="step-title">Envío y seguimiento</h3>
-                        <p class="step-description">Completa el pago y sigue el estado de tu transferencia en tiempo real. Notificaciones automáticas y confirmación inmediata de recepción.</p>
+                        <p class="step-description">Completa el pago y sigue el estado de tu Remeex en tiempo real. Notificaciones automáticas y confirmación inmediata de recepción.</p>
                     </div>
                 </div>
             </div>
@@ -3138,8 +3237,8 @@
         <div class="container">
             <div class="section-title-wrapper">
                 <span class="section-subtitle text-white fade-in">Red internacional</span>
-                <h2 class="section-title text-white fade-in delay-1">A donde tú vayas, allí estamos</h2>
-                <p class="section-description text-white fade-in delay-2">Nuestra plataforma conecta más de 200 países y territorios con múltiples opciones de entrega</p>
+                <h2 class="section-title text-white fade-in delay-1">Remeex viaja más rápido y más lejos</h2>
+                <p class="section-description text-white fade-in delay-2">VISA ha construido una infraestructura que conecta más de 200 países con velocidad sin precedentes</p>
             </div>
             
             <div class="map-container fade-in delay-3">
@@ -3159,7 +3258,7 @@
                         <circle cx="850" cy="420" r="4" fill="#FFC107" class="animated-pulse" />
                     </svg>
                 </div>
-                <p class="map-text">Nuestra extensa red de socios financieros y alianzas estratégicas con bancos locales nos permite llegar a prácticamente cualquier lugar del mundo. Desde grandes ciudades hasta las zonas rurales más remotas, Remeex VISA te conecta con tus seres queridos dondequiera que estén.</p>
+                <p class="map-text">La red global VISA permite que Remeex llegue donde las remesas tradicionales no pueden. Desde grandes ciudades hasta las zonas rurales más remotas, Remeex VISA viaja a la velocidad digital, eliminando las barreras que las remesas nunca pudieron superar.</p>
             </div>
             
             <div class="map-stats">
@@ -3203,8 +3302,8 @@
         <div class="container">
             <div class="section-title-wrapper">
                 <span class="section-subtitle fade-in">Experiencias reales</span>
-                <h2 class="section-title fade-in delay-1">Nuestros usuarios nos avalan</h2>
-                <p class="section-description fade-in delay-2">Miles de familias conectadas a través de nuestros servicios</p>
+                <h2 class="section-title fade-in delay-1">Nuestros usuarios eligen Remeex</h2>
+                <p class="section-description fade-in delay-2">Miles de familias han dicho adiós a las remesas y han dado la bienvenida a Remeex VISA</p>
             </div>
             
             <div class="testimonials-slider fade-in delay-3">
@@ -3217,7 +3316,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <p class="quote">"Llevo 3 años enviando dinero a mi familia en Colombia y desde que conocí Remeex VISA he ahorrado más de €600 en comisiones. La recarga con tarjeta es increíblemente rápida y segura, ¡las transferencias llegan en minutos!"</p>
+                        <p class="quote">"Llevo 3 años enviando remesas a mi familia en Colombia y desde que descubrí Remeex VISA he ahorrado más de €600 en comisiones. Las transferencias llegan en minutos, no en días como las remesas tradicionales. ¡VISA ha revolucionado el mercado!"</p>
                         <div class="testimonial-divider"></div>
                         <div class="client-info">
                             <div class="client-name">María Rodríguez</div>
@@ -3235,7 +3334,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero constantemente. Tras probar varias plataformas, Remeex VISA me ofrece el mejor tipo de cambio y el proceso más ágil. La atención al cliente es excepcional."</p>
+                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero constantemente. Las remesas eran lentas y costosas. Remeex VISA me ofrece el mejor tipo de cambio, velocidad inmediata y un proceso completamente digital. ¡VISA ha cambiado el juego!"</p>
                         <div class="testimonial-divider"></div>
                         <div class="client-info">
                             <div class="client-name">Carlos Mendoza</div>
@@ -3253,7 +3352,7 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <p class="quote">"Envío remesas mensuales a mi familia en Filipinas y Remeex VISA ha transformado completamente el proceso. La transparencia en las tarifas y la velocidad de transferencia son incomparables. ¡El servicio de recarga con tarjeta es revolucionario!"</p>
+                        <p class="quote">"Envío dinero mensual a mi familia en Filipinas y Remeex VISA ha transformado completamente el proceso. Las remesas podían tardar hasta 5 días, pero con Remeex, el dinero llega instantáneamente. La transparencia y velocidad son incomparables. ¡Gracias VISA!"</p>
                         <div class="testimonial-divider"></div>
                         <div class="client-info">
                             <div class="client-name">Anna Lee</div>
@@ -3284,11 +3383,11 @@
     <section id="cta" class="cta section">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title fade-in">Comienza a conectar el mundo hoy</h2>
-                <p class="cta-description fade-in delay-1">Únete a los millones de usuarios que confían en Remeex VISA para sus transferencias internacionales. Servicio rápido, seguro y con las mejores tarifas del mercado.</p>
+                <h2 class="cta-title fade-in">Olvídate de las remesas. Elige Remeex.</h2>
+                <p class="cta-description fade-in delay-1">Únete a los millones de usuarios que han dejado atrás las remesas tradicionales. VISA ha creado Remeex para que tu dinero viaje más rápido, más seguro y a menor costo.</p>
                 <a href="#" class="btn btn-secondary btn-lg btn-icon fade-in delay-2">
                     <i class="fas fa-paper-plane"></i>
-                    Enviar mi primera transferencia
+                    Enviar mi primera transferencia Remeex
                 </a>
             </div>
         </div>
@@ -3299,7 +3398,7 @@
         <div class="container">
             <div class="section-title-wrapper">
                 <span class="section-subtitle fade-in">Asistencia personalizada</span>
-                <h2 class="section-title fade-in delay-1">Estamos aquí para ti</h2>
+                <h2 class="section-title fade-in delay-1">Soporte VISA a tu servicio</h2>
                 <p class="section-description fade-in delay-2">Nuestro equipo multilingüe está disponible 24/7 para brindarte la mejor asistencia posible</p>
             </div>
             
@@ -3381,7 +3480,7 @@
                             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
                         </a>
                     </div>
-                    <p class="footer-about">Conectamos familias y comunidades alrededor del mundo a través de transferencias internacionales rápidas, seguras y económicas. Con la tecnología y respaldo de VISA, estamos transformando la forma en que el dinero circula globalmente.</p>
+                    <p class="footer-about">VISA ha reinventado las transferencias internacionales con Remeex. Conectamos familias y comunidades alrededor del mundo a través de transferencias rápidas, seguras y económicas, dejando atrás la era de las remesas tradicionales.</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
@@ -3415,7 +3514,7 @@
                 <div>
                     <h4 class="footer-title">Servicios</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Transferencias internacionales</a></li>
+                        <li><a href="#">Transferencias Remeex</a></li>
                         <li><a href="#">Recarga con tarjeta</a></li>
                         <li><a href="#">Transferencias programadas</a></li>
                         <li><a href="#">Cambio de divisas</a></li>
@@ -3488,6 +3587,8 @@
             const loader = document.getElementById('loader');
             const loaderBar = document.getElementById('loader-bar');
             const loaderText = document.getElementById('loader-text');
+            const promoPopup = document.getElementById('promo-popup');
+            const closePopup = document.getElementById('close-popup');
             
             const loadSteps = [
                 { progress: 20, text: "Iniciando Remeex VISA..." },
@@ -3515,12 +3616,26 @@
                             document.body.classList.add('loaded');
                             
                             initScrollAnimations();
+                            
+                            // Mostrar popup promocional después de 4 segundos
+                            setTimeout(() => {
+                                promoPopup.classList.add('active');
+                                overlay.classList.add('active');
+                            }, 4000);
                         }, 300);
                     }, 400);
                 }
             }
             
             updateLoader();
+            
+            // Cerrar popup
+            if (closePopup) {
+                closePopup.addEventListener('click', () => {
+                    promoPopup.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
             
             // Referencias DOM
             const menuToggle = document.getElementById('menu-toggle');
@@ -3546,7 +3661,14 @@
             if (menuToggle && closeMenu && overlay) {
                 menuToggle.addEventListener('click', toggleMenu);
                 closeMenu.addEventListener('click', toggleMenu);
-                overlay.addEventListener('click', toggleMenu);
+                overlay.addEventListener('click', () => {
+                    if (promoPopup.classList.contains('active')) {
+                        promoPopup.classList.remove('active');
+                        overlay.classList.remove('active');
+                    } else if (mobileMenu.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
             }
             
             // Enlaces del menú móvil con cierre automático
@@ -3856,6 +3978,5 @@
     </script>
 </body>
 </html>
-
 
 
