@@ -6,7 +6,7 @@
     <meta name="description" content="Remeex VISA - Transferencias internacionales y remesas sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
     <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales">
     <meta name="theme-color" content="#1A1F71">
-    <title>Remeex VISA | Transferencias y Remesas Internacionales Sin Fronteras</title>
+    <title>Remeex VISA | Conectando Familias Sin Fronteras</title>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -33,132 +33,84 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts - Optimizados para mejor rendimiento -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* === VARIABLES === */
         :root {
-            /* Colores principales - refinados para un aspecto más elegante */
+            /* Colores principales - Updated Palette */
             --visa-blue: #1434CB;
-            --visa-blue-light: #1F57E6;
-            --visa-blue-dark: #0C2B8E;
-            --visa-blue-hover: #1641B0;
             --visa-gold: #F7B600;
-            --accent-color: #0075FF;
+            --visa-accent: #00A1DF;
             --success-color: #00C389;
             --warning-color: #FF9F00;
-            --error-color: #FF4A4A;
+            --error-color: #FF5A5A;
             
-            /* Colores neutros - con mejor contraste */
+            /* Colores neutros - Updated for Modern Look */
             --white: #FFFFFF;
-            --gray-50: #F9FAFB;
-            --gray-100: #F3F4F6;
-            --gray-200: #E5E7EB;
-            --gray-300: #D1D5DB;
-            --gray-400: #9CA3AF;
-            --gray-500: #6B7280;
-            --gray-600: #4B5563;
-            --gray-700: #374151;
-            --gray-800: #1F2937;
-            --gray-900: #111827;
+            --off-white: #F9FAFB;
+            --gray-50: #F5F7FA;
+            --gray-100: #EDF2F7;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E0;
+            --gray-400: #A0AEC0;
+            --gray-500: #718096;
+            --gray-600: #4A5568;
+            --gray-700: #2D3748;
+            --gray-800: #1A202C;
+            --gray-900: #171923;
             
-            /* Colores de fondo y acento - más sutiles */
-            --light-blue: #EDF3FF;
-            --ultra-light-blue: #F7F9FF;
-            --gradient-blue: linear-gradient(135deg, var(--visa-blue), var(--accent-color));
-            --gradient-gold: linear-gradient(135deg, var(--visa-gold), #FFA040);
-            --gradient-dark: linear-gradient(135deg, #0A1757, #1434CB);
+            /* Colores de fondo y acento */
+            --light-blue: #EBF8FF;
+            --ultra-light-blue: #F0F7FF;
+            --gradient-blue: linear-gradient(135deg, var(--visa-blue), #0052FF);
+            --gradient-gold: linear-gradient(135deg, var(--visa-gold), #FFA940);
+            --gradient-dark: linear-gradient(135deg, #1A202C, #2D3748);
             
-            /* Sombras - refinadas para un aspecto más profesional */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 5px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.03);
-            --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.07), 0 5px 10px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 20px rgba(0, 0, 0, 0.04);
-            --shadow-card-hover: 0 10px 25px rgba(0, 0, 0, 0.06), 0 5px 15px rgba(0, 0, 0, 0.03);
-            --shadow-blue: 0 5px 15px rgba(20, 52, 203, 0.15);
-            --shadow-gold: 0 5px 15px rgba(247, 182, 0, 0.15);
+            /* Sombras - Enhanced for depth */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.04), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06), 0 10px 10px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.12);
+            --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.08);
+            --shadow-card-hover: 0 10px 30px rgba(0, 0, 0, 0.12);
             
-            /* Tipografía - Tamaños optimizados para mejor legibilidad */
-            --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --fs-xs: 0.75rem;    /* 12px */
-            --fs-sm: 0.875rem;   /* 14px */
-            --fs-base: 1rem;     /* 16px */
-            --fs-md: 1.125rem;   /* 18px */
-            --fs-lg: 1.25rem;    /* 20px */
-            --fs-xl: 1.5rem;     /* 24px */
-            --fs-2xl: 1.75rem;   /* 28px */
-            --fs-3xl: 2rem;      /* 32px */
-            --fs-4xl: 2.5rem;    /* 40px */
-            --fs-5xl: 3rem;      /* 48px */
-            --fs-6xl: 3.75rem;   /* 60px */
+            /* Tipografía */
+            --font-primary: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-secondary: 'Bricolage Grotesque', sans-serif;
             
-            /* Line heights - para mejor legibilidad */
-            --lh-none: 1;
-            --lh-tight: 1.25;
-            --lh-snug: 1.375;
-            --lh-normal: 1.5;
-            --lh-relaxed: 1.625;
-            --lh-loose: 2;
-            
-            /* Pesos de fuente - más coherentes */
-            --fw-light: 300;
-            --fw-regular: 400;
-            --fw-medium: 500;
-            --fw-semibold: 600;
-            --fw-bold: 700;
-            --fw-extrabold: 800;
-            
-            /* Espaciado - más refinado */
-            --space-1: 0.25rem;   /* 4px */
-            --space-2: 0.5rem;    /* 8px */
-            --space-3: 0.75rem;   /* 12px */
-            --space-4: 1rem;      /* 16px */
-            --space-5: 1.25rem;   /* 20px */
-            --space-6: 1.5rem;    /* 24px */
-            --space-8: 2rem;      /* 32px */
-            --space-10: 2.5rem;   /* 40px */
-            --space-12: 3rem;     /* 48px */
-            --space-16: 4rem;     /* 64px */
-            --space-20: 5rem;     /* 80px */
-            --space-24: 6rem;     /* 96px */
-            --space-32: 8rem;     /* 128px */
-            
-            /* Bordes - más refinados */
-            --radius-sm: 0.25rem;
-            --radius-md: 0.375rem;
-            --radius-lg: 0.5rem;
-            --radius-xl: 0.75rem;
-            --radius-2xl: 1rem;
-            --radius-3xl: 1.5rem;
-            --radius-full: 9999px;
-            
-            /* Z-index - mejor organización */
-            --z-0: 0;
-            --z-10: 10;
-            --z-20: 20;
-            --z-30: 30;
-            --z-40: 40;
-            --z-50: 50;
-            --z-auto: auto;
-            --z-fixed: 100;
-            --z-modal: 1000;
-            
-            /* Ancho contenedor - más tamaños intermedios */
-            --container-sm: 640px;
-            --container-md: 768px;
-            --container-lg: 1024px;
-            --container-xl: 1280px;
-            
-            /* Transiciones - más refinadas */
-            --transition-fast: 150ms;
-            --transition-normal: 250ms;
-            --transition-slow: 350ms;
-            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            /* Transiciones */
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-out: cubic-bezier(0, 0, 0.2, 1);
             --ease-in: cubic-bezier(0.4, 0, 1, 1);
             --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            /* Espaciado */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+            --spacing-20: 5rem;
+            --spacing-24: 6rem;
+            --spacing-32: 8rem;
+            
+            /* Bordes */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
         }
 
         /* === RESET Y BASE === */
@@ -166,24 +118,22 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
         html {
             font-size: 16px;
             scroll-behavior: smooth;
-            scroll-padding-top: 80px;
             -webkit-text-size-adjust: 100%;
         }
         
         body {
-            font-family: var(--font-family);
-            font-size: var(--fs-base);
-            font-weight: var(--fw-regular);
-            line-height: var(--lh-normal);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            line-height: 1.6;
             color: var(--gray-700);
             background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             min-height: 100vh;
         }
@@ -202,1159 +152,43 @@
         a {
             color: inherit;
             text-decoration: none;
-            transition: color var(--transition-normal) var(--ease-in-out);
+            transition: color 0.2s var(--ease);
         }
         
         ul, ol {
             list-style: none;
         }
         
-        /* Utilidades de texto */
-        .text-center { text-align: center; }
-        .text-left { text-align: left; }
-        .text-right { text-align: right; }
-        
-        .text-xs { font-size: var(--fs-xs); }
-        .text-sm { font-size: var(--fs-sm); }
-        .text-base { font-size: var(--fs-base); }
-        .text-md { font-size: var(--fs-md); }
-        .text-lg { font-size: var(--fs-lg); }
-        .text-xl { font-size: var(--fs-xl); }
-        .text-2xl { font-size: var(--fs-2xl); }
-        .text-3xl { font-size: var(--fs-3xl); }
-        .text-4xl { font-size: var(--fs-4xl); }
-        .text-5xl { font-size: var(--fs-5xl); }
-        
-        .font-light { font-weight: var(--fw-light); }
-        .font-normal { font-weight: var(--fw-regular); }
-        .font-medium { font-weight: var(--fw-medium); }
-        .font-semibold { font-weight: var(--fw-semibold); }
-        .font-bold { font-weight: var(--fw-bold); }
-        .font-extrabold { font-weight: var(--fw-extrabold); }
-        
-        .text-white { color: var(--white); }
-        .text-primary { color: var(--visa-blue); }
-        .text-accent { color: var(--accent-color); }
-        .text-success { color: var(--success-color); }
-        .text-warning { color: var(--warning-color); }
-        .text-error { color: var(--error-color); }
-        .text-gray { color: var(--gray-600); }
-        .text-dark { color: var(--gray-900); }
-        
-        .text-gradient {
-            background: var(--gradient-blue);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
-        
         /* === LAYOUT === */
         .container {
             width: 100%;
-            max-width: 1320px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 var(--space-4);
+            padding: 0 var(--spacing-4);
             position: relative;
             z-index: 1;
         }
         
         .section {
             position: relative;
-            padding: var(--space-16) 0;
+            padding: var(--spacing-16) 0;
             overflow: hidden;
-        }
-        
-        .section-sm {
-            padding: var(--space-10) 0;
-        }
-        
-        .section-lg {
-            padding: var(--space-24) 0;
-        }
-        
-        .section-title-wrapper {
-            max-width: 800px;
-            margin: 0 auto var(--space-12);
-            text-align: center;
-            position: relative;
-        }
-        
-        .section-subtitle {
-            display: inline-block;
-            font-weight: var(--fw-semibold);
-            font-size: var(--fs-sm);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--accent-color);
-            margin-bottom: var(--space-3);
-            position: relative;
-            padding-bottom: var(--space-2);
-        }
-        
-        .section-subtitle::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-        }
-        
-        .section-title {
-            font-size: var(--fs-3xl);
-            font-weight: var(--fw-bold);
-            line-height: var(--lh-tight);
-            margin-bottom: var(--space-4);
-            color: var(--gray-900);
-            position: relative;
-        }
-        
-        .section-description {
-            font-size: var(--fs-md);
-            color: var(--gray-600);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
         
         .grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: var(--space-6);
+            gap: var(--spacing-6);
         }
         
-        .flex {
-            display: flex;
-        }
-        
-        .flex-col {
-            flex-direction: column;
-        }
-        
-        .items-center {
-            align-items: center;
-        }
-        
-        .justify-center {
-            justify-content: center;
-        }
-        
-        .justify-between {
-            justify-content: space-between;
-        }
-        
-        .gap-1 { gap: var(--space-1); }
-        .gap-2 { gap: var(--space-2); }
-        .gap-3 { gap: var(--space-3); }
-        .gap-4 { gap: var(--space-4); }
-        .gap-6 { gap: var(--space-6); }
-        .gap-8 { gap: var(--space-8); }
-        
-        .mb-1 { margin-bottom: var(--space-1); }
-        .mb-2 { margin-bottom: var(--space-2); }
-        .mb-3 { margin-bottom: var(--space-3); }
-        .mb-4 { margin-bottom: var(--space-4); }
-        .mb-6 { margin-bottom: var(--space-6); }
-        .mb-8 { margin-bottom: var(--space-8); }
-        .mb-10 { margin-bottom: var(--space-10); }
-        .mb-12 { margin-bottom: var(--space-12); }
-        
-        .mt-1 { margin-top: var(--space-1); }
-        .mt-2 { margin-top: var(--space-2); }
-        .mt-3 { margin-top: var(--space-3); }
-        .mt-4 { margin-top: var(--space-4); }
-        .mt-6 { margin-top: var(--space-6); }
-        .mt-8 { margin-top: var(--space-8); }
-        .mt-10 { margin-top: var(--space-10); }
-        .mt-12 { margin-top: var(--space-12); }
-        
-        /* === COMPONENTES === */
-        /* Botones - Rediseñados con mejor estilo */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-            padding: 0 var(--space-5);
-            font-size: var(--fs-base);
-            font-weight: var(--fw-semibold);
-            line-height: 1;
-            text-align: center;
-            border-radius: var(--radius-lg);
-            transition: all var(--transition-normal) var(--ease-in-out);
-            cursor: pointer;
-            border: none;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            white-space: nowrap;
-            transform-origin: center;
-            z-index: 1;
-            outline: none;
-            text-decoration: none;
-            user-select: none;
-        }
-        
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0%;
-            height: 0%;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-            transform: translate(-50%, -50%);
-            transition: width var(--transition-normal) var(--ease-out), 
-                        height var(--transition-normal) var(--ease-out);
-            z-index: -1;
-        }
-        
-        .btn:hover::after {
-            width: 110%;
-            height: 300%;
-        }
-        
-        .btn-primary {
-            background-color: var(--visa-blue);
-            color: var(--white);
-            box-shadow: var(--shadow-blue);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--visa-blue-light);
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
-            background-color: var(--visa-blue);
-        }
-        
-        .btn-secondary {
-            background-color: var(--white);
-            color: var(--visa-blue);
-            box-shadow: 0 0 0 1px rgba(20, 52, 203, 0.15);
-        }
-        
-        .btn-secondary:hover {
-            box-shadow: 0 0 0 2px rgba(20, 52, 203, 0.2), var(--shadow-md);
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary:active {
-            transform: translateY(0);
-        }
-        
-        .btn-gold {
-            background: var(--gradient-gold);
-            color: var(--white);
-            box-shadow: var(--shadow-gold);
-        }
-        
-        .btn-gold:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-        
-        .btn-gold:active {
-            transform: translateY(0);
-        }
-        
-        .btn-lg {
-            height: 52px;
-            padding: 0 var(--space-6);
-            font-size: var(--fs-md);
-        }
-        
-        .btn-xl {
-            height: 60px;
-            padding: 0 var(--space-8);
-            font-size: var(--fs-lg);
-            border-radius: var(--radius-xl);
-        }
-        
-        .btn-sm {
-            height: 40px;
-            padding: 0 var(--space-4);
-            font-size: var(--fs-sm);
-        }
-        
-        .btn-icon {
-            gap: var(--space-2);
-        }
-        
-        .btn-icon i {
-            font-size: 1.1em;
-            transition: transform var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .btn:hover .btn-icon-right i {
-            transform: translateX(4px);
-        }
-        
-        .btn:hover .btn-icon-up i {
-            transform: translateY(-4px);
-        }
-        
-        /* Badges */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.2rem 0.8rem;
-            border-radius: var(--radius-full);
-            font-size: var(--fs-xs);
-            font-weight: var(--fw-semibold);
-            box-shadow: var(--shadow-sm);
-            line-height: 1.5;
-        }
-        
-        .badge-primary {
-            background: rgba(20, 52, 203, 0.08);
-            color: var(--visa-blue);
-            border: 1px solid rgba(20, 52, 203, 0.12);
-        }
-        
-        .badge-success {
-            background-color: rgba(0, 195, 137, 0.08);
-            color: var(--success-color);
-            border: 1px solid rgba(0, 195, 137, 0.12);
-        }
-        
-        .badge-new {
-            background: var(--gradient-blue);
-            color: var(--white);
-            padding: 0.25rem 0.6rem;
-            font-size: var(--fs-xs);
-            margin-left: 0.5rem;
-            box-shadow: var(--shadow-blue);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .badge-new::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: rotate(25deg);
-            animation: shine 3s infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                top: -100%;
-                left: -100%;
-            }
-            20% {
-                top: 100%;
-                left: 100%;
-            }
-            100% {
-                top: 100%;
-                left: 100%;
-            }
-        }
-        
-        .badge-new i {
-            margin-right: 0.25rem;
-        }
-        
-        /* Cards */
-        .card {
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            transition: transform var(--transition-normal) var(--ease-bounce), 
-                       box-shadow var(--transition-normal) var(--ease-in-out);
-            position: relative;
-            isolation: isolate;
-            border: 1px solid var(--gray-100);
-        }
-        
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: transparent;
-        }
-        
-        /* Feature Card */
-        .feature-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: var(--space-8) var(--space-6);
-            height: 100%;
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                       box-shadow var(--transition-normal) var(--ease-in-out);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            border: 1px solid var(--gray-100);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: transparent;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-blue);
-            z-index: 1;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background: linear-gradient(to top, var(--ultra-light-blue), transparent);
-            opacity: 0;
-            z-index: -1;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .feature-card:hover::after {
-            opacity: 1;
-        }
-        
-        .feature-icon-wrapper {
-            position: relative;
-            margin-bottom: var(--space-5);
-        }
-        
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light-blue);
-            color: var(--visa-blue);
-            font-size: var(--fs-2xl);
-            border-radius: var(--radius-2xl);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .feature-card:hover .feature-icon {
-            background: var(--visa-blue);
-            color: var(--white);
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon-bg {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: var(--accent-color);
-            opacity: 0.1;
-            border-radius: var(--radius-2xl);
-            bottom: -6px;
-            right: -6px;
-            transform: rotate(-8deg);
-            z-index: 1;
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .feature-card:hover .feature-icon-bg {
-            transform: scale(1.2) rotate(8deg);
-            opacity: 0.15;
-        }
-        
-        .feature-title {
-            font-size: var(--fs-lg);
-            font-weight: var(--fw-semibold);
-            margin-bottom: var(--space-3);
-            color: var(--gray-900);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .feature-description {
-            color: var(--gray-600);
-            font-size: var(--fs-base);
-            margin-bottom: 0;
-            line-height: var(--lh-relaxed);
-        }
-        
-        /* Step Card */
-        .step-card {
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8) var(--space-6);
-            box-shadow: var(--shadow-card);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                        box-shadow var(--transition-normal) var(--ease-in-out);
-            position: relative;
-            z-index: 1;
-            border: 1px solid var(--gray-100);
-        }
-        
-        .step-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: transparent;
-        }
-        
-        .step-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-xl);
-            padding: 2px;
-            background: var(--gradient-blue);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-            z-index: -1;
-        }
-        
-        .step-card:hover::after {
-            opacity: 1;
-        }
-        
-        .step-number-wrapper {
-            position: relative;
-            margin-bottom: var(--space-6);
-        }
-        
-        .step-number {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-xl);
-            font-weight: var(--fw-bold);
-            box-shadow: var(--shadow-blue);
-            position: relative;
-            z-index: 2;
-            transition: transform var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .step-card:hover .step-number {
-            transform: scale(1.1);
-        }
-        
-        .step-number-bg {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background: var(--accent-color);
-            opacity: 0.15;
-            border-radius: 50%;
-            top: -7px;
-            left: -7px;
-            z-index: 1;
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .step-card:hover .step-number-bg {
-            transform: scale(1.3);
-        }
-        
-        .step-icon {
-            font-size: var(--fs-3xl);
-            color: var(--visa-blue);
-            margin-bottom: var(--space-5);
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                        color var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .step-card:hover .step-icon {
-            color: var(--accent-color);
-            transform: scale(1.1);
-        }
-        
-        .step-title {
-            font-size: var(--fs-lg);
-            font-weight: var(--fw-semibold);
-            margin-bottom: var(--space-3);
-            color: var(--gray-900);
-        }
-        
-        .step-description {
-            color: var(--gray-600);
-            font-size: var(--fs-base);
-            line-height: var(--lh-relaxed);
-        }
-        
-        /* Step Connector */
-        .step-connector {
-            position: relative;
-            flex: 0.1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        
-        .step-connector-line {
-            width: 100%;
-            height: 2px;
-            background: var(--light-blue);
-            position: relative;
-        }
-        
-        .step-connector-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: var(--gradient-blue);
-            transition: width 0.8s var(--ease-in-out);
-        }
-        
-        .step-connector.active .step-connector-line::before {
-            width: 100%;
-        }
-        
-        .step-connector-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--light-blue);
-            border: 2px solid var(--white);
-            box-shadow: var(--shadow-sm);
-            z-index: 1;
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .step-connector.active .step-connector-dot {
-            background: var(--accent-color);
-            transform: scale(1.3);
-        }
-        
-        /* Stats Card */
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-xl);
-            padding: var(--space-6) var(--space-4);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                            rgba(255, 255, 255, 0.1) 0%, 
-                            rgba(255, 255, 255, 0) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .stat-card:hover::before {
-            opacity: 1;
-        }
-        
-        .stat-icon {
-            font-size: var(--fs-2xl);
-            margin-bottom: var(--space-4);
-            color: var(--white);
-            opacity: 0.7;
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                        opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .stat-card:hover .stat-icon {
-            transform: scale(1.2);
-            opacity: 1;
-        }
-        
-        .stat-number {
-            font-size: var(--fs-4xl);
-            font-weight: var(--fw-bold);
-            margin-bottom: var(--space-2);
-            background: linear-gradient(to right, #ffffff, #e6e6ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .stat-number::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-            opacity: 0.3;
-            transition: height var(--transition-normal) var(--ease-in-out),
-                        opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .stat-card:hover .stat-number::after {
-            height: 6px;
-            opacity: 0.5;
-        }
-        
-        .stat-label {
-            font-size: var(--fs-md);
-            font-weight: var(--fw-medium);
-            color: var(--white);
-            opacity: 0.9;
-        }
-        
-        /* Testimonial Card */
-        .testimonial-card {
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            box-shadow: var(--shadow-card);
-            text-align: center;
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                        box-shadow var(--transition-normal) var(--ease-in-out);
-            border: 1px solid var(--gray-100);
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: transparent;
-        }
-        
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 8rem;
-            font-family: Georgia, serif;
-            color: var(--visa-blue);
-            opacity: 0.05;
-            line-height: 0.5;
-        }
-        
-        .testimonial-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-xl);
-            padding: 2px;
-            background: var(--gradient-blue);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .testimonial-card:hover::after {
-            opacity: 1;
-        }
-        
-        .rating {
-            display: inline-flex;
-            gap: 0.25rem;
-            color: var(--visa-gold);
-            font-size: var(--fs-md);
-            margin-bottom: var(--space-4);
-            position: relative;
-        }
-        
-        .rating::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-        }
-        
-        .quote {
-            font-size: var(--fs-lg);
-            font-style: italic;
-            color: var(--gray-700);
-            margin-bottom: var(--space-6);
-            line-height: var(--lh-relaxed);
-            position: relative;
-        }
-        
-        .quote::before, .quote::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.1;
-        }
-        
-        .quote::before {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%231434CB' d='M7.5 17h-5C1.7 17 1 16.3 1 15.5v-5C1 7.4 3.4 5 6.5 5h1C8.3 5 9 5.7 9 6.5S8.3 8 7.5 8h-1C5 8 4 9 4 10.5V14h3.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5zm12 0h-5c-.8 0-1.5-.7-1.5-1.5v-5C13 7.4 15.4 5 18.5 5h1c.8 0 1.5.7 1.5 1.5S20.3 8 19.5 8h-1c-1.5 0-2.5 1-2.5 2.5V14h3.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z'/%3E%3C/svg%3E");
-            top: -10px;
-            left: -25px;
-        }
-        
-        .quote::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%231434CB' d='M16.5 7h5c.8 0 1.5.7 1.5 1.5v5c0 3.1-2.4 5.5-5.5 5.5h-1c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h1c1.5 0 2.5-1 2.5-2.5V10h-3.5c-.8 0-1.5-.7-1.5-1.5S15.7 7 16.5 7zm-12 0h5c.8 0 1.5.7 1.5 1.5v5c0 3.1-2.4 5.5-5.5 5.5h-1c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h1c1.5 0 2.5-1 2.5-2.5V10H4.5c-.8 0-1.5-.7-1.5-1.5S3.7 7 4.5 7z'/%3E%3C/svg%3E");
-            bottom: -10px;
-            right: -25px;
-        }
-        
-        .testimonial-divider {
-            width: 60px;
-            height: 2px;
-            background: var(--light-blue);
-            margin: 0 auto var(--space-6);
-            border-radius: var(--radius-full);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .testimonial-divider::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 30%;
-            height: 100%;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-            transition: transform var(--transition-normal) var(--ease-in-out);
-            transform: translateX(-100%);
-        }
-        
-        .testimonial-card:hover .testimonial-divider::after {
-            transform: translateX(300%);
-        }
-        
-        .client-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .client-name {
-            font-size: var(--fs-md);
-            font-weight: var(--fw-semibold);
-            margin-bottom: var(--space-1);
-            color: var(--visa-blue);
-        }
-        
-        .client-position {
-            font-size: var(--fs-sm);
-            color: var(--gray-600);
-        }
-        
-        /* Support Card */
-        .support-card {
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8) var(--space-6);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            height: 100%;
-            transition: transform var(--transition-normal) var(--ease-bounce),
-                        box-shadow var(--transition-normal) var(--ease-in-out);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--gray-100);
-        }
-        
-        .support-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: transparent;
-        }
-        
-        .support-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-xl);
-            padding: 2px;
-            background: var(--gradient-blue);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .support-card:hover::after {
-            opacity: 1;
-        }
-        
-        .support-icon-wrapper {
-            position: relative;
-            margin-bottom: var(--space-6);
-        }
-        
-        .support-icon {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light-blue);
-            color: var(--visa-blue);
-            font-size: var(--fs-xl);
-            border-radius: var(--radius-2xl);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .support-card:hover .support-icon {
-            background: var(--visa-blue);
-            color: var(--white);
-            transform: translateY(-5px);
-        }
-        
-        .support-icon-bg {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background: var(--accent-color);
-            opacity: 0.15;
-            border-radius: var(--radius-2xl);
-            top: -10px;
-            right: -10px;
-            transform: rotate(-8deg);
-            z-index: 1;
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .support-card:hover .support-icon-bg {
-            transform: scale(1.2) rotate(8deg);
-        }
-        
-        .support-title {
-            font-size: var(--fs-lg);
-            font-weight: var(--fw-semibold);
-            margin-bottom: var(--space-3);
-            color: var(--gray-900);
-        }
-        
-        .support-description {
-            color: var(--gray-600);
-            margin-bottom: var(--space-6);
-            flex-grow: 1;
-            font-size: var(--fs-base);
-            line-height: var(--lh-relaxed);
-        }
-        
-        /* App Feature */
-        .app-feature {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: var(--space-4);
-            padding: var(--space-3);
-            border-radius: var(--radius-lg);
-            transition: all var(--transition-normal) var(--ease-in-out);
-            border: 1px solid transparent;
-        }
-        
-        .app-feature:hover {
-            background-color: var(--white);
-            box-shadow: var(--shadow-md);
-            transform: translateX(8px);
-            border-color: var(--gray-100);
-        }
-        
-        .app-feature-icon {
-            color: var(--visa-blue);
-            font-size: var(--fs-md);
-            margin-right: var(--space-4);
-            margin-top: 0.2rem;
-            transition: transform var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .app-feature:hover .app-feature-icon {
-            transform: scale(1.2);
-            color: var(--accent-color);
-        }
-        
-        .app-btn {
-            display: flex;
-            align-items: center;
-            background-color: var(--gray-900);
-            color: var(--white);
-            padding: var(--space-3) var(--space-5);
-            border-radius: var(--radius-lg);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .app-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                            rgba(255, 255, 255, 0.1) 0%, 
-                            rgba(255, 255, 255, 0) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .app-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .app-btn:hover::before {
-            opacity: 1;
-        }
-        
-        .app-btn i {
-            font-size: var(--fs-2xl);
-            margin-right: var(--space-3);
-            transition: transform var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .app-btn:hover i {
-            transform: scale(1.1);
-        }
-        
-        .app-btn-content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .app-btn-text {
-            font-size: var(--fs-xs);
-            opacity: 0.8;
-        }
-        
-        .app-btn-name {
-            font-size: var(--fs-md);
-            font-weight: var(--fw-semibold);
-        }
-        
-        /* Social Icon */
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-            border-radius: 50%;
-            font-size: var(--fs-md);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-icon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-blue);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-            z-index: -1;
-        }
-        
-        .social-icon:hover {
-            transform: translateY(-5px);
-            color: var(--white);
-            border-color: transparent;
-        }
-        
-        .social-icon:hover::before {
-            opacity: 1;
-        }
-        
-        /* === LAYOUT ESPECÍFICOS === */
-        /* Header - Rediseñado para mejorar navegación */
+        /* === HEADER === */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: var(--z-fixed);
-            transition: all var(--transition-normal) var(--ease-in-out);
+            z-index: 1000;
+            transition: all 0.3s var(--ease);
             background-color: transparent;
         }
         
@@ -1369,7 +203,7 @@
             align-items: center;
             justify-content: space-between;
             height: 80px;
-            transition: height var(--transition-normal);
+            transition: height 0.3s;
         }
         
         .header.scrolled .header-container {
@@ -1383,15 +217,9 @@
         }
         
         .logo img {
-            height: 36px; /* Tamaño más pequeño para el logo */
+            height: 45px;
             width: auto;
-            max-width: 140px; /* Asegurarse de que el logo no se estire */
-            object-fit: contain; /* Mantener la proporción */
-            transition: transform var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .header.scrolled .logo img {
-            transform: scale(0.95);
+            transition: transform 0.3s var(--ease-bounce);
         }
         
         .nav {
@@ -1400,17 +228,19 @@
         
         .nav-list {
             display: flex;
-            gap: var(--space-6);
+            gap: var(--spacing-6);
         }
         
         .nav-link {
             position: relative;
-            font-size: var(--fs-sm); /* Tamaño más pequeño para la navegación */
-            font-weight: var(--fw-medium);
-            padding: var(--space-2) 0;
+            font-weight: 600;
+            padding: var(--spacing-2) 0;
+            color: var(--white);
+            transition: color 0.3s var(--ease);
+        }
+        
+        .header.scrolled .nav-link {
             color: var(--gray-700);
-            transition: color var(--transition-normal) var(--ease-in-out);
-            white-space: nowrap; /* Evitar que los enlaces se rompan en múltiples líneas */
         }
         
         .nav-link::after {
@@ -1420,14 +250,14 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-blue);
-            transition: width var(--transition-normal) var(--ease-in-out);
+            background: var(--visa-gold);
+            transition: width 0.3s var(--ease);
             border-radius: var(--radius-full);
         }
         
         .nav-link:hover, 
         .nav-link.active {
-            color: var(--visa-blue);
+            color: var(--visa-gold);
         }
         
         .nav-link:hover::after,
@@ -1437,23 +267,28 @@
         
         .header-actions {
             display: none;
-            gap: var(--space-3);
+            gap: var(--spacing-3);
         }
         
         .menu-toggle {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--white);
-            color: var(--visa-blue);
-            font-size: var(--fs-md);
+            width: 44px;
+            height: 44px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            font-size: 1.25rem;
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            box-shadow: var(--shadow-md);
-            transition: all var(--transition-normal) var(--ease-in-out);
+            transition: all 0.3s var(--ease-bounce);
+        }
+        
+        .header.scrolled .menu-toggle {
+            background-color: var(--gray-100);
+            color: var(--gray-800);
         }
         
         .menu-toggle:hover {
@@ -1462,17 +297,240 @@
             transform: rotate(90deg);
         }
         
-        /* Mobile Menu */
+        /* === HERO SECTION === */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(20, 52, 203, 0.95), rgba(20, 52, 203, 0.7));
+            z-index: 1;
+        }
+        
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            color: var(--white);
+            padding: var(--spacing-12) 0;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: var(--spacing-2) var(--spacing-4);
+            border-radius: var(--radius-full);
+            margin-bottom: var(--spacing-4);
+            font-weight: 600;
+            font-size: 0.875rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-5);
+            font-family: var(--font-secondary);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-8);
+            opacity: 0.9;
+            max-width: 550px;
+        }
+        
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-10);
+        }
+        
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-6);
+            margin-top: var(--spacing-8);
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+        
+        .hero-feature i {
+            color: var(--visa-gold);
+        }
+        
+        /* === FLOATING CARD === */
+        .floating-card {
+            position: absolute;
+            right: var(--spacing-8);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-8);
+            box-shadow: var(--shadow-xl);
+            z-index: 3;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: none;
+        }
+        
+        .floating-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-blue);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-4);
+            font-family: var(--font-secondary);
+        }
+        
+        .card-text {
+            font-size: 0.925rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: var(--spacing-4);
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) var(--spacing-10);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s;
+            color: var(--gray-800);
+            background-color: var(--white);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--visa-blue);
+            box-shadow: 0 0 0 3px rgba(20, 52, 203, 0.15);
+        }
+        
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            border-radius: var(--radius-lg);
+            transition: all 0.3s var(--ease-bounce);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(20, 52, 203, 0.25);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--visa-blue);
+            border: 2px solid var(--visa-blue);
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(20, 52, 203, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(20, 52, 203, 0.05);
+        }
+        
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+        
+        .btn-icon i {
+            font-size: 1.1em;
+            transition: transform 0.3s var(--ease-bounce);
+        }
+        
+        .btn:hover .btn-icon i {
+            transform: translateX(4px);
+        }
+        
+        /* === MOBILE MENU === */
         .mobile-menu {
             position: fixed;
             top: 0;
             right: -100%;
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
             height: 100%;
             background-color: var(--white);
-            z-index: var(--z-modal);
-            transition: right var(--transition-normal) var(--ease-in-out);
+            z-index: 2000;
+            transition: right 0.4s var(--ease);
             box-shadow: var(--shadow-xl);
             display: flex;
             flex-direction: column;
@@ -1486,30 +544,30 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--space-4);
+            padding: var(--spacing-4);
             border-bottom: 1px solid var(--gray-100);
         }
         
         .mobile-menu-body {
-            padding: var(--space-6);
+            padding: var(--spacing-6);
             flex: 1;
             overflow-y: auto;
         }
         
         .mobile-menu-footer {
-            padding: var(--space-4);
+            padding: var(--spacing-4);
             border-top: 1px solid var(--gray-100);
         }
         
         .mobile-nav-link {
             display: block;
-            padding: var(--space-3) var(--space-3);
-            font-size: var(--fs-base);
-            font-weight: var(--fw-medium);
+            padding: var(--spacing-3) var(--spacing-3);
+            font-size: 1.125rem;
+            font-weight: 600;
             color: var(--gray-800);
-            margin-bottom: var(--space-2);
+            margin-bottom: var(--spacing-2);
             border-radius: var(--radius-lg);
-            transition: all var(--transition-normal) var(--ease-in-out);
+            transition: all 0.3s var(--ease);
             border-left: 3px solid transparent;
         }
         
@@ -1518,44 +576,134 @@
             color: var(--visa-blue);
             background-color: var(--light-blue);
             border-left-color: var(--visa-blue);
-            padding-left: var(--space-5);
+            padding-left: var(--spacing-4);
         }
         
         .mobile-actions {
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
+            gap: var(--spacing-3);
         }
         
-        /* Overlay */
-        .overlay {
-            position: fixed;
+        /* === FEATURES SECTION === */
+        .features {
+            background-color: var(--white);
+            padding-top: var(--spacing-20);
+        }
+        
+        .section-title-wrapper {
+            max-width: 800px;
+            margin: 0 auto var(--spacing-12);
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            background-color: var(--light-blue);
+            color: var(--visa-blue);
+            padding: var(--spacing-1) var(--spacing-3);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-5);
+            color: var(--gray-900);
+            font-family: var(--font-secondary);
+        }
+        
+        .section-desc {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s var(--ease-bounce);
+            border: 1px solid var(--gray-100);
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-card-hover);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: var(--z-40);
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-normal) var(--ease-in-out);
+            height: 4px;
+            background: var(--gradient-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease);
         }
         
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
         
-        /* Hero Section */
-        .hero {
-            padding: calc(80px + var(--space-12)) 0 var(--space-16);
+        .feature-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-blue);
+            color: var(--visa-blue);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-4);
+            transition: all 0.3s var(--ease-bounce);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+        
+        .feature-card:hover .feature-icon-wrapper {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .feature-desc {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+        
+        /* === STEPS SECTION === */
+        .steps {
+            background-color: var(--gray-50);
             position: relative;
             overflow: hidden;
-            background-color: var(--ultra-light-blue);
         }
         
-        .hero::before {
+        .steps::before {
             content: '';
             position: absolute;
             top: 0;
@@ -1564,284 +712,73 @@
             height: 100%;
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 117, 255, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 90% 90%, rgba(247, 182, 0, 0.03) 0%, transparent 40%);
             pointer-events: none;
         }
         
-        .hero-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto var(--space-12);
-            position: relative;
-            z-index: 1;
+        .steps-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-12);
         }
         
-        .hero-badge {
-            margin-bottom: var(--space-5);
-            display: inline-block;
-        }
-        
-        .hero-title {
-            margin-bottom: var(--space-6);
-            color: var(--visa-blue);
-            position: relative;
-            display: inline-block;
-            font-size: var(--fs-5xl);
-            font-weight: var(--fw-bold);
-            line-height: 1.1;
-        }
-        
-        .hero-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-        }
-        
-        .hero-description {
-            font-size: var(--fs-xl);
-            color: var(--gray-700);
-            margin-bottom: var(--space-8);
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: var(--lh-relaxed);
-        }
-        
-        .hero-cta {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: var(--space-4);
-            margin-bottom: var(--space-8);
-        }
-        
-        .hero-slider-wrapper {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .hero-slider {
-            position: relative;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            background-color: var(--white);
-            height: 100%;
-            border: 1px solid var(--gray-100);
-        }
-        
-        .hero-slider::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-xl);
-            padding: 2px;
-            background: var(--gradient-blue);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            z-index: 5;
-            pointer-events: none;
-        }
-        
-        .hero-slide {
-            display: none;
-            height: 100%;
-        }
-        
-        .hero-slide.active {
-            display: block;
-            animation: fadeIn 0.6s var(--ease-out) forwards;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .slide-content {
-            padding: var(--space-10) var(--space-8);
-            text-align: center;
-            height: 100%;
+        .step-card {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .slide-title {
-            font-size: var(--fs-2xl);
-            font-weight: var(--fw-bold);
-            margin-bottom: var(--space-4);
-            color: var(--visa-blue);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .slide-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: var(--gradient-blue);
-            border-radius: var(--radius-full);
-        }
-        
-        .slide-description {
-            font-size: var(--fs-md);
-            color: var(--gray-600);
-            margin-bottom: var(--space-6);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: var(--lh-relaxed);
-        }
-        
-        .slider-controls {
-            position: absolute;
-            bottom: var(--space-5);
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: var(--space-2);
-            z-index: 10;
-        }
-        
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(20, 52, 203, 0.2);
-            cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-bounce);
             position: relative;
         }
         
-        .slider-dot::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50%;
-            border: 2px solid var(--visa-blue);
-            opacity: 0;
-            transform: scale(0);
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .slider-dot.active {
+        .step-number {
+            width: 48px;
+            height: 48px;
             background-color: var(--visa-blue);
-            transform: scale(1.2);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-4);
+            transition: all 0.3s var(--ease-bounce);
+            box-shadow: 0 4px 12px rgba(20, 52, 203, 0.2);
         }
         
-        .slider-dot.active::after {
-            opacity: 0.5;
-            transform: scale(1);
-        }
-        
-        .slider-dot:hover:not(.active) {
-            background-color: rgba(20, 52, 203, 0.4);
+        .step-card:hover .step-number {
             transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(20, 52, 203, 0.3);
         }
         
-        /* Global Coverage Section */
-        .global-coverage {
-            background: var(--gradient-dark);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .global-coverage::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .step-content {
+            background-color: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s var(--ease-bounce);
+            border: 1px solid var(--gray-100);
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
-            pointer-events: none;
         }
         
-        .map-container {
-            position: relative;
-            margin-top: var(--space-10);
-            padding: var(--space-8) var(--space-6);
-            border-radius: var(--radius-xl);
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        .step-card:hover .step-content {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card-hover);
         }
         
-        .map-container::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-xl);
-            pointer-events: none;
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-3);
         }
         
-        .map-image {
-            margin: 0 auto var(--space-8);
-            max-width: 800px;
-            opacity: 0.8;
-            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        .step-desc {
+            color: var(--gray-600);
+            font-size: 0.95rem;
         }
         
-        .world-map {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .map-text {
-            color: var(--white);
-            max-width: 800px;
-            margin: 0 auto var(--space-8);
-            font-size: var(--fs-md);
-            opacity: 0.9;
-            position: relative;
-            padding: 0 var(--space-4);
-            line-height: var(--lh-relaxed);
-        }
-        
-        .map-stats {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: var(--space-6);
-            margin-top: var(--space-10);
-        }
-        
-        /* Testimonials Section */
+        /* === TESTIMONIALS SECTION === */
         .testimonials {
-            background-color: var(--ultra-light-blue);
+            background-color: var(--white);
             position: relative;
             overflow: hidden;
         }
@@ -1854,205 +791,102 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 90%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(0, 117, 255, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 90% 10%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 10% 90%, rgba(247, 182, 0, 0.03) 0%, transparent 40%);
             pointer-events: none;
         }
         
-        .testimonials-slider {
-            position: relative;
-            padding: var(--space-8) 0;
-        }
-        
-        .testimonial-slide {
-            display: none;
-        }
-        
-        .testimonial-slide.active {
-            display: block;
-            animation: fadeIn 0.6s var(--ease-out) forwards;
-        }
-        
-        .testimonial-controls {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-3);
-            margin-top: var(--space-8);
-        }
-        
-        .testimonial-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(20, 52, 203, 0.2);
-            cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-bounce);
-            position: relative;
-        }
-        
-        .testimonial-dot::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50%;
-            border: 2px solid var(--visa-blue);
-            opacity: 0;
-            transform: scale(0);
-            transition: all var(--transition-normal) var(--ease-bounce);
-        }
-        
-        .testimonial-dot.active {
-            background-color: var(--visa-blue);
-            transform: scale(1.2);
-        }
-        
-        .testimonial-dot.active::after {
-            opacity: 0.5;
-            transform: scale(1);
-        }
-        
-        .testimonial-dot:hover:not(.active) {
-            background-color: rgba(20, 52, 203, 0.4);
-            transform: scale(1.1);
-        }
-        
-        .testimonial-arrows {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 var(--space-4);
-            z-index: 10;
-            pointer-events: none;
-        }
-        
-        .testimonial-arrow {
-            width: 44px;
-            height: 44px;
+        .testimonial-card {
             background-color: var(--white);
-            color: var(--visa-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-md);
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-bounce);
-            pointer-events: auto;
-            border: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .testimonial-arrow::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-blue);
-            opacity: 0;
-            transition: opacity var(--transition-normal) var(--ease-in-out);
-            z-index: -1;
-        }
-        
-        .testimonial-arrow:hover {
-            color: var(--white);
-            transform: scale(1.1);
-        }
-        
-        .testimonial-arrow:hover::after {
-            opacity: 1;
-        }
-        
-        /* App Section */
-        .app {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-        }
-        
-        .app::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 117, 255, 0.03) 0%, transparent 40%);
-            pointer-events: none;
-        }
-        
-        .app-container {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .app-content {
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-8);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s var(--ease-bounce);
+            border: 1px solid var(--gray-100);
             text-align: center;
+            position: relative;
+            overflow: hidden;
             max-width: 800px;
             margin: 0 auto;
         }
         
-        .app-device {
-            position: relative;
-            margin: var(--space-12) auto;
-            max-width: 300px;
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card-hover);
         }
         
-        .app-phone {
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
-        }
-        
-        .app-phone-bg {
+        .testimonial-card::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: var(--gradient-blue);
-            opacity: 0.1;
-            border-radius: 50%;
-            z-index: 1;
-            filter: blur(30px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-gold);
         }
         
-        .app-features {
-            max-width: 650px;
-            margin: var(--space-10) auto;
-            text-align: left;
+        .testimonial-quote {
+            font-size: 1.25rem;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-6);
+            position: relative;
+            font-style: italic;
+            line-height: 1.7;
         }
         
-        .app-download {
+        .testimonial-quote::before,
+        .testimonial-quote::after {
+            content: '"';
+            position: absolute;
+            font-size: 3rem;
+            line-height: 1;
+            color: var(--gray-300);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-quote::before {
+            top: -20px;
+            left: -10px;
+        }
+        
+        .testimonial-quote::after {
+            bottom: -50px;
+            right: -10px;
+            transform: rotate(180deg);
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .testimonial-role {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .testimonial-ratings {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
-            gap: var(--space-4);
-            margin-top: var(--space-10);
+            gap: var(--spacing-1);
+            color: var(--visa-gold);
+            margin-bottom: var(--spacing-4);
+            font-size: 1.25rem;
         }
         
-        /* CTA Section */
+        /* === CTA SECTION === */
         .cta {
-            background: var(--gradient-dark);
+            background: var(--gradient-blue);
             color: var(--white);
             position: relative;
             overflow: hidden;
+            border-radius: var(--radius-2xl);
+            max-width: 1200px;
+            margin: var(--spacing-16) auto;
+            padding: var(--spacing-16) var(--spacing-8);
+            box-shadow: var(--shadow-xl);
         }
         
         .cta::before {
@@ -2069,525 +903,165 @@
         }
         
         .cta-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
         
         .cta-title {
-            color: var(--white);
-            margin-bottom: var(--space-6);
-            font-size: var(--fs-4xl);
-            font-weight: var(--fw-bold);
-            position: relative;
-            display: inline-block;
+            font-size: 2.75rem;
+            font-weight: 800;
             line-height: 1.2;
+            margin-bottom: var(--spacing-4);
+            font-family: var(--font-secondary);
         }
         
-        .cta-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--white);
-            border-radius: var(--radius-full);
-            opacity: 0.3;
-        }
-        
-        .cta-description {
-            font-size: var(--fs-xl);
-            margin-bottom: var(--space-10);
+        .cta-desc {
+            font-size: 1.125rem;
+            margin-bottom: var(--spacing-8);
             opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: var(--lh-relaxed);
         }
         
-        /* Support Section */
-        .support {
-            background-color: var(--ultra-light-blue);
-            position: relative;
-            overflow: hidden;
+        .cta-btn {
+            background-color: var(--white);
+            color: var(--visa-blue);
+            padding: var(--spacing-4) var(--spacing-10);
+            font-weight: 700;
+            border-radius: var(--radius-full);
+            transition: all 0.3s var(--ease-bounce);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
         }
         
-        .support::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 90%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(0, 117, 255, 0.03) 0%, transparent 40%);
-            pointer-events: none;
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        .support-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: var(--space-6);
-            margin-top: var(--space-12);
-        }
-        
-        /* Footer */
+        /* === FOOTER === */
         .footer {
             background-color: var(--gray-900);
             color: var(--gray-400);
-            padding: var(--space-16) 0 var(--space-8);
+            padding: var(--spacing-16) 0 var(--spacing-8);
             position: relative;
-            overflow: hidden;
-        }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.025) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 40%);
-            pointer-events: none;
-        }
-        
-        .footer-wave {
-            position: absolute;
-            top: -2px;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            fill: var(--gray-900);
         }
         
         .footer-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--space-8);
-            margin-bottom: var(--space-12);
+            gap: var(--spacing-8);
+            margin-bottom: var(--spacing-10);
         }
         
         .footer-logo {
             display: flex;
-            justify-content: center;
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--spacing-4);
         }
         
         .footer-logo img {
-            height: 40px;
+            height: 36px;
             width: auto;
-            filter: brightness(0.9);
         }
         
         .footer-about {
-            margin-bottom: var(--space-6);
-            opacity: 0.8;
-            text-align: center;
-            font-size: var(--fs-md);
-            line-height: var(--lh-relaxed);
+            margin-bottom: var(--spacing-6);
+            max-width: 350px;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
         
-        .social-icons {
+        .social-links {
             display: flex;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: var(--space-3);
-            margin-bottom: var(--space-6);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all 0.3s var(--ease-bounce);
+        }
+        
+        .social-link:hover {
+            background-color: var(--visa-blue);
+            transform: translateY(-3px);
         }
         
         .footer-title {
-            font-size: var(--fs-md);
             color: var(--white);
-            margin-bottom: var(--space-6);
-            font-weight: var(--fw-semibold);
-            text-align: center;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .footer-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 2px;
-            background: var(--accent-color);
-            border-radius: var(--radius-full);
+            font-weight: 700;
+            margin-bottom: var(--spacing-4);
+            font-size: 1.125rem;
         }
         
         .footer-links {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: var(--spacing-2);
         }
         
-        .footer-links li {
-            margin-bottom: var(--space-3);
+        .footer-link {
+            transition: all 0.3s var(--ease);
         }
         
-        .footer-links li a {
-            opacity: 0.8;
-            transition: all var(--transition-normal) var(--ease-in-out);
-            position: relative;
-            display: inline-block;
-            font-size: var(--fs-sm);
-        }
-        
-        .footer-links li a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent-color);
-            transition: width var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .footer-links li a:hover {
-            opacity: 1;
+        .footer-link:hover {
             color: var(--white);
-            transform: translateX(5px);
-        }
-        
-        .footer-links li a:hover::after {
-            width: 100%;
-        }
-        
-        .footer-divider {
-            height: 1px;
-            background: linear-gradient(to right, 
-                            transparent, 
-                            rgba(255, 255, 255, 0.1),
-                            transparent);
-            margin-bottom: var(--space-8);
+            transform: translateX(3px);
         }
         
         .footer-bottom {
+            padding-top: var(--spacing-6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
+            gap: var(--spacing-4);
+            text-align: center;
+        }
+        
+        .footer-copyright {
+            font-size: 0.875rem;
+        }
+        
+        .footer-payments {
+            display: flex;
             align-items: center;
-            gap: var(--space-4);
+            justify-content: center;
+            gap: var(--spacing-4);
         }
         
-        .language-selector {
-            position: relative;
-            margin-bottom: var(--space-4);
-        }
-        
-        .language-selector select {
-            appearance: none;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: var(--space-2) var(--space-8) var(--space-2) var(--space-4);
-            border-radius: var(--radius-full);
-            font-size: var(--fs-sm);
-            cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .language-selector::after {
-            content: '\f107';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: var(--space-3);
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--white);
-            transition: transform var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .language-selector:hover::after {
-            transform: translateY(-50%) rotate(180deg);
-        }
-        
-        .language-selector select:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-        }
-        
-        .security-text {
-            color: var(--white);
+        .payment-method {
             opacity: 0.7;
-            text-align: center;
-            margin-bottom: var(--space-4);
-            font-size: var(--fs-sm);
+            transition: opacity 0.3s;
         }
         
-        .copyright {
-            text-align: center;
-            font-size: var(--fs-sm);
-            opacity: 0.7;
-        }
-        
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: var(--space-6);
-            right: var(--space-6);
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-md);
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-normal) var(--ease-bounce);
-            z-index: var(--z-30);
-            border: none;
-            box-shadow: var(--shadow-blue);
-        }
-        
-        .back-to-top.active {
+        .payment-method:hover {
             opacity: 1;
-            visibility: visible;
         }
         
-        .back-to-top:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(20, 52, 203, 0.3);
-        }
-        
-        /* WhatsApp Button */
-        .whatsapp-button {
-            position: fixed;
-            bottom: var(--space-6);
-            left: var(--space-6);
-            width: 50px;
-            height: 50px;
-            background-color: #25D366;
+        /* === UTILITIES === */
+        .text-white {
             color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-xl);
-            cursor: pointer;
-            transition: all var(--transition-normal) var(--ease-bounce);
-            z-index: var(--z-30);
-            border: none;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
         }
         
-        .whatsapp-button:hover {
-            transform: scale(1.1) rotate(8deg);
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-        }
-        
-        .whatsapp-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: transform var(--transition-normal) var(--ease-in-out);
-        }
-        
-        .whatsapp-button:hover::before {
-            transform: scale(1.3);
-            opacity: 0;
-        }
-        
-        /* Loader */
-        .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .bg-white {
             background-color: var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: var(--z-modal);
-            transition: opacity 0.5s, visibility 0.5s;
         }
         
-        .loader-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .loader-logo {
-            margin-bottom: var(--space-6);
-            transform-origin: center;
-            animation: pulse 2s var(--ease-in-out) infinite;
-        }
-        
-        .loader-logo img {
-            height: 50px;
-            width: auto;
-            filter: drop-shadow(0 5px 10px rgba(20, 52, 203, 0.1));
-        }
-        
-        .loader-spinner {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            margin-bottom: var(--space-8);
-        }
-        
-        .loader-circle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 3px solid rgba(20, 52, 203, 0.1);
-        }
-        
-        .loader-circle:nth-child(1) {
-            border-top-color: var(--visa-blue);
-            animation: spin 1s linear infinite;
-        }
-        
-        .loader-circle:nth-child(2) {
-            border-right-color: var(--accent-color);
-            animation: spin 1.5s linear reverse infinite;
-        }
-        
-        .loader-progress {
-            width: 200px;
-            height: 4px;
-            background-color: var(--gray-200);
+        .rounded-full {
             border-radius: var(--radius-full);
-            overflow: hidden;
-            margin-bottom: var(--space-4);
-            position: relative;
         }
         
-        .loader-bar {
-            height: 100%;
-            width: 0;
-            border-radius: var(--radius-full);
-            background: var(--gradient-blue);
-            transition: width 0.3s ease-out;
-            position: relative;
-        }
-        
-        .loader-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 80px;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3));
-            transform: translateX(100%);
-            animation: shimmerLoader 2s infinite;
-        }
-        
-        @keyframes shimmerLoader {
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        
-        .loader-text {
-            font-size: var(--fs-sm);
-            color: var(--visa-blue);
-            font-weight: var(--fw-medium);
-        }
-        
-        /* Promo Overlay */
-        .promo-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: var(--z-modal);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s, visibility 0.4s;
-        }
-        
-        .promo-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .promo-content {
-            position: relative;
-            max-width: 450px;
-            width: 90%;
-            background-color: var(--white);
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            transform: scale(0.95);
-            opacity: 0;
-            transition: transform 0.5s var(--ease-bounce), opacity 0.5s var(--ease-in-out);
-        }
-        
-        .promo-overlay.active .promo-content {
-            transform: scale(1);
-            opacity: 1;
-        }
-        
-        .promo-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            transform-origin: center;
-            animation: pulse 3s var(--ease-in-out) infinite;
-        }
-        
-        .promo-close {
-            position: absolute;
-            top: var(--space-4);
-            right: var(--space-4);
-            width: 32px;
-            height: 32px;
-            background-color: var(--white);
-            color: var(--gray-800);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--fs-sm);
-            cursor: pointer;
-            border: none;
-            box-shadow: var(--shadow-lg);
-            transition: all var(--transition-normal) var(--ease-bounce);
-            z-index: 10;
-        }
-        
-        .promo-close:hover {
-            background-color: var(--visa-blue);
-            color: var(--white);
-            transform: rotate(90deg);
-        }
-        
-        /* Animaciones */
+        /* === ANIMATIONS === */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -2602,7 +1076,7 @@
         @keyframes fadeInLeft {
             from {
                 opacity: 0;
-                transform: translateX(-30px);
+                transform: translateX(-50px);
             }
             to {
                 opacity: 1;
@@ -2613,7 +1087,7 @@
         @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateX(30px);
+                transform: translateX(50px);
             }
             to {
                 opacity: 1;
@@ -2621,206 +1095,109 @@
             }
         }
         
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.03);
-            }
-        }
-        
-        @keyframes ripple {
-            0% {
-                transform: scale(0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-        
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+            animation: fadeIn 0.8s var(--ease-out) forwards;
         }
         
         .fade-in-left {
             opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-        }
-        
-        .fade-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
+            animation: fadeInLeft 0.8s var(--ease-out) forwards;
         }
         
         .fade-in-right {
             opacity: 0;
-            transform: translateX(30px);
-            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-        }
-        
-        .fade-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
+            animation: fadeInRight 0.8s var(--ease-out) forwards;
         }
         
         .delay-1 {
-            transition-delay: 0.1s;
+            animation-delay: 0.1s;
         }
         
         .delay-2 {
-            transition-delay: 0.2s;
+            animation-delay: 0.2s;
         }
         
         .delay-3 {
-            transition-delay: 0.3s;
+            animation-delay: 0.3s;
         }
         
         .delay-4 {
-            transition-delay: 0.4s;
+            animation-delay: 0.4s;
         }
         
         .delay-5 {
-            transition-delay: 0.5s;
+            animation-delay: 0.5s;
         }
         
-        .delay-6 {
-            transition-delay: 0.6s;
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: var(--spacing-6);
+            right: var(--spacing-6);
+            width: 56px;
+            height: 56px;
+            background-color: #25D366;
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s var(--ease-bounce);
+            z-index: 100;
         }
         
-        .animated-float {
-            animation: float 5s ease-in-out infinite;
+        .whatsapp-button:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: var(--shadow-xl);
         }
         
-        .animated-pulse {
-            animation: pulse 3s ease-in-out infinite;
-        }
-        
-        /* Media Queries - Optimizados para mejor responsive */
-        @media (min-width: 576px) {
-            .container {
-                padding: 0 var(--space-5);
-            }
-            
-            .map-stats {
-                grid-template-columns: repeat(2, 1fr);
+        /* === RESPONSIVE === */
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 4rem;
             }
             
             .section-title {
-                font-size: var(--fs-4xl);
+                font-size: 3rem;
             }
             
-            .hero-title {
-                font-size: var(--fs-5xl);
+            .cta-title {
+                font-size: 3rem;
             }
             
-            .support-grid {
+            .steps-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
         
         @media (min-width: 768px) {
-            .container {
-                padding: 0 var(--space-6);
-            }
-            
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .hero-title {
-                font-size: var(--fs-6xl);
+                font-size: 4.5rem;
             }
             
-            .steps-container {
-                display: flex;
-                gap: 0;
-            }
-            
-            .step {
-                flex: 1;
-            }
-            
-            .step-connector {
-                flex: 0.2;
-            }
-            
-            .map-stats {
-                grid-template-columns: repeat(4, 1fr);
+            .floating-card {
+                display: block;
             }
             
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .footer-logo, 
-            .footer-title, 
-            .footer-about {
-                text-align: left;
-            }
-            
-            .footer-links {
-                align-items: flex-start;
-            }
-            
-            .social-icons {
-                justify-content: flex-start;
-            }
-            
-            .footer-title::after {
-                left: 0;
-                transform: none;
-            }
-            
             .footer-bottom {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
-            }
-            
-            .language-selector {
-                margin-bottom: 0;
-            }
-            
-            .security-text {
-                margin-bottom: 0;
+                text-align: left;
             }
         }
         
-        @media (min-width: 992px) {
-            .container {
-                padding: 0 var(--space-8);
-            }
-            
-            .menu-toggle {
-                display: none;
-            }
-            
+        @media (min-width: 1024px) {
             .nav {
                 display: block;
             }
@@ -2829,109 +1206,39 @@
                 display: flex;
             }
             
-            .hero-title {
-                font-size: var(--fs-6xl);
+            .menu-toggle {
+                display: none;
             }
             
-            .grid.features-grid {
+            .grid {
                 grid-template-columns: repeat(3, 1fr);
             }
             
-            .support-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .testimonial-card {
-                padding: var(--space-10);
-            }
-            
-            .footer-grid {
-                grid-template-columns: 2fr repeat(4, 1fr);
-            }
-            
-            .app-container {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                gap: var(--space-10);
-            }
-            
-            .app-content {
-                text-align: left;
-                order: 1;
-                flex: 1;
-            }
-            
-            .app-device {
-                order: 2;
-                flex: 1;
-                margin: 0;
-            }
-            
-            .app-features {
-                text-align: left;
-                margin-left: 0;
-            }
-        }
-        
-        @media (min-width: 1200px) {
-            .container {
-                padding: 0 var(--space-8);
+            .steps-container {
+                grid-template-columns: repeat(3, 1fr);
             }
             
             .hero-title {
-                font-size: var(--fs-6xl);
+                font-size: 5rem;
             }
             
-            .section-title {
-                font-size: var(--fs-4xl);
-            }
-            
-            .cta-title {
-                font-size: var(--fs-5xl);
+            .footer-grid {
+                grid-template-columns: 2fr repeat(3, 1fr);
             }
         }
         
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01s !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01s !important;
-                scroll-behavior: auto !important;
-            }
-            
-            .fade-in,
-            .fade-in-left,
-            .fade-in-right {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-            
-            .animated-float,
-            .animated-pulse {
-                animation: none;
+        @media (min-width: 1280px) {
+            .hero-title {
+                font-size: 5.5rem;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Loader -->
-    <div class="loader-container" id="loader">
-        <div class="loader-content">
-            <div class="loader-logo">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
-            </div>
-            <div class="loader-spinner">
-                <div class="loader-circle"></div>
-                <div class="loader-circle"></div>
-            </div>
-            <div class="loader-progress">
-                <div class="loader-bar" id="loader-bar"></div>
-            </div>
-            <div class="loader-text" id="loader-text">Cargando recursos...</div>
-        </div>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader"></div>
     </div>
 
     <!-- Header -->
@@ -2946,16 +1253,16 @@
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="#hero" class="nav-link active">Inicio</a></li>
-                    <li><a href="https://remeexvisa.com/servicios" class="nav-link">Servicios</a></li>
-                    <li><a href="https://remeexvisa.com/comofunciona" class="nav-link">Cómo Funciona</a></li>
-                    <li><a href="https://remeexvisa.com/coberturaglobal" class="nav-link">Cobertura</a></li>
-                    <li><a href="https://remeexvisa.com/soporte" class="nav-link">Soporte</a></li>
+                    <li><a href="#features" class="nav-link">Beneficios</a></li>
+                    <li><a href="#how-it-works" class="nav-link">Cómo Funciona</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonios</a></li>
+                    <li><a href="#contact" class="nav-link">Contacto</a></li>
                 </ul>
             </nav>
             
             <div class="header-actions">
-                <a href="#" class="btn btn-secondary btn-sm">Iniciar sesión</a>
-                <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-sm">Recibir remesa</a>
+                <a href="#" class="btn btn-secondary">Acceder</a>
+                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Comenzar</a>
             </div>
             
             <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
@@ -2968,7 +1275,7 @@
     <div class="mobile-menu" id="mobile-menu">
         <div class="mobile-menu-header">
             <div class="logo">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 32px; width: auto;">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 36px; width: auto;">
             </div>
             <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
                 <i class="fas fa-times"></i>
@@ -2979,18 +1286,18 @@
             <nav class="mobile-nav">
                 <ul>
                     <li><a href="#hero" class="mobile-nav-link active">Inicio</a></li>
-                    <li><a href="https://remeexvisa.com/servicios" class="mobile-nav-link">Servicios</a></li>
-                    <li><a href="https://remeexvisa.com/comofunciona" class="mobile-nav-link">Cómo Funciona</a></li>
-                    <li><a href="https://remeexvisa.com/coberturaglobal" class="mobile-nav-link">Cobertura Global</a></li>
-                    <li><a href="https://remeexvisa.com/soporte" class="mobile-nav-link">Soporte</a></li>
+                    <li><a href="#features" class="mobile-nav-link">Beneficios</a></li>
+                    <li><a href="#how-it-works" class="mobile-nav-link">Cómo Funciona</a></li>
+                    <li><a href="#testimonials" class="mobile-nav-link">Testimonios</a></li>
+                    <li><a href="#contact" class="mobile-nav-link">Contacto</a></li>
                 </ul>
             </nav>
         </div>
         
         <div class="mobile-menu-footer">
             <div class="mobile-actions">
-                <a href="#" class="btn btn-secondary">Iniciar sesión</a>
-                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recibir remesa</a>
+                <a href="#" class="btn btn-secondary">Acceder</a>
+                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Comenzar</a>
             </div>
         </div>
     </div>
@@ -2998,275 +1305,162 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section">
+    <section id="hero" class="hero">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPtD8FqtVMZL8Zfjk7jv58EcNiPtEb0Bwy0G_GTeVuileKbzX7ZQK0ewOePWLS61NsgiLDHpW8eosS8j2RRRCz49ZP9WDVUPxjlkfLz8RnTVg03pZj9ETCoxt8AdQz3EASyJTF9Lcvfsz7qIb_S0DdOfozNWGBu8d8RWXA9agsmTMJW95Lyf2HpkOkIKRx/s16000/a-professional-photo-of-a-latin-american_JRyaA1s4SbWZAHkcI4u3bA_y6HdECjgSTir5Hi6Mlv26A.jpeg" alt="Familia feliz utilizando Remeex VISA" class="hero-image">
         <div class="container">
-            <div class="hero-content">
-                <span class="badge badge-primary hero-badge fade-in">Transferencias seguras sin fronteras</span>
-                <h1 class="hero-title fade-in delay-1">Transferencias globales instantáneas</h1>
-                <p class="hero-description fade-in delay-2">Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica</p>
-                <div class="hero-cta fade-in delay-3">
-                    <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-xl btn-icon">
-                        <i class="fas fa-paper-plane"></i>
+            <div class="hero-content fade-in">
+                <span class="hero-badge">Con el respaldo de VISA</span>
+                <h1 class="hero-title">Conectando familias sin fronteras</h1>
+                <p class="hero-subtitle">Envía dinero a tus seres queridos en cualquier parte del mundo de forma rápida, segura y económica.</p>
+                <div class="hero-actions">
+                    <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-icon">
                         Recibir remesa ahora
+                        <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="https://remeexvisa.com/comofunciona" class="btn btn-secondary btn-xl btn-icon">
-                        <i class="fas fa-info-circle"></i>
+                    <a href="#how-it-works" class="btn btn-secondary btn-icon">
                         Cómo funciona
+                        <i class="fas fa-info-circle"></i>
                     </a>
+                </div>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sin comisiones ocultas</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Transferencias en minutos</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Cobertura en +200 países</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="hero-slider-wrapper fade-in delay-4">
-                <div class="hero-slider">
-                    <div class="hero-slide active">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Envía dinero a todo el mundo</h3>
-                            <p class="slide-description">Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
-                            <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-lg btn-icon">
-                                <i class="fas fa-arrow-right btn-icon-right"></i>
-                                Comenzar ahora
-                            </a>
-                        </div>
+            <div class="floating-card fade-in-right delay-2">
+                <h3 class="card-title">Recibe tu remesa ahora</h3>
+                <p class="card-text">Completa el formulario y comienza a recibir dinero de forma segura.</p>
+                
+                <form action="#" method="post" id="remesa-form">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" class="form-input" placeholder="Nombre completo" required>
                     </div>
                     
-                    <div class="hero-slide">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Las mejores tarifas del mercado</h3>
-                            <p class="slide-description">Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
-                            <a href="https://remeexvisa.com/servicios" class="btn btn-primary btn-lg btn-icon">
-                                <i class="fas fa-arrow-right btn-icon-right"></i>
-                                Ver tarifas
-                            </a>
-                        </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" class="form-input" placeholder="Correo electrónico" required>
                     </div>
                     
-                    <div class="hero-slide">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Recarga con tarjeta de crédito</h3>
-                            <p class="slide-description">Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
-                            <a href="https://remeexvisa.com/index1" class="btn btn-gold btn-lg btn-icon">
-                                <i class="fas fa-arrow-right btn-icon-right"></i>
-                                Recargar ahora
-                            </a>
-                        </div>
+                    <div class="input-group">
+                        <i class="fas fa-globe input-icon"></i>
+                        <input type="text" class="form-input" placeholder="País de recepción" required>
                     </div>
                     
-                    <div class="slider-controls">
-                        <span class="slider-dot active" data-slide="0"></span>
-                        <span class="slider-dot" data-slide="1"></span>
-                        <span class="slider-dot" data-slide="2"></span>
-                    </div>
-                </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-icon">
+                        Comenzar ahora
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="section">
+    <section id="features" class="features section">
         <div class="container">
             <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Nuestros Beneficios</span>
-                <h2 class="section-title fade-in delay-1">¿Por qué elegir Remeex VISA?</h2>
-                <p class="section-description fade-in delay-2">Descubre las ventajas que nos hacen líderes en transferencias internacionales</p>
+                <span class="section-tag">Beneficios</span>
+                <h2 class="section-title">¿Por qué elegir Remeex VISA?</h2>
+                <p class="section-desc">Descubre las ventajas que nos hacen líderes en transferencias internacionales</p>
             </div>
             
-            <div class="grid features-grid">
-                <div class="feature-card fade-in delay-1">
+            <div class="grid">
+                <div class="feature-card fade-in">
                     <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-bolt feature-icon"></i>
                     </div>
-                    <h3 class="feature-title">Transferencias inmediatas</h3>
-                    <p class="feature-description">Tu dinero llega en minutos a cualquier parte del mundo, cuando más lo necesitan.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-2">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Seguridad avanzada</h3>
-                    <p class="feature-description">Con el respaldo de VISA y la más avanzada tecnología de encriptación para proteger cada transacción.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-3">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Cobertura global</h3>
-                    <p class="feature-description">Alcance internacional con presencia en más de 200 países para llegar a tus seres queridos.</p>
+                    <h3 class="feature-title">Transferencias Inmediatas</h3>
+                    <p class="feature-desc">Tu dinero llega en minutos a cualquier parte del mundo, cuando más lo necesitan.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-1">
                     <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-shield-alt feature-icon"></i>
                     </div>
-                    <h3 class="feature-title">Tarifas competitivas</h3>
-                    <p class="feature-description">Las mejores tasas de cambio y comisiones más bajas del mercado para que envíes más por menos.</p>
+                    <h3 class="feature-title">Seguridad Avanzada</h3>
+                    <p class="feature-desc">Con el respaldo de VISA y la más avanzada tecnología de encriptación para proteger cada transacción.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-2">
                     <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-globe-americas feature-icon"></i>
                     </div>
-                    <h3 class="feature-title">Recarga con tarjeta <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></h3>
-                    <p class="feature-description">Recarga tu cuenta bancaria directamente con tu tarjeta de crédito. ¡Servicio express, instantáneo y sin comisiones!</p>
+                    <h3 class="feature-title">Cobertura Global</h3>
+                    <p class="feature-desc">Alcance global con presencia en más de 200 países y territorios para llegar a tus seres queridos.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-percentage feature-icon"></i>
+                    </div>
+                    <h3 class="feature-title">Tarifas Competitivas</h3>
+                    <p class="feature-desc">Las mejores tasas de cambio y comisiones más bajas del mercado para que envíes más por menos.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-credit-card feature-icon"></i>
+                    </div>
+                    <h3 class="feature-title">Recarga con Tarjeta</h3>
+                    <p class="feature-desc">Recarga tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
                 </div>
                 
                 <div class="feature-card fade-in delay-3">
                     <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-headset feature-icon"></i>
                     </div>
                     <h3 class="feature-title">Soporte 24/7</h3>
-                    <p class="feature-description">Atención al cliente disponible todos los días del año para resolver cualquier duda o incidencia.</p>
+                    <p class="feature-desc">Atención al cliente disponible todos los días del año para resolver cualquier duda o incidencia.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="section" style="background-color: var(--ultra-light-blue);">
+    <section id="how-it-works" class="steps section">
         <div class="container">
             <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Proceso Simple</span>
-                <h2 class="section-title fade-in delay-1">Cómo funciona</h2>
-                <p class="section-description fade-in delay-2">Tres simples pasos para conectar con tus seres queridos en cualquier parte del mundo</p>
+                <span class="section-tag">Proceso Simple</span>
+                <h2 class="section-title">Cómo funciona</h2>
+                <p class="section-desc">Tres simples pasos para conectar con tus seres queridos en cualquier parte del mundo</p>
             </div>
             
             <div class="steps-container">
-                <div class="step">
-                    <div class="step-card fade-in delay-1">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">1</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
                         <h3 class="step-title">Regístrate y verifica tu identidad</h3>
-                        <p class="step-description">Crea tu cuenta en menos de 2 minutos y verifica tu identidad de forma segura para comenzar a operar de inmediato.</p>
+                        <p class="step-desc">Crea tu cuenta en menos de 2 minutos y verifica tu identidad de forma segura para comenzar a operar de inmediato.</p>
                     </div>
                 </div>
                 
-                <div class="step-connector" id="connector-1">
-                    <div class="step-connector-line">
-                        <div class="step-connector-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-card fade-in delay-2">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">2</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
+                <div class="step-card fade-in delay-2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
                         <h3 class="step-title">Selecciona destinatario y monto</h3>
-                        <p class="step-description">Elige a quién quieres enviar dinero, indica el monto y revisa nuestras competitivas tarifas en tiempo real. Ahora también puedes recargar con tarjeta.</p>
+                        <p class="step-desc">Elige a quién quieres enviar dinero, indica el monto y revisa nuestras competitivas tarifas en tiempo real.</p>
                     </div>
                 </div>
                 
-                <div class="step-connector" id="connector-2">
-                    <div class="step-connector-line">
-                        <div class="step-connector-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-card fade-in delay-3">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">3</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-paper-plane"></i>
-                        </div>
+                <div class="step-card fade-in delay-3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
                         <h3 class="step-title">Realiza la transferencia</h3>
-                        <p class="step-description">Confirma los detalles, elige tu método de pago preferido y ¡listo! Tu dinero llegará en minutos, con confirmación instantánea.</p>
+                        <p class="step-desc">Confirma los detalles, elige tu método de pago preferido y ¡listo! Tu dinero llegará en minutos, con confirmación instantánea.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Global Coverage Section -->
-    <section id="global-coverage" class="global-coverage section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle text-white fade-in">Alcance Internacional</span>
-                <h2 class="section-title text-white fade-in delay-1">Cobertura Global</h2>
-                <p class="section-description text-white fade-in delay-2">Alcance internacional con presencia en más de 200 países y territorios</p>
-            </div>
-            
-            <div class="map-container fade-in delay-3">
-                <div class="map-image">
-                    <!-- Representación simple del mapa mundial - reemplazar por su imagen real del mapa -->
-                    <svg viewBox="0 0 1200 600" class="world-map">
-                        <path fill="rgba(255, 255, 255, 0.2)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1" d="M150,100 Q400,50 600,100 T1050,100 Q1100,300 1050,500 T600,500 Q400,550 150,500 T150,100" />
-                        <!-- Puntos de conexión -->
-                        <circle cx="300" cy="150" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="450" cy="220" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="600" cy="180" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="750" cy="250" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="900" cy="200" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="350" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="550" cy="380" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="750" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="850" cy="420" r="5" fill="#FFC107" class="animated-pulse" />
-                    </svg>
-                </div>
-                <p class="map-text">Contamos con una extensa red de partners y alianzas estratégicas que nos permiten ofrecer servicios de transferencia en prácticamente cualquier lugar del mundo. Ya sea que envíes dinero a las grandes ciudades o a las zonas rurales más remotas, nosotros te conectamos con tus seres queridos.</p>
-            </div>
-            
-            <div class="map-stats">
-                <div class="stat-card fade-in delay-1">
-                    <div class="stat-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="stat-number animated-pulse" data-count="200">200+</div>
-                    <div class="stat-label">Países</div>
-                </div>
-                
-                <div class="stat-card fade-in delay-2">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number animated-pulse" data-count="20">20M+</div>
-                    <div class="stat-label">Usuarios</div>
-                </div>
-                
-                <div class="stat-card fade-in delay-3">
-                    <div class="stat-icon">
-                        <i class="fas fa-smile"></i>
-                    </div>
-                    <div class="stat-number animated-pulse" data-count="99.9">99.9%</div>
-                    <div class="stat-label">Satisfacción</div>
-                </div>
-                
-                <div class="stat-card fade-in delay-4">
-                    <div class="stat-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <div class="stat-number animated-pulse">24/7</div>
-                    <div class="stat-label">Disponibilidad</div>
                 </div>
             </div>
         </div>
@@ -3276,282 +1470,61 @@
     <section id="testimonials" class="testimonials section">
         <div class="container">
             <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Experiencias Reales</span>
-                <h2 class="section-title fade-in delay-1">Lo que dicen nuestros clientes</h2>
-                <p class="section-description fade-in delay-2">Miles de personas confían en nosotros para sus transferencias internacionales</p>
+                <span class="section-tag">Experiencias Reales</span>
+                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                <p class="section-desc">Miles de personas confían en nosotros para sus transferencias internacionales</p>
             </div>
             
-            <div class="testimonials-slider fade-in delay-3">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">María Rodríguez</div>
-                            <p class="client-position">Madrid, España</p>
-                        </div>
-                    </div>
+            <div class="testimonial-card fade-in">
+                <div class="testimonial-ratings">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">Carlos Mendoza</div>
-                            <p class="client-position">Londres, Reino Unido</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">Anna Lee</div>
-                            <p class="client-position">Toronto, Canadá</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-arrows">
-                    <button class="testimonial-arrow" id="testimonial-prev" aria-label="Anterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="testimonial-arrow" id="testimonial-next" aria-label="Siguiente">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                
-                <div class="testimonial-controls">
-                    <span class="testimonial-dot active" data-slide="0"></span>
-                    <span class="testimonial-dot" data-slide="1"></span>
-                    <span class="testimonial-dot" data-slide="2"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- App Section -->
-    <section id="app" class="app section">
-        <div class="container app-container">
-            <div class="app-content">
-                <span class="badge badge-success fade-in">Disponible 24/7</span>
-                <h2 class="section-title fade-in delay-1">Lleva Remeex VISA siempre contigo</h2>
-                <p class="section-description fade-in delay-2">Descarga nuestra aplicación móvil y gestiona tus transferencias desde cualquier lugar, en cualquier momento.</p>
-                
-                <div class="app-features">
-                    <div class="app-feature fade-in delay-1">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Interfaz intuitiva y fácil de usar</div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-2">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Notificaciones en tiempo real</div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-3">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Acceso rápido con huella digital o Face ID</div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-4">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Recarga tu cuenta con tarjeta de crédito<span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-5">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Historial de transferencias detallado</div>
-                    </div>
-                </div>
-                
-                <div class="app-download">
-                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-1">
-                        <i class="fab fa-apple"></i>
-                        <div class="app-btn-content">
-                            <span class="app-btn-text">Descarga en la</span>
-                            <span class="app-btn-name">App Store</span>
-                        </div>
-                    </a>
-                    
-                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-2">
-                        <i class="fab fa-google-play"></i>
-                        <div class="app-btn-content">
-                            <span class="app-btn-text">Disponible en</span>
-                            <span class="app-btn-name">Google Play</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="app-device fade-in delay-4">
-                <div class="app-phone-bg"></div>
-                <div class="app-phone animated-float">
-                    <!-- Representación del teléfono - Reemplazar por su imagen real del teléfono -->
-                    <svg viewBox="0 0 320 640" width="300" height="600">
-                        <rect x="30" y="20" width="260" height="600" rx="30" fill="#1434CB" />
-                        <rect x="40" y="60" width="240" height="520" rx="5" fill="#FFFFFF" />
-                        <circle cx="160" cy="610" r="20" fill="rgba(255,255,255,0.2)" />
-                        <rect x="140" y="40" width="40" height="8" rx="4" fill="rgba(255,255,255,0.3)" />
-                        <circle cx="200" cy="40" r="5" fill="rgba(255,255,255,0.3)" />
-                        <!-- App UI -->
-                        <rect x="60" y="80" width="200" height="40" rx="20" fill="#E9EEFF" />
-                        <circle cx="80" cy="100" r="10" fill="#1434CB" />
-                        <rect x="60" y="140" width="90" height="90" rx="10" fill="#E9EEFF" />
-                        <rect x="160" y="140" width="100" height="40" rx="10" fill="#E9EEFF" />
-                        <rect x="160" y="190" width="100" height="40" rx="10" fill="#E9EEFF" />
-                        <rect x="60" y="240" width="200" height="60" rx="10" fill="#0075FF" opacity="0.2" />
-                        <rect x="60" y="310" width="95" height="120" rx="10" fill="#F7B600" opacity="0.2" />
-                        <rect x="165" y="310" width="95" height="120" rx="10" fill="#1434CB" opacity="0.2" />
-                        <rect x="60" y="440" width="200" height="60" rx="10" fill="#E9EEFF" />
-                        <rect x="100" y="520" width="120" height="40" rx="20" fill="#1434CB" />
-                    </svg>
-                </div>
+                <p class="testimonial-quote">Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones! No puedo imaginar una forma más fácil de mantenerme conectado con mis seres queridos.</p>
+                <h4 class="testimonial-author">María Rodríguez</h4>
+                <p class="testimonial-role">Madrid, España</p>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section id="cta" class="cta section">
+    <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title fade-in">Comienza a conectar sin fronteras</h2>
-                <p class="cta-description fade-in delay-1">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
-                <a href="https://remeexvisa.com/index1" class="btn btn-secondary btn-xl btn-icon fade-in delay-2">
-                    <i class="fas fa-paper-plane"></i>
+                <h2 class="cta-title">Comienza a conectar sin fronteras</h2>
+                <p class="cta-desc">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
+                <a href="https://remeexvisa.com/index1" class="cta-btn">
                     Recibir remesa ahora
+                    <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Support Section -->
-    <section id="support" class="support section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Asistencia Continua</span>
-                <h2 class="section-title fade-in delay-1">Estamos aquí para ayudarte</h2>
-                <p class="section-description fade-in delay-2">Nuestro equipo de soporte está disponible 24/7 para resolver todas tus dudas</p>
-            </div>
-            
-            <div class="support-grid">
-                <div class="support-card fade-in delay-1">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Chat en vivo</h3>
-                    <p class="support-description">Habla con un asesor en tiempo real a través de nuestra web o aplicación móvil.</p>
-                    <a href="#" id="open-chat" class="btn btn-primary btn-icon">
-                        <i class="fas fa-comment"></i>
-                        Iniciar chat
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-2">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Correo electrónico</h3>
-                    <p class="support-description">Envíanos tus consultas y te responderemos en menos de 24 horas.</p>
-                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-envelope"></i>
-                        Enviar consulta
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-3">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Teléfono</h3>
-                    <p class="support-description">Llámanos para hablar directamente con un asesor especializado.</p>
-                    <a href="tel:+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-phone"></i>
-                        Llamar ahora
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-4">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Centro de ayuda</h3>
-                    <p class="support-description">Consulta nuestras guías, tutoriales y preguntas frecuentes para resolver dudas comunes.</p>
-                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-external-link-alt"></i>
-                        Visitar centro
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer id="footer" class="footer">
-        <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
-            <path fill="currentColor" d="M0,32L48,30.7C96,29,192,27,288,26.7C384,27,480,29,576,32C672,35,768,37,864,34.7C960,32,1056,24,1152,21.3C1248,19,1344,21,1392,22.7L1440,24L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-        </svg>
-        
+    <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-grid">
                 <div>
                     <div class="footer-logo">
-                        <a href="#hero">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
-                        </a>
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
                     </div>
                     <p class="footer-about">Conectando familias alrededor del mundo con transferencias rápidas, seguras y económicas. Ahora con recarga instantánea de cuenta bancaria con tarjeta de crédito.</p>
-                    <div class="social-icons">
-                        <a href="https://twitter.com/visa_es" class="social-icon" aria-label="Twitter">
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="https://www.facebook.com/visa_es" class="social-icon" aria-label="Facebook">
+                        <a href="#" class="social-link" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/visa_es" class="social-icon" aria-label="Instagram">
+                        <a href="#" class="social-link" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.linkedin.com/company/visa_es" class="social-icon" aria-label="LinkedIn">
+                        <a href="#" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/user/visa_es" class="social-icon" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
@@ -3559,567 +1532,112 @@
                 <div>
                     <h4 class="footer-title">Empresa</h4>
                     <ul class="footer-links">
-                        <li><a href="https://visa.es">Sobre nosotros</a></li>
-                        <li><a href="https://visa.es">Carreras</a></li>
-                        <li><a href="https://visa.es">Sala de prensa</a></li>
-                        <li><a href="https://visa.es">Responsabilidad social</a></li>
-                        <li><a href="https://visa.es">Inversores</a></li>
+                        <li><a href="#" class="footer-link">Sobre nosotros</a></li>
+                        <li><a href="#" class="footer-link">Carreras</a></li>
+                        <li><a href="#" class="footer-link">Sala de prensa</a></li>
+                        <li><a href="#" class="footer-link">Responsabilidad social</a></li>
                     </ul>
                 </div>
                 
                 <div>
                     <h4 class="footer-title">Servicios</h4>
                     <ul class="footer-links">
-                        <li><a href="https://visa.es">Transferencias internacionales</a></li>
-                        <li><a href="https://visa.es">Recarga con tarjeta de crédito</a></li>
-                        <li><a href="https://visa.es">Pagos recurrentes</a></li>
-                        <li><a href="https://visa.es">Cambio de divisas</a></li>
-                        <li><a href="https://visa.es">Tarjetas virtuales</a></li>
+                        <li><a href="#" class="footer-link">Transferencias internacionales</a></li>
+                        <li><a href="#" class="footer-link">Recarga con tarjeta</a></li>
+                        <li><a href="#" class="footer-link">Pagos recurrentes</a></li>
+                        <li><a href="#" class="footer-link">Cambio de divisas</a></li>
                     </ul>
                 </div>
                 
                 <div>
                     <h4 class="footer-title">Ayuda</h4>
                     <ul class="footer-links">
-                        <li><a href="https://visa.es">Centro de ayuda</a></li>
-                        <li><a href="https://visa.es">Contáctanos</a></li>
-                        <li><a href="https://visa.es">Preguntas frecuentes</a></li>
-                        <li><a href="https://visa.es">Seguridad</a></li>
-                        <li><a href="https://visa.es">Reportar un problema</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="footer-title">Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://visa.es">Términos y condiciones</a></li>
-                        <li><a href="https://visa.es">Política de privacidad</a></li>
-                        <li><a href="https://visa.es">Política de cookies</a></li>
-                        <li><a href="https://visa.es">Cumplimiento normativo</a></li>
-                        <li><a href="https://visa.es">Licencias</a></li>
+                        <li><a href="#" class="footer-link">Centro de ayuda</a></li>
+                        <li><a href="#" class="footer-link">Contacto</a></li>
+                        <li><a href="#" class="footer-link">Preguntas frecuentes</a></li>
+                        <li><a href="#" class="footer-link">Seguridad</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="footer-divider"></div>
-            
             <div class="footer-bottom">
-                <div class="language-selector">
-                    <select aria-label="Seleccionar idioma">
-                        <option value="es">Español</option>
-                        <option value="en">English</option>
-                        <option value="fr">Français</option>
-                        <option value="pt">Português</option>
-                        <option value="de">Deutsch</option>
-                    </select>
+                <div class="footer-copyright">
+                    &copy; 2025 Remeex VISA. Todos los derechos reservados.
                 </div>
                 
-                <div class="security-text">
-                    Certificaciones de seguridad: SSL Secured | PCI Compliant | VISA Verified
-                </div>
-                
-                <div class="copyright">
-                    <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
+                <div class="footer-payments">
+                    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa" class="payment-method" height="24">
+                    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/eu/es/images/Consumidores/cards-benefits/standard-mastercard/standard-mastercard-card-image.png" alt="Mastercard" class="payment-method" height="24">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png" alt="PayPal" class="payment-method" height="24">
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
     <!-- WhatsApp Button -->
     <a href="https://wa.me/+17373018059" class="whatsapp-button" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
-    
-    <!-- Promo Overlay -->
-    <div class="promo-overlay" id="promo-overlay">
-        <div class="promo-content">
-            <button class="promo-close" id="promo-close" aria-label="Cerrar promoción">
-                <i class="fas fa-times"></i>
-            </button>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción especial" class="promo-image">
-        </div>
-    </div>
 
     <!-- Scripts -->
     <script>
-        // Corrección: asegurarse de que el DOM esté cargado completamente antes de ejecutar scripts
         document.addEventListener('DOMContentLoaded', function() {
-            // Simulador de carga - lo primero que se debe ejecutar
-            const loader = document.getElementById('loader');
-            const loaderBar = document.getElementById('loader-bar');
-            const loaderText = document.getElementById('loader-text');
+            // Header scroll effect
+            const header = document.getElementById('header');
             
-            // Valores de carga
-            const loadSteps = [
-                { progress: 20, text: "Cargando recursos..." },
-                { progress: 40, text: "Inicializando componentes..." },
-                { progress: 60, text: "Cargando interfaz..." },
-                { progress: 80, text: "Optimizando experiencia..." },
-                { progress: 100, text: "¡Listo!" }
-            ];
-            
-            let currentStep = 0;
-            
-            function updateLoader() {
-                if (currentStep < loadSteps.length) {
-                    loaderBar.style.width = loadSteps[currentStep].progress + '%';
-                    loaderText.textContent = loadSteps[currentStep].text;
-                    currentStep++;
-                    
-                    const delay = currentStep === loadSteps.length - 1 ? 300 : 400;
-                    setTimeout(updateLoader, delay);
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
                 } else {
-                    setTimeout(() => {
-                        // Ocultar el loader
-                        loader.style.opacity = '0';
-                        setTimeout(() => {
-                            loader.style.display = 'none';
-                            document.body.classList.add('loaded');
-                            
-                            // Iniciar animaciones de desplazamiento
-                            initScrollAnimations();
-                            
-                            // Mostrar la promoción después de 3 segundos
-                            setTimeout(() => {
-                                document.getElementById('promo-overlay').classList.add('active');
-                            }, 3000);
-                        }, 300);
-                    }, 400);
+                    header.classList.remove('scrolled');
                 }
-            }
+            });
             
-            // Iniciar el loader inmediatamente 
-            updateLoader();
-            
-            // Referencias DOM para elementos interactivos
+            // Mobile menu
             const menuToggle = document.getElementById('menu-toggle');
             const closeMenu = document.getElementById('close-menu');
             const mobileMenu = document.getElementById('mobile-menu');
             const overlay = document.getElementById('overlay');
-            const backToTop = document.getElementById('back-to-top');
-            const promoOverlay = document.getElementById('promo-overlay');
-            const promoClose = document.getElementById('promo-close');
-            const openChat = document.getElementById('open-chat');
-            const header = document.getElementById('header');
             
-            // Cerrar promoción
-            if (promoClose) {
-                promoClose.addEventListener('click', () => {
-                    promoOverlay.classList.remove('active');
-                });
-            }
-            
-            // Abrir chat (Tawk.to o WhatsApp)
-            if (openChat) {
-                openChat.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (typeof Tawk_API !== 'undefined') {
-                        Tawk_API.maximize();
-                    } else {
-                        window.open('https://wa.me/+17373018059', '_blank');
-                    }
-                });
-            }
-            
-            // Menú móvil
             function toggleMenu() {
                 mobileMenu.classList.toggle('active');
                 overlay.classList.toggle('active');
                 document.body.classList.toggle('menu-open');
-                
-                if (mobileMenu.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = '';
-                }
             }
             
-            if (menuToggle && closeMenu && overlay) {
+            if (menuToggle && closeMenu) {
                 menuToggle.addEventListener('click', toggleMenu);
                 closeMenu.addEventListener('click', toggleMenu);
                 overlay.addEventListener('click', toggleMenu);
             }
             
-            // Enlaces del menú móvil
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    toggleMenu();
-                });
-            });
-            
-            // Slider Hero
-            const heroSlides = document.querySelectorAll('.hero-slide');
-            const sliderDots = document.querySelectorAll('.slider-dot');
-            let currentSlide = 0;
-            let slideInterval;
-            
-            function showSlide(index) {
-                heroSlides.forEach(slide => slide.classList.remove('active'));
-                sliderDots.forEach(dot => dot.classList.remove('active'));
-                
-                heroSlides[index].classList.add('active');
-                sliderDots[index].classList.add('active');
-                
-                currentSlide = index;
-            }
-            
-            function nextSlide() {
-                let next = (currentSlide + 1) % heroSlides.length;
-                showSlide(next);
-            }
-            
-            function startSlider() {
-                slideInterval = setInterval(nextSlide, 5000);
-            }
-            
-            sliderDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    clearInterval(slideInterval);
-                    showSlide(index);
-                    startSlider();
-                });
-            });
-            
-            // Iniciar slider automático
-            if (heroSlides.length > 0) {
-                startSlider();
-            }
-            
-            // Slider de testimonios
-            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-            const testimonialDots = document.querySelectorAll('.testimonial-dot');
-            const prevBtn = document.getElementById('testimonial-prev');
-            const nextBtn = document.getElementById('testimonial-next');
-            let currentTestimonial = 0;
-            let testimonialInterval;
-            
-            function showTestimonial(index) {
-                testimonialSlides.forEach(slide => slide.classList.remove('active'));
-                testimonialDots.forEach(dot => dot.classList.remove('active'));
-                
-                testimonialSlides[index].classList.add('active');
-                testimonialDots[index].classList.add('active');
-                
-                currentTestimonial = index;
-            }
-            
-            function nextTestimonial() {
-                let next = (currentTestimonial + 1) % testimonialSlides.length;
-                showTestimonial(next);
-            }
-            
-            function prevTestimonial() {
-                let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-                showTestimonial(prev);
-            }
-            
-            function startTestimonialSlider() {
-                testimonialInterval = setInterval(nextTestimonial, 6000);
-            }
-            
-            testimonialDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    showTestimonial(index);
-                    startTestimonialSlider();
-                });
-            });
-            
-            if (prevBtn && nextBtn) {
-                prevBtn.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    prevTestimonial();
-                    startTestimonialSlider();
-                });
-                
-                nextBtn.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    nextTestimonial();
-                    startTestimonialSlider();
-                });
-            }
-            
-            // Iniciar slider de testimonios si hay testimonios
-            if (testimonialSlides.length > 0) {
-                startTestimonialSlider();
-            }
-            
-            // Animación de los steps connectors
-            function updateStepConnectors() {
-                const connectors = document.querySelectorAll('.step-connector');
-                
-                // Comprobar si los conectores son visibles
-                const isVisible = (element) => {
-                    const rect = element.getBoundingClientRect();
-                    return (
-                        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
-                        rect.bottom >= 0
-                    );
-                };
-                
-                connectors.forEach((connector, index) => {
-                    if (isVisible(connector)) {
-                        setTimeout(() => {
-                            connector.classList.add('active');
-                        }, index * 300);
-                    }
-                });
-            }
-            
-            // Botón de volver arriba y efectos de scroll
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTop && backToTop.classList.add('active');
-                } else {
-                    backToTop && backToTop.classList.remove('active');
-                }
-                
-                // Header con efecto al hacer scroll
-                if (window.scrollY > 10) {
-                    header && header.classList.add('scrolled');
-                } else {
-                    header && header.classList.remove('scrolled');
-                }
-                
-                // Actualizar conectores
-                updateStepConnectors();
-                
-                // Actualizar animaciones scroll
-                handleScrollAnimation();
-                
-                // Actualizar navegación activa
-                updateActiveNavOnScroll();
-            });
-            
-            if (backToTop) {
-                backToTop.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
-            // Navegación suave para enlaces de anclaje
+            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') !== "#") {
-                        e.preventDefault();
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const headerHeight = header.offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                         
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
                         
-                        if (targetElement) {
-                            const headerHeight = header ? header.offsetHeight : 0;
-                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                            
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Actualizar clase active en la navegación
-                            document.querySelectorAll('.nav-link').forEach(navLink => {
-                                navLink.classList.remove('active');
-                            });
-                            
-                            document.querySelector(`.nav-link[href="${targetId}"]`).classList.add('active');
+                        // Close mobile menu if open
+                        if (mobileMenu.classList.contains('active')) {
+                            toggleMenu();
                         }
                     }
                 });
             });
-            
-            // Animaciones al hacer scroll
-            function initScrollAnimations() {
-                // Inicializar todas las animaciones activando las que ya están visibles
-                handleScrollAnimation();
-            }
-            
-            function handleScrollAnimation() {
-                const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
-                
-                const elementInView = (el, percentageScroll = 100) => {
-                    const elementTop = el.getBoundingClientRect().top;
-                    return (
-                        elementTop <= 
-                        ((window.innerHeight || document.documentElement.clientHeight) * (percentageScroll/100))
-                    );
-                };
-                
-                animatedElements.forEach((el) => {
-                    if (elementInView(el, 85)) {
-                        el.classList.add('visible');
-                    }
-                });
-                
-                // Actualizar conectores
-                updateStepConnectors();
-            }
-            
-            // Actualizar navegación activa al hacer scroll
-            function updateActiveNavOnScroll() {
-                const sections = document.querySelectorAll('section[id]');
-                const navLinks = document.querySelectorAll('.nav-link');
-                
-                const scrollPosition = window.scrollY + window.innerHeight / 3;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - (header ? header.offsetHeight : 0);
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }
-            
-            // Animación de contadores para estadísticas
-            function animateCounters() {
-                const counters = document.querySelectorAll('.stat-number[data-count]');
-                
-                // Usar IntersectionObserver si está disponible
-                if ('IntersectionObserver' in window) {
-                    const counterObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                const counter = entry.target;
-                                animateCounter(counter);
-                                counterObserver.unobserve(counter);
-                            }
-                        });
-                    }, { threshold: 0.5 });
-                    
-                    counters.forEach(counter => {
-                        counterObserver.observe(counter);
-                    });
-                } else {
-                    // Fallback para navegadores que no soportan IntersectionObserver
-                    counters.forEach(counter => {
-                        animateCounter(counter);
-                    });
-                }
-                
-                function animateCounter(counter) {
-                    const target = parseFloat(counter.getAttribute('data-count'));
-                    let count = 0;
-                    const duration = 2000; // ms
-                    const increment = target / (duration / 16); // Para 60fps aproximadamente
-                    
-                    // Animación del contador
-                    const updateCount = () => {
-                        count += increment;
-                        if (count < target) {
-                            counter.textContent = Math.ceil(count) + '+';
-                            requestAnimationFrame(updateCount);
-                        } else {
-                            counter.textContent = target + '+';
-                        }
-                    };
-                    
-                    requestAnimationFrame(updateCount);
-                }
-            }
-            
-            // Llamar a animateCounters para iniciar las animaciones
-            animateCounters();
-            
-            // Detectar soporte táctil
-            const isTouchDevice = () => {
-                return (('ontouchstart' in window) ||
-                        (navigator.maxTouchPoints > 0) ||
-                        (navigator.msMaxTouchPoints > 0));
-            };
-            
-            if (isTouchDevice()) {
-                document.body.classList.add('touch-device');
-                
-                // Funcionalidad de deslizar para sliders en dispositivos táctiles
-                const handleSwipe = (element, nextFunc, prevFunc) => {
-                    if (!element) return;
-                    
-                    let startX, endX;
-                    const minSwipeDistance = 50;
-                    
-                    element.addEventListener('touchstart', (e) => {
-                        startX = e.touches[0].clientX;
-                    }, { passive: true });
-                    
-                    element.addEventListener('touchend', (e) => {
-                        endX = e.changedTouches[0].clientX;
-                        const distance = endX - startX;
-                        
-                        if (Math.abs(distance) >= minSwipeDistance) {
-                            if (distance > 0) {
-                                // Deslizamiento a la derecha - anterior
-                                prevFunc();
-                            } else {
-                                // Deslizamiento a la izquierda - siguiente
-                                nextFunc();
-                            }
-                        }
-                    }, { passive: true });
-                };
-                
-                // Aplicar swipe a los sliders
-                const heroSlider = document.querySelector('.hero-slider');
-                const testimonialSlider = document.querySelector('.testimonials-slider');
-                
-                if (heroSlider) {
-                    handleSwipe(heroSlider, 
-                        () => {
-                            clearInterval(slideInterval);
-                            nextSlide();
-                            startSlider();
-                        }, 
-                        () => {
-                            clearInterval(slideInterval);
-                            showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
-                            startSlider();
-                        }
-                    );
-                }
-                
-                if (testimonialSlider) {
-                    handleSwipe(testimonialSlider, 
-                        () => {
-                            clearInterval(testimonialInterval);
-                            nextTestimonial();
-                            startTestimonialSlider();
-                        }, 
-                        () => {
-                            clearInterval(testimonialInterval);
-                            prevTestimonial();
-                            startTestimonialSlider();
-                        }
-                    );
-                }
-            }
         });
-    </script>
-
-    <!-- Tawk.to Script -->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/67cca8c614b1ee191063c36a/default';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-        })();
     </script>
 </body>
 </html>
