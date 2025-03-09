@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Remeex VISA - Transferencias internacionales y remesas sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
+    <meta name="description" content="Remeex VISA - Transferencias y remesas internacionales sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
     <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales">
-    <meta name="theme-color" content="#1A1F71">
+    <meta name="theme-color" content="#1434CB">
     <title>Remeex VISA | Transferencias y Remesas Internacionales Sin Fronteras</title>
     
     <!-- Open Graph / Facebook -->
@@ -33,24 +33,24 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Cambiado a Inter para un look más moderno y profesional -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* === VARIABLES === */
         :root {
-            /* Colores principales */
-            --visa-blue: #1A1F71;
-            --visa-blue-light: #2C36A2;
-            --visa-blue-dark: #141850;
-            --visa-blue-hover: #232D88;
+            /* Colores principales - refinados para mejor alineación con Visa */
+            --visa-blue: #1434CB;
+            --visa-blue-light: #2C52E8;
+            --visa-blue-dark: #0C2074;
+            --visa-blue-hover: #0F2A9B;
             --visa-gold: #F7B600;
-            --accent-color: #00A1DF;
-            --success-color: #00C389;
+            --accent-color: #0070E0;
+            --success-color: #00A661;
             --warning-color: #FF9F00;
-            --error-color: #FF5A5A;
+            --error-color: #E31837;
             
-            /* Colores neutros */
+            /* Colores neutros - más sutiles */
             --white: #FFFFFF;
             --gray-50: #F9FAFB;
             --gray-100: #F3F4F6;
@@ -64,24 +64,24 @@
             --gray-900: #111827;
             
             /* Colores de fondo y acento */
-            --light-blue: #E9EEFF;
-            --ultra-light-blue: #F5F7FF;
-            --gradient-blue: linear-gradient(135deg, var(--visa-blue), var(--accent-color));
+            --light-blue: #EDF2FF;
+            --ultra-light-blue: #F8FAFF;
+            --gradient-blue: linear-gradient(135deg, var(--visa-blue), #2175D9);
             --gradient-gold: linear-gradient(135deg, var(--visa-gold), #FFA040);
             --gradient-dark: linear-gradient(135deg, var(--visa-blue-dark), var(--visa-blue));
             
-            /* Sombras */
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.08), 0 10px 10px rgba(0, 0, 0, 0.02);
-            --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.06);
-            --shadow-card-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-blue: 0 5px 15px rgba(26, 31, 113, 0.15);
+            /* Sombras - refinadas */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.03);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.07), 0 10px 10px rgba(0, 0, 0, 0.02);
+            --shadow-card: 0 2px 15px rgba(0, 0, 0, 0.04);
+            --shadow-card-hover: 0 10px 25px rgba(0, 0, 0, 0.07);
+            --shadow-blue: 0 5px 15px rgba(20, 52, 203, 0.15);
             --shadow-gold: 0 5px 15px rgba(247, 182, 0, 0.15);
             
             /* Tipografía */
-            --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             
             /* Transiciones */
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -108,7 +108,7 @@
             --radius-md: 0.5rem;
             --radius-lg: 0.75rem;
             --radius-xl: 1rem;
-            --radius-2xl: 1.5rem;
+            --radius-2xl: 1.25rem;
             --radius-full: 9999px;
             
             /* Z-index */
@@ -192,8 +192,8 @@
         
         .section-subtitle {
             display: inline-block;
-            font-weight: 700;
-            font-size: 1.125rem;
+            font-weight: 600;
+            font-size: 1rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             background: var(--gradient-blue);
@@ -212,15 +212,15 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
+            width: 40px;
+            height: 2px;
             background: var(--gradient-blue);
             border-radius: var(--radius-full);
         }
         
         .section-title {
             font-size: 2.5rem;
-            font-weight: 800;
+            font-weight: 700;
             line-height: 1.2;
             margin-bottom: var(--spacing-5);
             color: var(--gray-900);
@@ -228,8 +228,11 @@
         }
         
         .section-description {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: var(--gray-600);
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .grid {
@@ -248,18 +251,18 @@
         
         h1 {
             font-size: 3rem;
-            font-weight: 900;
+            font-weight: 800;
             letter-spacing: -0.02em;
         }
         
         h2 {
             font-size: 2.5rem;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: -0.01em;
         }
         
         h3 {
-            font-size: 2rem;
+            font-size: 1.875rem;
             font-weight: 700;
         }
         
@@ -285,13 +288,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.875rem 1.75rem;
+            padding: 0.75rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
             line-height: 1.5;
             text-align: center;
-            border-radius: var(--radius-full);
-            transition: all 0.3s var(--ease-bounce);
+            border-radius: var(--radius-md);
+            transition: all 0.3s var(--ease);
             cursor: pointer;
             border: none;
             position: relative;
@@ -322,44 +325,43 @@
         }
         
         .btn-primary {
-            background: var(--gradient-blue);
+            background: var(--visa-blue);
             color: var(--white);
             box-shadow: var(--shadow-blue);
         }
         
         .btn-primary:hover {
+            background: var(--visa-blue-hover);
             box-shadow: var(--shadow-lg);
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-2px);
         }
         
         .btn-secondary {
             background-color: var(--white);
             color: var(--visa-blue);
-            border: 2px solid transparent;
-            background-image: linear-gradient(var(--white), var(--white)), 
-                            var(--gradient-blue);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
+            border: 1px solid var(--visa-blue);
         }
         
         .btn-secondary:hover {
+            background-color: var(--light-blue);
             box-shadow: var(--shadow-lg);
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-2px);
         }
         
         .btn-gold {
-            background: var(--gradient-gold);
-            color: var(--white);
+            background: var(--visa-gold);
+            color: var(--gray-900);
             box-shadow: var(--shadow-gold);
         }
         
         .btn-gold:hover {
+            background: #E6A800;
             box-shadow: var(--shadow-lg);
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-2px);
         }
         
         .btn-lg {
-            padding: 1rem 2.25rem;
+            padding: 0.875rem 2rem;
             font-size: 1.125rem;
         }
         
@@ -380,34 +382,35 @@
         .badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.35rem 1rem;
+            padding: 0.35rem 0.75rem;
             border-radius: var(--radius-full);
-            font-size: 0.875rem;
-            font-weight: 600;
+            font-size: 0.8125rem;
+            font-weight: 500;
             box-shadow: var(--shadow-sm);
         }
         
         .badge-primary {
-            background: rgba(26, 31, 113, 0.08);
+            background: rgba(20, 52, 203, 0.08);
             color: var(--visa-blue);
-            border: 1px solid rgba(26, 31, 113, 0.12);
+            border: 1px solid rgba(20, 52, 203, 0.12);
         }
         
         .badge-success {
-            background-color: rgba(0, 195, 137, 0.08);
+            background-color: rgba(0, 166, 97, 0.08);
             color: var(--success-color);
-            border: 1px solid rgba(0, 195, 137, 0.12);
+            border: 1px solid rgba(0, 166, 97, 0.12);
         }
         
         .badge-new {
             background: var(--gradient-blue);
             color: var(--white);
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.6875rem;
             margin-left: 0.5rem;
             box-shadow: var(--shadow-blue);
             position: relative;
             overflow: hidden;
+            vertical-align: middle;
         }
         
         .badge-new::after {
@@ -433,21 +436,22 @@
         
         .badge-new i {
             margin-right: 0.25rem;
+            font-size: 0.625rem;
         }
         
         /* Cards */
         .card {
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
             overflow: hidden;
-            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
             position: relative;
             isolation: isolate;
         }
         
         .card:hover {
-            transform: translateY(-12px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-card-hover);
         }
         
@@ -460,9 +464,9 @@
             padding: var(--spacing-8) var(--spacing-6);
             height: 100%;
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
-            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -470,7 +474,7 @@
         }
         
         .feature-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-card-hover);
             border-color: transparent;
         }
@@ -481,7 +485,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: var(--gradient-blue);
             z-index: 1;
             transform: scaleX(0);
@@ -516,16 +520,16 @@
         }
         
         .feature-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--light-blue);
             color: var(--visa-blue);
-            font-size: 1.75rem;
-            border-radius: 24px;
-            transition: all 0.4s var(--ease-bounce);
+            font-size: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.4s var(--ease);
             position: relative;
             z-index: 2;
         }
@@ -534,7 +538,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 24px;
+            border-radius: 16px;
             padding: 2px;
             background: var(--gradient-blue);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -556,20 +560,20 @@
         
         .feature-icon-bg {
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: var(--accent-color);
             opacity: 0.1;
-            border-radius: 30px;
+            border-radius: 22px;
             bottom: -8px;
             right: -8px;
             transform: rotate(-10deg);
             z-index: 1;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
         }
         
         .feature-card:hover .feature-icon-bg {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.1) rotate(10deg);
             opacity: 0.15;
         }
         
@@ -611,7 +615,7 @@
         /* Step Card */
         .step-card {
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: var(--spacing-8) var(--spacing-6);
             box-shadow: var(--shadow-card);
             height: 100%;
@@ -619,14 +623,14 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
             position: relative;
             z-index: 1;
             border: 1px solid var(--gray-100);
         }
         
         .step-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-card-hover);
             border-color: transparent;
         }
@@ -635,7 +639,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: 2px;
             background: var(--gradient-blue);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -656,20 +660,20 @@
         }
         
         .step-number {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             background: var(--gradient-blue);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             box-shadow: var(--shadow-blue);
             position: relative;
             z-index: 2;
-            transition: transform 0.4s var(--ease-bounce);
+            transition: transform 0.4s var(--ease);
         }
         
         .step-card:hover .step-number {
@@ -678,26 +682,26 @@
         
         .step-number-bg {
             position: absolute;
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: var(--accent-color);
             opacity: 0.15;
             border-radius: 50%;
-            top: -8px;
-            left: -8px;
+            top: -7px;
+            left: -7px;
             z-index: 1;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
         }
         
         .step-card:hover .step-number-bg {
-            transform: scale(1.3);
+            transform: scale(1.2);
         }
         
         .step-icon {
-            font-size: 2.5rem;
+            font-size: 2.25rem;
             color: var(--visa-blue);
             margin-bottom: var(--spacing-5);
-            transition: transform 0.4s var(--ease-bounce), color 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), color 0.4s var(--ease);
         }
         
         .step-card:hover .step-icon {
@@ -731,7 +735,7 @@
         
         .step-connector-line {
             width: 100%;
-            height: 3px;
+            height: 2px;
             background: var(--light-blue);
             position: relative;
         }
@@ -753,14 +757,14 @@
         
         .step-connector-dot {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: var(--light-blue);
             border: 2px solid var(--white);
             box-shadow: var(--shadow-sm);
             z-index: 1;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
         }
         
         .step-connector.active .step-connector-dot {
@@ -772,18 +776,18 @@
         .stat-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: var(--spacing-8) var(--spacing-6);
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         .stat-card:hover {
-            transform: translateY(-12px) scale(1.05);
+            transform: translateY(-10px);
             background: rgba(255, 255, 255, 0.1);
         }
         
@@ -806,11 +810,11 @@
         }
         
         .stat-icon {
-            font-size: 2rem;
+            font-size: 1.75rem;
             margin-bottom: var(--spacing-4);
             color: var(--white);
-            opacity: 0.7;
-            transition: transform 0.4s var(--ease-bounce), opacity 0.4s var(--ease);
+            opacity: 0.8;
+            transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
         }
         
         .stat-card:hover .stat-icon {
@@ -819,7 +823,7 @@
         }
         
         .stat-number {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             margin-bottom: var(--spacing-2);
             background: linear-gradient(to right, #ffffff, #e6e6ff);
@@ -837,7 +841,7 @@
             bottom: 5px;
             left: 0;
             width: 100%;
-            height: 4px;
+            height: 3px;
             background: var(--gradient-blue);
             border-radius: var(--radius-full);
             opacity: 0.3;
@@ -845,12 +849,12 @@
         }
         
         .stat-card:hover .stat-number::after {
-            height: 8px;
+            height: 6px;
             opacity: 0.5;
         }
         
         .stat-label {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 600;
             color: var(--white);
             opacity: 0.9;
@@ -859,14 +863,14 @@
         /* Testimonial Card */
         .testimonial-card {
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: var(--spacing-10);
             box-shadow: var(--shadow-card);
             text-align: center;
             position: relative;
             max-width: 800px;
             margin: 0 auto;
-            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
             border: 1px solid var(--gray-100);
         }
         
@@ -879,10 +883,10 @@
         .testimonial-card::before {
             content: '"';
             position: absolute;
-            top: 0;
+            top: 5px;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 10rem;
+            font-size: 8rem;
             font-family: Georgia, serif;
             color: var(--visa-blue);
             opacity: 0.05;
@@ -893,7 +897,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: 2px;
             background: var(--gradient-blue);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -911,7 +915,7 @@
             display: inline-flex;
             gap: 0.25rem;
             color: var(--visa-gold);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             margin-bottom: var(--spacing-5);
             position: relative;
         }
@@ -919,17 +923,17 @@
         .rating::before {
             content: '';
             position: absolute;
-            top: -20px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 4px;
+            width: 40px;
+            height: 3px;
             background: var(--gradient-blue);
             border-radius: var(--radius-full);
         }
         
         .quote {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-style: italic;
             color: var(--gray-700);
             margin-bottom: var(--spacing-6);
@@ -937,31 +941,9 @@
             position: relative;
         }
         
-        .quote::before, .quote::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.1;
-        }
-        
-        .quote::before {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%231A1F71' d='M7.5 17h-5C1.7 17 1 16.3 1 15.5v-5C1 7.4 3.4 5 6.5 5h1C8.3 5 9 5.7 9 6.5S8.3 8 7.5 8h-1C5 8 4 9 4 10.5V14h3.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5zm12 0h-5c-.8 0-1.5-.7-1.5-1.5v-5C13 7.4 15.4 5 18.5 5h1c.8 0 1.5.7 1.5 1.5S20.3 8 19.5 8h-1c-1.5 0-2.5 1-2.5 2.5V14h3.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z'/%3E%3C/svg%3E");
-            top: -10px;
-            left: -30px;
-        }
-        
-        .quote::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%231A1F71' d='M16.5 7h5c.8 0 1.5.7 1.5 1.5v5c0 3.1-2.4 5.5-5.5 5.5h-1c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h1c1.5 0 2.5-1 2.5-2.5V10h-3.5c-.8 0-1.5-.7-1.5-1.5S15.7 7 16.5 7zm-12 0h5c.8 0 1.5.7 1.5 1.5v5c0 3.1-2.4 5.5-5.5 5.5h-1c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h1c1.5 0 2.5-1 2.5-2.5V10H4.5c-.8 0-1.5-.7-1.5-1.5S3.7 7 4.5 7z'/%3E%3C/svg%3E");
-            bottom: -10px;
-            right: -30px;
-        }
-        
         .testimonial-divider {
-            width: 80px;
-            height: 3px;
+            width: 70px;
+            height: 2px;
             background: var(--light-blue);
             margin: 0 auto var(--spacing-6);
             border-radius: var(--radius-full);
@@ -992,32 +974,22 @@
             align-items: center;
         }
         
-        .client-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-bottom: var(--spacing-4);
-            border: 3px solid var(--white);
-            box-shadow: var(--shadow-md);
-        }
-        
         .client-name {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
             margin-bottom: var(--spacing-1);
             color: var(--visa-blue);
         }
         
         .client-position {
-            font-size: 1rem;
+            font-size: 0.9375rem;
             color: var(--gray-600);
         }
         
         /* Support Card */
         .support-card {
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: var(--spacing-8) var(--spacing-6);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -1025,14 +997,14 @@
             align-items: center;
             text-align: center;
             height: 100%;
-            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
             position: relative;
             overflow: hidden;
             border: 1px solid var(--gray-100);
         }
         
         .support-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-card-hover);
             border-color: transparent;
         }
@@ -1041,7 +1013,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             padding: 2px;
             background: var(--gradient-blue);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -1061,16 +1033,16 @@
         }
         
         .support-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--light-blue);
             color: var(--visa-blue);
-            font-size: 1.75rem;
-            border-radius: 24px;
-            transition: all 0.4s var(--ease-bounce);
+            font-size: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.4s var(--ease);
             position: relative;
             z-index: 2;
         }
@@ -1083,20 +1055,20 @@
         
         .support-icon-bg {
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: var(--accent-color);
             opacity: 0.15;
-            border-radius: 30px;
+            border-radius: 20px;
             top: -10px;
             right: -10px;
             transform: rotate(-10deg);
             z-index: 1;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
         }
         
         .support-card:hover .support-icon-bg {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.1) rotate(10deg);
         }
         
         .support-title {
@@ -1120,7 +1092,7 @@
             align-items: flex-start;
             margin-bottom: var(--spacing-4);
             padding: var(--spacing-3);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             transition: all 0.3s var(--ease);
             border: 1px solid transparent;
         }
@@ -1128,16 +1100,16 @@
         .app-feature:hover {
             background-color: var(--white);
             box-shadow: var(--shadow-md);
-            transform: translateX(10px);
+            transform: translateX(8px);
             border-color: var(--gray-100);
         }
         
         .app-feature-icon {
             color: var(--visa-blue);
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             margin-right: var(--spacing-4);
             margin-top: 0.2rem;
-            transition: transform 0.3s var(--ease-bounce);
+            transition: transform 0.3s var(--ease);
         }
         
         .app-feature:hover .app-feature-icon {
@@ -1151,8 +1123,8 @@
             background-color: var(--gray-900);
             color: var(--white);
             padding: var(--spacing-3) var(--spacing-5);
-            border-radius: var(--radius-lg);
-            transition: all 0.4s var(--ease-bounce);
+            border-radius: var(--radius-md);
+            transition: all 0.4s var(--ease);
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1173,7 +1145,7 @@
         }
         
         .app-btn:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
         }
         
@@ -1182,9 +1154,9 @@
         }
         
         .app-btn i {
-            font-size: 2.25rem;
+            font-size: 2rem;
             margin-right: var(--spacing-3);
-            transition: transform 0.3s var(--ease-bounce);
+            transition: transform 0.3s var(--ease);
         }
         
         .app-btn:hover i {
@@ -1203,7 +1175,7 @@
         }
         
         .app-btn-name {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 600;
         }
         
@@ -1212,13 +1184,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             background: rgba(255, 255, 255, 0.1);
             color: var(--white);
             border-radius: 50%;
-            font-size: 1.125rem;
-            transition: all 0.3s var(--ease-bounce);
+            font-size: 1rem;
+            transition: all 0.3s var(--ease);
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
@@ -1238,7 +1210,7 @@
         }
         
         .social-icon:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             color: var(--white);
             border-color: transparent;
         }
@@ -1260,7 +1232,7 @@
         }
         
         .header.scrolled {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow-md);
         }
@@ -1269,7 +1241,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 90px;
+            height: 80px;
             transition: height 0.3s;
         }
         
@@ -1284,13 +1256,13 @@
         }
         
         .logo img {
-            height: 45px;
+            height: 40px;
             width: auto;
-            transition: transform 0.3s var(--ease-bounce);
+            transition: transform 0.3s var(--ease);
         }
         
         .header.scrolled .logo img {
-            transform: scale(0.9);
+            transform: scale(0.95);
         }
         
         .nav {
@@ -1304,11 +1276,11 @@
         
         .nav-link {
             position: relative;
-            font-weight: 600;
+            font-weight: 500;
             padding: var(--spacing-2) 0;
-            color: var(--white); /* Cambiado para mejorar contraste en el hero */
+            color: var(--white);
             transition: color 0.3s var(--ease);
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sombra para mejor legibilidad */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
         
         .nav-link::after {
@@ -1357,16 +1329,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background-color: var(--white);
             color: var(--visa-blue);
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             border-radius: 50%;
             border: none;
             cursor: pointer;
             box-shadow: var(--shadow-md);
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
         }
         
         .menu-toggle:hover {
@@ -1418,10 +1390,10 @@
             display: block;
             padding: var(--spacing-4) var(--spacing-3);
             font-size: 1.125rem;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--gray-800);
             margin-bottom: var(--spacing-2);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             transition: all 0.3s var(--ease);
             border-left: 3px solid transparent;
         }
@@ -1431,7 +1403,7 @@
             color: var(--visa-blue);
             background-color: var(--light-blue);
             border-left-color: var(--visa-blue);
-            padding-left: var(--spacing-6);
+            padding-left: var(--spacing-5);
         }
         
         .mobile-actions {
@@ -1460,16 +1432,18 @@
             visibility: visible;
         }
         
-        /* Hero Section - MODIFICADO CON IMAGEN DE FONDO */
+        /* Hero Section - MEJORADO CON DISEÑO MÁS LIMPIO */
         .hero {
-            padding: calc(90px + var(--spacing-16)) 0 var(--spacing-16);
+            padding: calc(80px + var(--spacing-12)) 0 var(--spacing-16);
             position: relative;
             overflow: hidden;
-            background-color: rgba(0, 0, 0, 0.3); /* Fondo con opacidad para oscurecer la imagen */
             color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
         
-        /* Imagen de fondo para escritorio */
+        /* Imagen de fondo con gradiente optimizado */
         .hero::before {
             content: '';
             position: absolute;
@@ -1483,10 +1457,9 @@
             z-index: -2;
             opacity: 1;
             pointer-events: none;
-            filter: brightness(0.9);
         }
         
-        /* Overlay para mejorar la legibilidad del texto */
+        /* Overlay mejorado para mejorar legibilidad del texto */
         .hero::after {
             content: '';
             position: absolute;
@@ -1494,17 +1467,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(0deg, 
-                rgba(26, 31, 113, 0.7) 0%, 
-                rgba(0, 0, 0, 0.3) 100%);
+            background: linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(20, 52, 203, 0.7) 100%);
             z-index: -1;
             pointer-events: none;
         }
         
         .hero-content {
             text-align: center;
-            max-width: 850px;
-            margin: 0 auto var(--spacing-12);
+            max-width: 750px;
+            margin: 0 auto var(--spacing-8);
             position: relative;
             z-index: 1;
         }
@@ -1513,41 +1486,46 @@
         .hero-badge {
             margin-bottom: var(--spacing-5);
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
         }
         
         .hero-title {
             margin-bottom: var(--spacing-6);
             color: var(--white);
+            font-size: 3.5rem;
+            line-height: 1.1;
             position: relative;
             display: inline-block;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            font-weight: 800;
         }
         
         .hero-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
-            height: 4px;
+            height: 3px;
             background: var(--white);
             border-radius: var(--radius-full);
             opacity: 0.8;
         }
         
         .hero-description {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             color: var(--white);
             margin-bottom: var(--spacing-8);
-            max-width: 750px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            line-height: 1.5;
         }
         
         .hero-cta {
@@ -1560,16 +1538,16 @@
         
         .hero-slider-wrapper {
             position: relative;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-xl);
         }
         
         .hero-slider {
             position: relative;
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             background-color: var(--white);
             height: 100%;
@@ -1580,8 +1558,8 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: var(--radius-2xl);
-            padding: 3px;
+            border-radius: var(--radius-lg);
+            padding: 2px;
             background: var(--gradient-blue);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -1603,7 +1581,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -1622,7 +1600,7 @@
         }
         
         .slide-title {
-            font-size: 2rem;
+            font-size: 1.875rem;
             font-weight: 700;
             margin-bottom: var(--spacing-4);
             color: var(--visa-blue);
@@ -1633,17 +1611,17 @@
         .slide-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
             width: 50px;
-            height: 3px;
+            height: 2px;
             background: var(--gradient-blue);
             border-radius: var(--radius-full);
         }
         
         .slide-description {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: var(--gray-600);
             margin-bottom: var(--spacing-6);
             max-width: 600px;
@@ -1662,12 +1640,12 @@
         }
         
         .slider-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background-color: rgba(26, 31, 113, 0.2);
+            background-color: rgba(20, 52, 203, 0.2);
             cursor: pointer;
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
             position: relative;
         }
         
@@ -1679,10 +1657,10 @@
             right: -4px;
             bottom: -4px;
             border-radius: 50%;
-            border: 2px solid var(--visa-blue);
+            border: 1px solid var(--visa-blue);
             opacity: 0;
             transform: scale(0);
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
         }
         
         .slider-dot.active {
@@ -1696,7 +1674,7 @@
         }
         
         .slider-dot:hover:not(.active) {
-            background-color: rgba(26, 31, 113, 0.4);
+            background-color: rgba(20, 52, 203, 0.4);
             transform: scale(1.1);
         }
         
@@ -1716,7 +1694,7 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
             pointer-events: none;
         }
@@ -1725,7 +1703,7 @@
             position: relative;
             margin-top: var(--spacing-12);
             padding: var(--spacing-10) var(--spacing-6);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             background-color: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             text-align: center;
@@ -1740,8 +1718,8 @@
             left: 20px;
             right: 20px;
             bottom: 20px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-xl);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-md);
             pointer-events: none;
         }
         
@@ -1789,8 +1767,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 90%, rgba(26, 31, 113, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(0, 161, 223, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 10% 90%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(0, 112, 224, 0.03) 0%, transparent 40%);
             pointer-events: none;
         }
         
@@ -1816,12 +1794,12 @@
         }
         
         .testimonial-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background-color: rgba(26, 31, 113, 0.2);
+            background-color: rgba(20, 52, 203, 0.2);
             cursor: pointer;
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
             position: relative;
         }
         
@@ -1833,10 +1811,10 @@
             right: -4px;
             bottom: -4px;
             border-radius: 50%;
-            border: 2px solid var(--visa-blue);
+            border: 1px solid var(--visa-blue);
             opacity: 0;
             transform: scale(0);
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
         }
         
         .testimonial-dot.active {
@@ -1850,7 +1828,7 @@
         }
         
         .testimonial-dot:hover:not(.active) {
-            background-color: rgba(26, 31, 113, 0.4);
+            background-color: rgba(20, 52, 203, 0.4);
             transform: scale(1.1);
         }
         
@@ -1868,18 +1846,18 @@
         }
         
         .testimonial-arrow {
-            width: 50px;
-            height: 50px;
+            width: 46px;
+            height: 46px;
             background-color: var(--white);
             color: var(--visa-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             box-shadow: var(--shadow-lg);
             cursor: pointer;
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
             pointer-events: auto;
             border: none;
             position: relative;
@@ -1923,8 +1901,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 10%, rgba(26, 31, 113, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 161, 223, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 10% 10%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 112, 224, 0.03) 0%, transparent 40%);
             pointer-events: none;
         }
         
@@ -1998,7 +1976,7 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
             pointer-events: none;
         }
@@ -2014,8 +1992,8 @@
         .cta-title {
             color: var(--white);
             margin-bottom: var(--spacing-6);
-            font-size: 2.75rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 700;
             position: relative;
             display: inline-block;
         }
@@ -2026,15 +2004,15 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 70px;
+            height: 3px;
             background: var(--white);
             border-radius: var(--radius-full);
             opacity: 0.3;
         }
         
         .cta-description {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             margin-bottom: var(--spacing-10);
             opacity: 0.9;
             max-width: 700px;
@@ -2057,8 +2035,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 90%, rgba(26, 31, 113, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(0, 161, 223, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 10% 90%, rgba(20, 52, 203, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(0, 112, 224, 0.03) 0%, transparent 40%);
             pointer-events: none;
         }
         
@@ -2086,8 +2064,8 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.025) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.025) 0%, transparent 40%);
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
             pointer-events: none;
         }
         
@@ -2114,7 +2092,7 @@
         }
         
         .footer-logo img {
-            height: 45px;
+            height: 40px;
             width: auto;
             filter: brightness(0.9);
         }
@@ -2123,8 +2101,8 @@
             margin-bottom: var(--spacing-6);
             opacity: 0.8;
             text-align: center;
-            font-size: 1.125rem;
-            line-height: 1.7;
+            font-size: 1.0625rem;
+            line-height: 1.6;
         }
         
         .social-icons {
@@ -2135,10 +2113,10 @@
         }
         
         .footer-title {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: var(--white);
             margin-bottom: var(--spacing-6);
-            font-weight: 700;
+            font-weight: 600;
             text-align: center;
             position: relative;
             display: inline-block;
@@ -2147,11 +2125,11 @@
         .footer-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
+            width: 30px;
+            height: 2px;
             background: var(--accent-color);
             border-radius: var(--radius-full);
         }
@@ -2254,7 +2232,7 @@
             opacity: 0.7;
             text-align: center;
             margin-bottom: var(--spacing-4);
-            font-size: 1rem;
+            font-size: 0.9375rem;
         }
         
         .copyright {
@@ -2268,19 +2246,19 @@
             position: fixed;
             bottom: var(--spacing-6);
             right: var(--spacing-6);
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-blue);
+            width: 50px;
+            height: 50px;
+            background: var(--visa-blue);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
             z-index: var(--z-30);
             border: none;
             box-shadow: var(--shadow-blue);
@@ -2292,8 +2270,9 @@
         }
         
         .back-to-top:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(26, 31, 113, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(20, 52, 203, 0.2);
+            background: var(--visa-blue-hover);
         }
         
         /* WhatsApp Button */
@@ -2301,24 +2280,24 @@
             position: fixed;
             bottom: var(--spacing-6);
             left: var(--spacing-6);
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background-color: #25D366;
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.4s var(--ease-bounce);
+            transition: all 0.4s var(--ease);
             z-index: var(--z-30);
             border: none;
             box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
         }
         
         .whatsapp-button:hover {
-            transform: scale(1.15) rotate(10deg);
+            transform: scale(1.15);
             box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
         }
         
@@ -2369,15 +2348,15 @@
         }
         
         .loader-logo img {
-            height: 60px;
+            height: 50px;
             width: auto;
-            filter: drop-shadow(0 5px 10px rgba(26, 31, 113, 0.1));
+            filter: drop-shadow(0 5px 10px rgba(20, 52, 203, 0.1));
         }
         
         .loader-spinner {
             position: relative;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             margin-bottom: var(--spacing-8);
         }
         
@@ -2388,7 +2367,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 3px solid rgba(26, 31, 113, 0.1);
+            border: 2px solid rgba(20, 52, 203, 0.1);
         }
         
         .loader-circle:nth-child(1) {
@@ -2402,8 +2381,8 @@
         }
         
         .loader-progress {
-            width: 240px;
-            height: 6px;
+            width: 220px;
+            height: 4px;
             background-color: var(--gray-200);
             border-radius: var(--radius-full);
             overflow: hidden;
@@ -2426,7 +2405,7 @@
             top: 0;
             right: 0;
             bottom: 0;
-            width: 100px;
+            width: 80px;
             background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3));
             transform: translateX(100%);
             animation: shimmerLoader 2s infinite;
@@ -2439,9 +2418,9 @@
         }
         
         .loader-text {
-            font-size: 1.125rem;
+            font-size: 1rem;
             color: var(--visa-blue);
-            font-weight: 600;
+            font-weight: 500;
         }
         
         /* Promo Overlay */
@@ -2469,15 +2448,15 @@
         
         .promo-content {
             position: relative;
-            max-width: 500px;
+            max-width: 480px;
             width: 90%;
             background-color: var(--white);
-            border-radius: var(--radius-2xl);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-xl);
             transform: scale(0.95);
             opacity: 0;
-            transition: transform 0.5s var(--ease-bounce), opacity 0.5s var(--ease);
+            transition: transform 0.5s var(--ease), opacity 0.5s var(--ease);
         }
         
         .promo-overlay.active .promo-content {
@@ -2497,19 +2476,19 @@
             position: absolute;
             top: var(--spacing-4);
             right: var(--spacing-4);
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background-color: var(--white);
             color: var(--gray-800);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.9375rem;
             cursor: pointer;
             border: none;
             box-shadow: var(--shadow-lg);
-            transition: all 0.3s var(--ease-bounce);
+            transition: all 0.3s var(--ease);
             z-index: 10;
         }
         
@@ -2523,7 +2502,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -2534,7 +2513,7 @@
         @keyframes fadeInLeft {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
@@ -2545,7 +2524,7 @@
         @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateX(50px);
+                transform: translateX(30px);
             }
             to {
                 opacity: 1;
@@ -2558,7 +2537,7 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-15px);
+                transform: translateY(-10px);
             }
         }
         
@@ -2590,7 +2569,7 @@
 
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
             transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
         }
 
@@ -2601,7 +2580,7 @@
 
         .fade-in-left {
             opacity: 0;
-            transform: translateX(-50px);
+            transform: translateX(-30px);
             transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
         }
 
@@ -2612,7 +2591,7 @@
 
         .fade-in-right {
             opacity: 0;
-            transform: translateX(50px);
+            transform: translateX(30px);
             transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
         }
 
@@ -2653,7 +2632,7 @@
             animation: pulse 3s ease-in-out infinite;
         }
 
-        /* Media Queries - MODIFICADOS PARA SOPORTAR IMAGEN DE FONDO ADAPTATIVA */
+        /* Media Queries - OPTIMIZADOS PARA MEJOR RESPONSIVIDAD */
         @media (min-width: 576px) {
             .container {
                 padding: 0 var(--spacing-5);
@@ -2664,268 +2643,263 @@
             }
             
             .section-title {
-                font-size: 3rem;
+                font-size: 2.75rem;
             }
             
             .hero-title {
-                font-size: 3.5rem;
+                font-size: 3.75rem;
+            }
+            
+            .hero-description {
+                font-size: 1.25rem;
             }
         }
 
-        @media (min-width: 576px) {
-    .container {
-        padding: 0 var(--spacing-5);
-    }
-    
-    .map-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .section-title {
-        font-size: 3rem;
-    }
-    
-    .hero-title {
-        font-size: 3.5rem;
-    }
-}
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-6);
+            }
+            
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .steps-container {
+                display: flex;
+                gap: 0;
+            }
+            
+            .step {
+                flex: 1;
+            }
+            
+            .step-connector {
+                flex: 0.2;
+            }
+            
+            .map-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .support-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-logo, 
+            .footer-title, 
+            .footer-about {
+                text-align: left;
+            }
+            
+            .footer-links {
+                align-items: flex-start;
+            }
+            
+            .social-icons {
+                justify-content: flex-start;
+            }
+            
+            .footer-title::after {
+                left: 0;
+                transform: none;
+            }
+            
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .language-selector {
+                margin-bottom: 0;
+            }
+            
+            .security-text {
+                margin-bottom: 0;
+            }
+            
+            .hero {
+                min-height: 90vh;
+            }
+        }
 
-@media (min-width: 768px) {
-    .container {
-        padding: 0 var(--spacing-6);
-    }
-    
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .hero-title {
-        font-size: 4rem;
-    }
-    
-    .steps-container {
-        display: flex;
-        gap: 0;
-    }
-    
-    .step {
-        flex: 1;
-    }
-    
-    .step-connector {
-        flex: 0.2;
-    }
-    
-    .map-stats {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .support-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .footer-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .footer-logo, 
-    .footer-title, 
-    .footer-about {
-        text-align: left;
-    }
-    
-    .footer-links {
-        align-items: flex-start;
-    }
-    
-    .social-icons {
-        justify-content: flex-start;
-    }
-    
-    .footer-title::after {
-        left: 0;
-        transform: none;
-    }
-    
-    .footer-bottom {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .language-selector {
-        margin-bottom: 0;
-    }
-    
-    .security-text {
-        margin-bottom: 0;
-    }
-}
+        @media (min-width: 992px) {
+            .container {
+                padding: 0 var(--spacing-8);
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .nav {
+                display: block;
+            }
+            
+            .header-actions {
+                display: flex;
+            }
+            
+            .hero-title {
+                font-size: 4.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .support-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .testimonial-card {
+                padding: var(--spacing-12);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 2fr repeat(4, 1fr);
+            }
+            
+            .app-container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--spacing-10);
+            }
+            
+            .app-content {
+                text-align: left;
+                order: 1;
+                flex: 1;
+            }
+            
+            .app-device {
+                order: 2;
+                flex: 1;
+                margin: 0;
+            }
+            
+            .app-features {
+                text-align: left;
+                margin-left: 0;
+            }
+            
+            .hero {
+                min-height: 85vh;
+            }
+        }
 
-@media (min-width: 992px) {
-    .container {
-        padding: 0 var(--spacing-8);
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0 var(--spacing-10);
+            }
+            
+            .hero-title {
+                font-size: 5rem;
+            }
+            
+            .section-title {
+                font-size: 3.5rem;
+            }.cta-title {
+            font-size: 3rem;
+        }
     }
-    
-    .menu-toggle {
-        display: none;
-    }
-    
-    .nav {
-        display: block;
-    }
-    
-    .header-actions {
-        display: flex;
-    }
-    
-    .hero-title {
-        font-size: 4.5rem;
-    }
-    
-    .features-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .section-title {
-        font-size: 3.5rem;
-    }
-    
-    .support-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .testimonial-card {
-        padding: var(--spacing-12);
-    }
-    
-    .footer-grid {
-        grid-template-columns: 2fr repeat(4, 1fr);
-    }
-    
-    .app-container {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--spacing-10);
-    }
-    
-    .app-content {
-        text-align: left;
-        order: 1;
-        flex: 1;
-    }
-    
-    .app-device {
-        order: 2;
-        flex: 1;
-        margin: 0;
-    }
-    
-    .app-features {
-        text-align: left;
-        margin-left: 0;
-    }
-}
 
-@media (min-width: 1200px) {
-    .container {
-        padding: 0 var(--spacing-10);
+    /* Estilos específicos para móviles */
+    @media (max-width: 767px) {
+        /* Imagen de fondo optimizada para móviles */
+        .hero::before {
+            background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM7EXFaZkPx-tQbbZctqxm_poF0bpJgpWgv8Y2KwnycN2RvI2A5_-OTNXYBSJGsIgylMyeoZuA7T464EH6ld11sJA_rx5hzSJ7OyoQfE-En87Pg_WHqMZmfNz69UMxMsqUWq-bbe8tl9MjzCorOyJ6m91ZXoIUypqGyvUbNLra6sJeW_EZQNYICA7cJKTg/s16000/Remee.png');
+            background-position: center;
+            opacity: 0.95;
+        }
+        
+        .hero {
+            padding-top: calc(70px + var(--spacing-10));
+            padding-bottom: var(--spacing-10);
+            min-height: auto;
+        }
+        
+        .hero-content {
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .hero-title {
+            font-size: 2.25rem;
+        }
+        
+        .hero-description {
+            font-size: 1.0625rem;
+        }
+        
+        .hero-cta {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .hero-cta .btn {
+            width: 100%;
+        }
+        
+        /* Ajustar el header para móviles */
+        .header-container {
+            height: 70px;
+        }
+        
+        /* Ajustar slider para móviles */
+        .slide-content {
+            padding: var(--spacing-6) var(--spacing-4);
+        }
+        
+        .slide-title {
+            font-size: 1.5rem;
+        }
+        
+        .slide-description {
+            font-size: 1rem;
+        }
+        
+        .feature-card, .step-card, .support-card {
+            padding: var(--spacing-6) var(--spacing-4);
+        }
     }
-    
-    .hero-title {
-        font-size: 5rem;
-    }
-    
-    .section-title {
-        font-size: 4rem;
-    }
-    
-    .cta-title {
-        font-size: 3.5rem;
-    }
-}
 
-/* Estilos específicos para móviles */
-@media (max-width: 767px) {
-    /* Cambiar la imagen de fondo del hero para móviles */
-    .hero::before {
-        background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM7EXFaZkPx-tQbbZctqxm_poF0bpJgpWgv8Y2KwnycN2RvI2A5_-OTNXYBSJGsIgylMyeoZuA7T464EH6ld11sJA_rx5hzSJ7OyoQfE-En87Pg_WHqMZmfNz69UMxMsqUWq-bbe8tl9MjzCorOyJ6m91ZXoIUypqGyvUbNLra6sJeW_EZQNYICA7cJKTg/s16000/Remee.png');
-        background-position: center top;
-        opacity: 0.9;
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01s !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01s !important;
+            scroll-behavior: auto !important;
+        }
+        
+        .fade-in,
+        .fade-in-left,
+        .fade-in-right {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+        
+        .animated-float,
+        .animated-pulse {
+            animation: none;
+        }
     }
-    
-    .hero {
-        padding-top: calc(70px + var(--spacing-12));
-        padding-bottom: var(--spacing-12);
-    }
-    
-    .hero-content {
-        margin-bottom: var(--spacing-8);
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-description {
-        font-size: 1.1rem;
-    }
-    
-    .hero-cta {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .hero-cta .btn {
-        width: 100%;
-    }
-    
-    /* Ajustar el header para móviles */
-    .header-container {
-        height: 70px;
-    }
-    
-    /* Ajustar slider para móviles */
-    .slide-content {
-        padding: var(--spacing-6) var(--spacing-4);
-    }
-    
-    .slide-title {
-        font-size: 1.5rem;
-    }
-    
-    .slide-description {
-        font-size: 1rem;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01s !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01s !important;
-        scroll-behavior: auto !important;
-    }
-    
-    .fade-in,
-    .fade-in-left,
-    .fade-in-right {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    
-    .animated-float,
-    .animated-pulse {
-        animation: none;
-    }
-}
-    </style>
-</head>
-
+</style></head>
 <body>
-    <!-- Loader -->
+    <!-- Loader - Mejorado con animación más suave -->
     <div class="loader-container" id="loader">
         <div class="loader-content">
             <div class="loader-logo">
@@ -2938,1205 +2912,1199 @@
             <div class="loader-progress">
                 <div class="loader-bar" id="loader-bar"></div>
             </div>
-            <div class="loader-text" id="loader-text">Cargando recursos...</div>
+            <div class="loader-text" id="loader-text">Iniciando Remeex VISA...</div>
         </div>
+    </div><!-- Header - Rediseñado para mejor contraste -->
+<header class="header" id="header">
+    <div class="container header-container">
+        <div class="logo">
+            <a href="#hero">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="#hero" class="nav-link active">Inicio</a></li>
+                <li><a href="#features" class="nav-link">Servicios</a></li>
+                <li><a href="#how-it-works" class="nav-link">Cómo Funciona</a></li>
+                <li><a href="#global-coverage" class="nav-link">Cobertura Global</a></li>
+                <li><a href="#support" class="nav-link">Soporte</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-actions">
+            <a href="#" class="btn btn-secondary">Acceder</a>
+            <a href="#cta" class="btn btn-primary">Enviar dinero</a>
+        </div>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
+</header>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <div class="container header-container">
-            <div class="logo">
-                <a href="#hero">
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
-                </a>
-            </div>
-            
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link active">Inicio</a></li>
-                    <li><a href="https://remeexvisa.com/servicios" class="nav-link">Servicios</a></li>
-                    <li><a href="https://remeexvisa.com/comofunciona" class="nav-link">Cómo Funciona</a></li>
-                    <li><a href="https://remeexvisa.com/coberturaglobal" class="nav-link">Cobertura Global</a></li>
-                    <li><a href="https://remeexvisa.com/soporte" class="nav-link">Soporte</a></li>
-                </ul>
-            </nav>
-            
-            <div class="header-actions">
-                <a href="#" class="btn btn-secondary">Acceder</a>
-                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recibir remesa ya!</a>
-            </div>
-            
-            <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
-                <i class="fas fa-bars"></i>
-            </button>
+<!-- Mobile Menu - Mejorado para mejor experiencia en móviles -->
+<div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-header">
+        <div class="logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 34px; width: auto;">
         </div>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobile-menu">
-        <div class="mobile-menu-header">
-            <div class="logo">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 36px; width: auto;">
-            </div>
-            <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="mobile-menu-body">
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="#hero" class="mobile-nav-link active">Inicio</a></li>
-                    <li><a href="https://remeexvisa.com/servicios" class="mobile-nav-link">Servicios</a></li>
-                    <li><a href="https://remeexvisa.com/comofunciona" class="mobile-nav-link">Cómo Funciona</a></li>
-                    <li><a href="https://remeexvisa.com/coberturaglobal" class="mobile-nav-link">Cobertura Global</a></li>
-                    <li><a href="https://remeexvisa.com/soporte" class="mobile-nav-link">Soporte</a></li>
-                </ul>
-            </nav>
-        </div>
-        
-        <div class="mobile-menu-footer">
-            <div class="mobile-actions">
-                <a href="#" class="btn btn-secondary">Acceder</a>
-                <a href="https://remeexvisa.com/index1" class="btn btn-primary">Recibir remesa ya!</a>
-            </div>
-        </div>
+        <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
     
-    <div class="overlay" id="overlay"></div>
+    <div class="mobile-menu-body">
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="#hero" class="mobile-nav-link active">Inicio</a></li>
+                <li><a href="#features" class="mobile-nav-link">Servicios</a></li>
+                <li><a href="#how-it-works" class="mobile-nav-link">Cómo Funciona</a></li>
+                <li><a href="#global-coverage" class="mobile-nav-link">Cobertura Global</a></li>
+                <li><a href="#support" class="mobile-nav-link">Soporte</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="mobile-menu-footer">
+        <div class="mobile-actions">
+            <a href="#" class="btn btn-secondary">Acceder</a>
+            <a href="#cta" class="btn btn-primary">Enviar dinero</a>
+        </div>
+    </div>
+</div>
 
-    <!-- Hero Section - Mejorado con imagen de fondo -->
-    <section id="hero" class="hero section">
-        <div class="container">
-            <div class="hero-content">
-                <span class="badge badge-primary hero-badge fade-in">Transfiere dinero con confianza</span>
-                <h1 class="hero-title fade-in delay-1">Transferencias globales sin fronteras</h1>
-                <p class="hero-description fade-in delay-2">Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica</p>
-                <div class="hero-cta fade-in delay-3">
-                    <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-lg btn-icon">
-                        <i class="fas fa-paper-plane"></i>
-                        Recibir remesa ya!
-                    </a>
-                    <a href="https://remeexvisa.com/comofunciona" class="btn btn-secondary btn-lg btn-icon">
-                        <i class="fas fa-info-circle"></i>
-                        Cómo funciona
-                    </a>
-                </div>
+<div class="overlay" id="overlay"></div>
+
+<!-- Hero Section - Rediseñado para mejor integración de imagen y texto -->
+<section id="hero" class="hero section">
+    <div class="container">
+        <div class="hero-content">
+            <span class="badge badge-primary hero-badge fade-in">Respaldado por VISA Internacional</span>
+            <h1 class="hero-title fade-in delay-1">Conectando familias sin fronteras</h1>
+            <p class="hero-description fade-in delay-2">Transfiere dinero al instante a tus seres queridos en cualquier parte del mundo con la seguridad y confianza que solo VISA puede ofrecer</p>
+            <div class="hero-cta fade-in delay-3">
+                <a href="#cta" class="btn btn-primary btn-lg btn-icon">
+                    <i class="fas fa-paper-plane"></i>
+                    Enviar dinero ahora
+                </a>
+                <a href="#how-it-works" class="btn btn-secondary btn-lg btn-icon">
+                    <i class="fas fa-info-circle"></i>
+                    Descubrir cómo funciona
+                </a>
             </div>
-            
-            <div class="hero-slider-wrapper fade-in delay-4">
-                <div class="hero-slider">
-                    <div class="hero-slide active">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Envía dinero a todo el mundo</h3>
-                            <p class="slide-description">Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
-                            <a href="https://remeexvisa.com/index1" class="btn btn-primary btn-icon">
-                                <i class="fas fa-arrow-right"></i>
-                                Comenzar ahora
-                            </a>
-                        </div>
+        </div>
+        
+        <div class="hero-slider-wrapper fade-in delay-4">
+            <div class="hero-slider">
+                <div class="hero-slide active">
+                    <div class="slide-content">
+                        <h3 class="slide-title">Transferencias instantáneas globales</h3>
+                        <p class="slide-description">Tu dinero llegará en minutos a más de 200 países, directamente a cuentas bancarias o para retiro en efectivo.</p>
+                        <a href="#cta" class="btn btn-primary btn-icon">
+                            <i class="fas fa-arrow-right"></i>
+                            Iniciar transferencia
+                        </a>
                     </div>
-                    
-                    <div class="hero-slide">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Las mejores tarifas del mercado</h3>
-                            <p class="slide-description">Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
-                            <a href="https://remeexvisa.com/servicios" class="btn btn-primary btn-icon">
-                                <i class="fas fa-arrow-right"></i>
-                                Ver tarifas
-                            </a>
-                        </div>
+                </div>
+                
+                <div class="hero-slide">
+                    <div class="slide-content">
+                        <h3 class="slide-title">Tarifas más bajas garantizadas</h3>
+                        <p class="slide-description">Ahorra hasta un 70% en cada transferencia con nuestras tarifas transparentes y los mejores tipos de cambio del mercado.</p>
+                        <a href="#features" class="btn btn-primary btn-icon">
+                            <i class="fas fa-arrow-right"></i>
+                            Ver comparativa
+                        </a>
                     </div>
-                    
-                    <div class="hero-slide">
-                        <div class="slide-content">
-                            <h3 class="slide-title">Recarga con tarjeta de crédito</h3>
-                            <p class="slide-description">Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
-                            <a href="https://remeexvisa.com/index1" class="btn btn-gold btn-icon">
-                                <i class="fas fa-arrow-right"></i>
-                                Recargar ahora
-                            </a>
-                        </div>
+                </div>
+                
+                <div class="hero-slide">
+                    <div class="slide-content">
+                        <h3 class="slide-title">Recarga instantánea con tarjeta</h3>
+                        <p class="slide-description">Recarga cualquier cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, sin comisiones ocultas y 100% seguro.</p>
+                        <a href="#cta" class="btn btn-gold btn-icon">
+                            <i class="fas fa-arrow-right"></i>
+                            Recargar ahora
+                        </a>
                     </div>
-                    
-                    <div class="slider-controls">
-                        <span class="slider-dot active" data-slide="0"></span>
-                        <span class="slider-dot" data-slide="1"></span>
-                        <span class="slider-dot" data-slide="2"></span>
-                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <span class="slider-dot active" data-slide="0"></span>
+                    <span class="slider-dot" data-slide="1"></span>
+                    <span class="slider-dot" data-slide="2"></span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Features Section -->
-    <section id="features" class="section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Nuestros Beneficios</span>
-                <h2 class="section-title fade-in delay-1">¿Por qué elegir Remeex VISA?</h2>
-                <p class="section-description fade-in delay-2">Descubre las ventajas que nos hacen líderes en transferencias internacionales</p>
-            </div>
-            
-            <div class="grid features-grid">
-                <div class="feature-card fade-in delay-1">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Transferencias inmediatas</h3>
-                    <p class="feature-description">Tu dinero llega en minutos a cualquier parte del mundo, cuando más lo necesitan.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-2">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Seguridad avanzada</h3>
-                    <p class="feature-description">Con el respaldo de VISA y la más avanzada tecnología de encriptación para proteger cada transacción.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-3">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Cobertura en 200+ países</h3>
-                    <p class="feature-description">Alcance global para llegar a tus seres queridos sin importar dónde se encuentren.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-1">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Tarifas competitivas</h3>
-                    <p class="feature-description">Las mejores tasas de cambio y comisiones más bajas del mercado para que envíes más por menos.</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-2">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Recarga con tarjeta <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></h3>
-                    <p class="feature-description">Recarga tu cuenta bancaria directamente con tu tarjeta de crédito. ¡Servicio express, instantáneo y sin comisiones!</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-3">
-                    <div class="feature-icon-wrapper">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <div class="feature-icon-bg"></div>
-                    </div>
-                    <h3 class="feature-title">Soporte 24/7</h3>
-                    <p class="feature-description">Atención al cliente disponible todos los días del año para resolver cualquier duda o incidencia.</p>
-                </div>
-            </div>
+<!-- Features Section - Contenido mejorado -->
+<section id="features" class="section">
+    <div class="container">
+        <div class="section-title-wrapper">
+            <span class="section-subtitle fade-in">Ventajas exclusivas</span>
+            <h2 class="section-title fade-in delay-1">La experiencia Remeex VISA</h2>
+            <p class="section-description fade-in delay-2">Descubre por qué millones de personas en todo el mundo eligen nuestra plataforma para sus transferencias internacionales</p>
         </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="section" style="background-color: var(--ultra-light-blue);">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Proceso Simple</span>
-                <h2 class="section-title fade-in delay-1">Cómo funciona</h2>
-                <p class="section-description fade-in delay-2">Tres simples pasos para conectar con tus seres queridos en cualquier parte del mundo</p>
+        
+        <div class="grid features-grid">
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-icon-bg"></div>
+                </div>
+                <h3 class="feature-title">Transferencias en tiempo real</h3>
+                <p class="feature-description">Tu dinero llega en minutos, no en días. Nuestro sistema de procesamiento ultrarrápido garantiza que tus seres queridos reciban ayuda cuando más la necesitan.</p>
             </div>
             
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-card fade-in delay-1">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">1</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <h3 class="step-title">Regístrate y verifica tu identidad</h3>
-                        <p class="step-description">Crea tu cuenta en menos de 2 minutos y verifica tu identidad de forma segura para comenzar a operar de inmediato.</p>
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
+                    <div class="feature-icon-bg"></div>
                 </div>
-                
-                <div class="step-connector" id="connector-1">
-                    <div class="step-connector-line">
-                        <div class="step-connector-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-card fade-in delay-2">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">2</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <h3 class="step-title">Selecciona destinatario y monto</h3>
-                        <p class="step-description">Elige a quién quieres enviar dinero, indica el monto y revisa nuestras competitivas tarifas en tiempo real. Ahora también puedes recargar con tarjeta.</p>
-                    </div>
-                </div>
-                
-                <div class="step-connector" id="connector-2">
-                    <div class="step-connector-line">
-                        <div class="step-connector-dot"></div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-card fade-in delay-3">
-                        <div class="step-number-wrapper">
-                            <div class="step-number">3</div>
-                            <div class="step-number-bg"></div>
-                        </div>
-                        <div class="step-icon animated-float">
-                            <i class="fas fa-paper-plane"></i>
-                        </div>
-                        <h3 class="step-title">Realiza la transferencia</h3>
-                        <p class="step-description">Confirma los detalles, elige tu método de pago preferido y ¡listo! Tu dinero llegará en minutos, con confirmación instantánea.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Global Coverage Section -->
-    <section id="global-coverage" class="global-coverage section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle text-white fade-in">Alcance Internacional</span>
-                <h2 class="section-title text-white fade-in delay-1">Cobertura Global</h2>
-                <p class="section-description text-white fade-in delay-2">Alcance internacional con presencia en más de 200 países y territorios</p>
+                <h3 class="feature-title">Seguridad de nivel bancario</h3>
+                <p class="feature-description">Con el respaldo de VISA y protección antifraude avanzada, cada transacción está asegurada con encriptación de 256 bits y autenticación multinivel.</p>
             </div>
             
-            <div class="map-container fade-in delay-3">
-                <div class="map-image">
-                    <!-- Representación simple del mapa mundial - reemplazar por su imagen real del mapa -->
-                    <svg viewBox="0 0 1200 600" class="world-map">
-                        <path fill="rgba(255, 255, 255, 0.2)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1" d="M150,100 Q400,50 600,100 T1050,100 Q1100,300 1050,500 T600,500 Q400,550 150,500 T150,100" />
-                        <!-- Puntos de conexión -->
-                        <circle cx="300" cy="150" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="450" cy="220" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="600" cy="180" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="750" cy="250" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="900" cy="200" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="350" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="550" cy="380" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="750" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
-                        <circle cx="850" cy="420" r="5" fill="#FFC107" class="animated-pulse" />
-                    </svg>
+            <div class="feature-card fade-in delay-3">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="feature-icon-bg"></div>
                 </div>
-                <p class="map-text">Contamos con una extensa red de partners y alianzas estratégicas que nos permiten ofrecer servicios de transferencia en prácticamente cualquier lugar del mundo. Ya sea que envíes dinero a las grandes ciudades o a las zonas rurales más remotas, nosotros te conectamos con tus seres queridos.</p>
+                <h3 class="feature-title">Alcance verdaderamente global</h3>
+                <p class="feature-description">Presente en más de 200 países y con múltiples opciones de entrega, incluyendo depósito bancario, efectivo y billeteras digitales locales.</p>
             </div>
             
-            <div class="map-stats">
-                <div class="stat-card fade-in delay-1">
-                    <div class="stat-icon">
-                        <i class="fas fa-globe"></i>
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
                     </div>
-                    <div class="stat-number animated-pulse" data-count="200">200+</div>
-                    <div class="stat-label">Países</div>
+                    <div class="feature-icon-bg"></div>
                 </div>
-                
-                <div class="stat-card fade-in delay-2">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
+                <h3 class="feature-title">Tarifas competitivas garantizadas</h3>
+                <p class="feature-description">Hasta un 70% más económico que los bancos tradicionales. Sin costos ocultos, con total transparencia en tipos de cambio y comisiones.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
                     </div>
-                    <div class="stat-number animated-pulse" data-count="20">20M+</div>
-                    <div class="stat-label">Usuarios</div>
+                    <div class="feature-icon-bg"></div>
                 </div>
-                
-                <div class="stat-card fade-in delay-3">
-                    <div class="stat-icon">
-                        <i class="fas fa-smile"></i>
-                    </div>
-                    <div class="stat-number animated-pulse" data-count="99.9">99.9%</div>
-                    <div class="stat-label">Satisfacción</div>
-                </div>
-                
-                <div class="stat-card fade-in delay-4">
-                    <div class="stat-icon">
+                <h3 class="feature-title">Recarga con tarjeta <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></h3>
+                <p class="feature-description">Recarga cualquier cuenta bancaria directamente con tu tarjeta de crédito. Proceso express 100% digital, instantáneo y sin comisiones adicionales.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-3">
+                <div class="feature-icon-wrapper">
+                    <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
-                    <div class="stat-number animated-pulse">24/7</div>
-                    <div class="stat-label">Disponibilidad</div>
+                    <div class="feature-icon-bg"></div>
                 </div>
+                <h3 class="feature-title">Asistencia personalizada 24/7</h3>
+                <p class="feature-description">Soporte multilingüe disponible todo el año por chat, teléfono o correo electrónico. Resolución garantizada en menos de 15 minutos.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Experiencias Reales</span>
-                <h2 class="section-title fade-in delay-1">Lo que dicen nuestros clientes</h2>
-                <p class="section-description fade-in delay-2">Miles de personas confían en nosotros para sus transferencias internacionales</p>
-            </div>
-            
-            <div class="testimonials-slider fade-in delay-3">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">María Rodríguez</div>
-                            <p class="client-position">Madrid, España</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">Carlos Mendoza</div>
-                            <p class="client-position">Londres, Reino Unido</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
-                        <div class="testimonial-divider"></div>
-                        <div class="client-info">
-                            <div class="client-name">Anna Lee</div>
-                            <p class="client-position">Toronto, Canadá</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-arrows">
-                    <button class="testimonial-arrow" id="testimonial-prev" aria-label="Anterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="testimonial-arrow" id="testimonial-next" aria-label="Siguiente">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                
-                <div class="testimonial-controls">
-                    <span class="testimonial-dot active" data-slide="0"></span>
-                    <span class="testimonial-dot" data-slide="1"></span>
-                    <span class="testimonial-dot" data-slide="2"></span>
-                </div>
-            </div>
+<!-- How It Works Section - Proceso simplificado y mejorado -->
+<section id="how-it-works" class="section" style="background-color: var(--ultra-light-blue);">
+    <div class="container">
+        <div class="section-title-wrapper">
+            <span class="section-subtitle fade-in">Proceso sencillo</span>
+            <h2 class="section-title fade-in delay-1">Tres pasos para conectar el mundo</h2>
+            <p class="section-description fade-in delay-2">Enviar dinero nunca fue tan fácil, seguro y rápido</p>
         </div>
-    </section>
-
-    <!-- App Section -->
-    <section id="app" class="app section">
-        <div class="container app-container">
-            <div class="app-content">
-                <span class="badge badge-success fade-in">Disponible 24/7</span>
-                <h2 class="section-title fade-in delay-1">Lleva Remeex VISA siempre contigo</h2>
-                <p class="section-description fade-in delay-2">Descarga nuestra aplicación móvil y gestiona tus transferencias desde cualquier lugar, en cualquier momento.</p>
-                
-                <div class="app-features">
-                    <div class="app-feature fade-in delay-1">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Interfaz intuitiva y fácil de usar</div>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-card fade-in delay-1">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">1</div>
+                        <div class="step-number-bg"></div>
                     </div>
-                    
-                    <div class="app-feature fade-in delay-2">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Notificaciones en tiempo real</div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-user-plus"></i>
                     </div>
-                    
-                    <div class="app-feature fade-in delay-3">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Acceso rápido con huella digital o Face ID</div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-4">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Recarga tu cuenta con tarjeta de crédito<span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></div>
-                    </div>
-                    
-                    <div class="app-feature fade-in delay-5">
-                        <i class="fas fa-check-circle app-feature-icon"></i>
-                        <div>Historial de transferencias detallado</div>
-                    </div>
-                </div>
-                
-                <div class="app-download">
-                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-1">
-                        <i class="fab fa-apple"></i>
-                        <div class="app-btn-content">
-                            <span class="app-btn-text">Descarga en la</span>
-                            <span class="app-btn-name">App Store</span>
-                        </div>
-                    </a>
-                    
-                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-2">
-                        <i class="fab fa-google-play"></i>
-                        <div class="app-btn-content">
-                            <span class="app-btn-text">Disponible en</span>
-                            <span class="app-btn-name">Google Play</span>
-                        </div>
-                    </a>
+                    <h3 class="step-title">Regístrate en segundos</h3>
+                    <p class="step-description">Crea tu cuenta con solo un email y verificación de identidad en tiempo real. Sin papeleo, todo 100% digital y seguro.</p>
                 </div>
             </div>
             
-            <div class="app-device fade-in delay-4">
-                <div class="app-phone-bg"></div>
-                <div class="app-phone animated-float">
-                    <!-- Representación del teléfono - Reemplazar por su imagen real del teléfono -->
-                    <svg viewBox="0 0 320 640" width="300" height="600">
-                        <rect x="30" y="20" width="260" height="600" rx="30" fill="#1A1F71" />
-                        <rect x="40" y="60" width="240" height="520" rx="5" fill="#FFFFFF" />
-                        <circle cx="160" cy="610" r="20" fill="rgba(255,255,255,0.2)" />
-                        <rect x="140" y="40" width="40" height="8" rx="4" fill="rgba(255,255,255,0.3)" />
-                        <circle cx="200" cy="40" r="5" fill="rgba(255,255,255,0.3)" />
-                        <!-- App UI -->
-                        <rect x="60" y="80" width="200" height="40" rx="20" fill="#E9EEFF" />
-                        <circle cx="80" cy="100" r="10" fill="#1A1F71" />
-                        <rect x="60" y="140" width="90" height="90" rx="10" fill="#E9EEFF" />
-                        <rect x="160" y="140" width="100" height="40" rx="10" fill="#E9EEFF" />
-                        <rect x="160" y="190" width="100" height="40" rx="10" fill="#E9EEFF" />
-                        <rect x="60" y="240" width="200" height="60" rx="10" fill="#00A1DF" opacity="0.2" />
-                        <rect x="60" y="310" width="95" height="120" rx="10" fill="#F7B600" opacity="0.2" />
-                        <rect x="165" y="310" width="95" height="120" rx="10" fill="#1A1F71" opacity="0.2" />
-                        <rect x="60" y="440" width="200" height="60" rx="10" fill="#E9EEFF" />
-                        <rect x="100" y="520" width="120" height="40" rx="20" fill="#1A1F71" />
-                    </svg>
+            <div class="step-connector" id="connector-1">
+                <div class="step-connector-line">
+                    <div class="step-connector-dot"></div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-card fade-in delay-2">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">2</div>
+                        <div class="step-number-bg"></div>
+                    </div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="step-title">Configura tu transferencia</h3>
+                    <p class="step-description">Selecciona destinatario, monto y método de entrega. Visualiza en tiempo real las tarifas y el tipo de cambio aplicado con total transparencia.</p>
+                </div>
+            </div>
+            
+            <div class="step-connector" id="connector-2">
+                <div class="step-connector-line">
+                    <div class="step-connector-dot"></div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-card fade-in delay-3">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">3</div>
+                        <div class="step-number-bg"></div>
+                    </div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <h3 class="step-title">Envío y seguimiento</h3>
+                    <p class="step-description">Completa el pago y sigue el estado de tu transferencia en tiempo real. Notificaciones automáticas y confirmación inmediata de recepción.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section id="cta" class="cta section">
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title fade-in">Comienza a conectar sin fronteras</h2>
-                <p class="cta-description fade-in delay-1">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
-                <a href="https://remeexvisa.com/index1" class="btn btn-secondary btn-lg btn-icon fade-in delay-2">
-                    <i class="fas fa-paper-plane"></i>
-                    Recibir remesa ya!
+<!-- Global Coverage Section - Contenido mejorado -->
+<section id="global-coverage" class="global-coverage section">
+    <div class="container">
+        <div class="section-title-wrapper">
+            <span class="section-subtitle text-white fade-in">Red internacional</span>
+            <h2 class="section-title text-white fade-in delay-1">A donde tú vayas, allí estamos</h2>
+            <p class="section-description text-white fade-in delay-2">Nuestra plataforma conecta más de 200 países y territorios con múltiples opciones de entrega</p>
+        </div>
+        
+        <div class="map-container fade-in delay-3">
+            <div class="map-image">
+                <!-- Representación simple del mapa mundial -->
+                <svg viewBox="0 0 1200 600" class="world-map">
+                    <path fill="rgba(255, 255, 255, 0.2)" stroke="rgba(255, 255, 255, 0.3)" stroke-width="1" d="M150,100 Q400,50 600,100 T1050,100 Q1100,300 1050,500 T600,500 Q400,550 150,500 T150,100" />
+                    <!-- Puntos de conexión con animación -->
+                    <circle cx="300" cy="150" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="450" cy="220" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="600" cy="180" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="750" cy="250" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="900" cy="200" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="350" cy="350" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="550" cy="380" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="750" cy="350" r="4" fill="#FFC107" class="animated-pulse" />
+                    <circle cx="850" cy="420" r="4" fill="#FFC107" class="animated-pulse" />
+                </svg>
+            </div>
+            <p class="map-text">Nuestra extensa red de socios financieros y alianzas estratégicas con bancos locales nos permite llegar a prácticamente cualquier lugar del mundo. Desde grandes ciudades hasta las zonas rurales más remotas, Remeex VISA te conecta con tus seres queridos dondequiera que estén.</p>
+        </div>
+        
+        <div class="map-stats">
+            <div class="stat-card fade-in delay-1">
+                <div class="stat-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="stat-number animated-pulse" data-count="200">200+</div>
+                <div class="stat-label">Países</div>
+            </div>
+            
+            <div class="stat-card fade-in delay-2">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number animated-pulse" data-count="20">20M+</div>
+                <div class="stat-label">Usuarios</div>
+            </div>
+            
+            <div class="stat-card fade-in delay-3">
+                <div class="stat-icon">
+                    <i class="fas fa-smile"></i>
+                </div>
+                <div class="stat-number animated-pulse" data-count="99.9">99.9%</div>
+                <div class="stat-label">Satisfacción</div>
+            </div>
+            
+            <div class="stat-card fade-in delay-4">
+                <div class="stat-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="stat-number animated-pulse">24/7</div>
+                <div class="stat-label">Disponibilidad</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section - Testimonios más auténticos -->
+<section id="testimonials" class="testimonials section">
+    <div class="container">
+        <div class="section-title-wrapper">
+            <span class="section-subtitle fade-in">Experiencias reales</span>
+            <h2 class="section-title fade-in delay-1">Nuestros usuarios nos avalan</h2>
+            <p class="section-description fade-in delay-2">Miles de familias conectadas a través de nuestros servicios</p>
+        </div>
+        
+        <div class="testimonials-slider fade-in delay-3">
+            <div class="testimonial-slide active">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="quote">"Llevo 3 años enviando dinero a mi familia en Colombia y desde que conocí Remeex VISA he ahorrado más de €600 en comisiones. La recarga con tarjeta es increíblemente rápida y segura, ¡las transferencias llegan en minutos!"</p>
+                    <div class="testimonial-divider"></div>
+                    <div class="client-info">
+                        <div class="client-name">María Rodríguez</div>
+                        <p class="client-position">Madrid, España</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-slide">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero constantemente. Tras probar varias plataformas, Remeex VISA me ofrece el mejor tipo de cambio y el proceso más ágil. La atención al cliente es excepcional."</p>
+                    <div class="testimonial-divider"></div>
+                    <div class="client-info">
+                        <div class="client-name">Carlos Mendoza</div>
+                        <p class="client-position">Londres, Reino Unido</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-slide">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="quote">"Envío remesas mensuales a mi familia en Filipinas y Remeex VISA ha transformado completamente el proceso. La transparencia en las tarifas y la velocidad de transferencia son incomparables. ¡El servicio de recarga con tarjeta es revolucionario!"</p>
+                    <div class="testimonial-divider"></div>
+                    <div class="client-info">
+                        <div class="client-name">Anna Lee</div>
+                        <p class="client-position">Toronto, Canadá</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-arrows">
+                <button class="testimonial-arrow" id="testimonial-prev" aria-label="Anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-arrow" id="testimonial-next" aria-label="Siguiente">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="testimonial-controls">
+                <span class="testimonial-dot active" data-slide="0"></span>
+                <span class="testimonial-dot" data-slide="1"></span>
+                <span class="testimonial-dot" data-slide="2"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- App Section - Mejor presentación de la app -->
+<section id="app" class="app section">
+    <div class="container app-container">
+        <div class="app-content">
+            <span class="badge badge-success fade-in">Disponible 24/7</span>
+            <h2 class="section-title fade-in delay-1">Tu banco global en tu bolsillo</h2>
+            <p class="section-description fade-in delay-2">Nuestra aplicación te permite gestionar tus transferencias internacionales desde cualquier lugar, en cualquier momento.</p>
+            
+            <div class="app-features">
+                <div class="app-feature fade-in delay-1">
+                    <i class="fas fa-check-circle app-feature-icon"></i>
+                    <div>Interfaz intuitiva con configuración en 3 clics</div>
+                </div>
+                
+                <div class="app-feature fade-in delay-2">
+                    <i class="fas fa-check-circle app-feature-icon"></i>
+                    <div>Notificaciones en tiempo real del estado de transferencias</div>
+                </div>
+                
+                <div class="app-feature fade-in delay-3">
+                    <i class="fas fa-check-circle app-feature-icon"></i>
+                    <div>Seguridad biométrica (huella digital y Face ID)</div>
+                </div>
+                
+                <div class="app-feature fade-in delay-4">
+                    <i class="fas fa-check-circle app-feature-icon"></i>
+                    <div>Recarga de cuentas con tarjeta de crédito <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></div>
+                </div>
+                
+                <div class="app-feature fade-in delay-5">
+                    <i class="fas fa-check-circle app-feature-icon"></i>
+                    <div>Historial y análisis de transferencias con tendencias</div>
+                </div>
+            </div>
+            
+            <div class="app-download">
+                <a href="#" class="app-btn fade-in delay-1">
+                    <i class="fab fa-apple"></i>
+                    <div class="app-btn-content">
+                        <span class="app-btn-text">Descarga en</span>
+                        <span class="app-btn-name">App Store</span>
+                    </div>
+                </a>
+                
+                <a href="#" class="app-btn fade-in delay-2">
+                    <i class="fab fa-google-play"></i>
+                    <div class="app-btn-content">
+                        <span class="app-btn-text">Disponible en</span>
+                        <span class="app-btn-name">Google Play</span>
+                    </div>
                 </a>
             </div>
         </div>
-    </section>
-
-    <!-- Support Section -->
-    <section id="support" class="support section">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <span class="section-subtitle fade-in">Asistencia Continua</span>
-                <h2 class="section-title fade-in delay-1">Estamos aquí para ayudarte</h2>
-                <p class="section-description fade-in delay-2">Nuestro equipo de soporte está disponible 24/7 para resolver todas tus dudas</p>
-            </div>
-            
-            <div class="support-grid">
-                <div class="support-card fade-in delay-1">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Chat en vivo</h3>
-                    <p class="support-description">Habla con un asesor en tiempo real a través de nuestra web o aplicación móvil.</p>
-                    <a href="#" id="open-chat" class="btn btn-primary btn-icon">
-                        <i class="fas fa-comment"></i>
-                        Iniciar chat
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-2">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Correo electrónico</h3>
-                    <p class="support-description">Envíanos tus consultas y te responderemos en menos de 24 horas.</p>
-                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-envelope"></i>
-                        Enviar consulta
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-3">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Teléfono</h3>
-                    <p class="support-description">Llámanos para hablar directamente con un asesor especializado.</p>
-                    <a href="tel:+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-phone"></i>
-                        Llamar ahora
-                    </a>
-                </div>
-                
-                <div class="support-card fade-in delay-4">
-                    <div class="support-icon-wrapper">
-                        <div class="support-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="support-icon-bg"></div>
-                    </div>
-                    <h3 class="support-title">Centro de ayuda</h3>
-                    <p class="support-description">Consulta nuestras guías, tutoriales y preguntas frecuentes para resolver dudas comunes.</p>
-                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
-                        <i class="fas fa-external-link-alt"></i>
-                        Visitar centro
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="footer" class="footer">
-        <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
-            <path fill="currentColor" d="M0,32L48,30.7C96,29,192,27,288,26.7C384,27,480,29,576,32C672,35,768,37,864,34.7C960,32,1056,24,1152,21.3C1248,19,1344,21,1392,22.7L1440,24L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-        </svg>
         
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo">
-                        <a href="#hero">
-                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
-                        </a>
-                    </div>
-                    <p class="footer-about">Conectando familias alrededor del mundo con transferencias rápidas, seguras y económicas. Ahora con recarga instantánea de cuenta bancaria con tarjeta de crédito.</p>
-                    <div class="social-icons">
-                        <a href="https://twitter.com/visa_es" class="social-icon" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://www.facebook.com/visa_es" class="social-icon" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/visa_es" class="social-icon" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/company/visa_es" class="social-icon" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/user/visa_es" class="social-icon" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="footer-title">Empresa</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://visa.es">Sobre nosotros</a></li>
-                        <li><a href="https://visa.es">Carreras</a></li>
-                        <li><a href="https://visa.es">Sala de prensa</a></li>
-                        <li><a href="https://visa.es">Responsabilidad social</a></li>
-                        <li><a href="https://visa.es">Inversores</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="footer-title">Servicios</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://visa.es">Transferencias internacionales</a></li>
-                        <li><a href="https://visa.es">Recarga con tarjeta de crédito</a></li>
-                        <li><a href="https://visa.es">Pagos recurrentes</a></li>
-                        <li><a href="https://visa.es">Cambio de divisas</a></li>
-                        <li><a href="https://visa.es">Tarjetas virtuales</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="footer-title">Ayuda</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://visa.es">Centro de ayuda</a></li>
-                        <li><a href="https://visa.es">Contáctanos</a></li>
-                        <li><a href="https://visa.es">Preguntas frecuentes</a></li>
-                        <li><a href="https://visa.es">Seguridad</a></li>
-                        <li><a href="https://visa.es">Reportar un problema</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="footer-title">Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://visa.es">Términos y condiciones</a></li>
-                        <li><a href="https://visa.es">Política de privacidad</a></li>
-                        <li><a href="https://visa.es">Política de cookies</a></li>
-                        <li><a href="https://visa.es">Cumplimiento normativo</a></li>
-                        <li><a href="https://visa.es">Licencias</a></li>
-                    </ul>
-                </div>
+        <div class="app-device fade-in delay-4">
+            <div class="app-phone-bg"></div>
+            <div class="app-phone animated-float">
+                <!-- Representación del teléfono con app -->
+                <svg viewBox="0 0 320 640" width="300" height="600">
+                    <rect x="30" y="20" width="260" height="600" rx="30" fill="#1434CB" />
+                    <rect x="40" y="60" width="240" height="520" rx="5" fill="#FFFFFF" />
+                    <circle cx="160" cy="610" r="20" fill="rgba(255,255,255,0.2)" />
+                    <rect x="140" y="40" width="40" height="8" rx="4" fill="rgba(255,255,255,0.3)" />
+                    <circle cx="200" cy="40" r="5" fill="rgba(255,255,255,0.3)" />
+                    <!-- App UI con diseño más moderno -->
+                    <rect x="60" y="80" width="200" height="40" rx="20" fill="#EDF2FF" />
+                    <circle cx="80" cy="100" r="10" fill="#1434CB" />
+                    <rect x="60" y="140" width="90" height="90" rx="10" fill="#EDF2FF" />
+                    <rect x="160" y="140" width="100" height="40" rx="10" fill="#EDF2FF" />
+                    <rect x="160" y="190" width="100" height="40" rx="10" fill="#EDF2FF" />
+                    <rect x="60" y="240" width="200" height="60" rx="10" fill="#0070E0" opacity="0.2" />
+                    <rect x="60" y="310" width="95" height="120" rx="10" fill="#F7B600" opacity="0.2" />
+                    <rect x="165" y="310" width="95" height="120" rx="10" fill="#1434CB" opacity="0.2" />
+                    <rect x="60" y="440" width="200" height="60" rx="10" fill="#EDF2FF" />
+                    <rect x="100" y="520" width="120" height="40" rx="20" fill="#1434CB" />
+                </svg>
             </div>
-            
-            <div class="footer-divider"></div>
-            
-            <div class="footer-bottom">
-                <div class="language-selector">
-                    <select aria-label="Seleccionar idioma">
-                        <option value="es">Español</option>
-                        <option value="en">English</option>
-                        <option value="fr">Français</option>
-                        <option value="pt">Português</option>
-                        <option value="de">Deutsch</option>
-                    </select>
-                </div>
-                
-                <div class="security-text">
-                    Certificaciones de seguridad: SSL Secured | PCI Compliant | VISA Verified
-                </div>
-                
-                <div class="copyright">
-                    <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/+17373018059" class="whatsapp-button" aria-label="Contactar por WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    
-    <!-- Promo Overlay -->
-    <div class="promo-overlay" id="promo-overlay">
-        <div class="promo-content">
-            <button class="promo-close" id="promo-close" aria-label="Cerrar promoción">
-                <i class="fas fa-times"></i>
-            </button>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción especial" class="promo-image">
         </div>
     </div>
+</section>
 
-    <!-- Scripts -->
-    <script>
-        // Corrección: asegurarse de que el DOM esté cargado completamente antes de ejecutar scripts
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulador de carga - lo primero que se debe ejecutar
-            const loader = document.getElementById('loader');
-            const loaderBar = document.getElementById('loader-bar');
-            const loaderText = document.getElementById('loader-text');
+<!-- CTA Section - Llamada a la acción más impactante -->
+<section id="cta" class="cta section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title fade-in">Comienza a conectar el mundo hoy</h2>
+            <p class="cta-description fade-in delay-1">Únete a los millones de usuarios que confían en Remeex VISA para sus transferencias internacionales. Servicio rápido, seguro y con las mejores tarifas del mercado.</p>
+            <a href="#" class="btn btn-secondary btn-lg btn-icon fade-in delay-2">
+                <i class="fas fa-paper-plane"></i>
+                Enviar mi primera transferencia
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Support Section - Opciones de contacto mejoradas -->
+<section id="support" class="support section">
+    <div class="container">
+        <div class="section-title-wrapper">
+            <span class="section-subtitle fade-in">Asistencia personalizada</span>
+            <h2 class="section-title fade-in delay-1">Estamos aquí para ti</h2>
+            <p class="section-description fade-in delay-2">Nuestro equipo multilingüe está disponible 24/7 para brindarte la mejor asistencia posible</p>
+        </div>
+        
+        <div class="support-grid">
+            <div class="support-card fade-in delay-1">
+                <div class="support-icon-wrapper">
+                    <div class="support-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="support-icon-bg"></div>
+                </div>
+                <h3 class="support-title">Chat en vivo</h3>
+                <p class="support-description">Comunícate en tiempo real con nuestros asesores especializados disponibles 24/7 en múltiples idiomas.</p>
+                <a href="#" id="open-chat" class="btn btn-primary btn-icon">
+                    <i class="fas fa-comment"></i>
+                    Iniciar chat
+                </a>
+            </div>
             
-            // Valores de carga
-            const loadSteps = [
-                { progress: 20, text: "Cargando recursos..." },
-                { progress: 40, text: "Inicializando componentes..." },
-                { progress: 60, text: "Cargando interfaz..." },
-                { progress: 80, text: "Optimizando experiencia..." },
-                { progress: 100, text: "¡Listo para navegar!" }
-            ];
+            <div class="support-card fade-in delay-2">
+                <div class="support-icon-wrapper">
+                    <div class="support-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="support-icon-bg"></div>
+                </div>
+                <h3 class="support-title">Correo electrónico</h3>
+                <p class="support-description">Envíanos tus consultas y te responderemos en menos de 2 horas, garantizado para todas tus dudas.</p>
+                <a href="mailto:soporte@remeexvisa.com" class="btn btn-primary btn-icon">
+                    <i class="fas fa-envelope"></i>
+                    Enviar consulta
+                </a>
+            </div>
             
-            let currentStep = 0;
+            <div class="support-card fade-in delay-3">
+                <div class="support-icon-wrapper">
+                    <div class="support-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="support-icon-bg"></div>
+                </div>
+                <h3 class="support-title">Teléfono directo</h3>
+                <p class="support-description">Línea de atención directa con agentes especializados según tu país y tipo de consulta.</p>
+                <a href="tel:+17373018059" class="btn btn-primary btn-icon">
+                    <i class="fas fa-phone"></i>
+                    Llamar ahora
+                </a>
+            </div>
             
-            function updateLoader() {
-                if (currentStep < loadSteps.length) {
-                    loaderBar.style.width = loadSteps[currentStep].progress + '%';
-                    loaderText.textContent = loadSteps[currentStep].text;
-                    currentStep++;
-                    
-                    const delay = currentStep === loadSteps.length - 1 ? 300 : 400;
-                    setTimeout(updateLoader, delay);
-                } else {
+            <div class="support-card fade-in delay-4">
+                <div class="support-icon-wrapper">
+                    <div class="support-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="support-icon-bg"></div>
+                </div>
+                <h3 class="support-title">WhatsApp</h3>
+                <p class="support-description">Comunícate a través de WhatsApp para una asistencia rápida y personalizada desde cualquier lugar.</p>
+                <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
+                    <i class="fab fa-whatsapp"></i>
+                    Contactar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer - Rediseñado con mejor jerarquía -->
+<footer id="footer" class="footer">
+    <svg class="footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 40" preserveAspectRatio="none">
+        <path fill="currentColor" d="M0,32L48,30.7C96,29,192,27,288,26.7C384,27,480,29,576,32C672,35,768,37,864,34.7C960,32,1056,24,1152,21.3C1248,19,1344,21,1392,22.7L1440,24L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+    
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">
+                    <a href="#hero">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
+                    </a>
+                </div>
+                <p class="footer-about">Conectamos familias y comunidades alrededor del mundo a través de transferencias internacionales rápidas, seguras y económicas. Con la tecnología y respaldo de VISA, estamos transformando la forma en que el dinero circula globalmente.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="footer-title">Empresa</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Carreras</a></li>
+                    <li><a href="#">Noticias</a></li>
+                    <li><a href="#">Responsabilidad social</a></li>
+                    <li><a href="#">Socios comerciales</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="footer-title">Servicios</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Transferencias internacionales</a></li>
+                    <li><a href="#">Recarga con tarjeta</a></li>
+                    <li><a href="#">Transferencias programadas</a></li>
+                    <li><a href="#">Cambio de divisas</a></li>
+                    <li><a href="#">Transferencias corporativas</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="footer-title">Recursos</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Centro de ayuda</a></li>
+                    <li><a href="#">Guías y tutoriales</a></li>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Calculadora de tarifas</a></li>
+                    <li><a href="#">Tipos de cambio</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">Cumplimiento normativo</a></li>
+                    <li><a href="#">Licencias</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-divider"></div>
+        
+        <div class="footer-bottom">
+            <div class="language-selector">
+                <select aria-label="Seleccionar idioma">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="pt">Português</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+            
+            <div class="security-text">
+                <i class="fas fa-shield-alt"></i> Certificaciones: SSL Secured | PCI DSS Compliant | VISA Verified | AML Compliant
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/+17373018059" class="whatsapp-button" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Promo Overlay - Mejorado para mayor impacto -->
+<div class="promo-overlay" id="promo-overlay">
+    <div class="promo-content">
+        <button class="promo-close" id="promo-close" aria-label="Cerrar promoción">
+            <i class="fas fa-times"></i>
+        </button>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción especial" class="promo-image">
+    </div>
+</div>
+
+<!-- Scripts - Optimizados y más interactivos -->
+<script>
+    // Asegurarse de que el DOM esté cargado completamente
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simulador de carga mejorado
+        const loader = document.getElementById('loader');
+        const loaderBar = document.getElementById('loader-bar');
+        const loaderText = document.getElementById('loader-text');
+        
+        // Etapas de carga con mensajes más informativos
+        const loadSteps = [
+            { progress: 20, text: "Iniciando Remeex VISA..." },
+            { progress: 40, text: "Conectando con servidores seguros..." },
+            { progress: 60, text: "Cargando componentes..." },
+            { progress: 80, text: "Preparando experiencia personalizada..." },
+            { progress: 100, text: "¡Todo listo!" }
+        ];
+        
+        let currentStep = 0;
+        
+        function updateLoader() {
+            if (currentStep < loadSteps.length) {
+                loaderBar.style.width = loadSteps[currentStep].progress + '%';
+                loaderText.textContent = loadSteps[currentStep].text;
+                currentStep++;
+                
+                const delay = currentStep === loadSteps.length - 1 ? 300 : 400;
+                setTimeout(updateLoader, delay);
+            } else {
+                setTimeout(() => {
+                    // Ocultar el loader con transición suave
+                    loader.style.opacity = '0';
                     setTimeout(() => {
-                        // Ocultar el loader
-                        loader.style.opacity = '0';
+                        loader.style.display = 'none';
+                        document.body.classList.add('loaded');
+                        
+                        // Iniciar animaciones de desplazamiento
+                        initScrollAnimations();
+                        
+                        // Mostrar la promoción después de 3 segundos
                         setTimeout(() => {
-                            loader.style.display = 'none';
-                            document.body.classList.add('loaded');
-                            
-                            // Iniciar animaciones de desplazamiento
-                            initScrollAnimations();
-                            
-                            // Mostrar la promoción después de 3 segundos
-                            setTimeout(() => {
-                                document.getElementById('promo-overlay').classList.add('active');
-                            }, 3000);
-                        }, 300);
-                    }, 400);
-                }
+                            document.getElementById('promo-overlay').classList.add('active');
+                        }, 3000);
+                    }, 300);
+                }, 400);
             }
-            
-            // Iniciar el loader inmediatamente 
-            updateLoader();
-            
-            // Referencias DOM para elementos interactivos
-            const menuToggle = document.getElementById('menu-toggle');
-            const closeMenu = document.getElementById('close-menu');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('overlay');
-            const backToTop = document.getElementById('back-to-top');
-            const promoOverlay = document.getElementById('promo-overlay');
-            const promoClose = document.getElementById('promo-close');
-            const openChat = document.getElementById('open-chat');
-            const header = document.getElementById('header');
-            
-            // Cerrar promoción
-            if (promoClose) {
-                promoClose.addEventListener('click', () => {
-                    promoOverlay.classList.remove('active');
-                });
-            }
-            
-            // Abrir chat (Tawk.to o WhatsApp)
-            if (openChat) {
-                openChat.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (typeof Tawk_API !== 'undefined') {
-                        Tawk_API.maximize();
-                    } else {
-                        window.open('https://wa.me/+17373018059', '_blank');
-                    }
-                });
-            }
-            
-            // Menú móvil
-            function toggleMenu() {
-                mobileMenu.classList.toggle('active');
-                overlay.classList.toggle('active');
-                document.body.classList.toggle('menu-open');
-                
-                if (mobileMenu.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = '';
-                }
-            }
-            
-            if (menuToggle && closeMenu && overlay) {
-                menuToggle.addEventListener('click', toggleMenu);
-                closeMenu.addEventListener('click', toggleMenu);
-                overlay.addEventListener('click', toggleMenu);
-            }
-            
-            // Enlaces del menú móvil
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    toggleMenu();
-                });
+        }
+        
+        // Iniciar el loader inmediatamente 
+        updateLoader();
+        
+        // Referencias DOM para elementos interactivos
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('overlay');
+        const backToTop = document.getElementById('back-to-top');
+        const promoOverlay = document.getElementById('promo-overlay');
+        const promoClose = document.getElementById('promo-close');
+        const openChat = document.getElementById('open-chat');
+        const header = document.getElementById('header');
+        
+        // Cerrar promoción
+        if (promoClose) {
+            promoClose.addEventListener('click', () => {
+                promoOverlay.classList.remove('active');
             });
-            
-            // Slider Hero
-            const heroSlides = document.querySelectorAll('.hero-slide');
-            const sliderDots = document.querySelectorAll('.slider-dot');
-            let currentSlide = 0;
-            let slideInterval;
-            
-            function showSlide(index) {
-                heroSlides.forEach(slide => slide.classList.remove('active'));
-                sliderDots.forEach(dot => dot.classList.remove('active'));
-                
-                heroSlides[index].classList.add('active');
-                sliderDots[index].classList.add('active');
-                
-                currentSlide = index;
-            }
-            
-            function nextSlide() {
-                let next = (currentSlide + 1) % heroSlides.length;
-                showSlide(next);
-            }
-            
-            function startSlider() {
-                slideInterval = setInterval(nextSlide, 5000);
-            }
-            
-            sliderDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    clearInterval(slideInterval);
-                    showSlide(index);
-                    startSlider();
-                });
+        }
+        
+        // Abrir chat (integración WhatsApp)
+        if (openChat) {
+            openChat.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open('https://wa.me/+17373018059', '_blank');
             });
+        }
+        
+        // Menú móvil mejorado
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
             
-            // Iniciar slider automático
-            if (heroSlides.length > 0) {
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        if (menuToggle && closeMenu && overlay) {
+            menuToggle.addEventListener('click', toggleMenu);
+            closeMenu.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+        }
+        
+        // Enlaces del menú móvil con cierre automático
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggleMenu();
+            });
+        });
+        
+        // Slider Hero mejorado
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const sliderDots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        let slideInterval;
+        
+        function showSlide(index) {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            sliderDots.forEach(dot => dot.classList.remove('active'));
+            
+            heroSlides[index].classList.add('active');
+            sliderDots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            let next = (currentSlide + 1) % heroSlides.length;
+            showSlide(next);
+        }
+        
+        function startSlider() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        sliderDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide(index);
                 startSlider();
-            }
-            
-            // Slider de testimonios
-            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-            const testimonialDots = document.querySelectorAll('.testimonial-dot');
-            const prevBtn = document.getElementById('testimonial-prev');
-            const nextBtn = document.getElementById('testimonial-next');
-            let currentTestimonial = 0;
-            let testimonialInterval;
-            
-            function showTestimonial(index) {
-                testimonialSlides.forEach(slide => slide.classList.remove('active'));
-                testimonialDots.forEach(dot => dot.classList.remove('active'));
-                
-                testimonialSlides[index].classList.add('active');
-                testimonialDots[index].classList.add('active');
-                
-                currentTestimonial = index;
-            }
-            
-            function nextTestimonial() {
-                let next = (currentTestimonial + 1) % testimonialSlides.length;
-                showTestimonial(next);
-            }
-            
-            function prevTestimonial() {
-                let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-                showTestimonial(prev);
-            }
-            
-            function startTestimonialSlider() {
-                testimonialInterval = setInterval(nextTestimonial, 6000);
-            }
-            
-            testimonialDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    showTestimonial(index);
-                    startTestimonialSlider();
-                });
             });
+        });
+        
+        // Iniciar slider automático
+        if (heroSlides.length > 0) {
+            startSlider();
+        }
+        
+        // Slider de testimonios mejorado
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        const prevBtn = document.getElementById('testimonial-prev');
+        const nextBtn = document.getElementById('testimonial-next');
+        let currentTestimonial = 0;
+        let testimonialInterval;
+        
+        function showTestimonial(index) {
+            testimonialSlides.forEach(slide => slide.classList.remove('active'));
+            testimonialDots.forEach(dot => dot.classList.remove('active'));
             
-            if (prevBtn && nextBtn) {
-                prevBtn.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    prevTestimonial();
-                    startTestimonialSlider();
-                });
-                
-                nextBtn.addEventListener('click', () => {
-                    clearInterval(testimonialInterval);
-                    nextTestimonial();
-                    startTestimonialSlider();
-                });
-            }
+            testimonialSlides[index].classList.add('active');
+            testimonialDots[index].classList.add('active');
             
-            // Iniciar slider de testimonios si hay testimonios
-            if (testimonialSlides.length > 0) {
+            currentTestimonial = index;
+        }
+        
+        function nextTestimonial() {
+            let next = (currentTestimonial + 1) % testimonialSlides.length;
+            showTestimonial(next);
+        }
+        
+        function prevTestimonial() {
+            let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
+            showTestimonial(prev);
+        }
+        
+        function startTestimonialSlider() {
+            testimonialInterval = setInterval(nextTestimonial, 6000);
+        }
+        
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(testimonialInterval);
+                showTestimonial(index);
                 startTestimonialSlider();
-            }
-            
-            // Animación de los steps connectors
-            function updateStepConnectors() {
-                const connectors = document.querySelectorAll('.step-connector');
-                
-                // Comprobar si los conectores son visibles
-                const isVisible = (element) => {
-                    const rect = element.getBoundingClientRect();
-                    return (
-                        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
-                        rect.bottom >= 0
-                    );
-                };
-                
-                connectors.forEach((connector, index) => {
-                    if (isVisible(connector)) {
-                        setTimeout(() => {
-                            connector.classList.add('active');
-                        }, index * 300);
-                    }
-                });
-            }
-            
-            // Botón de volver arriba y efectos de scroll
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTop && backToTop.classList.add('active');
-                } else {
-                    backToTop && backToTop.classList.remove('active');
-                }
-                
-                // Header con efecto al hacer scroll
-                if (window.scrollY > 10) {
-                    header && header.classList.add('scrolled');
-                } else {
-                    header && header.classList.remove('scrolled');
-                }
-                
-                // Actualizar conectores
-                updateStepConnectors();
-                
-                // Actualizar animaciones scroll
-                handleScrollAnimation();
-                
-                // Actualizar navegación activa
-                updateActiveNavOnScroll();
+            });
+        });
+        
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                clearInterval(testimonialInterval);
+                prevTestimonial();
+                startTestimonialSlider();
             });
             
-            if (backToTop) {
-                backToTop.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
-            // Navegación suave para enlaces de anclaje
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') !== "#") {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            const headerHeight = header ? header.offsetHeight : 0;
-                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                            
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Actualizar clase active en la navegación
-                            document.querySelectorAll('.nav-link').forEach(navLink => {
-                                navLink.classList.remove('active');
-                            });
-                            
-                            const activeNavLink = document.querySelector(`.nav-link[href="${targetId}"]`);
-                            if (activeNavLink) {
-                                activeNavLink.classList.add('active');
-                            }
-                        }
-                    }
-                });
+            nextBtn.addEventListener('click', () => {
+                clearInterval(testimonialInterval);
+                nextTestimonial();
+                startTestimonialSlider();
             });
+        }
+        
+        // Iniciar slider de testimonios
+        if (testimonialSlides.length > 0) {
+            startTestimonialSlider();
+        }
+        
+        // Animación de los conectores de pasos
+        function updateStepConnectors() {
+            const connectors = document.querySelectorAll('.step-connector');
             
-            // Animaciones al hacer scroll
-            function initScrollAnimations() {
-                // Inicializar todas las animaciones activando las que ya están visibles
-                handleScrollAnimation();
-            }
-            
-            function handleScrollAnimation() {
-                const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
-                
-                const elementInView = (el, percentageScroll = 100) => {
-                    const elementTop = el.getBoundingClientRect().top;
-                    return (
-                        elementTop <= 
-                        ((window.innerHeight || document.documentElement.clientHeight) * (percentageScroll/100))
-                    );
-                };
-                
-                const displayScrollElement = (element) => {
-                    element.classList.add('visible');
-                };
-                
-                animatedElements.forEach((el) => {
-                    if (elementInView(el, 85)) {
-                        displayScrollElement(el);
-                    }
-                });
-                
-                // Actualizar conectores
-                updateStepConnectors();
-            }
-            
-            // Actualizar navegación activa al hacer scroll
-            function updateActiveNavOnScroll() {
-                const sections = document.querySelectorAll('section[id]');
-                const navLinks = document.querySelectorAll('.nav-link');
-                
-                const scrollPosition = window.scrollY + window.innerHeight / 3;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - (header ? header.offsetHeight : 0);
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }
-            
-            // Animación de contadores para estadísticas
-            function animateCounters() {
-                const counters = document.querySelectorAll('.stat-number[data-count]');
-                
-                // Usar IntersectionObserver si está disponible
-                if ('IntersectionObserver' in window) {
-                    const counterObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                const counter = entry.target;
-                                animateCounter(counter);
-                                counterObserver.unobserve(counter);
-                            }
-                        });
-                    }, { threshold: 0.5 });
-                    
-                    counters.forEach(counter => {
-                        counterObserver.observe(counter);
-                    });
-                } else {
-                    // Fallback para navegadores que no soportan IntersectionObserver
-                    counters.forEach(counter => {
-                        animateCounter(counter);
-                    });
-                }
-                
-                function animateCounter(counter) {
-                    const target = parseFloat(counter.getAttribute('data-count'));
-                    let count = 0;
-                    const duration = 2000; // ms
-                    const increment = target / (duration / 16); // Para 60fps aproximadamente
-                    
-                    // Animación del contador
-                    const updateCount = () => {
-                        count += increment;
-                        if (count < target) {
-                            counter.textContent = Math.ceil(count) + '+';
-                            requestAnimationFrame(updateCount);
-                        } else {
-                            counter.textContent = target + '+';
-                        }
-                    };
-                    
-                    requestAnimationFrame(updateCount);
-                }
-            }
-            
-            // Llamar a animateCounters para iniciar las animaciones
-            animateCounters();
-            
-            // Detectar soporte táctil
-            const isTouchDevice = () => {
-                return (('ontouchstart' in window) ||
-                        (navigator.maxTouchPoints > 0) ||
-                        (navigator.msMaxTouchPoints > 0));
+            // Comprobar visibilidad de elementos
+            const isVisible = (element) => {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+                    rect.bottom >= 0
+                );
             };
             
-            if (isTouchDevice()) {
-                document.body.classList.add('touch-device');
-                
-                // Funcionalidad de deslizar para sliders en dispositivos táctiles
-                const handleSwipe = (element, nextFunc, prevFunc) => {
-                    if (!element) return;
+            connectors.forEach((connector, index) => {
+                if (isVisible(connector)) {
+                    setTimeout(() => {
+                        connector.classList.add('active');
+                    }, index * 300);
+                }
+            });
+        }
+        
+        // Botón de volver arriba y efectos de scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop && backToTop.classList.add('active');
+            } else {
+                backToTop && backToTop.classList.remove('active');
+            }
+            
+            // Header con efecto al hacer scroll
+            if (window.scrollY > 10) {
+                header && header.classList.add('scrolled');
+            } else {
+                header && header.classList.remove('scrolled');
+            }
+            
+            // Actualizar conectores
+            updateStepConnectors();
+            
+            // Actualizar animaciones scroll
+            handleScrollAnimation();
+            
+            // Actualizar navegación activa
+            updateActiveNavOnScroll();
+        });
+        
+        if (backToTop) {
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // Navegación suave para enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== "#") {
+                    e.preventDefault();
                     
-                    let startX, endX;
-                    const minSwipeDistance = 50;
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
                     
-                    element.addEventListener('touchstart', (e) => {
-                        startX = e.touches[0].clientX;
-                    }, { passive: true });
-                    
-                    element.addEventListener('touchend', (e) => {
-                        endX = e.changedTouches[0].clientX;
-                        const distance = endX - startX;
+                    if (targetElement) {
+                        const headerHeight = header ? header.offsetHeight : 0;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                         
-                        if (Math.abs(distance) >= minSwipeDistance) {
-                            if (distance > 0) {
-                                // Deslizamiento a la derecha - anterior
-                                prevFunc();
-                            } else {
-                                // Deslizamiento a la izquierda - siguiente
-                                nextFunc();
-                            }
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Actualizar clase active en la navegación
+                        document.querySelectorAll('.nav-link').forEach(navLink => {
+                            navLink.classList.remove('active');
+                        });
+                        
+                        const activeNavLink = document.querySelector(`.nav-link[href="${targetId}"]`);
+                        if (activeNavLink) {
+                            activeNavLink.classList.add('active');
                         }
-                    }, { passive: true });
+                    }
+                }
+            });
+        });
+        
+        // Animaciones al hacer scroll - mejoradas
+        function initScrollAnimations() {
+            // Inicializar todas las animaciones activando las que ya están visibles
+            handleScrollAnimation();
+        }
+        
+        function handleScrollAnimation() {
+            const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+            
+            const elementInView = (el, percentageScroll = 100) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return (
+                    elementTop <= 
+                    ((window.innerHeight || document.documentElement.clientHeight) * (percentageScroll/100))
+                );
+            };
+            
+            const displayScrollElement = (element) => {
+                element.classList.add('visible');
+            };
+            
+            animatedElements.forEach((el) => {
+                if (elementInView(el, 85)) {
+                    displayScrollElement(el);
+                }
+            });
+            
+            // Actualizar conectores
+            updateStepConnectors();
+        }
+        
+        // Actualizar navegación activa al hacer scroll
+        function updateActiveNavOnScroll() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            const scrollPosition = window.scrollY + window.innerHeight / 3;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - (header ? header.offsetHeight : 0);
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Animación de contadores para estadísticas
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number[data-count]');
+            
+            // Usar IntersectionObserver si está disponible
+            if ('IntersectionObserver' in window) {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            animateCounter(counter);
+                            counterObserver.unobserve(counter);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                counters.forEach(counter => {
+                    counterObserver.observe(counter);
+                });
+            } else {
+                // Fallback para navegadores antiguos
+                counters.forEach(counter => {
+                    animateCounter(counter);
+                });
+            }
+            
+            function animateCounter(counter) {
+                const target = parseFloat(counter.getAttribute('data-count'));
+                let count = 0;
+                const duration = 2000; // ms
+                const increment = target / (duration / 16); // Para 60fps 
+                
+                // Animación del contador
+                const updateCount = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.textContent = Math.ceil(count) + '+';
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.textContent = target + '+';
+                    }
                 };
                 
-                // Aplicar swipe a los sliders
-                const heroSlider = document.querySelector('.hero-slider');
-                const testimonialSlider = document.querySelector('.testimonials-slider');
-                
-                if (heroSlider) {
-                    handleSwipe(heroSlider, 
-                        () => {
-                            clearInterval(slideInterval);
-                            nextSlide();
-                            startSlider();
-                        }, 
-                        () => {
-                            clearInterval(slideInterval);
-                            showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
-                            startSlider();
-                        }
-                    );
-                }
-                
-                if (testimonialSlider) {
-                    handleSwipe(testimonialSlider, 
-                        () => {
-                            clearInterval(testimonialInterval);
-                            nextTestimonial();
-                            startTestimonialSlider();
-                        }, 
-                        () => {
-                            clearInterval(testimonialInterval);
-                            prevTestimonial();
-                            startTestimonialSlider();
-                        }
-                    );
-                }
+                requestAnimationFrame(updateCount);
             }
-        });
-    </script>
+        }
+        
+        // Llamar a animateCounters para iniciar las animaciones
+        animateCounters();
+        
+        // Detectar soporte táctil para mejorar interacción
+        const isTouchDevice = () => {
+            return (('ontouchstart' in window) ||
+                    (navigator.maxTouchPoints > 0) ||
+                    (navigator.msMaxTouchPoints > 0));
+        };
+        
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+            
+            // Funcionalidad de deslizar para sliders
+            const handleSwipe = (element, nextFunc, prevFunc) => {
+                if (!element) return;
+                
+                let startX, endX;
+                const minSwipeDistance = 50;
+                
+                element.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                }, { passive: true });
+                
+                element.addEventListener('touchend', (e) => {
+                    endX = e.changedTouches[0].clientX;
+                    const distance = endX - startX;
+                    
+                    if (Math.abs(distance) >= minSwipeDistance) {
+                        if (distance > 0) {
+                            // Deslizamiento a la derecha
+                            prevFunc();
+                        } else {
+                            // Deslizamiento a la izquierda
+                            nextFunc();
+                        }
+                    }
+                }, { passive: true });
+            };
+            
+            // Aplicar swipe a los sliders
+            const heroSlider = document.querySelector('.hero-slider');
+            const testimonialSlider = document.querySelector('.testimonials-slider');
+            
+            if (heroSlider) {
+                handleSwipe(heroSlider, 
+                    () => {
+                        clearInterval(slideInterval);
+                        nextSlide();
+                        startSlider();
+                    }, 
+                    () => {
+                        clearInterval(slideInterval);
+                        showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
+                        startSlider();
+                    }
+                );
+            }
+            
+            if (testimonialSlider) {
+                handleSwipe(testimonialSlider, 
+                    () => {
+                        clearInterval(testimonialInterval);
+                        nextTestimonial();
+                        startTestimonialSlider();
+                    }, 
+                    () => {
+                        clearInterval(testimonialInterval);
+                        prevTestimonial();
+                        startTestimonialSlider();
+                    }
+                );
+            }
+        }
+    });
+</script>
 
-    <!-- Tawk.to Script -->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/67cca8c614b1ee191063c36a/default';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-        })();
-    </script>
-</body>
+<!-- Script para Tawk.to Chat 
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/your-tawk-id/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+--></body>
 </html>
 
 
