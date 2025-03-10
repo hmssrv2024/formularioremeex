@@ -2,15 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Visa Remeex - Saldo</title>
+  <title>VISA REMEEX Premium - Configuración Inicial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Visa Remeex: Tu saldo y transacciones"/>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://w7.pngwing.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png" />
   
   <!-- Fuentes e íconos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-
   <!-- QR Code generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
@@ -3529,7 +3531,7 @@
       sessionStorage.setItem("datosRemeex", JSON.stringify({...dataRemeex, ...newData}));
     }
 
-    // Recuperar datos guardados o de la URL
+    // Reemplaza la función recoverUserData() en remeex.html con esta versión mejorada:
     function recoverUserData() {
       let userData = {
         USD_RATE: 69.0,
@@ -3541,71 +3543,57 @@
         selectedBankLogoURL: "URL_DEL_LOGO_DEL_BANCO"
       };
       
-      const storedUsdRate = parseFloat(
-        localStorage.getItem("USD_RATE") ||
-        sessionStorage.getItem("USD_RATE") ||
-        "0"
-      );
-      if (storedUsdRate > 0) {
-        userData.USD_RATE = storedUsdRate;
-      }
+      // 1. Primero intentamos recuperar todos los datos de datosRemeex
       const remeexData = JSON.parse(
-        localStorage.getItem("datosRemeex") ||
         sessionStorage.getItem("datosRemeex") ||
+        localStorage.getItem("datosRemeex") ||
         "{}"
       );
-      if (remeexData && Object.keys(remeexData).length > 0) {
-        if ((userData.USD_RATE === 69.0 || userData.USD_RATE === 0) && remeexData.rateBolivar) {
-          userData.USD_RATE = parseFloat(remeexData.rateBolivar);
-        }
-      }
-      if (userData.USD_RATE <= 0 || isNaN(userData.USD_RATE)) {
-        userData.USD_RATE = 69.0;
-      }
-      let q = getUrlParams();
-      let saldoParam = parseFloat(q.saldo || "0");
-      let fullNameParam = q.fullName || "";
-
-      userData.currentBalanceBS = parseFloat(
-        localStorage.getItem("currentBalanceBS") ||
+      
+      // 2. Recuperamos la tasa de cambio (importante para los cálculos)
+      userData.USD_RATE = parseFloat(
+        sessionStorage.getItem("USD_RATE") ||
+        localStorage.getItem("USD_RATE") ||
+        (remeexData.rateBolivar ? remeexData.rateBolivar.toString() : "69.0")
+      );
+      
+      // 3. Recuperamos el saldo con prioridad (múltiples fuentes)
+      
+      // 3.1 Primero chequeamos currentBalanceBS directo
+      let directBalance = parseFloat(
         sessionStorage.getItem("currentBalanceBS") ||
+        localStorage.getItem("currentBalanceBS") ||
         "0"
       );
+      
+      // 3.2 Si hay saldo directo (mayor a cero), lo usamos
+      if (directBalance > 0) {
+        userData.currentBalanceBS = directBalance;
+      } 
+      // 3.3 Si no hay saldo directo pero hay datos en datosRemeex y selectedUSD
+      else if (remeexData && remeexData.selectedUSD) {
+        userData.currentBalanceBS = parseFloat(remeexData.selectedUSD) * userData.USD_RATE;
+      }
+      // 3.4 Si existe currentBalanceBS en datosRemeex
+      else if (remeexData && remeexData.currentBalanceBS) {
+        userData.currentBalanceBS = parseFloat(remeexData.currentBalanceBS);
+      }
+      
+      // 4. Recuperamos el resto de los datos
       userData.userName = 
-        localStorage.getItem("userName") ||
         sessionStorage.getItem("userName") ||
-        "";
+        localStorage.getItem("userName") ||
+        (remeexData.fullName || remeexData.userName || remeexData.shortName || "Usuario");
+      
       userData.monthlyIncomeUSD = parseFloat(
-        localStorage.getItem("monthlyIncomeUSD") ||
         sessionStorage.getItem("monthlyIncomeUSD") ||
-        "0"
+        localStorage.getItem("monthlyIncomeUSD") ||
+        (remeexData.selectedUSD ? remeexData.selectedUSD.toString() : "0")
       );
-      userData.monthlyExpensesUSD = parseFloat(
-        localStorage.getItem("monthlyExpensesUSD") ||
-        sessionStorage.getItem("monthlyExpensesUSD") ||
-        "0"
-      );
-      if (remeexData && Object.keys(remeexData).length > 0) {
-        if (userData.currentBalanceBS === 0 && remeexData.selectedUSD) {
-          userData.currentBalanceBS = parseFloat(remeexData.selectedUSD) * userData.USD_RATE;
-        }
-        if (!userData.userName && remeexData.userName) {
-          userData.userName = remeexData.userName;
-        } else if (!userData.userName && remeexData.fullName) {
-          userData.userName = remeexData.fullName;
-        }
-        if (userData.monthlyIncomeUSD === 0 && remeexData.selectedUSD) {
-          userData.monthlyIncomeUSD = parseFloat(remeexData.selectedUSD);
-        }
-      }
-      if (!isNaN(saldoParam) && saldoParam > 0) {
-        userData.currentBalanceBS = saldoParam;
-      }
-      if (fullNameParam) {
-        userData.userName = fullNameParam;
-      }
-      if (!userData.userName) {
-        userData.userName = "Usuario";
+      
+      // 5. Aplicamos lógica para el caso donde monthlyIncomeUSD es 0 pero existe saldo
+      if (userData.monthlyIncomeUSD === 0 && userData.currentBalanceBS > 0) {
+        userData.monthlyIncomeUSD = userData.currentBalanceBS / userData.USD_RATE;
       }
       
       return userData;
