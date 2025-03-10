@@ -1,0 +1,3447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Remeex VISA - Transferencias internacionales y remesas sin fronteras. Envía dinero a cualquier parte del mundo de forma rápida, segura y económica.">
+    <meta name="keywords" content="transferencias internacionales, enviar dinero, pagos internacionales, remesas, Visa, transferencias globales">
+    <meta name="theme-color" content="#1A1F71">
+    <title>Remeex VISA | Transferencias y Remesas Internacionales Sin Fronteras</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://remeexvisa.com/">
+    <meta property="og:title" content="Remeex VISA | Transferencias Internacionales Sin Fronteras">
+    <meta property="og:description" content="Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica con Remeex VISA.">
+    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://remeexvisa.com/">
+    <meta property="twitter:title" content="Remeex VISA | Transferencias Internacionales Sin Fronteras">
+    <meta property="twitter:description" content="Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica con Remeex VISA.">
+    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png">
+    
+    <!-- Preconectar con CDNs -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === VARIABLES === */
+        :root {
+            /* Colores principales */
+            --visa-blue: #1A1F71;
+            --visa-blue-light: #2C36A2;
+            --visa-blue-dark: #141850;
+            --visa-blue-hover: #232D88;
+            --visa-gold: #F7B600;
+            --accent-color: #00A1DF;
+            --success-color: #00C389;
+            --warning-color: #FF9F00;
+            --error-color: #FF5A5A;
+            
+            /* Colores neutros */
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            
+            /* Colores de fondo y acento */
+            --light-blue: #E9EEFF;
+            --ultra-light-blue: #F5F7FF;
+            --gradient-blue: linear-gradient(135deg, var(--visa-blue), var(--accent-color));
+            --gradient-gold: linear-gradient(135deg, var(--visa-gold), #FFA040);
+            --gradient-dark: linear-gradient(135deg, var(--visa-blue-dark), var(--visa-blue));
+            
+            /* Sombras */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.08), 0 10px 10px rgba(0, 0, 0, 0.02);
+            --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.06);
+            --shadow-card-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-blue: 0 5px 15px rgba(26, 31, 113, 0.15);
+            --shadow-gold: 0 5px 15px rgba(247, 182, 0, 0.15);
+            
+            /* Tipografía */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            /* Transiciones */
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            /* Espaciado */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+            --spacing-20: 5rem;
+            --spacing-24: 6rem;
+            --spacing-32: 8rem;
+            
+            /* Bordes */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+            
+            /* Z-index */
+            --z-10: 10;
+            --z-20: 20;
+            --z-30: 30;
+            --z-40: 40;
+            --z-50: 50;
+            --z-fixed: 100;
+            --z-modal: 1000;
+        }
+
+        /* === RESET Y BASE === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        input, button, textarea, select {
+            font: inherit;
+            color: inherit;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s var(--ease);
+        }
+        
+        ul, ol {
+            list-style: none;
+        }
+        
+        /* === LAYOUT === */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-4);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section {
+            position: relative;
+            padding: var(--spacing-16) 0;
+            overflow: hidden;
+        }
+        
+        .section-title-wrapper {
+            max-width: 800px;
+            margin: 0 auto var(--spacing-12);
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-subtitle {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: var(--spacing-3);
+            position: relative;
+            padding-bottom: var(--spacing-2);
+        }
+        
+        .section-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-blue);
+            border-radius: var(--radius-full);
+        }
+        
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-5);
+            color: var(--gray-900);
+            position: relative;
+        }
+        
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--spacing-6);
+        }
+        
+        /* === TIPOGRAFÍA === */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-4);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .text-white {
+            color: var(--white);
+        }
+        
+        .text-gradient {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* === COMPONENTES === */
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            border-radius: var(--radius-md);
+            transition: all 0.3s var(--ease-bounce);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            white-space: nowrap;
+            transform-origin: center;
+            z-index: 1;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0%;
+            height: 0%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::after {
+            width: 120%;
+            height: 400%;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: var(--white);
+            box-shadow: var(--shadow-blue);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--visa-blue);
+            border: 1px solid var(--visa-blue);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px) scale(1.02);
+            background-color: var(--light-blue);
+        }
+        
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--white);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .btn-gold:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        .btn-lg {
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+        }
+        
+        .btn-icon {
+            gap: 0.5rem;
+        }
+        
+        .btn-icon i {
+            font-size: 1em;
+            transition: transform 0.3s var(--ease);
+        }
+        
+        .btn:hover .btn-icon i {
+            transform: translateX(4px);
+        }
+        
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .badge-primary {
+            background: rgba(26, 31, 113, 0.08);
+            color: var(--visa-blue);
+            border: 1px solid rgba(26, 31, 113, 0.12);
+        }
+        
+        .badge-success {
+            background-color: rgba(0, 195, 137, 0.08);
+            color: var(--success-color);
+            border: 1px solid rgba(0, 195, 137, 0.12);
+        }
+        
+        .badge-new {
+            background: var(--gradient-blue);
+            color: var(--white);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            box-shadow: var(--shadow-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge-new::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, transparent, transparent, rgba(255, 255, 255, 0.25));
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(30deg);
+            }
+        }
+        
+        .badge-new i {
+            margin-right: 0.25rem;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            position: relative;
+            isolation: isolate;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-card-hover);
+        }
+        
+        /* Feature Card */
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--spacing-6);
+            height: 100%;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: transparent;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-blue);
+            z-index: 1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s var(--ease);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon-wrapper {
+            position: relative;
+            margin-bottom: var(--spacing-5);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+            color: var(--visa-blue);
+            font-size: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.4s var(--ease-bounce);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: var(--visa-blue);
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+        
+        .feature-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-3);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feature-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Step Card */
+        .step-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-card);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: transparent;
+        }
+        
+        .step-number-wrapper {
+            position: relative;
+            margin-bottom: var(--spacing-5);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-blue);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.4s var(--ease-bounce);
+        }
+        
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+        }
+        
+        .step-icon {
+            font-size: 2rem;
+            color: var(--visa-blue);
+            margin-bottom: var(--spacing-4);
+            transition: transform 0.4s var(--ease-bounce), color 0.4s var(--ease);
+        }
+        
+        .step-card:hover .step-icon {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .step-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Stats Card */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s var(--ease-bounce);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-icon {
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-4);
+            color: var(--white);
+            opacity: 0.8;
+            transition: transform 0.4s var(--ease-bounce), opacity 0.4s var(--ease);
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-2);
+            background: linear-gradient(to right, #ffffff, #e6e6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            opacity: 0.9;
+        }
+        
+        /* Testimonial Card */
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-8);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            border: 1px solid var(--gray-100);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: transparent;
+        }
+        
+        .rating {
+            display: inline-flex;
+            gap: 0.25rem;
+            color: var(--visa-gold);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-4);
+            position: relative;
+        }
+        
+        .quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-5);
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .client-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .client-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-1);
+            color: var(--visa-blue);
+        }
+        
+        .client-position {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+        
+        /* Support Card */
+        .support-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            transition: transform 0.4s var(--ease-bounce), box-shadow 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .support-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: transparent;
+        }
+        
+        .support-icon-wrapper {
+            position: relative;
+            margin-bottom: var(--spacing-5);
+        }
+        
+        .support-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+            color: var(--visa-blue);
+            font-size: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.4s var(--ease-bounce);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .support-card:hover .support-icon {
+            background: var(--visa-blue);
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+        
+        .support-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .support-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-5);
+            flex-grow: 1;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: var(--z-fixed);
+            transition: all 0.3s var(--ease);
+            background-color: transparent;
+        }
+        
+        .header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+            transition: height 0.3s;
+        }
+        
+        .header.scrolled .header-container {
+            height: 70px;
+        }
+        
+        .logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s var(--ease-bounce);
+        }
+        
+        .header.scrolled .logo img {
+            transform: scale(0.9);
+        }
+        
+        .nav {
+            display: none;
+        }
+        
+        .nav-list {
+            display: flex;
+            gap: var(--spacing-6);
+        }
+        
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: var(--spacing-2) 0;
+            color: var(--white);
+            transition: color 0.3s var(--ease);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--white);
+            transition: width 0.3s var(--ease);
+            border-radius: var(--radius-full);
+        }
+        
+        .nav-link:hover, 
+        .nav-link.active {
+            color: var(--white);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Cambiar el color de los enlaces al hacer scroll */
+        .header.scrolled .nav-link {
+            color: var(--gray-700);
+            text-shadow: none;
+        }
+        
+        .header.scrolled .nav-link::after {
+            background: var(--gradient-blue);
+        }
+        
+        .header.scrolled .nav-link:hover, 
+        .header.scrolled .nav-link.active {
+            color: var(--visa-blue);
+        }
+        
+        .header-actions {
+            display: none;
+            gap: var(--spacing-3);
+        }
+        
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--white);
+            color: var(--visa-blue);
+            font-size: 1.1rem;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s var(--ease-bounce);
+        }
+        
+        .menu-toggle:hover {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: rotate(90deg);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 320px;
+            height: 100%;
+            background-color: var(--white);
+            z-index: var(--z-modal);
+            transition: right 0.4s var(--ease);
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-4);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .mobile-menu-body {
+            padding: var(--spacing-6);
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu-footer {
+            padding: var(--spacing-4);
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: var(--spacing-3) var(--spacing-3);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-2);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s var(--ease);
+            border-left: 3px solid transparent;
+        }
+        
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            color: var(--visa-blue);
+            background-color: var(--light-blue);
+            border-left-color: var(--visa-blue);
+            padding-left: var(--spacing-5);
+        }
+        
+        .mobile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-3);
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: var(--z-40);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero Section - REDISEÑADO */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 80vh;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .hero-content-wrapper {
+            background-color: var(--white);
+            padding: var(--spacing-12) 0;
+            position: relative;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-badge {
+            margin-bottom: var(--spacing-5);
+            display: inline-block;
+        }
+        
+        .hero-title {
+            margin-bottom: var(--spacing-6);
+            color: var(--visa-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-blue);
+            border-radius: var(--radius-full);
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        /* Slider rediseñado */
+        .hero-slider-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hero-slider {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background-color: var(--white);
+            height: 100%;
+            border: 1px solid var(--gray-100);
+        }
+        
+        .hero-slide {
+            display: none;
+            height: 100%;
+        }
+        
+        .hero-slide.active {
+            display: block;
+            animation: fadeIn 0.6s var(--ease-out) forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-content {
+            padding: var(--spacing-8) var(--spacing-6);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .slide-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-4);
+            color: var(--visa-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-blue);
+            border-radius: var(--radius-full);
+        }
+        
+        .slide-description {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-6);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .slider-controls {
+            position: absolute;
+            bottom: var(--spacing-5);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--spacing-2);
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(26, 31, 113, 0.2);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-bounce);
+            position: relative;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--visa-blue);
+            transform: scale(1.2);
+        }
+        
+        .slider-dot:hover:not(.active) {
+            background-color: rgba(26, 31, 113, 0.4);
+            transform: scale(1.1);
+        }
+        
+        /* YouTube Video Container */
+        .video-container {
+            margin: var(--spacing-12) auto;
+            max-width: 900px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--ultra-light-blue);
+            position: relative;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--spacing-6);
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            position: relative;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-6);
+        }
+        
+        /* Global Coverage Section */
+        .global-coverage {
+            background: var(--gradient-dark);
+            color: var(--white);
+            position: relative;
+        }
+        
+        .map-container {
+            position: relative;
+            margin-top: var(--spacing-8);
+            padding: var(--spacing-8) var(--spacing-6);
+            border-radius: var(--radius-lg);
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-image {
+            margin: 0 auto var(--spacing-6);
+            max-width: 800px;
+            opacity: 0.8;
+        }
+        
+        .world-map {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .map-text {
+            color: var(--white);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-6);
+            font-size: 1.05rem;
+            opacity: 0.9;
+            position: relative;
+            padding: 0 var(--spacing-4);
+        }
+        
+        .map-stats {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--spacing-6);
+            margin-top: var(--spacing-8);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--ultra-light-blue);
+            position: relative;
+        }
+        
+        .testimonials-slider {
+            position: relative;
+            padding: var(--spacing-6) 0;
+        }
+        
+        .testimonial-slide {
+            display: none;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+            animation: fadeIn 0.6s var(--ease-out) forwards;
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-3);
+            margin-top: var(--spacing-6);
+        }
+        
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(26, 31, 113, 0.2);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-bounce);
+            position: relative;
+        }
+        
+        .testimonial-dot.active {
+            background-color: var(--visa-blue);
+            transform: scale(1.2);
+        }
+        
+        .testimonial-dot:hover:not(.active) {
+            background-color: rgba(26, 31, 113, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .testimonial-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 var(--spacing-4);
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .testimonial-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: var(--white);
+            color: var(--visa-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-bounce);
+            pointer-events: auto;
+            border: none;
+        }
+        
+        .testimonial-arrow:hover {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        /* App Section */
+        .app {
+            position: relative;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+        }
+        
+        .app-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .app-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .app-device {
+            position: relative;
+            margin: var(--spacing-8) auto;
+            max-width: 280px;
+        }
+        
+        .app-phone {
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
+        }
+        
+        .app-features {
+            max-width: 650px;
+            margin: var(--spacing-8) auto;
+            text-align: left;
+        }
+        
+        .app-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-4);
+            padding: var(--spacing-3);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s var(--ease);
+            border: 1px solid transparent;
+        }
+        
+        .app-feature:hover {
+            background-color: var(--white);
+            box-shadow: var(--shadow-md);
+            transform: translateX(10px);
+            border-color: var(--gray-100);
+        }
+        
+        .app-feature-icon {
+            color: var(--visa-blue);
+            font-size: 1.1rem;
+            margin-right: var(--spacing-4);
+            margin-top: 0.2rem;
+            transition: transform 0.3s var(--ease-bounce);
+        }
+        
+        .app-feature:hover .app-feature-icon {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+        
+        .app-download {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-4);
+            margin-top: var(--spacing-8);
+        }
+        
+        .app-btn {
+            display: flex;
+            align-items: center;
+            background-color: var(--gray-900);
+            color: var(--white);
+            padding: var(--spacing-3) var(--spacing-5);
+            border-radius: var(--radius-lg);
+            transition: all 0.4s var(--ease-bounce);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .app-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .app-btn i {
+            font-size: 2rem;
+            margin-right: var(--spacing-3);
+            transition: transform 0.3s var(--ease-bounce);
+        }
+        
+        .app-btn:hover i {
+            transform: scale(1.1);
+        }
+        
+        .app-btn-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .app-btn-text {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .app-btn-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: var(--gradient-dark);
+            color: var(--white);
+            position: relative;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            color: var(--white);
+            margin-bottom: var(--spacing-6);
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cta-description {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-8);
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Support Section */
+        .support {
+            background-color: var(--ultra-light-blue);
+            position: relative;
+        }
+        
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: var(--spacing-6);
+            margin-top: var(--spacing-10);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--gray-900);
+            color: var(--gray-400);
+            padding: var(--spacing-16) 0 var(--spacing-8);
+            position: relative;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-8);
+            margin-bottom: var(--spacing-12);
+        }
+        
+        .footer-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(0.9);
+        }
+        
+        .footer-about {
+            margin-bottom: var(--spacing-6);
+            opacity: 0.8;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1rem;
+            transition: all 0.3s var(--ease-bounce);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background-color: var(--visa-blue);
+            color: var(--white);
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: var(--spacing-5);
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: var(--radius-full);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .footer-links li a {
+            opacity: 0.8;
+            transition: all 0.3s var(--ease);
+            position: relative;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-color);
+            transition: width 0.3s var(--ease);
+        }
+        
+        .footer-links li a:hover {
+            opacity: 1;
+            color: var(--white);
+            transform: translateX(5px);
+        }
+        
+        .footer-links li a:hover::after {
+            width: 100%;
+        }
+        
+        .footer-divider {
+            height: 1px;
+            background: linear-gradient(to right, 
+                            transparent, 
+                            rgba(255, 255, 255, 0.1),
+                            transparent);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-4);
+        }
+        
+        .language-selector {
+            position: relative;
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .language-selector select {
+            appearance: none;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-2) var(--spacing-8) var(--spacing-2) var(--spacing-4);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .language-selector::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: var(--spacing-3);
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--white);
+            transition: transform 0.3s var(--ease);
+        }
+        
+        .language-selector:hover::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .language-selector select:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+        
+        .security-text {
+            color: var(--white);
+            opacity: 0.7;
+            text-align: center;
+            margin-bottom: var(--spacing-4);
+            font-size: 0.95rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: var(--spacing-6);
+            right: var(--spacing-6);
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--ease-bounce);
+            z-index: var(--z-30);
+            border: none;
+            box-shadow: var(--shadow-blue);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(26, 31, 113, 0.3);
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: var(--spacing-6);
+            left: var(--spacing-6);
+            width: 50px;
+            height: 50px;
+            background-color: #25D366;
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-bounce);
+            z-index: var(--z-30);
+            border: none;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: var(--z-modal);
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .loader-logo {
+            margin-bottom: var(--spacing-6);
+            transform-origin: center;
+            animation: pulse 2s var(--ease) infinite;
+        }
+        
+        .loader-logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 5px 10px rgba(26, 31, 113, 0.1));
+        }
+        
+        .loader-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .loader-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid rgba(26, 31, 113, 0.1);
+        }
+        
+        .loader-circle:nth-child(1) {
+            border-top-color: var(--visa-blue);
+            animation: spin 1s linear infinite;
+        }
+        
+        .loader-circle:nth-child(2) {
+            border-right-color: var(--accent-color);
+            animation: spin 1.5s linear reverse infinite;
+        }
+        
+        .loader-progress {
+            width: 240px;
+            height: 6px;
+            background-color: var(--gray-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--spacing-4);
+            position: relative;
+        }
+        
+        .loader-bar {
+            height: 100%;
+            width: 0;
+            border-radius: var(--radius-full);
+            background: var(--gradient-blue);
+            transition: width 0.3s ease-out;
+            position: relative;
+        }
+        
+        .loader-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3));
+            transform: translateX(100%);
+            animation: shimmerLoader 2s infinite;
+        }
+        
+        @keyframes shimmerLoader {
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        .loader-text {
+            font-size: 1rem;
+            color: var(--visa-blue);
+            font-weight: 600;
+        }
+        
+        /* Promo Overlay */
+        .promo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: var(--z-modal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        
+        .promo-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .promo-content {
+            position: relative;
+            max-width: 450px;
+            width: 90%;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.5s var(--ease-bounce), opacity 0.5s var(--ease);
+        }
+        
+        .promo-overlay.active .promo-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .promo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transform-origin: center;
+            animation: pulse 3s var(--ease) infinite;
+        }
+        
+        .promo-close {
+            position: absolute;
+            top: var(--spacing-4);
+            right: var(--spacing-4);
+            width: 30px;
+            height: 30px;
+            background-color: var(--white);
+            color: var(--gray-800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s var(--ease-bounce);
+            z-index: 10;
+        }
+        
+        .promo-close:hover {
+            background-color: var(--visa-blue);
+            color: var(--white);
+            transform: rotate(90deg);
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        .delay-5 {
+            transition-delay: 0.5s;
+        }
+
+        .delay-6 {
+            transition-delay: 0.6s;
+        }
+
+        .animated-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animated-pulse {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Media Queries */
+        @media (min-width: 576px) {
+            .container {
+                padding: 0 var(--spacing-5);
+            }
+            
+            .map-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-6);
+            }
+            
+            .grid, 
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .steps-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .hero-title {
+                font-size: 3.25rem;
+            }
+            
+            .map-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .support-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-logo, 
+            .footer-title, 
+            .footer-about {
+                text-align: left;
+            }
+            
+            .footer-links {
+                align-items: flex-start;
+            }
+            
+            .social-icons {
+                justify-content: flex-start;
+            }
+            
+            .footer-title::after {
+                left: 0;
+                transform: none;
+            }
+            
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .language-selector {
+                margin-bottom: 0;
+            }
+            
+            .security-text {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                padding: 0 var(--spacing-8);
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .nav {
+                display: block;
+            }
+            
+            .header-actions {
+                display: flex;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .support-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .testimonial-card {
+                padding: var(--spacing-10);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 2fr repeat(4, 1fr);
+            }
+            
+            .app-container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--spacing-10);
+            }
+            
+            .app-content {
+                text-align: left;
+                order: 1;
+                flex: 1;
+            }
+            
+            .app-device {
+                order: 2;
+                flex: 1;
+                margin: 0;
+            }
+            
+            .app-features {
+                text-align: left;
+                margin-left: 0;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0 var(--spacing-10);
+            }
+            
+            .section-title {
+                font-size: 3.25rem;
+            }
+            
+            .cta-title {
+                font-size: 3rem;
+            }
+        }
+
+        /* Estilos específicos para móviles */
+        @media (max-width: 767px) {
+            /* Header ajustado para móviles */
+            .header-container {
+                height: 70px;
+            }
+            
+            /* Ajustes para el hero en móviles */
+            .hero-image {
+                height: 60vh;
+                object-position: center;
+            }
+            
+            .hero-content-wrapper {
+                padding: var(--spacing-8) 0;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-cta .btn {
+                width: 100%;
+            }
+            
+            /* Ajustar slider para móviles */
+            .slide-content {
+                padding: var(--spacing-5) var(--spacing-4);
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+            
+            .slide-description {
+                font-size: 0.95rem;
+            }
+            
+            /* Video responsive en móviles */
+            .video-container {
+                margin: var(--spacing-8) auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01s !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01s !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .fade-in,
+            .fade-in-left,
+            .fade-in-right {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            
+            .animated-float,
+            .animated-pulse {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
+            </div>
+            <div class="loader-spinner">
+                <div class="loader-circle"></div>
+                <div class="loader-circle"></div>
+            </div>
+            <div class="loader-progress">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-text" id="loader-text">Cargando recursos...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="#hero">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
+                </a>
+            </div>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#hero" class="nav-link active">Inicio</a></li>
+                    <li><a href="https://remeexvisa.com/servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="https://remeexvisa.com/comofunciona" class="nav-link">Cómo Funciona</a></li>
+                    <li><a href="https://remeexvisa.com/coberturaglobal" class="nav-link">Cobertura</a></li>
+                    <li><a href="https://remeexvisa.com/soporte" class="nav-link">Soporte</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="#" class="btn btn-secondary">Acceder</a>
+                <a href="index_remeex.html" class="btn btn-primary">Recibir remesa</a>
+            </div>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo" style="height: 36px; width: auto;">
+            </div>
+            <button class="menu-toggle" id="close-menu" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu-body">
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="#hero" class="mobile-nav-link active">Inicio</a></li>
+                    <li><a href="https://remeexvisa.com/servicios" class="mobile-nav-link">Servicios</a></li>
+                    <li><a href="https://remeexvisa.com/comofunciona" class="mobile-nav-link">Cómo Funciona</a></li>
+                    <li><a href="https://remeexvisa.com/coberturaglobal" class="mobile-nav-link">Cobertura</a></li>
+                    <li><a href="https://remeexvisa.com/soporte" class="mobile-nav-link">Soporte</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="mobile-menu-footer">
+            <div class="mobile-actions">
+                <a href="#" class="btn btn-secondary">Acceder</a>
+                <a href="index_remeex.html" class="btn btn-primary">Recibir remesa</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section - REDISEÑADO -->
+    <section id="hero" class="hero">
+        <!-- Imagen principal del hero -->
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPtD8FqtVMZL8Zfjk7jv58EcNiPtEb0Bwy0G_GTeVuileKbzX7ZQK0ewOePWLS61NsgiLDHpW8eosS8j2RRRCz49ZP9WDVUPxjlkfLz8RnTVg03pZj9ETCoxt8AdQz3EASyJTF9Lcvfsz7qIb_S0DdOfozNWGBu8d8RWXA9agsmTMJW95Lyf2HpkOkIKRx/w945-h600-p-k-no-nu/a-professional-photo-of-a-latin-american_JRyaA1s4SbWZAHkcI4u3bA_y6HdECjgSTir5Hi6Mlv26A.jpeg" alt="Transferencias internacionales" class="hero-image">
+        
+        <!-- Contenido ahora debajo de la imagen -->
+        <div class="hero-content-wrapper">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="badge badge-primary hero-badge fade-in">Transfiere dinero con confianza</span>
+                    <h1 class="hero-title fade-in delay-1">Transferencias globales sin fronteras</h1>
+                    <p class="hero-description fade-in delay-2">Envía dinero a tu familia en cualquier parte del mundo de forma rápida, segura y económica</p>
+                    <div class="hero-cta fade-in delay-3">
+                        <a href="index_remeex.html" class="btn btn-primary btn-lg btn-icon">
+                            <i class="fas fa-paper-plane"></i>
+                            Recibir remesa ya!
+                        </a>
+                        <a href="https://remeexvisa.com/comofunciona" class="btn btn-secondary btn-lg btn-icon">
+                            <i class="fas fa-info-circle"></i>
+                            Cómo funciona
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Slider debajo del hero principal -->
+                <div class="hero-slider-wrapper fade-in delay-4">
+                    <div class="hero-slider">
+                        <div class="hero-slide active">
+                            <div class="slide-content">
+                                <h3 class="slide-title">Envía dinero a todo el mundo</h3>
+                                <p class="slide-description">Conectamos a familias de todo el mundo con nuestras transferencias seguras y rápidas.</p>
+                                <a href="index_remeex.html" class="btn btn-primary btn-icon">
+                                    <i class="fas fa-arrow-right"></i>
+                                    Comenzar ahora
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-slide">
+                            <div class="slide-content">
+                                <h3 class="slide-title">Las mejores tarifas del mercado</h3>
+                                <p class="slide-description">Ahorra en cada transferencia con nuestras tarifas competitivas y tipos de cambio transparentes.</p>
+                                <a href="https://remeexvisa.com/servicios" class="btn btn-primary btn-icon">
+                                    <i class="fas fa-arrow-right"></i>
+                                    Ver tarifas
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-slide">
+                            <div class="slide-content">
+                                <h3 class="slide-title">Recarga con tarjeta de crédito</h3>
+                                <p class="slide-description">Ahora puedes recargar tu cuenta bancaria directamente con tu tarjeta de crédito. Servicio express, instantáneo y sin comisiones.</p>
+                                <a href="index_remeex.html" class="btn btn-gold btn-icon">
+                                    <i class="fas fa-arrow-right"></i>
+                                    Recargar ahora
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-controls">
+                            <span class="slider-dot active" data-slide="0"></span>
+                            <span class="slider-dot" data-slide="1"></span>
+                            <span class="slider-dot" data-slide="2"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video de YouTube -->
+                <div class="video-container fade-in delay-5">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/JFYZBfvBi-A?si=-uJNEIeRSBvn6RN_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle fade-in">Nuestros Beneficios</span>
+                <h2 class="section-title fade-in delay-1">¿Por qué elegir Remeex VISA?</h2>
+                <p class="section-description fade-in delay-2">Descubre las ventajas que nos hacen líderes en transferencias internacionales</p>
+            </div>
+            
+            <div class="grid features-grid">
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Transferencias inmediatas</h3>
+                    <p class="feature-description">Tu dinero llega en minutos a cualquier parte del mundo, cuando más lo necesitan.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Seguridad avanzada</h3>
+                    <p class="feature-description">Con el respaldo de VISA y la más avanzada tecnología de encriptación para proteger cada transacción.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Cobertura en 200+ países</h3>
+                    <p class="feature-description">Alcance global para llegar a tus seres queridos sin importar dónde se encuentren.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Tarifas competitivas</h3>
+                    <p class="feature-description">Las mejores tasas de cambio y comisiones más bajas del mercado para que envíes más por menos.</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Recarga con tarjeta <span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></h3>
+                    <p class="feature-description">Recarga tu cuenta bancaria directamente con tu tarjeta de crédito. ¡Servicio express sin comisiones!</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">Soporte 24/7</h3>
+                    <p class="feature-description">Atención al cliente disponible todos los días del año para resolver cualquier duda o incidencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle fade-in">Proceso Simple</span>
+                <h2 class="section-title fade-in delay-1">Cómo funciona</h2>
+                <p class="section-description fade-in delay-2">Tres simples pasos para conectar con tus seres queridos en cualquier parte del mundo</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-card fade-in delay-1">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">1</div>
+                    </div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="step-title">Regístrate y verifica tu identidad</h3>
+                    <p class="step-description">Crea tu cuenta en menos de 2 minutos y verifica tu identidad de forma segura para comenzar.</p>
+                </div>
+                
+                <div class="step-card fade-in delay-2">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">2</div>
+                    </div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="step-title">Selecciona destinatario y monto</h3>
+                    <p class="step-description">Elige a quién quieres enviar dinero, indica el monto y revisa nuestras competitivas tarifas en tiempo real.</p>
+                </div>
+                
+                <div class="step-card fade-in delay-3">
+                    <div class="step-number-wrapper">
+                        <div class="step-number">3</div>
+                    </div>
+                    <div class="step-icon animated-float">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <h3 class="step-title">Realiza la transferencia</h3>
+                    <p class="step-description">Confirma los detalles, elige tu método de pago preferido y ¡listo! Tu dinero llegará en minutos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Coverage Section -->
+    <section id="global-coverage" class="global-coverage section">
+        <div class="container"><div class="section-title-wrapper">
+                <span class="section-subtitle text-white fade-in">Alcance Internacional</span>
+                <h2 class="section-title text-white fade-in delay-1">Cobertura Global</h2>
+                <p class="section-description text-white fade-in delay-2">Alcance internacional con presencia en más de 200 países y territorios</p>
+            </div>
+            
+            <div class="map-container fade-in delay-3">
+                <div class="map-image">
+                    <svg viewBox="0 0 1200 600" class="world-map">
+                        <path fill="rgba(255, 255, 255, 0.2)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1" d="M150,100 Q400,50 600,100 T1050,100 Q1100,300 1050,500 T600,500 Q400,550 150,500 T150,100" />
+                        <!-- Puntos de conexión -->
+                        <circle cx="300" cy="150" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="450" cy="220" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="600" cy="180" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="750" cy="250" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="900" cy="200" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="350" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="550" cy="380" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="750" cy="350" r="5" fill="#FFC107" class="animated-pulse" />
+                        <circle cx="850" cy="420" r="5" fill="#FFC107" class="animated-pulse" />
+                    </svg>
+                </div>
+                <p class="map-text">Contamos con una extensa red de partners y alianzas estratégicas que nos permiten ofrecer servicios de transferencia en prácticamente cualquier lugar del mundo. Ya sea que envíes dinero a las grandes ciudades o a las zonas rurales más remotas, nosotros te conectamos con tus seres queridos.</p>
+            </div>
+            
+            <div class="map-stats">
+                <div class="stat-card fade-in delay-1">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number animated-pulse" data-count="200">200+</div>
+                    <div class="stat-label">Países</div>
+                </div>
+                
+                <div class="stat-card fade-in delay-2">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number animated-pulse" data-count="20">20M+</div>
+                    <div class="stat-label">Usuarios</div>
+                </div>
+                
+                <div class="stat-card fade-in delay-3">
+                    <div class="stat-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="stat-number animated-pulse" data-count="99.9">99.9%</div>
+                    <div class="stat-label">Satisfacción</div>
+                </div>
+                
+                <div class="stat-card fade-in delay-4">
+                    <div class="stat-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="stat-number animated-pulse">24/7</div>
+                    <div class="stat-label">Disponibilidad</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle fade-in">Experiencias Reales</span>
+                <h2 class="section-title fade-in delay-1">Lo que dicen nuestros clientes</h2>
+                <p class="section-description fade-in delay-2">Miles de personas confían en nosotros para sus transferencias internacionales</p>
+            </div>
+            
+            <div class="testimonials-slider fade-in delay-3">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="quote">"Puedo enviar dinero a mi familia en Colombia en minutos y con las mejores tasas. La nueva función de recarga con tarjeta es increíble, ¡instantánea y sin comisiones!"</p>
+                        <div class="client-info">
+                            <div class="client-name">María Rodríguez</div>
+                            <p class="client-position">Madrid, España</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="quote">"Como estudiante internacional, necesito enviar y recibir dinero regularmente. Remeex VISA ha simplificado todo el proceso y ahora con la recarga desde mi tarjeta todo es aún más rápido."</p>
+                        <div class="client-info">
+                            <div class="client-name">Carlos Mendoza</div>
+                            <p class="client-position">Londres, Reino Unido</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="quote">"Envío remesas a mi familia en Filipinas mensualmente y desde que uso Remeex VISA, el dinero llega más rápido y pago menos comisiones. ¡El servicio express con tarjeta de crédito es un cambio de juego!"</p>
+                        <div class="client-info">
+                            <div class="client-name">Anna Lee</div>
+                            <p class="client-position">Toronto, Canadá</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-arrows">
+                    <button class="testimonial-arrow" id="testimonial-prev" aria-label="Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="testimonial-arrow" id="testimonial-next" aria-label="Siguiente">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="testimonial-controls">
+                    <span class="testimonial-dot active" data-slide="0"></span>
+                    <span class="testimonial-dot" data-slide="1"></span>
+                    <span class="testimonial-dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Section -->
+    <section id="app" class="app section">
+        <div class="container app-container">
+            <div class="app-content">
+                <span class="badge badge-success fade-in">Disponible 24/7</span>
+                <h2 class="section-title fade-in delay-1">Lleva Remeex VISA siempre contigo</h2>
+                <p class="section-description fade-in delay-2">Descarga nuestra aplicación móvil y gestiona tus transferencias desde cualquier lugar, en cualquier momento.</p>
+                
+                <div class="app-features">
+                    <div class="app-feature fade-in delay-1">
+                        <i class="fas fa-check-circle app-feature-icon"></i>
+                        <div>Interfaz intuitiva y fácil de usar</div>
+                    </div>
+                    
+                    <div class="app-feature fade-in delay-2">
+                        <i class="fas fa-check-circle app-feature-icon"></i>
+                        <div>Notificaciones en tiempo real</div>
+                    </div>
+                    
+                    <div class="app-feature fade-in delay-3">
+                        <i class="fas fa-check-circle app-feature-icon"></i>
+                        <div>Acceso rápido con huella digital o Face ID</div>
+                    </div>
+                    
+                    <div class="app-feature fade-in delay-4">
+                        <i class="fas fa-check-circle app-feature-icon"></i>
+                        <div>Recarga tu cuenta con tarjeta de crédito<span class="badge-new"><i class="fas fa-star"></i>NUEVO</span></div>
+                    </div>
+                    
+                    <div class="app-feature fade-in delay-5">
+                        <i class="fas fa-check-circle app-feature-icon"></i>
+                        <div>Historial de transferencias detallado</div>
+                    </div>
+                </div>
+                
+                <div class="app-download">
+                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-1">
+                        <i class="fab fa-apple"></i>
+                        <div class="app-btn-content">
+                            <span class="app-btn-text">Descarga en la</span>
+                            <span class="app-btn-name">App Store</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://play.google.com/store/apps/details?id=com.visa.vdec&hl=es" class="app-btn fade-in delay-2">
+                        <i class="fab fa-google-play"></i>
+                        <div class="app-btn-content">
+                            <span class="app-btn-text">Disponible en</span>
+                            <span class="app-btn-name">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="app-device fade-in delay-4">
+                <div class="app-phone animated-float">
+                    <!-- Representación del teléfono con la app -->
+                    <svg viewBox="0 0 320 640" width="280" height="560">
+                        <rect x="30" y="20" width="260" height="600" rx="30" fill="#1A1F71" />
+                        <rect x="40" y="60" width="240" height="520" rx="5" fill="#FFFFFF" />
+                        <circle cx="160" cy="610" r="20" fill="rgba(255,255,255,0.2)" />
+                        <rect x="140" y="40" width="40" height="8" rx="4" fill="rgba(255,255,255,0.3)" />
+                        <circle cx="200" cy="40" r="5" fill="rgba(255,255,255,0.3)" />
+                        <!-- App UI -->
+                        <rect x="60" y="80" width="200" height="40" rx="20" fill="#E9EEFF" />
+                        <circle cx="80" cy="100" r="10" fill="#1A1F71" />
+                        <rect x="60" y="140" width="90" height="90" rx="10" fill="#E9EEFF" />
+                        <rect x="160" y="140" width="100" height="40" rx="10" fill="#E9EEFF" />
+                        <rect x="160" y="190" width="100" height="40" rx="10" fill="#E9EEFF" />
+                        <rect x="60" y="240" width="200" height="60" rx="10" fill="#00A1DF" opacity="0.2" />
+                        <rect x="60" y="310" width="95" height="120" rx="10" fill="#F7B600" opacity="0.2" />
+                        <rect x="165" y="310" width="95" height="120" rx="10" fill="#1A1F71" opacity="0.2" />
+                        <rect x="60" y="440" width="200" height="60" rx="10" fill="#E9EEFF" />
+                        <rect x="100" y="520" width="120" height="40" rx="20" fill="#1A1F71" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title fade-in">Comienza a conectar sin fronteras</h2>
+                <p class="cta-description fade-in delay-1">Únete a millones de usuarios satisfechos que confían en Remeex VISA para sus transferencias internacionales</p>
+                <a href="index_remeex.html" class="btn btn-secondary btn-lg btn-icon fade-in delay-2">
+                    <i class="fas fa-paper-plane"></i>
+                    Recibir remesa ya!
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="support section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-subtitle fade-in">Asistencia Continua</span>
+                <h2 class="section-title fade-in delay-1">Estamos aquí para ayudarte</h2>
+                <p class="section-description fade-in delay-2">Nuestro equipo de soporte está disponible 24/7 para resolver todas tus dudas</p>
+            </div>
+            
+            <div class="support-grid">
+                <div class="support-card fade-in delay-1">
+                    <div class="support-icon-wrapper">
+                        <div class="support-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                    </div>
+                    <h3 class="support-title">Chat en vivo</h3>
+                    <p class="support-description">Habla con un asesor en tiempo real a través de nuestra web o aplicación móvil.</p>
+                    <a href="#" id="open-chat" class="btn btn-primary btn-icon">
+                        <i class="fas fa-comment"></i>
+                        Iniciar chat
+                    </a>
+                </div>
+                
+                <div class="support-card fade-in delay-2">
+                    <div class="support-icon-wrapper">
+                        <div class="support-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <h3 class="support-title">Correo electrónico</h3>
+                    <p class="support-description">Envíanos tus consultas y te responderemos en menos de 24 horas.</p>
+                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
+                        <i class="fas fa-envelope"></i>
+                        Enviar consulta
+                    </a>
+                </div>
+                
+                <div class="support-card fade-in delay-3">
+                    <div class="support-icon-wrapper">
+                        <div class="support-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                    </div>
+                    <h3 class="support-title">Teléfono</h3>
+                    <p class="support-description">Llámanos para hablar directamente con un asesor especializado.</p>
+                    <a href="tel:+17373018059" class="btn btn-primary btn-icon">
+                        <i class="fas fa-phone"></i>
+                        Llamar ahora
+                    </a>
+                </div>
+                
+                <div class="support-card fade-in delay-4">
+                    <div class="support-icon-wrapper">
+                        <div class="support-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <h3 class="support-title">Centro de ayuda</h3>
+                    <p class="support-description">Consulta nuestras guías, tutoriales y preguntas frecuentes para resolver dudas comunes.</p>
+                    <a href="https://wa.me/+17373018059" class="btn btn-primary btn-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                        Visitar centro
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <a href="#hero">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s16000/remeex.png" alt="Remeex VISA Logo">
+                        </a>
+                    </div>
+                    <p class="footer-about">Conectando familias alrededor del mundo con transferencias rápidas, seguras y económicas. Ahora con recarga instantánea de cuenta bancaria con tarjeta de crédito.</p>
+                    <div class="social-icons">
+                        <a href="https://twitter.com/visa_es" class="social-icon" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.facebook.com/visa_es" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/visa_es" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/visa_es" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/user/visa_es" class="social-icon" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Empresa</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://visa.es">Sobre nosotros</a></li>
+                        <li><a href="https://visa.es">Carreras</a></li>
+                        <li><a href="https://visa.es">Sala de prensa</a></li>
+                        <li><a href="https://visa.es">Responsabilidad social</a></li>
+                        <li><a href="https://visa.es">Inversores</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://visa.es">Transferencias internacionales</a></li>
+                        <li><a href="https://visa.es">Recarga con tarjeta de crédito</a></li>
+                        <li><a href="https://visa.es">Pagos recurrentes</a></li>
+                        <li><a href="https://visa.es">Cambio de divisas</a></li>
+                        <li><a href="https://visa.es">Tarjetas virtuales</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Ayuda</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://visa.es">Centro de ayuda</a></li>
+                        <li><a href="https://visa.es">Contáctanos</a></li>
+                        <li><a href="https://visa.es">Preguntas frecuentes</a></li>
+                        <li><a href="https://visa.es">Seguridad</a></li>
+                        <li><a href="https://visa.es">Reportar un problema</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://visa.es">Términos y condiciones</a></li>
+                        <li><a href="https://visa.es">Política de privacidad</a></li>
+                        <li><a href="https://visa.es">Política de cookies</a></li>
+                        <li><a href="https://visa.es">Cumplimiento normativo</a></li>
+                        <li><a href="https://visa.es">Licencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <div class="language-selector">
+                    <select aria-label="Seleccionar idioma">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="pt">Português</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+                
+                <div class="security-text">
+                    Certificaciones de seguridad: SSL Secured | PCI Compliant | VISA Verified
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Remeex VISA. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/+17373018059" class="whatsapp-button" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <!-- Promo Overlay -->
+    <div class="promo-overlay" id="promo-overlay">
+        <div class="promo-content">
+            <button class="promo-close" id="promo-close" aria-label="Cerrar promoción">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1ZMu79Yc6wPdwxws5FU46z64Fav7yuDDTdvlubFKa4fCjPyHSuBH5wowS2iX1kkU48ZGp_BEdL0QpVolvHdqgHbs3Gi4o3o382lQdpY9wDzhR8_ZG9FBe-TBa1xD1ZElRrHDMMHMEbeM9psPfSfabol-P82bn5exgu4tjeoGRZU2CcxuaM5YwMLBGjhlq/s16000/FD.png" alt="Promoción especial" class="promo-image">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Corrección: asegurarse de que el DOM esté cargado completamente antes de ejecutar scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulador de carga - lo primero que se debe ejecutar
+            const loader = document.getElementById('loader');
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderText = document.getElementById('loader-text');
+            
+            // Valores de carga
+            const loadSteps = [
+                { progress: 20, text: "Cargando recursos..." },
+                { progress: 40, text: "Inicializando componentes..." },
+                { progress: 60, text: "Cargando interfaz..." },
+                { progress: 80, text: "Optimizando experiencia..." },
+                { progress: 100, text: "¡Listo para navegar!" }
+            ];
+            
+            let currentStep = 0;
+            
+            function updateLoader() {
+                if (currentStep < loadSteps.length) {
+                    loaderBar.style.width = loadSteps[currentStep].progress + '%';
+                    loaderText.textContent = loadSteps[currentStep].text;
+                    currentStep++;
+                    
+                    const delay = currentStep === loadSteps.length - 1 ? 300 : 400;
+                    setTimeout(updateLoader, delay);
+                } else {
+                    setTimeout(() => {
+                        // Ocultar el loader
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            document.body.classList.add('loaded');
+                            
+                            // Iniciar animaciones de desplazamiento
+                            initScrollAnimations();
+                            
+                            // Mostrar la promoción después de 3 segundos
+                            setTimeout(() => {
+                                document.getElementById('promo-overlay').classList.add('active');
+                            }, 3000);
+                        }, 300);
+                    }, 400);
+                }
+            }
+            
+            // Iniciar el loader inmediatamente 
+            updateLoader();
+            
+            // Referencias DOM para elementos interactivos
+            const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('overlay');
+            const backToTop = document.getElementById('back-to-top');
+            const promoOverlay = document.getElementById('promo-overlay');
+            const promoClose = document.getElementById('promo-close');
+            const openChat = document.getElementById('open-chat');
+            const header = document.getElementById('header');
+            
+            // Cerrar promoción
+            if (promoClose) {
+                promoClose.addEventListener('click', () => {
+                    promoOverlay.classList.remove('active');
+                });
+            }
+            
+            // Abrir chat (Tawk.to o WhatsApp)
+            if (openChat) {
+                openChat.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (typeof Tawk_API !== 'undefined') {
+                        Tawk_API.maximize();
+                    } else {
+                        window.open('https://wa.me/+17373018059', '_blank');
+                    }
+                });
+            }
+            
+            // Menú móvil
+            function toggleMenu() {
+                mobileMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+                
+                if (mobileMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            if (menuToggle && closeMenu && overlay) {
+                menuToggle.addEventListener('click', toggleMenu);
+                closeMenu.addEventListener('click', toggleMenu);
+                overlay.addEventListener('click', toggleMenu);
+            }
+            
+            // Enlaces del menú móvil
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleMenu();
+                });
+            });
+            
+            // Slider Hero
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const sliderDots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            let slideInterval;
+            
+            function showSlide(index) {
+                heroSlides.forEach(slide => slide.classList.remove('active'));
+                sliderDots.forEach(dot => dot.classList.remove('active'));
+                
+                heroSlides[index].classList.add('active');
+                sliderDots[index].classList.add('active');
+                
+                currentSlide = index;
+            }
+            
+            function nextSlide() {
+                let next = (currentSlide + 1) % heroSlides.length;
+                showSlide(next);
+            }
+            
+            function startSlider() {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            sliderDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(slideInterval);
+                    showSlide(index);
+                    startSlider();
+                });
+            });
+            
+            // Iniciar slider automático
+            if (heroSlides.length > 0) {
+                startSlider();
+            }
+            
+            // Slider de testimonios
+            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            const testimonialDots = document.querySelectorAll('.testimonial-dot');
+            const prevBtn = document.getElementById('testimonial-prev');
+            const nextBtn = document.getElementById('testimonial-next');
+            let currentTestimonial = 0;
+            let testimonialInterval;
+            
+            function showTestimonial(index) {
+                testimonialSlides.forEach(slide => slide.classList.remove('active'));
+                testimonialDots.forEach(dot => dot.classList.remove('active'));
+                
+                testimonialSlides[index].classList.add('active');
+                testimonialDots[index].classList.add('active');
+                
+                currentTestimonial = index;
+            }
+            
+            function nextTestimonial() {
+                let next = (currentTestimonial + 1) % testimonialSlides.length;
+                showTestimonial(next);
+            }
+            
+            function prevTestimonial() {
+                let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
+                showTestimonial(prev);
+            }
+            
+            function startTestimonialSlider() {
+                testimonialInterval = setInterval(nextTestimonial, 6000);
+            }
+            
+            testimonialDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    showTestimonial(index);
+                    startTestimonialSlider();
+                });
+            });
+            
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    prevTestimonial();
+                    startTestimonialSlider();
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    clearInterval(testimonialInterval);
+                    nextTestimonial();
+                    startTestimonialSlider();
+                });
+            }
+            
+            // Iniciar slider de testimonios si hay testimonios
+            if (testimonialSlides.length > 0) {
+                startTestimonialSlider();
+            }
+            
+            // Botón de volver arriba y efectos de scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop && backToTop.classList.add('active');
+                } else {
+                    backToTop && backToTop.classList.remove('active');
+                }
+                
+                // Header con efecto al hacer scroll
+                if (window.scrollY > 10) {
+                    header && header.classList.add('scrolled');
+                } else {
+                    header && header.classList.remove('scrolled');
+                }
+                
+                // Actualizar animaciones scroll
+                handleScrollAnimation();
+                
+                // Actualizar navegación activa
+                updateActiveNavOnScroll();
+            });
+            
+            if (backToTop) {
+                backToTop.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Navegación suave para enlaces de anclaje
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') !== "#") {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Actualizar clase active en la navegación
+                            document.querySelectorAll('.nav-link').forEach(navLink => {
+                                navLink.classList.remove('active');
+                            });
+                            
+                            const activeNavLink = document.querySelector(`.nav-link[href="${targetId}"]`);
+                            if (activeNavLink) {
+                                activeNavLink.classList.add('active');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Animaciones al hacer scroll
+            function initScrollAnimations() {
+                // Inicializar todas las animaciones activando las que ya están visibles
+                handleScrollAnimation();
+            }
+            
+            function handleScrollAnimation() {
+                const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+                
+                const elementInView = (el, percentageScroll = 100) => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    return (
+                        elementTop <= 
+                        ((window.innerHeight || document.documentElement.clientHeight) * (percentageScroll/100))
+                    );
+                };
+                
+                const displayScrollElement = (element) => {
+                    element.classList.add('visible');
+                };
+                
+                animatedElements.forEach((el) => {
+                    if (elementInView(el, 85)) {
+                        displayScrollElement(el);
+                    }
+                });
+            }
+            
+            // Actualizar navegación activa al hacer scroll
+            function updateActiveNavOnScroll() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                const scrollPosition = window.scrollY + window.innerHeight / 3;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - (header ? header.offsetHeight : 0);
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Animación de contadores para estadísticas
+            function animateCounters() {
+                const counters = document.querySelectorAll('.stat-number[data-count]');
+                
+                // Usar IntersectionObserver si está disponible
+                if ('IntersectionObserver' in window) {
+                    const counterObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const counter = entry.target;
+                                animateCounter(counter);
+                                counterObserver.unobserve(counter);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    
+                    counters.forEach(counter => {
+                        counterObserver.observe(counter);
+                    });
+                } else {
+                    // Fallback para navegadores que no soportan IntersectionObserver
+                    counters.forEach(counter => {
+                        animateCounter(counter);
+                    });
+                }
+                
+                function animateCounter(counter) {
+                    const target = parseFloat(counter.getAttribute('data-count'));
+                    let count = 0;
+                    const duration = 2000; // ms
+                    const increment = target / (duration / 16); // Para 60fps aproximadamente
+                    
+                    // Animación del contador
+                    const updateCount = () => {
+                        count += increment;
+                        if (count < target) {
+                            counter.textContent = Math.ceil(count) + '+';
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            counter.textContent = target + '+';
+                        }
+                    };
+                    
+                    requestAnimationFrame(updateCount);
+                }
+            }
+            
+            // Llamar a animateCounters para iniciar las animaciones
+            animateCounters();
+            
+            // Detectar soporte táctil
+            const isTouchDevice = () => {
+                return (('ontouchstart' in window) ||
+                        (navigator.maxTouchPoints > 0) ||
+                        (navigator.msMaxTouchPoints > 0));
+            };
+            
+            if (isTouchDevice()) {
+                document.body.classList.add('touch-device');
+                
+                // Funcionalidad de deslizar para sliders en dispositivos táctiles
+                const handleSwipe = (element, nextFunc, prevFunc) => {
+                    if (!element) return;
+                    
+                    let startX, endX;
+                    const minSwipeDistance = 50;
+                    
+                    element.addEventListener('touchstart', (e) => {
+                        startX = e.touches[0].clientX;
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchend', (e) => {
+                        endX = e.changedTouches[0].clientX;
+                        const distance = endX - startX;
+                        
+                        if (Math.abs(distance) >= minSwipeDistance) {
+                            if (distance > 0) {
+                                // Deslizamiento a la derecha - anterior
+                                prevFunc();
+                            } else {
+                                // Deslizamiento a la izquierda - siguiente
+                                nextFunc();
+                            }
+                        }
+                    }, { passive: true });
+                };
+                
+                // Aplicar swipe a los sliders
+                const heroSlider = document.querySelector('.hero-slider');
+                const testimonialSlider = document.querySelector('.testimonials-slider');
+                
+                if (heroSlider) {
+                    handleSwipe(heroSlider, 
+                        () => {
+                            clearInterval(slideInterval);
+                            nextSlide();
+                            startSlider();
+                        }, 
+                        () => {
+                            clearInterval(slideInterval);
+                            showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
+                            startSlider();
+                        }
+                    );
+                }
+                
+                if (testimonialSlider) {
+                    handleSwipe(testimonialSlider, 
+                        () => {
+                            clearInterval(testimonialInterval);
+                            nextTestimonial();
+                            startTestimonialSlider();
+                        }, 
+                        () => {
+                            clearInterval(testimonialInterval);
+                            prevTestimonial();
+                            startTestimonialSlider();
+                        }
+                    );
+                }
+            }
+        });
+    </script>
+
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/67cca8c614b1ee191063c36a/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+</body>
+</html>
