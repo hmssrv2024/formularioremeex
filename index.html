@@ -1,279 +1,432 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iván Collado Chozas - Professional CV</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 210mm; /* Letter width in mm */
-            width: 100%;
-            margin: 0 auto;
-            padding: 10mm;
-            background-color: #f4f6f9;
-        }
-        .cv-container {
-            background-color: white;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-            border-radius: 12px;
-            padding: 20mm;
-            position: relative;
-        }
-        /* Header */
-        .header {
-            border-bottom: 3px solid #2c3e50;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .name {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #2c3e50;
-            letter-spacing: -1px;
-        }
-        .tagline {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            font-weight: 300;
-            margin-top: 5px;
-        }
-        .qr-header img {
-            width: 80px;
-            height: 80px;
-        }
-        /* Two-column layout */
-        .content-wrapper {
-            display: flex;
-            gap: 20px;
-        }
-        .sidebar {
-            width: 30%;
-        }
-        .main-content {
-            width: 70%;
-        }
-        /* Section titles with icons */
-        .section-title {
-            font-size: 1.2rem;
-            color: #2980b9;
-            border-bottom: 2px solid #2980b9;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-        }
-        .section-title i {
-            margin-right: 10px;
-            color: #2980b9;
-        }
-        .section-title-sidebar {
-            font-size: 1rem;
-            color: #2980b9;
-            margin-bottom: 10px;
-            font-weight: 500;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-        }
-        .section-title-sidebar i {
-            margin-right: 8px;
-            color: #2980b9;
-        }
-        /* Contact Info with Icons */
-        .contact-info p {
-            font-size: 0.85rem;
-            color: #34495e;
-            margin-bottom: 5px;
-        }
-        .contact-info i {
-            color: #2980b9;
-            margin-right: 5px;
-            width: 15px;
-            text-align: center;
-        }
-        /* Skills */
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .skill-tag {
-            background-color: #3498db;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 300;
-        }
-        /* Professional Summary */
-        .professional-summary p {
-            font-size: 0.95rem;
-        }
-        /* Experience Items as Cards */
-        .experience-item {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .job-title {
-            font-weight: 700;
-            color: #2c3e50;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        .job-details {
-            color: #7f8c8d;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-        .experience-item ul {
-            margin-left: 20px;
-            font-size: 0.9rem;
-        }
-        /* Education and Additional Info */
-        .education p, .additional-info ul {
-            font-size: 0.9rem;
-        }
-        .additional-info ul {
-            margin-left: 20px;
-        }
-        .additional-info li {
-            margin-bottom: 5px;
-        }
-        /* Print Styles */
-        @media print {
-            body {
-                padding: 0;
-                background-color: white;
-            }
-            .cv-container {
-                box-shadow: none;
-                padding: 10mm;
-            }
-        }
-        /* Optional Responsiveness */
-        @media (max-width: 600px) {
-            .content-wrapper {
-                flex-direction: column;
-            }
-            .sidebar, .main-content {
-                width: 100%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currículum - Iván Collado Chozas</title>
+
+  <!-- Tipografía moderna (Montserrat) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* --------------------------------
+       RESETEO BÁSICO Y AJUSTES GENERALES
+    ---------------------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #2c3e50;
+      background-color: #f8f9fa;
+      margin: 0 auto;
+      width: 216mm; /* Ajustado a tamaño "Oficio" */
+      min-height: 356mm;
+      /* El padding inferior ayuda cuando se imprime en varias páginas */
+      padding-bottom: 20mm;
+    }
+
+    .cv-container {
+      display: flex;
+      flex-direction: column;
+      padding: 25mm 20mm;
+      background-color: #ffffff;
+    }
+
+    /* --------------------------------
+       CABECERA
+    ---------------------------------- */
+    .header {
+      border-bottom: 2px solid #e2e2e2;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .name {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 6px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 400;
+      color: #7f8c8d;
+      margin-bottom: 10px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 30px;
+      font-size: 14px;
+      color: #34495e;
+    }
+
+    /* --------------------------------
+       CONTENIDO A DOS COLUMNAS
+    ---------------------------------- */
+    .content {
+      display: flex;
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .main-column {
+      flex: 2;
+    }
+
+    .side-column {
+      flex: 1;
+      border-left: 2px solid #e2e2e2;
+      padding-left: 20px;
+    }
+
+    /* --------------------------------
+       TITULOS DE SECCIÓN
+    ---------------------------------- */
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 12px;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background-color: #3498db;
+      margin-top: 4px;
+    }
+
+    /* --------------------------------
+       SECCIÓN DE PERFIL
+    ---------------------------------- */
+    .profile-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #34495e;
+    }
+
+    /* --------------------------------
+       EXPERIENCIA
+    ---------------------------------- */
+    .experience-item {
+      margin-bottom: 20px;
+    }
+
+    .job-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .job-details {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-bottom: 8px;
+    }
+
+    .job-description {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .job-description li {
+      position: relative;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #34495e;
+      line-height: 1.4;
+      padding-left: 18px;
+    }
+
+    .job-description li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #3498db;
+    }
+
+    /* --------------------------------
+       FORTALEZAS PROFESIONALES
+    ---------------------------------- */
+    .strengths-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .strengths-list li {
+      position: relative;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #34495e;
+      line-height: 1.4;
+      padding-left: 18px;
+    }
+
+    .strengths-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #3498db;
+    }
+
+    /* --------------------------------
+       EDUCACIÓN
+    ---------------------------------- */
+    .education-item {
+      margin-bottom: 15px;
+    }
+
+    .education-degree {
+      font-weight: 600;
+      font-size: 15px;
+      color: #2c3e50;
+      margin-bottom: 4px;
+    }
+
+    .education-details {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+
+    /* --------------------------------
+       HABILIDADES
+    ---------------------------------- */
+    .skills-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .skills-list li {
+      position: relative;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #34495e;
+      line-height: 1.4;
+      padding-left: 18px;
+    }
+
+    .skills-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #3498db;
+    }
+
+    /* --------------------------------
+       INFORMACIÓN ADICIONAL
+    ---------------------------------- */
+    .info-item {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      color: #34495e;
+    }
+
+    /* --------------------------------
+       AJUSTES PARA IMPRESIÓN
+    ---------------------------------- */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cv-container {
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="cv-container">
-        <header class="header">
-            <div>
-                <h1 class="name">IVÁN COLLADO CHOZAS</h1>
-                <p class="tagline">Versatile Professional | Hospitality & Retail Specialist</p>
+  <div class="cv-container">
+    <!-- CABECERA: NOMBRE Y DATOS DE CONTACTO -->
+    <header class="header">
+      <h1 class="name">Iván Collado Chozas</h1>
+      <p class="title">Hospitality & Retail Professional</p>
+      <div class="contact-info">
+        <span>Perth, Australia</span>
+        <span>+61 467 711 489</span>
+        <span>ivancasa93@gmail.com</span>
+        <span>English: B2 | Spanish: Native</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- COLUMNA PRINCIPAL -->
+      <div class="main-column">
+        <!-- PERFIL PROFESIONAL -->
+        <section class="section">
+          <h2 class="section-title">Professional Profile</h2>
+          <p class="profile-text">
+            Dynamic professional with extensive experience across hospitality, retail, and customer service sectors. Combines strong culinary expertise with exceptional people skills and operational efficiency. Seeking to leverage diverse international experience and adaptability in the Australian market.
+          </p>
+        </section>
+
+        <!-- EXPERIENCIA PROFESIONAL -->
+        <section class="section">
+          <h2 class="section-title">Professional Experience</h2>
+
+          <div class="experience-item">
+            <h3 class="job-title">Supermarket Staff</h3>
+            <div class="job-details">
+              <span>La Despensa & DIA Supermarkets, Candeleda, Spain</span>
+              <span>2020-2024</span>
             </div>
-            <div class="qr-header">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/+61467711489" alt="QR Code for WhatsApp">
+            <ul class="job-description">
+              <li>Managed multiple operational roles including cashier, fishmonger, and inventory management, demonstrating exceptional versatility in a fast-paced retail environment</li>
+              <li>Delivered consistently high-quality customer service while maintaining operational efficiency standards</li>
+              <li>Implemented and maintained store organization protocols, product presentation standards, and inventory control systems</li>
+              <li>Collaborated effectively with team members to optimize workflow and enhance customer experience</li>
+            </ul>
+          </div>
+
+          <div class="experience-item">
+            <h3 class="job-title">Advanced Culinary Apprentice</h3>
+            <div class="job-details">
+              <span>Hotel & Restaurant Engø Gård, Tjøme, Norway</span>
+              <span>2017-2018</span>
             </div>
-        </header>
+            <ul class="job-description">
+              <li>Contributed to kitchen operations in a prestigious 5-star hotel known for exceptional gourmet seafood cuisine</li>
+              <li>Mastered advanced Nordic culinary techniques and contemporary cooking methodologies</li>
+              <li>Demonstrated precision and attention to detail in a high-pressure, quality-focused environment</li>
+              <li>Assisted in preparation and presentation of premium dishes for an exclusive clientele</li>
+            </ul>
+          </div>
 
-        <div class="content-wrapper">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <section class="contact-info">
-                    <h2 class="section-title-sidebar"><i class="fas fa-address-card"></i> Contact</h2>
-                    <p><i class="fas fa-map-marker-alt"></i> Perth, Australia</p>
-                    <p><i class="fas fa-phone"></i> +61 467711489 </p>
-                    <p><i class="fas fa-envelope"></i> ivancasa93@gmail.com</p>
-                    <p><i class="fas fa-language"></i> English: B2 Level</p>
-                </section>
-
-                <section class="skills-section">
-                    <h2 class="section-title-sidebar"><i class="fas fa-tools"></i> Key Skills</h2>
-                    <div class="skills">
-                        <span class="skill-tag">Customer Service</span>
-                        <span class="skill-tag">Team Collaboration</span>
-                        <span class="skill-tag">Culinary Arts</span>
-                        <span class="skill-tag">Inventory Management</span>
-                        <span class="skill-tag">Multitasking</span>
-                        <span class="skill-tag">Elderly Care</span>
-                        <span class="skill-tag">Problem Solving</span>
-                        <span class="skill-tag">Adaptability</span>
-                    </div>
-                </section>
-
-                <section class="additional-info">
-                    <h2 class="section-title-sidebar"><i class="fas fa-info-circle"></i> Additional Info</h2>
-                    <ul>
-                        <li><strong>Work and Holiday Visa (Subclass 417)</strong> | Valid until 2026</li>
-                        <li>Languages: English (B2), Spanish (Native)</li>
-                    </ul>
-                </section>
+          <div class="experience-item">
+            <h3 class="job-title">Elderly Care Assistant</h3>
+            <div class="job-details">
+              <span>Private Care Services, Spain</span>
+              <span>2018-2020</span>
             </div>
+            <ul class="job-description">
+              <li>Provided comprehensive care services including hygiene assistance, mobility support, and medication management</li>
+              <li>Developed strong empathy and effective communication skills with clients and their families</li>
+              <li>Ensured high quality of life standards for clients with diverse health needs</li>
+              <li>Maintained detailed documentation of care activities and client wellbeing</li>
+            </ul>
+          </div>
+        </section>
 
-            <!-- Main Content -->
-            <div class="main-content">
-                <section class="professional-summary">
-                    <h2 class="section-title"><i class="fas fa-user"></i> Professional Profile</h2>
-                    <p>Adaptable and dynamic professional with a proven track record in hospitality, retail, and customer service. Experienced in diverse roles from culinary arts to elderly care, demonstrating exceptional versatility, quick learning, and strong interpersonal skills. Seeking opportunities to leverage my multifaceted background in the Australian job market.</p>
-                </section>
+        <!-- FORTALEZAS PROFESIONALES -->
+        <section class="section">
+          <h2 class="section-title">Professional Strengths</h2>
+          <ul class="strengths-list">
+            <li><strong>Adaptability & Versatility:</strong> Quickly master diverse roles across multiple industries, adapting seamlessly to new operational environments</li>
+            <li><strong>International Experience:</strong> Valuable experience in multicultural settings across Spain and Norway, developing cultural sensitivity and global perspective</li>
+            <li><strong>Service Excellence:</strong> Comprehensive background spanning retail operations, culinary arts, and care services creating a holistic approach to customer satisfaction</li>
+            <li><strong>Problem-Solving:</strong> Demonstrated ability to identify challenges and implement practical solutions in time-sensitive situations</li>
+          </ul>
+        </section>
+      </div>
 
-                <section class="work-experience">
-                    <h2 class="section-title"><i class="fas fa-briefcase"></i> Work Experience</h2>
-                    <div class="experience-item">
-                        <h3 class="job-title">Supermarket Staff</h3>
-                        <p class="job-details">La Despensa & DIA Supermarkets, Candeleda | 2020-2024</p>
-                        <ul>
-                            <li>Managed multiple roles including cashier, fishmonger, and inventory management</li>
-                            <li>Demonstrated exceptional customer service and operational flexibility</li>
-                            <li>Maintained high standards of store organization and product presentation</li>
-                        </ul>
-                    </div>
-                    <div class="experience-item">
-                        <h3 class="job-title">Advanced Culinary Apprentice</h3>
-                        <p class="job-details">Hotel & Restaurant Engø Gård, Tjøme, Norway | 2017-2018</p>
-                        <ul>
-                            <li>Worked in a prestigious 5-star hotel kitchen, specializing in seafood and gourmet preparations</li>
-                            <li>Mastered advanced Norwegian culinary techniques and modern cooking methods</li>
-                            <li>Collaborated effectively in a dynamic, international kitchen environment</li>
-                        </ul>
-                    </div>
-                    <div class="experience-item">
-                        <h3 class="job-title">Elderly Care Assistant</h3>
-                        <p class="job-details">Private Care Services | 2018-2020</p>
-                        <ul>
-                            <li>Provided comprehensive personal care including hygiene, medication management</li>
-                            <li>Developed strong empathy and professional communication skills</li>
-                            <li>Ensured quality of life and comfort for elderly clients</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="education">
-                    <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
-                    <p><strong>Advanced Diploma in Kitchen Management</strong> - I.E.S San Isidro, Spain (2015-2017)</p>
-                    <p><strong>Technical Degree in Nursing Care Assistant</strong> - I.E.S Isabel de Castilla, Spain (2013-2014)</p>
-                </section>
+      <!-- COLUMNA LATERAL -->
+      <div class="side-column">
+        <!-- EDUCACIÓN -->
+        <section class="section">
+          <h2 class="section-title">Education</h2>
+          <div class="education-item">
+            <h3 class="education-degree">Advanced Diploma in Kitchen Management</h3>
+            <div class="education-details">
+              <span>I.E.S San Isidro, Spain</span>
+              <span>2015-2017</span>
             </div>
-        </div>
+          </div>
+
+          <div class="education-item">
+            <h3 class="education-degree">Technical Degree in Nursing Care Assistant</h3>
+            <div class="education-details">
+              <span>I.E.S Isabel de Castilla, Spain</span>
+              <span>2013-2014</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- HABILIDADES CLAVE -->
+        <section class="section">
+          <h2 class="section-title">Key Skills</h2>
+          <ul class="skills-list">
+            <li>Customer Service</li>
+            <li>Team Collaboration</li>
+            <li>Culinary Arts</li>
+            <li>Inventory Management</li>
+            <li>Multitasking</li>
+            <li>Elderly Care</li>
+            <li>Problem Solving</li>
+            <li>Adaptability</li>
+          </ul>
+        </section>
+
+        <!-- HABILIDADES TÉCNICAS -->
+        <section class="section">
+          <h2 class="section-title">Technical Skills</h2>
+          <ul class="skills-list">
+            <li>Food Preparation & Presentation</li>
+            <li>Menu Planning</li>
+            <li>Inventory Control</li>
+            <li>Health & Safety Protocols</li>
+            <li>Point of Sale Systems</li>
+            <li>Basic First Aid</li>
+          </ul>
+        </section>
+
+        <!-- ESTATUS VISA -->
+        <section class="section">
+          <h2 class="section-title">Visa Status</h2>
+          <div class="info-item">
+            <div class="info-label">Work and Holiday Visa (Subclass 417)</div>
+            <div class="info-value">Valid until 2026</div>
+          </div>
+        </section>
+
+        <!-- IDIOMAS -->
+        <section class="section">
+          <h2 class="section-title">Languages</h2>
+          <div class="info-item">
+            <div class="info-label">English</div>
+            <div class="info-value">B2 Level</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Spanish</div>
+            <div class="info-value">Native</div>
+          </div>
+        </section>
+      </div>
     </div>
+  </div>
 </body>
 </html>
