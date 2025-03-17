@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="header">
+    <h1>RETIRO VISA</h1>
+    <p>Confirmación de Retiro</p>
+  </div>
+  
+  <div class="logo-bar">
+    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
+    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg" alt="MasterCard Logo">
+    <img src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" alt="American Express Logo">
+  </div>
+  
+  <div class="content">
+    <h1>Confirmación de Retiro VISA</h1>
+    <p>Confirma los detalles de tu retiro antes de proceder.</p>
+    
+    <div style="background: #f0f4ff; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="font-weight: 500;">Monto:</span>
+        <strong>500 USD</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <span style="font-weight: 500;">Banco:</span>
+        <strong>Banco Nacional</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="font-weight: 500;">Fecha:</span>
+        <strong id="fechaActual">Cargando...</strong>
+      </div>
+    </div>
+    
+    <div style="display: flex; gap: 20px;">
+      <button onclick="redirigir('retiroremeex')" class="btn" style="background: linear-gradient(135deg, #64748b, #94a3b8);">
+        Atrás
+      </button>
+      <button onclick="confirmarRetiro()" class="btn">
+        Confirmar Retiro
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Actualizar la fecha actual
+  const ahora = new Date();
+  document.getElementById('fechaActual').textContent = ahora.toLocaleDateString();
+  
+  // Función para confirmar el retiro
+  function confirmarRetiro() {
+    alert("Retiro confirmado. Redirigiendo a la página final...");
+    redirigir('retiroremeexvisafinal');
+  }
+</script>
