@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="header">
+    <h1>RETIRO REMEEX</h1>
+    <p>Gestión de Retiros</p>
+  </div>
+  
+  <div class="logo-bar">
+    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
+    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg" alt="MasterCard Logo">
+    <img src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" alt="American Express Logo">
+  </div>
+  
+  <div class="content">
+    <h1>Retiro de Fondos</h1>
+    <p>Desde aquí podrás gestionar tus retiros a cuentas bancarias internacionales.</p>
+    
+    <div style="margin-bottom: 30px;">
+      <a href="retiroremeexvisa.html" class="btn">Continuar al siguiente paso <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div>
+      <button onclick="volverAlInicio()" class="btn" style="background: linear-gradient(135deg, #64748b, #94a3b8);">
+        Volver al inicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Este script se ejecutará cuando esta página se cargue
+  console.log("Página RetirorRemeex cargada correctamente con AJAX");
+  
+  // Ejemplo de función JavaScript que usa redirigir() en lugar de window.location.href
+  function volverAlInicio() {
+    // En vez de: window.location.href = "index_remeex.html";
+    redirigir('index_remeex_content');
+  }
+</script>
