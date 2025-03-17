@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header">
+    <h1>REMEEX</h1>
+    <p>Panel Principal</p>
+  </div>
+  
+  <div class="logo-bar">
+    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
+    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg" alt="MasterCard Logo">
+    <img src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" alt="American Express Logo">
+  </div>
+  
+  <div class="content">
+    <h1>Panel Principal de Remeex</h1>
+    <p>Desde aquí podrás gestionar todas tus operaciones de remesas internacionales.</p>
+    
+    <div style="display: flex; gap: 20px;">
+      <a href="retiroremeex.html" class="btn">Ir a Retiro <i class="fas fa-money-bill-wave"></i></a>
+      <button onclick="redirigir('retiroremeexvisa')" class="btn">Usar JavaScript Redirect</button>
+    </div>
+    
+    <p style="margin-top: 30px;">
+      Observa que puedes navegar usando tanto enlaces normales como redirecciones JavaScript (window.location.href).
+      En ambos casos, la URL permanece igual y el contenido se carga mediante AJAX.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Este script se ejecutará cuando esta página se cargue
+  console.log("Página Remeex cargada correctamente con AJAX");
+  
+  // Puedes incluir cualquier JavaScript específico de esta página aquí
+  document.title = "Remeex - Panel Principal";
+</script>
