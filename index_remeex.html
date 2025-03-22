@@ -1,0 +1,4323 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>VISA REMEEX Premium - Configuración Inicial</title>
+  <!-- Se desactiva el zoom en móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Selección de Idioma, Tipo de Tarjeta, País, Tipo de Transacción y Términos." />
+
+  <link rel="icon" href="https://w7.pngwing.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+  <!-- ESTILOS PARA EL PRELOADER -->
+  <style>
+    /* Preloader Styles */
+    #preloader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a1029 0%, #1a1f71 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease-out;
+    }
+    .preloader-container {
+      width: 90%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      animation: glow 4s infinite alternate;
+    }
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(26, 31, 113, 0.3);
+      }
+      50% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 50px rgba(26, 31, 113, 0.6);
+      }
+    }
+    .preloader-logo {
+      width: 200px;
+      margin-bottom: 1.5rem;
+      animation: pulsate 2s ease-in-out infinite alternate;
+    }
+    @keyframes pulsate {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.05); opacity: 0.8; }
+    }
+    .preloader-title {
+      color: #1a1f71;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .preloader-message {
+      color: #475569;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .preloader-progress-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .preloader-progress-bar {
+      height: 12px;
+      background-color: #e2e8f0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    }
+    .preloader-progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #1a1f71, #3b82f6);
+      transition: width 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .preloader-progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+    .preloader-progress-text {
+      position: absolute;
+      top: -25px;
+      right: 0;
+      font-weight: 600;
+      color: #1a1f71;
+      font-size: 0.9rem;
+    }
+    .preloader-info {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+    .preloader-step {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      background: #f8fafc;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+    }
+    .preloader-step.active {
+      background: #f0f9ff;
+      opacity: 1;
+      border-left: 3px solid #1a1f71;
+    }
+    .preloader-step i {
+      color: #1a1f71;
+      font-size: 1.1rem;
+    }
+    .preloader-step span {
+      color: #475569;
+      font-size: 0.9rem;
+    }
+    .preloader-step.active span {
+      color: #1a1f71;
+      font-weight: 500;
+    }
+    .preloader-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 480px) {
+      .preloader-container {
+        padding: 1.5rem;
+      }
+      
+      .preloader-logo {
+        width: 160px;
+      }
+      
+      .preloader-title {
+        font-size: 1.4rem;
+      }
+      
+      .preloader-message {
+        font-size: 0.9rem;
+      }
+      
+      .preloader-step {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .preloader-step span {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+  
+  <!-- ESTILOS PARA EL POPUP DE BIENVENIDA (Ventana emergente moderna) -->
+  <style>
+    /* Estilos para la ventana emergente de bienvenida */
+    .welcome-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+    }
+    
+    .welcome-popup.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    .popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .popup-container {
+      position: relative;
+      width: 95%;
+      max-width: 550px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem 2rem;
+      overflow: hidden;
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+      border: 2px solid var(--border-white);
+      transform: translateY(30px);
+      animation: popup-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    
+    @keyframes popup-enter {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Botón de cerrar */
+    .popup-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    
+    .popup-close:hover {
+      color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+      transform: rotate(90deg);
+    }
+    
+    /* Botones de navegación lateral */
+    .popup-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .popup-container:hover .popup-nav {
+      opacity: 1;
+    }
+    
+    .popup-nav:hover {
+      background: rgba(255, 255, 255, 0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .popup-nav-prev {
+      left: 15px;
+    }
+    
+    .popup-nav-next {
+      right: 15px;
+    }
+    
+    .popup-nav.disabled {
+      opacity: 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    
+    .popup-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    /* Sustituimos el círculo azul por un contenedor de imagen (Remeex Visa) */
+    .popup-logo {
+      width: 140px;
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+    .popup-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Contenedor de mensajes */
+    .popup-message-container {
+      height: 80px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .popup-message {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+      padding: 0 1rem;
+    }
+    
+    .popup-message.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    #userName {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    
+    /* Spinner con 3 puntos, ajustamos distancias */
+    .popup-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+    .spinner-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin: 0 10px;
+      opacity: 0.8;
+      animation: spinner-orbit 2s infinite ease-in-out;
+    }
+    .circle1 {
+      background: var(--primary);
+      animation-delay: -0.4s;
+    }
+    .circle2 {
+      background: var(--accent);
+      animation-delay: -0.2s;
+    }
+    .circle3 {
+      background: var(--secondary);
+      animation-delay: 0s;
+    }
+    @keyframes spinner-orbit {
+      0%, 100% {
+        transform: scale(1) translateY(0);
+      }
+      25% {
+        transform: scale(1.3) translateY(-10px);
+      }
+      50% {
+        transform: scale(1) translateY(0);
+      }
+      75% {
+        transform: scale(0.7) translateY(10px);
+      }
+    }
+    
+    /* Indicadores de paso clicables */
+    .popup-steps {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 1rem 0 2rem;
+    }
+    
+    .step-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #e2e8f0;
+      transition: all 0.3s ease;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    
+    .step-indicator:hover {
+      background-color: #cbd5e1;
+      width: 20px;
+      border-radius: 4px;
+    }
+    
+    .step-indicator.active {
+      width: 30px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      cursor: default;
+    }
+    
+    /* Botón adaptado */
+    .popup-btn {
+      width: 180px;
+      margin: 0 auto;
+    }
+    
+    .popup-btn .btn-glow-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .popup-btn .btn-glow-icon {
+      margin-left: 10px;
+    }
+    
+    /* Media queries para dispositivos móviles */
+    @media (max-width: 768px) {
+      .popup-container {
+        padding: 2rem 1.5rem;
+        max-width: 500px;
+      }
+      
+      .popup-message {
+        font-size: 1.1rem;
+      }
+      
+      .popup-btn {
+        width: 150px;
+      }
+      
+      .popup-logo {
+        width: 110px;
+      }
+      
+      .popup-spinner {
+        margin: 1rem 0;
+      }
+      .spinner-circle {
+        width: 16px;
+        height: 16px;
+        margin: 0 7px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .popup-container {
+        padding: 1.8rem 1.2rem;
+        max-width: 400px;
+      }
+      
+      .popup-logo {
+        width: 100px;
+      }
+
+      .popup-message {
+        font-size: 1rem;
+      }
+      .popup-message-container {
+        height: 70px;
+      }
+      
+      .spinner-circle {
+        width: 14px;
+        height: 14px;
+        margin: 0 5px;
+      }
+      
+      .popup-btn {
+        width: 130px;
+      }
+      
+      .popup-nav {
+        display: none;
+      }
+    }
+  </style>
+
+  <!-- ESTILOS GENERALES DE LA PÁGINA -->
+  <style>
+    :root {
+      /* Colores modernos inspirados en Visa */
+      --primary: #1a1f71; /* Azul oscuro de Visa */
+      --primary-dark: #0d153e; 
+      --secondary: #3b82f6;
+      --accent: #60a5fa;
+      --success: #22c55e;
+      --success-dark: #16a34a;
+      --danger: #ef4444;
+      --danger-dark: #dc2626;
+      --warning: #f59e0b;
+      --warning-dark: #d97706;
+
+      /* Colores para la animación del borde */
+      --border-white: #ffffff;
+      --border-gray: #d1d5db;
+      --border-light-blue: #93c5fd;
+
+      /* Fondos y texto */
+      --background: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-light: #94a3b8;
+
+      /* Diseño */
+      --border-radius-xl: 28px;
+      --border-radius-lg: 24px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      
+      /* Efectos */
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 650px;
+      width: 100%;
+      margin-top: 2rem;
+      background: var(--card-bg);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 2px solid var(--border-white);
+      overflow: hidden;
+      position: relative;
+      transition: var(--transition);
+      animation: glow 6s ease infinite, border-blink 6s linear infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 40px rgba(26, 31, 113, 0.5), 0 0 80px rgba(26, 31, 113, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 70px rgba(26, 31, 113, 0.8), 0 0 100px rgba(26, 31, 113, 0.6);
+      }
+    }
+
+    @keyframes border-blink {
+      0% {
+        border-color: var(--border-white);
+      }
+      33% {
+        border-color: var(--border-gray);
+      }
+      66% {
+        border-color: var(--border-light-blue);
+      }
+      100% {
+        border-color: var(--border-white);
+      }
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-top-left-radius: var(--border-radius-xl);
+      border-top-right-radius: var(--border-radius-xl);
+      background-image: var(--aurora-gradient);
+      animation: aurora-animation 15s ease infinite;
+    }
+
+    @keyframes aurora-animation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    :root {
+      --aurora-gradient: linear-gradient(
+        120deg, 
+        rgba(26, 31, 113, 0.4), 
+        rgba(25, 35, 102, 0.3), 
+        rgba(30, 40, 120, 0.3), 
+        rgba(26, 31, 113, 0.2)
+      );
+      background-size: 400% 400%;
+    }
+
+    .header-logo {
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+      transform: skewX(-20deg);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      animation: flash 3s infinite;
+    }
+
+    @keyframes flash {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      50% {
+        left: 100%;
+        opacity: 1;
+      }
+      60% {
+        opacity: 0;
+      }
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    .logo-bar {
+      background: var(--card-bg);
+      padding: 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(50%);
+      }
+    }
+
+    .logo-bar img {
+      height: 36px;
+      filter: grayscale(20%);
+      opacity: 0.9;
+      transition: var(--transition);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-bar img:hover {
+      filter: none;
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .progress-bar {
+      height: 16px;
+      background-color: #e2e8f0;
+      border-radius: var(--border-radius);
+      margin: 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 0%;
+      transition: width 0.6s ease-in-out;
+      border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-45deg);
+      animation: move 2s linear infinite;
+    }
+
+    @keyframes move {
+      0% {
+        left: -50%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .section-content {
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease-out;
+      display: none;
+    }
+
+    .section-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-content h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--primary);
+      display: inline-block;
+      line-height: 1.4;
+    }
+
+    .section-content h2 i {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin-right: 0.75rem;
+      vertical-align: middle;
+    }
+
+    .user-name-title {
+      font-weight: 600;
+      display: inline;
+    }
+
+    .form-group {
+      margin-bottom: 1.75rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      background: #fff;
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+
+    .form-control:hover {
+      border-color: #cbd5e1;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(26, 31, 113, 0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: var(--border-radius);
+      border: 1px solid #e2e8f0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 4px;
+      border: 2px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .checkbox-group a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .checkbox-group a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      gap: 1rem;
+    }
+
+    .btn-container {
+      position: relative;
+      width: 180px;
+      height: 50px;
+    }
+
+    .btn-glow-effect {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(
+        90deg, 
+        transparent, 
+        var(--primary), 
+        var(--secondary), 
+        transparent
+      );
+      background-size: 200% 100%;
+      border-radius: 30px;
+      animation: border-glow 3s ease infinite;
+      filter: blur(15px);
+      opacity: 0.7;
+      z-index: 0;
+    }
+
+    @keyframes border-glow {
+      0% {
+        background-position: -100% 0;
+      }
+      50% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: -100% 0;
+      }
+    }
+
+    .btn-glow {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 
+          0 15px 25px rgba(0,0,0,0.3), 
+          inset 0 -4px 8px rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .btn-glow-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-glow-initial {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .btn-glow:hover .btn-glow-initial {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    .btn-glow-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(-100%);
+      color: white;
+    }
+
+    .btn-glow:hover .btn-glow-hover {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .btn-glow-icon {
+      margin-left: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin-top: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem;
+      }
+
+      .header-logo {
+        width: 70%;
+        max-width: 300px;
+      }
+
+      .header p {
+        font-size: 1rem;
+      }
+
+      .logo-bar {
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .logo-bar img {
+        height: 28px;
+      }
+
+      .section-content {
+        padding: 1.5rem;
+      }
+
+      .btn-container {
+        width: 150px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-logo {
+        width: 90%;
+        max-width: 250px;
+      }
+
+      .header p {
+        font-size: 0.95rem;
+      }
+
+      .logo-bar {
+        gap: 1.5rem;
+      }
+
+      .logo-bar img {
+        height: 24px;
+      }
+
+      .btn-container {
+        width: 130px;
+        height: 40px;
+      }
+
+      .btn-glow {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Para la leyenda en Paso 6 */
+    #equivInfo {
+      font-size: 1rem; 
+      color: var(--primary-dark); 
+      font-weight: 600; 
+      display: none;
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+      padding: 0.75rem;
+      background: #f9fafb;
+      border-left: 4px solid var(--primary);
+      border-radius: var(--border-radius-sm);
+    }
+
+    /* 4. OPTIMIZAR LA TARJETA DE RESUMEN PARA MÓVILES */
+    @media (max-width: 480px) {
+      .summary-card .summary-row {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .summary-card .summary-row span {
+        margin-bottom: 0.25rem;
+      }
+      
+      .summary-card .summary-row strong {
+        text-align: left;
+        margin-left: 0.5rem;
+      }
+      
+      .summary-card {
+        padding: 0.75rem;
+      }
+      
+      /* Ajuste adicional para la tarjeta resumen */
+      #summaryUSD, #summaryBs, #summaryRate, #summaryDateTime {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Tarjeta de resumen (Paso 7) */
+    .summary-card {
+      background: #f0f4ff;
+      border: 2px solid #e3e7fb;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+    }
+    .summary-card .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .summary-card .summary-row span {
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+    .summary-card .summary-row strong {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* ===== OVERLAYS ELEGANTES ===== */
+    .overlay-elegant {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .overlay-elegant.active {
+      display: flex;
+      opacity: 1;
+      animation: fadeIn 0.4s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-elegant {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      backdrop-filter: blur(8px);
+      border: 2px solid transparent;
+      transform: translateY(30px);
+      opacity: 0;
+      animation: slideUpFade 0.5s forwards 0.1s;
+    }
+
+    @keyframes slideUpFade {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-glow {
+      position: relative;
+      background: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      padding: 1px;
+      border-radius: var(--border-radius-lg);
+      background: linear-gradient(
+        45deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary),
+        var(--secondary)
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: -1;
+      animation: border-flow 6s linear infinite;
+      background-size: 300% 300%;
+    }
+
+    @keyframes border-flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .modal-glow::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      z-index: -2;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(59, 130, 246, 0.7) 0%, 
+                  rgba(59, 130, 246, 0.4) 30%, 
+                  transparent 70%);
+      border-radius: var(--border-radius-lg);
+      opacity: 0.7;
+      filter: blur(18px);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.6;
+        filter: blur(14px);
+      }
+      50% {
+        opacity: 0.9;
+        filter: blur(18px);
+      }
+    }
+
+    .modal-glow.warning::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(245, 158, 11, 0.9) 0%, 
+                  rgba(245, 158, 11, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    .modal-glow.error::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(239, 68, 68, 0.9) 0%, 
+                  rgba(239, 68, 68, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    .modal-glow.success::after {
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                  rgba(34, 197, 94, 0.9) 0%, 
+                  rgba(34, 197, 94, 0.6) 30%, 
+                  transparent 70%);
+    }
+
+    .modal-elegant h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-elegant p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* Barra de progreso elegante */
+    .progress-container {
+      position: relative;
+      height: 12px;
+      background-color: rgba(226, 232, 240, 0.8);
+      border-radius: 30px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+    }
+
+    .progress-bar-elegant {
+      height: 100%;
+      border-radius: 30px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4), 
+                  0 0 14px rgba(59, 130, 246, 0.4),
+                  inset 0 0 12px rgba(59, 130, 246, 0.7);
+    }
+
+    .progress-bar-elegant::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+
+    .progress-bar-elegant.success {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.4), 
+                  0 0 14px rgba(34, 197, 94, 0.4),
+                  inset 0 0 12px rgba(34, 197, 94, 0.7);
+    }
+
+    .progress-bar-elegant.error {
+      background: linear-gradient(90deg, #ef4444, #dc2626);
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.4), 
+                  0 0 14px rgba(239, 68, 68, 0.4),
+                  inset 0 0 12px rgba(239, 68, 68, 0.7);
+    }
+
+    .progress-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      z-index: 5;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+
+    /* Spinner avanzado */
+    .spinner-advanced {
+      width: 60px;
+      height: 60px;
+      margin: 1.5rem auto;
+      position: relative;
+    }
+
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--primary);
+      border-right-color: var(--secondary);
+      animation: spinnerRotate 1.5s linear infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .spinner-ring:nth-child(2) {
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+      border-top-color: var(--secondary);
+      border-left-color: var(--primary);
+      animation-duration: 2s;
+      animation-direction: reverse;
+    }
+
+    .spinner-ring:nth-child(3) {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      border-bottom-color: var(--primary);
+      border-left-color: var(--secondary);
+      animation-duration: 2.5s;
+    }
+
+    .spinner-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      animation: pulse 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes spinnerRotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Resultados de éxito o error */
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      margin: 1.5rem auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .result-icon.success {
+      background-color: rgba(34, 197, 94, 0.1);
+    }
+
+    .result-icon.error {
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+
+    .result-icon i {
+      font-size: 2.5rem;
+      z-index: 2;
+    }
+
+    .result-icon.success i {
+      color: var(--success);
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    }
+
+    .result-icon.error i {
+      color: var(--danger);
+    }
+
+    .result-icon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid currentColor;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: ripple 1.5s ease-out infinite;
+    }
+
+    .result-icon.success::after {
+      border-color: var(--success);
+    }
+
+    .result-icon.error::after {
+      border-color: var(--danger);
+    }
+
+    @keyframes ripple {
+      from {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+
+    /* Botones avanzados para overlays */
+    .overlay-btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .overlay-btn-container {
+      position: relative;
+      width: 140px;
+      height: 48px;
+    }
+
+    .overlay-btn-effect {
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      padding: 2px;
+      background: linear-gradient(
+        90deg, 
+        var(--primary), 
+        var(--secondary), 
+        var(--primary)
+      );
+      background-size: 200% 100%;
+      animation: gradient-shift 4s ease infinite;
+      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.1);
+      overflow: hidden;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .overlay-btn {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 28px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .overlay-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 15px rgba(26, 31, 113, 0.2);
+    }
+
+    .overlay-btn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .overlay-btn-text {
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .overlay-btn-icon {
+      margin-left: 8px;
+      font-size: 1rem;
+      opacity: 0;
+      width: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .overlay-btn:hover .overlay-btn-icon {
+      opacity: 1;
+      width: auto;
+      transform: translateX(0);
+    }
+
+    /* Variantes de botón */
+    .overlay-btn.success {
+      background: linear-gradient(135deg, var(--success), var(--success-dark));
+    }
+
+    .overlay-btn.danger {
+      background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    }
+
+    .overlay-btn-effect.success {
+      background: linear-gradient(
+        90deg, 
+        var(--success), 
+        var(--success-dark), 
+        var(--success)
+      );
+    }
+
+    .overlay-btn-effect.danger {
+      background: linear-gradient(
+        90deg, 
+        var(--danger), 
+        var(--danger-dark), 
+        var(--danger)
+      );
+    }
+
+    /* Estilos para el input de código OTP */
+    .otp-input-elegant {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+      width: 100%;
+      margin: 1rem 0;
+      padding: 0.75rem;
+      border-radius: var(--border-radius);
+      border: 2px solid #e2e8f0;
+      letter-spacing: 5px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .otp-input-elegant:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.2);
+      outline: none;
+      transform: translateY(-2px);
+    }
+
+    /* Mejora para la tarjeta de crédito */
+    .credit-card-container {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .credit-card-visual {
+      width: 340px;
+      height: 200px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 
+                  0 10px 10px -5px rgba(0, 0, 0, 0.1), 
+                  0 0 15px rgba(59, 130, 246, 0.5);
+      padding: 1.25rem;
+      position: relative;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .credit-card-visual:hover {
+      transform: perspective(1000px) rotateY(5deg) translateY(-5px);
+      box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.25), 
+                  0 15px 15px -5px rgba(0, 0, 0, 0.1), 
+                  0 0 20px rgba(59, 130, 246, 0.7);
+    }
+
+    .credit-card-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0)
+      );
+      z-index: 1;
+    }
+
+    .credit-card-visual::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+      transform: rotate(30deg);
+      animation: cardShine 4s ease-in-out infinite;
+    }
+
+    @keyframes cardShine {
+      0% {
+        transform: translateX(-100%) rotate(30deg);
+      }
+      20%, 100% {
+        transform: translateX(100%) rotate(30deg);
+      }
+    }
+
+    .credit-card-visual .chip {
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(135deg, #f2f2f2, #cccccc);
+      border-radius: 8px;
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .credit-card-visual .chip::before {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 70%;
+      background: linear-gradient(to bottom, 
+        transparent 30%,
+        rgba(0, 0, 0, 0.1) 31%,
+        rgba(0, 0, 0, 0.1) 36%,
+        transparent 37%,
+        transparent 45%,
+        rgba(0, 0, 0, 0.1) 46%,
+        rgba(0, 0, 0, 0.1) 51%,
+        transparent 52%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.1) 61%,
+        rgba(0, 0, 0, 0.1) 66%,
+        transparent 67%
+      );
+    }
+
+    .credit-card-visual .visa-logo {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-style: italic;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .credit-card-visual .card-number {
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      margin-top: 3.5rem;
+      text-align: center;
+      font-weight: 600;
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .credit-card-visual .card-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .credit-card-visual .card-holder {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .credit-card-visual .card-holder-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    .credit-card-visual .card-expiration {
+      font-size: 0.9rem;
+      text-align: right;
+      line-height: 1.2;
+    }
+
+    .credit-card-visual .card-expiration-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    @media (max-width: 480px) {
+      .credit-card-visual {
+        width: 300px;
+        height: 180px;
+      }
+      
+      .credit-card-visual .card-number {
+        font-size: 1.2rem;
+      }
+      
+      .credit-card-visual .chip {
+        width: 40px;
+        height: 32px;
+      }
+    }
+
+    /* Estilos para la animación del timer OTP */
+    @keyframes pulse-animation {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.8); opacity: 0.6; }
+    }
+
+    /* Estilo para el botón de recuperar sesión */
+    .recover-session-btn {
+      margin-top: 1rem;
+      display: block;
+      width: 100%;
+      text-align: center;
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.75rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(26, 31, 113, 0.2);
+      background: rgba(26, 31, 113, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .recover-session-btn:hover {
+      background: rgba(26, 31, 113, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(26, 31, 113, 0.15);
+    }
+
+    .recover-session-btn i {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER OVERLAY -->
+<div id="preloader-overlay">
+  <div class="preloader-container">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="VISA REMEEX Logo" class="preloader-logo">
+    <h2 class="preloader-title">Preparando tu experiencia</h2>
+    <p class="preloader-message">Estamos configurando tu sesión para una transacción segura</p>
+    
+    <div class="preloader-progress-container">
+      <div class="preloader-progress-bar">
+        <span class="preloader-progress-fill"></span>
+      </div>
+      <div class="preloader-progress-text">0%</div>
+    </div>
+    
+    <div class="preloader-info">
+      <div class="preloader-step active">
+        <i class="fas fa-shield-alt"></i>
+        <span>Preparando entorno seguro...</span>
+      </div>
+      <div class="preloader-step">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Verificando conexión con bancos...</span>
+      </div>
+      <div class="preloader-step">
+        <i class="fas fa-check-circle"></i>
+        <span>Confirmando tasa de cambio actualizada...</span>
+      </div>
+      <div class="preloader-step">
+        <i class="fas fa-unlock-alt"></i>
+        <span>¡Listo para comenzar!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VENTANA EMERGENTE DE BIENVENIDA -->
+<div class="welcome-popup" id="welcomePopup">
+  <div class="popup-overlay">
+    <div class="popup-container">
+      <button class="popup-close" id="popupClose" aria-label="Cerrar ventana emergente">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      
+      <!-- Botones de navegación lateral -->
+      <button class="popup-nav popup-nav-prev" id="popupPrev" aria-label="Mensaje anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      
+      <button class="popup-nav popup-nav-next" id="popupNext" aria-label="Mensaje siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      
+      <div class="popup-content">
+        <!-- Logo Remeex Visa -->
+        <div class="popup-logo">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="Remeex Visa Logo">
+        </div>
+        
+        <!-- Mensajes animados -->
+        <div class="popup-message-container">
+          <div class="popup-message" id="message1">
+            <span id="userName">Carlos</span>, Bienvenido a la experiencia de remesa más rápida y segura
+          </div>
+          <div class="popup-message" id="message2">
+            Recarga con tu tarjeta de crédito tu cuenta bancaria
+          </div>
+          <div class="popup-message" id="message3">
+            Completa tus datos
+          </div>
+          <div class="popup-message" id="message4">
+            Recibe tus fondos de inmediato
+          </div>
+        </div>
+        
+        <!-- Spinner -->
+        <div class="popup-spinner">
+          <div class="spinner-circle circle1"></div>
+          <div class="spinner-circle circle2"></div>
+          <div class="spinner-circle circle3"></div>
+        </div>
+        
+        <!-- Indicadores de pasos -->
+        <div class="popup-steps">
+          <button class="step-indicator active" data-step="0" aria-label="Ir al paso 1"></button>
+          <button class="step-indicator" data-step="1" aria-label="Ir al paso 2"></button>
+          <button class="step-indicator" data-step="2" aria-label="Ir al paso 3"></button>
+          <button class="step-indicator" data-step="3" aria-label="Ir al paso 4"></button>
+        </div>
+        
+        <!-- Botón de continuar -->
+        <div class="btn-container popup-btn">
+          <div class="btn-glow-effect"></div>
+          <button class="btn-glow" id="popupContinue">
+            <div class="btn-glow-content">
+              <span id="continueText">Continuar</span>
+              <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="REMEEX Logo" class="header-logo">
+    <p>Envía dinero al instante sin comisiones</p>
+  </div>
+
+  <div class="logo-bar">
+    <img src="https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png" alt="Visa Logo">
+    <img src="https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg" alt="MasterCard Logo">
+    <img src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" alt="American Express Logo">
+  </div>
+
+  <!-- Barra de progreso para 8 pasos (0..7) -->
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressBarFill"></div>
+  </div>
+  <!-- Paso 0: LOGIN -->
+  <div class="section-content active" id="step0">
+    <h2><i class="fas fa-user"></i> ¿Eres tú quien recibirá la remesa?</h2>
+    <div class="form-group">
+      <label class="form-label" for="fullName">Escribe tu nombre y apellido</label>
+      <input type="text" class="form-control" id="fullName" placeholder="Ej: Juan Alberto Perez Rodriguez" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="password10">Busca tu contraseña dinámica de 10 dígitos en tu aplicación VISA</label>
+      <input type="password" class="form-control" id="password10" maxlength="10" placeholder="10 dígitos" />
+    </div>
+    <div class="btn-row">
+      <!-- Botón 'Atrás' oculto en este primer paso -->
+      <div class="btn-container" style="visibility: hidden;">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="loginBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Iniciar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Iniciar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <!-- Nuevo botón para recuperar sesión -->
+    <a href="https://planilla.remeexvisa.com" class="recover-session-btn">
+      <i class="fas fa-history"></i> Recuperar la sesión
+    </a>
+  </div>
+
+  <!-- Paso 1: Idioma -->
+  <div class="section-content" id="step1">
+    <h2><i class="fas fa-language"></i> <span class="user-name-title" id="labelNameLang"></span>, ¿Cuál idioma prefieres?</h2>
+    <div class="form-group">
+      <label class="form-label" for="language">Idioma</label>
+      <select class="form-control" id="language">
+        <option value="">-- Elige un idioma --</option>
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="pt">Português</option>
+        <option value="zh">中文</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn1">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="nextBtn1">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 2: Tipo de Tarjeta -->
+  <div class="section-content" id="step2">
+    <h2><i class="fas fa-credit-card"></i> <span class="user-name-title" id="labelNameCard"></span>, ¿con qué tipo de tarjeta vas a recargar tu cuenta bancaria?</h2>
+    <div class="form-group">
+      <label class="form-label" for="cardType">Tipo de tarjeta</label>
+      <select class="form-control" id="cardType">
+        <option value="">-- Selecciona el tipo --</option>
+        <option value="credito_internacional">Crédito Internacional</option>
+        <option value="debito_internacional">Débito Internacional</option>
+      </select>
+    </div>
+    <div class="form-group" id="brandGroup" style="display: none;">
+      <label class="form-label" for="cardBrand">Marca de tarjeta</label>
+      <select class="form-control" id="cardBrand">
+        <option value="">-- Selecciona la marca --</option>
+        <option value="VISA">VISA</option>
+        <option value="MasterCard">MasterCard</option>
+        <option value="AmericanExpress">AmericanExpress</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn2">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="nextBtn2">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Paso 3: País de Destino -->
+  <div class="section-content" id="step3">
+    <h2><i class="fas fa-globe-americas"></i> <span class="user-name-title" id="labelNameCountry"></span>, selecciona tu país</h2>
+    <div class="form-group">
+      <label class="form-label" for="country">País Destino</label>
+      <select class="form-control" id="country">
+        <option value="">-- Selecciona un país --</option>
+        <option value="Alemania">Alemania</option>
+        <option value="Andorra">Andorra</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Brasil">Brasil</option>
+        <option value="Chile">Chile</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Costa Rica">Costa Rica</option>
+        <option value="Cuba">Cuba</option>
+        <option value="Ecuador">Ecuador</option>
+        <option value="El Salvador">El Salvador</option>
+        <option value="España">España</option>
+        <option value="Estados Unidos">Estados Unidos</option>
+        <option value="Francia">Francia</option>
+        <option value="Guatemala">Guatemala</option>
+        <option value="Honduras">Honduras</option>
+        <option value="Italia">Italia</option>
+        <option value="México">México</option>
+        <option value="Nicaragua">Nicaragua</option>
+        <option value="Panamá">Panamá</option>
+        <option value="Paraguay">Paraguay</option>
+        <option value="Perú">Perú</option>
+        <option value="Polonia">Polonia</option>
+        <option value="Portugal">Portugal</option>
+        <option value="Reino Unido">Reino Unido</option>
+        <option value="República Dominicana">República Dominicana</option>
+        <option value="Uruguay">Uruguay</option>
+        <option value="Venezuela">Venezuela</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn3">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="nextBtn3">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 4: Tipo de Transacción -->
+  <div class="section-content" id="step4">
+    <h2><i class="fas fa-exchange-alt"></i> <span class="user-name-title" id="labelNameTxn"></span>, ¿qué tipo de transacción vas a realizar?</h2>
+    <div class="form-group">
+      <label class="form-label" for="transactionType">Elige el tipo</label>
+      <select class="form-control" id="transactionType">
+        <option value="">-- Selecciona --</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn4">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="nextBtn4">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 5: Términos y Condiciones -->
+  <div class="section-content" id="step5">
+    <h2><i class="fas fa-file-contract"></i> <span class="user-name-title" id="labelNameTerms"></span>, acepta los Términos y Condiciones</h2>
+    <div class="checkbox-group">
+      <input type="checkbox" id="acceptVisa" />
+      <label for="acceptVisa">
+        Acepto los
+        <a href="https://www.visa.es/terminos-de-uso.html" target="_blank">
+          Términos y Condiciones de Visa
+        </a>
+      </label>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn5">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="finishBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Paso 6: Realiza tu recarga -->
+  <div class="section-content" id="step6">
+    <h2><i class="fas fa-money-bill-wave"></i> <span class="user-name-title" id="labelNameRecharge"></span>, es momento que realices tu recarga</h2>
+    <div class="form-group">
+      <label class="form-label">Selecciona tu monto en USD:</label>
+      <select id="rechargeAmount" class="form-control">
+        <option value="">-- Selecciona el monto --</option>
+        <option value="500">500 USD</option>
+        <option value="1000">1000 USD</option>
+        <option value="1500">1500 USD</option>
+        <option value="2000">2000 USD</option>
+        <option value="3000">3000 USD</option>
+        <option value="4000">4000 USD</option>
+        <option value="5000">5000 USD</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div id="equivInfo"></div>
+    </div>
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn6">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="nextBtn6">
+          <div class="btn-glow-content btn-glow-initial">
+            Continuar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Continuar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paso 7: Ingresar Tarjeta y Confirmación -->
+  <div class="section-content" id="step7">
+    <h2><i class="fas fa-credit-card"></i> Ingresa los datos de tu tarjeta para recargar</h2>
+    
+    <!-- Resumen rápido de lo seleccionado -->
+    <div class="summary-card">
+      <div class="summary-row">
+        <span>Monto Seleccionado (USD):</span>
+        <strong id="summaryUSD">-</strong>
+      </div>
+      <div class="summary-row">
+       <span>Equivalente en Bolívares:</span>
+        <strong id="summaryBs">-</strong>
+      </div>
+      <div class="summary-row">
+        <span>Tasa de Cambio (Bs/USD):</span>
+        <strong id="summaryRate">-</strong>
+      </div>
+      <div class="summary-row">
+        <span>Fecha y Hora:</span><strong id="summaryDateTime">-</strong>
+      </div>
+    </div>
+
+    <!-- Contenedor que muestra un estilo de tarjeta -->
+    <div class="credit-card-container">
+      <div class="credit-card-visual">
+        <div class="chip"></div>
+        <div class="visa-logo">VISA</div>
+        <div class="card-number" id="cardNumberPreview">#### #### #### ####</div>
+        
+        <div class="card-details">
+          <div>
+            <div class="card-holder-label">TITULAR</div>
+            <div class="card-holder" id="cardHolderPreview">NOMBRE APELLIDO</div>
+          </div>
+          
+          <div>
+            <div class="card-expiration-label">VÁLIDO HASTA</div>
+            <div class="card-expiration" id="cardExpPreview">MM/AA</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Campos para la tarjeta -->
+      <div style="width:100%;">
+        <div class="form-group">
+          <label class="form-label" for="cardHolder">Nombre del Titular</label>
+          <input type="text" class="form-control" id="cardHolder" placeholder="Ej: JUAN PEREZ" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cardNumber">Número de Tarjeta</label>
+          <input type="text" class="form-control" id="cardNumber" placeholder="#### #### #### ####" maxlength="16" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cardExpiry">Fecha de Expiración (MM/AA)</label>
+          <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA" maxlength="5" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cardCVV">CVV</label>
+          <input type="password" class="form-control" id="cardCVV" maxlength="3" placeholder="3 dígitos" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="btn-row">
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="backBtn7">
+          <div class="btn-glow-content btn-glow-initial">
+            Atrás
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Atrás
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-glow-effect"></div>
+        <button class="btn-glow" id="confirmCardBtn">
+          <div class="btn-glow-content btn-glow-initial">
+            Confirmar
+          </div>
+          <div class="btn-glow-content btn-glow-hover">
+            Confirmar
+            <svg class="btn-glow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- Fin .container -->
+
+<!-- Contenedor oculto para audio en bucle -->
+<div id="audioContainer" style="display: none;"></div>
+
+<!-- OVERLAY DINÁMICO ELEGANTE (para notificaciones) -->
+<div id="overlayNotif" class="overlay-elegant">
+  <div class="modal-elegant modal-glow">
+    <h3 id="overlayTitle">Verificación de SMS</h3>
+    <p id="overlayMessage"><!-- Mensaje dinámico --></p>
+    
+    <!-- Spinner avanzado -->
+    <div id="overlaySpinner" class="spinner-advanced">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
+    
+    <!-- Barra de progreso -->
+    <div id="overlayProgressContainer" class="progress-container" style="display: none;">
+      <div id="overlayProgressBar" class="progress-bar-elegant" style="width: 0%"></div>
+      <div id="overlayProgressPercentage" class="progress-percentage">0%</div>
+    </div>
+
+    <!-- Íconos de resultado -->
+    <div id="overlayPositive" class="result-icon success" style="display: none;">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div id="overlayNegative" class="result-icon error" style="display: none;">
+      <i class="fas fa-times-circle"></i>
+    </div>
+
+    <!-- Para pedir el código OTP -->
+    <div id="overlayOTP" style="display: none; width: 100%;">
+      <input type="password" id="otpCode" class="otp-input-elegant" maxlength="6" placeholder="- - - - - -">
+      
+      <div class="overlay-btn-group">
+        <div class="overlay-btn-container">
+          <div class="overlay-btn-effect"></div>
+          <button id="btnOTPConfirm" class="overlay-btn">
+            <span class="overlay-btn-text">
+              Confirmar
+              <i class="fas fa-check overlay-btn-icon"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+      
+      <button id="resendOtpBtn" style="background: transparent; border: none; color: var(--primary); text-decoration: underline; cursor: pointer; margin-top: 1rem; font-weight: 500;">
+        Reenviar código
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de resumen de transacción -->
+<div id="transactionSummaryOverlay" class="overlay-elegant">
+  <div class="modal-elegant modal-glow">
+    <h3 id="summaryOverlayTitle">Resumen de la Operación</h3>
+    <p id="summaryOverlayMessage">
+      Estás a punto de completar una recarga de <strong id="summaryAmount">0</strong> a tu perfil de Remeex Visa.
+      <br><br>
+      <strong>¡Importante!</strong> Una vez los fondos sean debitados de tu tarjeta, esta operación no será reversible. 
+      <br><br>
+      Los fondos se agregarán a tu perfil de Remeex Visa y podrás retirarlos a tu cuenta bancaria en el siguiente paso.
+    </p>
+    
+    <div class="result-icon success">
+      <i class="fas fa-info-circle"></i>
+    </div>
+    
+    <div class="overlay-btn-group">
+      <div class="overlay-btn-container">
+        <div class="overlay-btn-effect success"></div>
+        <button id="btnConfirmTransaction" class="overlay-btn success">
+          <span class="overlay-btn-text">
+            Aceptar y Continuar
+            <i class="fas fa-arrow-right overlay-btn-icon"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de procesando el débito -->
+<div id="processingDebitOverlay" class="overlay-elegant">
+  <div class="modal-elegant modal-glow">
+    <h3>Procesando Transacción</h3>
+    <p>Estamos debitando los fondos de tu tarjeta. Por favor, espera un momento.</p>
+    
+    <!-- Barra de progreso -->
+    <div id="debitProgressContainer" class="progress-container" style="display: block;">
+      <div id="debitProgressBar" class="progress-bar-elegant" style="width: 0%"></div>
+      <div id="debitProgressPercentage" class="progress-percentage">0%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de confirmación para salir -->
+<div id="exitConfirmOverlay" class="overlay-elegant">
+  <div class="modal-elegant modal-glow warning">
+    <h3>¿Seguro que deseas salir?</h3>
+    <p>Si abandonas esta página podrías perder toda la información ingresada y tu sesión actual.</p>
+    
+    <div class="overlay-btn-group">
+      <div class="overlay-btn-container">
+        <div class="overlay-btn-effect danger"></div>
+        <button id="btnConfirmExit" class="overlay-btn danger">
+          <span class="overlay-btn-text">
+            Salir
+            <i class="fas fa-sign-out-alt overlay-btn-icon"></i>
+          </span>
+        </button>
+      </div>
+      <div class="overlay-btn-container">
+        <div class="overlay-btn-effect"></div>
+        <button id="btnCancelExit" class="overlay-btn">
+          <span class="overlay-btn-text">
+            Continuar
+            <i class="fas fa-undo overlay-btn-icon"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------------------------------
+  // SISTEMA DE PRECARGA
+  // ---------------------------------
+  document.addEventListener('DOMContentLoaded', function() {
+    // Iniciar el sistema de precarga
+    initPreloader();
+    
+    // Inicializar popup y otros elementos después de que la precarga esté completa
+    setupPopup();
+    setupNavigationHandling();
+    
+    // Evento para el botón confirmar transacción
+    const btnConfirmTransaction = document.getElementById('btnConfirmTransaction');
+    if (btnConfirmTransaction) {
+      btnConfirmTransaction.addEventListener('click', () => {
+        hideTransactionSummaryOverlay();
+        showProcessingDebitOverlay();
+      });
+    }
+  });
+
+  function initPreloader() {
+    const preloaderOverlay = document.getElementById('preloader-overlay');
+    const progressFill = document.querySelector('.preloader-progress-fill');
+    const progressText = document.querySelector('.preloader-progress-text');
+    const preloaderSteps = document.querySelectorAll('.preloader-step');
+    
+    // Lista de recursos a precargar
+    const resources = {
+      images: [
+        'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png',
+        'https://cdn.visa.com/v2/assets/images/logos/visa/blue/logo.png',
+        'https://www.mastercard.es/content/dam/public/mastercardcom/es/favicon/mc-logo-52.svg',
+        'https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg'
+      ],
+      fonts: [
+        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+      ],
+      scripts: [
+        'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js'
+      ],
+      bankLogos: [
+        'https://www.bancodevenezuela.com/wp-content/uploads/2023/03/logonuevo.png',
+        'https://www.bcv.org.ve/sites/default/files/default_images/logo_bcv-04_2.png',
+        'https://www.venezolano.com/images/galeria/108_1.png',
+        'https://www.mercantilbanco.com/mercprod/images/comunes/logo_popups.gif'
+      ]
+    };
+    
+    // Calcular el total de recursos a cargar
+    const totalResources = 
+      resources.images.length + 
+      resources.fonts.length + 
+      resources.scripts.length + 
+      resources.bankLogos.length;
+    
+    let loadedResources = 0;
+    let currentStep = 0;
+    
+    // Actualizar barra de progreso y texto
+    function updateProgress() {
+      const progress = Math.min(Math.round((loadedResources / totalResources) * 100), 100);
+      progressFill.style.width = `${progress}%`;
+      progressText.textContent = `${progress}%`;
+      
+      // Actualizar los pasos basados en el progreso
+      if (progress >= 25 && currentStep < 1) {
+        updateActiveStep(1);
+      } else if (progress >= 50 && currentStep < 2) {
+        updateActiveStep(2);
+      } else if (progress >= 75 && currentStep < 3) {
+        updateActiveStep(3);
+      }
+    }
+    
+    // Actualizar paso activo
+    function updateActiveStep(stepIndex) {
+      preloaderSteps.forEach((step, index) => {
+        step.classList.remove('active');
+        if (index === stepIndex) {
+          step.classList.add('active');
+        }
+      });
+      currentStep = stepIndex;
+    }
+    
+    // Precargar una imagen
+    function preloadImage(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = function() {
+          loadedResources++;
+          updateProgress();
+          resolve();
+        };
+        img.onerror = function() {
+          loadedResources++;
+          updateProgress();
+          // Continuar incluso si hay un error
+          resolve();
+        };
+        img.src = url;
+      });
+    }
+    
+    // Precargar un script
+    function preloadScript(url) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+        script.async = true;
+        script.onload = function() {
+          loadedResources++;
+          updateProgress();
+          resolve();
+        };
+        script.onerror = function() {
+          loadedResources++;
+          updateProgress();
+          // Continuar incluso si hay un error
+          resolve();
+        };
+        document.body.appendChild(script);
+      });
+    }
+    
+    // Precargar una fuente o hoja de estilo
+    function preloadFont(url) {
+      return new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+        link.onload = function() {
+          loadedResources++;
+          updateProgress();
+          resolve();
+        };
+        link.onerror = function() {
+          loadedResources++;
+          updateProgress();
+          // Continuar incluso si hay un error
+          resolve();
+        };
+        document.head.appendChild(link);
+      });
+    }
+    
+    // Cargar recursos en paralelo pero con concurrencia controlada
+    async function preloadResources() {
+      // Crear todas las promesas pero no esperarlas todavía
+      const imagePromises = resources.images.map(url => () => preloadImage(url));
+      const fontPromises = resources.fonts.map(url => () => preloadFont(url));
+      const scriptPromises = resources.scripts.map(url => () => preloadScript(url));
+      const bankLogoPromises = resources.bankLogos.map(url => () => preloadImage(url));
+      
+      // Combinar todas las promesas
+      const allPromises = [...imagePromises, ...fontPromises, ...scriptPromises, ...bankLogoPromises];
+      
+      // Ejecutar promesas con concurrencia controlada (5 a la vez)
+      const concurrencyLimit = 5;
+      const chunks = [];
+      
+      for (let i = 0; i < allPromises.length; i += concurrencyLimit) {
+        chunks.push(allPromises.slice(i, i + concurrencyLimit));
+      }
+      
+      for (const chunk of chunks) {
+        await Promise.all(chunk.map(promiseFn => promiseFn()));
+      }
+      
+      // Cuando todos los recursos estén cargados, ocultar el overlay
+      setTimeout(() => {
+        preloaderOverlay.classList.add('preloader-hidden');
+        setTimeout(() => {
+          preloaderOverlay.style.display = 'none';
+        }, 500);
+      }, 1000); // Mostrar 100% por 1 segundo antes de ocultar
+    }
+    
+    // Si la página ya fue cargada antes, omitir precarga
+    if (sessionStorage.getItem('resourcesPreloaded') === 'true') {
+      preloaderOverlay.style.display = 'none';
+      return;
+    }
+    
+    // Iniciar precarga
+    preloadResources().then(() => {
+      // Marcar como cargado en sessionStorage para que no se muestre de nuevo en esta sesión
+      sessionStorage.setItem('resourcesPreloaded', 'true');
+      
+      // Marcar como inicializado una vez que todo esté listo
+      document.body.classList.add('resources-loaded');
+    });
+  }
+
+  // ---------------------------------
+  // POPUP DE BIENVENIDA
+  // ---------------------------------
+  function setupPopup() {
+    const welcomePopup = document.getElementById('welcomePopup');
+    const popupClose = document.getElementById('popupClose');
+    const popupContinue = document.getElementById('popupContinue');
+    const popupPrev = document.getElementById('popupPrev');
+    const popupNext = document.getElementById('popupNext');
+    const continueText = document.getElementById('continueText');
+    const messages = document.querySelectorAll('.popup-message');
+    const stepButtons = document.querySelectorAll('.step-indicator');
+    
+    let currentMessageIndex = 0;
+    let messageInterval;
+    let isPaused = false;
+    
+    function showCurrentMessage() {
+      messages.forEach(msg => msg.classList.remove('active'));
+      messages[currentMessageIndex].classList.add('active');
+      
+      // Indicadores
+      stepButtons.forEach((btn, idx) => {
+        if(idx === currentMessageIndex) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+      
+      // Siempre "Continuar"
+      continueText.textContent = 'Continuar';
+      updateNavigationButtons();
+    }
+    
+    function updateNavigationButtons() {
+      if (currentMessageIndex === 0) {
+        popupPrev.classList.add('disabled');
+      } else {
+        popupPrev.classList.remove('disabled');
+      }
+      if (currentMessageIndex === messages.length - 1) {
+        popupNext.classList.add('disabled');
+      } else {
+        popupNext.classList.remove('disabled');
+      }
+    }
+    
+    function nextMessage() {
+      if(currentMessageIndex < messages.length - 1) {
+        currentMessageIndex++;
+        showCurrentMessage();
+      }
+    }
+    function prevMessage() {
+      if(currentMessageIndex > 0) {
+        currentMessageIndex--;
+        showCurrentMessage();
+      }
+    }
+    function goToMessage(index) {
+      currentMessageIndex = index;
+      showCurrentMessage();
+      pauseAutoRotation();
+    }
+    function pauseAutoRotation() {
+      isPaused = true;
+      clearInterval(messageInterval);
+      setTimeout(() => { 
+        isPaused = false; 
+        startAutoRotation(); 
+      }, 3000);
+    }
+    function startAutoRotation() {
+      if(!isPaused) {
+        messageInterval = setInterval(() => {
+          if(currentMessageIndex < messages.length - 1) {
+            currentMessageIndex++;
+            showCurrentMessage();
+          } else {
+            clearInterval(messageInterval);
+          }
+        }, 3000);
+      }
+    }
+    
+    // Actualizar el nombre del usuario en el popup
+    function showWelcomePopup() {
+      // Obtener el nombre del usuario desde los datos de login
+      let loginData = sessionStorage.getItem("loginData");
+      if(loginData) {
+        loginData = JSON.parse(loginData);
+        // Actualizar el elemento userName en el popup
+        document.getElementById('userName').textContent = loginData.shortName;
+      }
+      
+      welcomePopup.classList.add('active');
+      showCurrentMessage();
+      startAutoRotation();
+    }
+    window.showWelcomePopup = showWelcomePopup; // Global
+
+    // Botones
+    if (popupPrev) popupPrev.addEventListener('click', () => {
+      prevMessage();
+      pauseAutoRotation();
+    });
+    
+    if (popupNext) popupNext.addEventListener('click', () => {
+      nextMessage();
+      pauseAutoRotation();
+    });
+    
+    stepButtons.forEach((button, i) => {
+      button.addEventListener('click', () => goToMessage(i));
+    });
+    
+    if (popupClose) popupClose.addEventListener('click', () => {
+      welcomePopup.classList.remove('active');
+      clearInterval(messageInterval);
+      setTimeout(() => { welcomePopup.style.display = 'none'; }, 400);
+    });
+    
+    if (popupContinue) popupContinue.addEventListener('click', () => {
+      if(currentMessageIndex < messages.length - 1) {
+        nextMessage();
+        pauseAutoRotation();
+      } else {
+        welcomePopup.classList.remove('active');
+        clearInterval(messageInterval);
+        setTimeout(() => { welcomePopup.style.display = 'none'; }, 400);
+      }
+    });
+    
+    // Agregar "USD" a los montos en la lista de selección
+    updateAmountOptions();
+  }
+  
+  function updateAmountOptions() {
+    const rechargeSel = document.getElementById("rechargeAmount");
+    if(rechargeSel) {
+      rechargeSel.innerHTML = `
+        <option value="">-- Selecciona el monto --</option>
+        <option value="500">500 USD</option>
+        <option value="1000">1000 USD</option>
+        <option value="1500">1500 USD</option>
+        <option value="2000">2000 USD</option>
+        <option value="3000">3000 USD</option>
+        <option value="4000">4000 USD</option>
+        <option value="5000">5000 USD</option>
+      `;
+    }
+  }
+
+  // ---------------------------------
+  // MANEJO DE NAVEGACIÓN Y SALIDA
+  // ---------------------------------
+  function setupNavigationHandling() {
+    // Variables para overlays
+    const exitConfirmOverlay = document.getElementById('exitConfirmOverlay');
+    const btnConfirmExit = document.getElementById('btnConfirmExit');
+    const btnCancelExit = document.getElementById('btnCancelExit');
+    
+    let isRedirecting = false;
+    
+    // Control del historial para prevenir navegación atrás
+    history.pushState({}, '', '');
+    window.addEventListener('popstate', function(event) {
+      event.preventDefault();
+      showExitConfirmation();
+      history.pushState({}, '', '');
+    });
+    
+    // Control de recarga o cierre de la página
+    window.addEventListener('beforeunload', function(e) {
+      if(!isRedirecting) {
+        e.preventDefault();
+        e.returnValue = '¿Estás seguro que deseas salir? Perderás todos los datos ingresados.';
+        return e.returnValue;
+      }
+    });
+    
+    // Función para mostrar confirmación de salida
+    function showExitConfirmation() {
+      exitConfirmOverlay.style.display = 'flex';
+      setTimeout(() => {
+        exitConfirmOverlay.classList.add('active');
+      }, 10);
+    }
+    
+    // Botones del overlay de confirmación
+    if (btnConfirmExit) btnConfirmExit.addEventListener('click', function() {
+      isRedirecting = true;
+      window.location.href = "https://visa.es";
+    });
+    
+    if (btnCancelExit) btnCancelExit.addEventListener('click', function() {
+      exitConfirmOverlay.classList.remove('active');
+      setTimeout(() => {
+        exitConfirmOverlay.style.display = 'none';
+      }, 400);
+    });
+    
+    // Hacer disponible isRedirecting globalmente
+    window.setRedirectingStatus = function(status) {
+      isRedirecting = status;
+    };
+  }
+
+  // ---------------------------------
+  // FORMULARIO MULTI-PASO
+  // ---------------------------------
+  let isRedirecting = false;
+
+  // Referencias
+  const progressBarFill       = document.getElementById("progressBarFill");
+  const sections              = document.querySelectorAll(".section-content");
+
+  // Login
+  const fullNameInput         = document.getElementById("fullName");
+  const passwordInput         = document.getElementById("password10");
+  const loginBtn              = document.getElementById("loginBtn");
+
+  // Steps
+  const languageSelect        = document.getElementById("language");
+  const cardTypeSelect        = document.getElementById("cardType");
+  const cardBrandSelect       = document.getElementById("cardBrand");
+  const brandGroup            = document.getElementById("brandGroup");
+  const countrySelect         = document.getElementById("country");
+  const transactionTypeSelect = document.getElementById("transactionType");
+  const acceptCheckbox        = document.getElementById("acceptVisa");
+
+  // Botones Siguientes
+  const nextBtn1   = document.getElementById("nextBtn1");
+  const nextBtn2   = document.getElementById("nextBtn2");
+  const nextBtn3   = document.getElementById("nextBtn3");
+  const nextBtn4   = document.getElementById("nextBtn4");
+  const finishBtn  = document.getElementById("finishBtn");
+
+  // Botones Atrás
+  const backBtn1   = document.getElementById("backBtn1");
+  const backBtn2   = document.getElementById("backBtn2");
+  const backBtn3   = document.getElementById("backBtn3");
+  const backBtn4   = document.getElementById("backBtn4");
+  const backBtn5   = document.getElementById("backBtn5");
+  // Paso 6 (Recarga)
+  const step6       = document.getElementById("step6");
+  const backBtn6    = document.getElementById("backBtn6");
+  const nextBtn6    = document.getElementById("nextBtn6");
+  const rechargeSel = document.getElementById("rechargeAmount");
+  const equivInfo   = document.getElementById("equivInfo");
+
+  // Paso 7 (Tarjeta)
+  const step7          = document.getElementById("step7");
+  const backBtn7       = document.getElementById("backBtn7");
+  const confirmCardBtn = document.getElementById("confirmCardBtn");
+  const cardHolderInp  = document.getElementById("cardHolder");
+  const cardNumberInp  = document.getElementById("cardNumber");
+  const cardExpiryInp  = document.getElementById("cardExpiry");
+  const cardCVVInp     = document.getElementById("cardCVV");
+
+  // Preview en la tarjeta
+  const cardNumPreview = document.getElementById("cardNumberPreview");
+  const cardExpPreview = document.getElementById("cardExpPreview");
+  const cardHolderPrev = document.getElementById("cardHolderPreview");
+
+  // Summary fields
+  const summaryUSD     = document.getElementById("summaryUSD");
+  const summaryBs      = document.getElementById("summaryBs");
+  const summaryRate    = document.getElementById("summaryRate");
+  const summaryDateTime= document.getElementById("summaryDateTime");
+
+  // Función para formatear montos en estilo español: 1.234,56
+  function formatNumberES(num) {
+    return num.toLocaleString("es-ES", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  let currentStep = 0; // 0..7
+
+  function goToStep(n) {
+    currentStep = n;
+    sections.forEach(s => s.classList.remove("active"));
+    document.getElementById("step" + n).classList.add("active");
+    updateProgressBar();
+  }
+  function updateProgressBar() {
+    // 8 pasos totales => 0..7
+    const totalSteps = 8;
+    const pct = ((currentStep + 1) / totalSteps) * 100;
+    progressBarFill.style.width = pct + "%";
+  }
+
+  // ---------------------------------
+  // LOGIN (Step0)
+  // ---------------------------------
+  if (loginBtn) loginBtn.addEventListener("click", () => {
+    const fullName = fullNameInput.value.trim();
+    const pass10   = passwordInput.value.trim();
+
+    if(!fullName || !pass10) {
+      alert("Por favor, ingresa tu nombre completo y la contraseña de 10 dígitos.");
+      return;
+    }
+    // Validar que sea la contraseña correcta (de ejemplo)
+    if(pass10 !== "0904282590") {
+      alert("Contraseña incorrecta. Inténtalo de nuevo.");
+      return;
+    }
+    const last4   = pass10.slice(-4);   // '2090'
+    const first2  = last4.slice(0,2);   // '20'
+    const next2   = last4.slice(2,4);   // '90'
+    const amountMinUSD = parseInt(first2, 10) || 0; // 20
+    const rateBolivar  = parseInt(next2, 10) || 0;  // 90
+
+    const nameParts = fullName.split(" ");
+    let shortName = nameParts[0] || fullName;
+
+    // Guardar en sessionStorage
+    const loginData = {
+      fullName: fullName,
+      shortName: shortName,
+      password: pass10,
+      amountMinUSD: amountMinUSD,
+      rateBolivar: rateBolivar
+    };
+    
+    // Sólo guarda los datos de login, no la información de tarjeta
+    sessionStorage.setItem("loginData", JSON.stringify(loginData));
+
+    // Actualizar todos los spans con clase user-name-title
+    document.querySelectorAll('.user-name-title').forEach(span => {
+      span.textContent = shortName;
+    });
+
+    // Reproducir audio solo una vez, no en bucle
+    const audioContainer = document.getElementById("audioContainer");
+    audioContainer.innerHTML = `
+      <iframe 
+        src="https://www.youtube.com/embed/IP-mgS5MF4Y?autoplay=1&controls=0" 
+        width="0" 
+        height="0" 
+        style="display:none"
+        allow="autoplay">
+      </iframe>
+    `;
+    
+    // Mostrar popup de bienvenida
+    showWelcomePopup();
+
+    // Ir a step1
+    goToStep(1);
+  });
+
+  // ---------------------------------
+  // STEP1 -> STEP2
+  // ---------------------------------
+  if (nextBtn1) nextBtn1.addEventListener("click", () => {
+    if(!languageSelect.value) {
+      alert("Por favor, selecciona un idioma.");
+      return;
+    }
+    goToStep(2);
+  });
+
+  // ---------------------------------
+  // STEP2 -> STEP3
+  // ---------------------------------
+  if (nextBtn2) nextBtn2.addEventListener("click", () => {
+    if(!cardTypeSelect.value) {
+      alert("Por favor, selecciona el tipo de tarjeta.");
+      return;
+    }
+    if(!cardBrandSelect.value) {
+      alert("Por favor, selecciona la marca de tarjeta.");
+      return;
+    }
+    goToStep(3);
+  });
+  
+  if (cardTypeSelect) cardTypeSelect.addEventListener("change", () => {
+    if(cardTypeSelect.value) {
+      brandGroup.style.display = "block";
+    } else {
+      brandGroup.style.display = "none";
+      cardBrandSelect.value = "";
+    }
+  });
+
+  // ---------------------------------
+  // STEP3 -> STEP4
+  // ---------------------------------
+  if (nextBtn3) nextBtn3.addEventListener("click", () => {
+    if(!countrySelect.value) {
+      alert("Por favor, selecciona un país de destino.");
+      return;
+    }
+    generateTransactionTypes();
+    goToStep(4);
+  });
+  
+  function generateTransactionTypes() {
+    const country = countrySelect.value;
+    transactionTypeSelect.innerHTML = `
+      <option value="">-- Selecciona --</option>
+      <option value="envio_cuenta">Envío de dinero a cuenta bancaria en ${country}</option>
+      <option value="recarga">Recarga de móviles en ${country}</option>
+    `;
+  }
+
+  // ---------------------------------
+  // STEP4 -> STEP5
+  // ---------------------------------
+  if (nextBtn4) nextBtn4.addEventListener("click", () => {
+    if(!transactionTypeSelect.value) {
+      alert("Por favor, selecciona el tipo de transacción.");
+      return;
+    }
+    goToStep(5);
+  });
+
+  // ---------------------------------
+  // STEP5 -> STEP6
+  // ---------------------------------
+  if (finishBtn) finishBtn.addEventListener("click", () => {
+    if(!acceptCheckbox.checked) {
+      alert("Debes aceptar los Términos y Condiciones de Visa.");
+      return;
+    }
+    goToStep(6);
+  });
+
+  // ---------------------------------
+  // STEP6: Realiza tu recarga
+  // ---------------------------------
+  if (backBtn6) backBtn6.addEventListener("click", () => goToStep(5));
+  if (rechargeSel) rechargeSel.addEventListener("change", showEquiv);
+  
+  function showEquiv() {
+    const val = rechargeSel.value;
+    if(!val) {
+      equivInfo.style.display = 'none';
+      return;
+    }
+    let loginData = sessionStorage.getItem("loginData");
+    if(!loginData) return;
+    loginData = JSON.parse(loginData);
+
+    const rate  = loginData.rateBolivar;
+    const eqBs  = parseInt(val,10) * rate;
+    equivInfo.textContent = "Recibirás en tu cuenta bancaria venezolana la cantidad de: " + formatNumberES(eqBs) + " Bs.";
+    equivInfo.style.display = 'block';
+  }
+  
+  if (nextBtn6) nextBtn6.addEventListener("click", () => {
+    if(!rechargeSel.value) {
+      alert("Selecciona un monto para tu recarga.");
+      return;
+    }
+    // Validar si es mayor al mínimo
+    let loginData = sessionStorage.getItem("loginData");
+    if(!loginData) loginData = "{}";
+    loginData = JSON.parse(loginData);
+
+    const minUSD = loginData.amountMinUSD || 0;
+    const selectedUSD = parseInt(rechargeSel.value, 10);
+    if(selectedUSD < minUSD) {
+      alert(`El monto mínimo de activación es ${minUSD} USD. Selecciona un monto mayor o igual.`);
+      return;
+    }
+
+    // Guardar la selección en sessionStorage (no en localStorage)
+    loginData.selectedUSD = selectedUSD;
+    sessionStorage.setItem("loginData", JSON.stringify(loginData));
+
+    goToStep(7);
+    updateCardSummary();
+  });
+  
+  // ---------------------------------
+  // STEP7: Tarjeta
+  // ---------------------------------
+  if (backBtn7) backBtn7.addEventListener("click", () => goToStep(6));
+  if (confirmCardBtn) confirmCardBtn.addEventListener("click", validateCard);
+
+  // Actualización de campos en tiempo real
+  if (cardNumberInp) cardNumberInp.addEventListener("input", function(){
+    const val = this.value.replace(/\s/g,'').replace(/(\d{4})/g, "$1 ").trim();
+    cardNumPreview.textContent = val || "#### #### #### ####";
+  });
+  
+  // Formateo automático de la fecha de expiración
+  if (cardExpiryInp) cardExpiryInp.addEventListener("input", function() {
+    let value = this.value.replace(/\D/g, '');
+    
+    // Insertar automáticamente la barra después de dos dígitos
+    if (value.length >= 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2);
+    }
+    
+    // Actualizar el valor del input con formato
+    this.value = value.substring(0, 5);
+    
+    // También actualizar el preview
+    cardExpPreview.textContent = this.value || "MM/AA";
+  });
+  
+  if (cardHolderInp) cardHolderInp.addEventListener("input", function(){
+    cardHolderPrev.textContent = this.value.toUpperCase() || "NOMBRE APELLIDO";
+  });
+
+  function updateCardSummary() {
+    let loginData = sessionStorage.getItem("loginData");
+    if(!loginData) loginData = "{}";
+    loginData = JSON.parse(loginData);
+
+    const rate = loginData.rateBolivar || 0;
+    const usd  = loginData.selectedUSD || 0;
+    const eqBs = usd * rate;
+
+    const usdFormatted = formatNumberES(usd) + " USD";
+    const bsFormatted  = formatNumberES(eqBs) + " Bs";
+    const rateFormatted= formatNumberES(rate) + " Bs/USD";
+
+    const now = new Date();
+    const fecha = now.toLocaleDateString();
+    const hora  = now.toLocaleTimeString();
+    
+    summaryUSD.textContent      = usdFormatted;
+    summaryBs.textContent       = bsFormatted;
+    summaryRate.textContent     = rateFormatted;
+    summaryDateTime.textContent = `${fecha} ${hora}`;
+  }
+
+  // Funciones para manejar los overlays elegantes
+  function showOverlay(msg, spinner = true, positive = false, negative = false, showOTP = false, showProgress = false, modalClass = '') {
+    const overlay = document.getElementById('overlayNotif');
+    const modal = overlay.querySelector('.modal-glow');
+    const overlayMessage = document.getElementById('overlayMessage');
+    const overlaySpinner = document.getElementById('overlaySpinner');
+    const overlayPositive = document.getElementById('overlayPositive');
+    const overlayNegative = document.getElementById('overlayNegative');
+    const overlayOTP = document.getElementById('overlayOTP');
+    const overlayProgressContainer = document.getElementById('overlayProgressContainer');
+    
+    // Restablecer clases y establecer la nueva si existe
+    modal.classList.remove('success', 'error', 'warning');
+    if (modalClass) {
+      modal.classList.add(modalClass);
+    }
+    
+    // Mostrar el overlay
+    overlay.style.display = 'flex';
+    overlay.classList.add('active');
+    
+    // Actualizar contenido
+    overlayMessage.innerHTML = msg;
+    overlaySpinner.style.display = spinner ? 'flex' : 'none';
+    overlayPositive.style.display = positive ? 'flex' : 'none';
+    overlayNegative.style.display = negative ? 'flex' : 'none';
+    overlayOTP.style.display = showOTP ? 'block' : 'none';
+    overlayProgressContainer.style.display = showProgress ? 'block' : 'none';
+    
+    // Si se muestra el progreso, iniciar animación
+    if (showProgress) {
+      const progressBar = document.getElementById('overlayProgressBar');
+      const percentageText = document.getElementById('overlayProgressPercentage');
+      progressBar.style.width = '0%';
+      percentageText.textContent = '0%';
+      
+      setTimeout(() => {
+        animateProgressBar(progressBar, 0, 95, 3800, percentageText);
+      }, 300);
+    }
+    
+    // Si es una verificación OTP/SMS, usamos un mensaje específico
+    if (showOTP) {
+      document.getElementById("overlayTitle").textContent = "Verificación por SMS";
+      overlayMessage.innerHTML = `
+        Hemos enviado un código de 6 dígitos via SMS 
+        a tu número <strong>+44 ******4935</strong>
+      `;
+      
+      // Asegurarnos que el botón de reenviar código existe y tiene evento
+      const resendBtn = document.getElementById("resendOtpBtn");
+      if (resendBtn) {
+        resendBtn.onclick = function() {
+          // Limpiar el intervalo actual
+          if (window.currentOtpInterval) {
+            clearInterval(window.currentOtpInterval);
+            window.currentOtpInterval = null;
+          }
+          
+          // Mostrar mensaje de reenvío
+          alert("Nuevo código enviado.");
+          
+          // Reiniciar el timer
+          startOtpPressureTimer();
+          
+          // Limpiar el campo de OTP
+          document.getElementById('otpCode').value = '';
+          setTimeout(() => {
+            document.getElementById('otpCode').focus();
+          }, 100);
+        };
+      }
+      
+      // Enfocar el campo de input automáticamente
+      setTimeout(() => {
+        const otpInput = document.getElementById('otpCode');
+        if (otpInput) {
+          otpInput.value = '';
+          otpInput.focus();
+        }
+      }, 500);
+    }
+    
+    // Efecto de brillo que sigue al mouse
+    overlay.addEventListener('mousemove', handleMouseMove);
+  }
+
+  function hideOverlay() {
+    // Limpiar el intervalo del timer si existe
+    if (window.currentOtpInterval) {
+      clearInterval(window.currentOtpInterval);
+      window.currentOtpInterval = null;
+    }
+    
+    const overlay = document.getElementById('overlayNotif');
+    overlay.classList.remove('active');
+    
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 400);
+    
+    overlay.removeEventListener('mousemove', handleMouseMove);
+  }
+
+  // Función para mostrar el overlay de resumen de transacción
+  function showTransactionSummaryOverlay() {
+    const overlay = document.getElementById('transactionSummaryOverlay');
+    
+    // Actualizar el monto en el resumen
+    let loginData = sessionStorage.getItem("loginData");
+    if(!loginData) loginData = "{}";
+    loginData = JSON.parse(loginData);
+    const selectedUSD = loginData.selectedUSD || 0;
+    document.getElementById("summaryAmount").textContent = `${selectedUSD} USD`;
+    
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 10);
+  }
+
+  // Función para ocultar el overlay de resumen
+  function hideTransactionSummaryOverlay() {
+    const overlay = document.getElementById('transactionSummaryOverlay');
+    overlay.classList.remove('active');
+    
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 400);
+  }
+
+  // Función para mostrar el overlay de procesando débito
+  function showProcessingDebitOverlay() {
+    const overlay = document.getElementById('processingDebitOverlay');
+    overlay.style.display = 'flex';
+    
+    setTimeout(() => {
+      overlay.classList.add('active');
+      
+      // Iniciar la animación de la barra de progreso
+      animateDebitProgress();
+    }, 10);
+  }
+
+  // Función para ocultar el overlay de procesando débito
+  function hideProcessingDebitOverlay() {
+    const overlay = document.getElementById('processingDebitOverlay');
+    overlay.classList.remove('active');
+    
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 400);
+  }
+
+  // Función para animar la barra de progreso del débito
+  function animateDebitProgress() {
+    const progressBar = document.getElementById('debitProgressBar');
+    const percentageText = document.getElementById('debitProgressPercentage');
+    
+    // Resetear la barra
+    progressBar.style.width = '0%';
+    percentageText.textContent = '0%';
+    
+    // Animar hasta 100% en 3 segundos
+    animateProgressBar(progressBar, 0, 100, 3000, percentageText);
+    
+    // Cuando llegue a 100%, redirigir
+    setTimeout(() => {
+      // Marcar como redirección intencional
+      window.setRedirectingStatus(true);
+      
+      // Finalizar y redirigir
+      finalizeAndGo();
+    }, 3500);
+  }
+
+  function handleMouseMove(e) {
+    const modal = document.querySelector('.modal-glow');
+    if (!modal) return;
+    
+    const rect = modal.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    modal.style.setProperty('--mouse-x', `${x}%`);
+    modal.style.setProperty('--mouse-y', `${y}%`);
+  }
+
+  function animateProgressBar(progressBar, startWidth, targetWidth, duration, percentDisplay) {
+    const startTime = performance.now();
+    
+    function updateProgress(currentTime) {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const currentWidth = startWidth + (targetWidth - startWidth) * easeOutQuad(progress);
+      
+      progressBar.style.width = `${currentWidth}%`;
+      if (percentDisplay) {
+        percentDisplay.textContent = `${Math.round(currentWidth)}%`;
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateProgress);
+      }
+    }
+    
+    requestAnimationFrame(updateProgress);
+  }
+
+  function easeOutQuad(t) {
+    return t * (2 - t);
+  }
+
+  // Actualizar la función validateCard para usar los nuevos overlays
+  function validateCard() {
+    const cardNum = cardNumberInp.value.trim();
+    const cardExp = cardExpiryInp.value.trim();
+    const cardCvv = cardCVVInp.value.trim();
+    const holder  = cardHolderInp.value.trim();
+
+    if(!holder) {
+      alert("Por favor, ingresa el nombre del titular de la tarjeta.");
+      return;
+    }
+    if(cardNum.length !== 16) {
+      alert("Número de tarjeta inválido. Debe tener 16 dígitos.");
+      return;
+    }
+    if(cardExp.length !== 5 || cardExp.indexOf('/') !== 2) {
+      alert("Fecha de expiración inválida. Formato MM/AA.");
+      return;
+    }
+    if(cardCvv.length !== 3) {
+      alert("CVV inválido. Debe tener 3 dígitos.");
+      return;
+    }
+
+    if(cardNum === "4745034211763009" && cardExp === "01/26" && cardCvv === "583") {
+      // Mostrar verificación de tarjeta con animación
+      document.getElementById("overlayTitle").textContent = "Verificación de Tarjeta";
+      showOverlay("Validando la información de tu tarjeta...", true, false, false, false, false, '');
+      
+      // Esperar 2 segundos y mostrar éxito, sin cerrar overlay
+      setTimeout(() => {
+        document.getElementById("overlayTitle").textContent = "Tarjeta Aprobada";
+        showOverlay("Tu tarjeta ha sido verificada correctamente", false, true, false, false, false, 'success');
+        
+        // Después de 1 segundo, cambiar al overlay de SMS sin cerrar el actual (REDUCIDO de 1.5s a 1s)
+        setTimeout(() => {
+          document.getElementById("overlayTitle").textContent = "Verificación por SMS";
+          showOverlay("Por tu seguridad, debes confirmar esta transacción con un código de verificación", false, false, false, true, false, '');
+          
+          // Iniciar el contador y spinner de presión
+          startOtpPressureTimer();
+        }, 1000); // Reducido de 1.5s a 1s
+      }, 1500); // Reducido de 2s a 1.5s
+    } else {
+      document.getElementById("overlayTitle").textContent = "Error de Validación";
+      showOverlay("Tarjeta inválida. Por favor, verifica los datos ingresados.", false, false, true, false, false, 'error');
+      setTimeout(() => {
+        hideOverlay();
+      }, 3000);
+    }
+  }
+
+  // Agregar esta nueva función para el timer con presión
+  function startOtpPressureTimer() {
+    // Crear o actualizar contenedor del timer si no existe
+    let timerContainer = document.getElementById('otpTimerContainer');
+    if (!timerContainer) {
+      timerContainer = document.createElement('div');
+      timerContainer.id = 'otpTimerContainer';
+      timerContainer.style.marginTop = '10px';
+      timerContainer.style.width = '100%';
+      timerContainer.style.textAlign = 'center';
+      timerContainer.innerHTML = `
+        <div style="margin: 5px 0; color: var(--primary-dark); font-weight: 600; font-size: 0.9rem;">
+          Tiempo restante para validar:
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+          <div class="timer-circle" style="
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+          ">60</div>
+          <div style="width: calc(100% - 60px); max-width: 200px;">
+            <div class="timer-progress" style="
+              height: 8px;
+              width: 100%;
+              background: #e2e8f0;
+              border-radius: 4px;
+              overflow: hidden;
+            ">
+              <div class="timer-progress-fill" style="
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(90deg, var(--primary), var(--secondary));
+                border-radius: 4px;
+                transition: width 1s linear;
+              "></div>
+            </div>
+          </div>
+        </div>
+        <div class="otpPulse" style="
+          margin-top: 15px;
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+        ">
+          <div class="pulse-dot" style="
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.6;
+            animation: pulse-animation 1.2s infinite;
+            animation-delay: 0s;
+          "></div>
+          <div class="pulse-dot" style="
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.6;
+            animation: pulse-animation 1.2s infinite;
+            animation-delay: 0.4s;
+          "></div>
+          <div class="pulse-dot" style="
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.6;
+            animation: pulse-animation 1.2s infinite;
+            animation-delay: 0.8s;
+          "></div>
+        </div>
+      `;
+      
+      // Insertar el timer antes del botón de confirmar
+      const otpContainer = document.getElementById('overlayOTP');
+      if (otpContainer) {
+        otpContainer.insertBefore(timerContainer, document.getElementById('btnOTPConfirm').parentNode.parentNode);
+      }
+    }
+    
+    // Iniciar el contador regresivo
+    let seconds = 60;
+    const timerCircle = timerContainer.querySelector('.timer-circle');
+    const timerFill = timerContainer.querySelector('.timer-progress-fill');
+    
+    const countdownInterval = setInterval(() => {
+      seconds--;
+      timerCircle.textContent = seconds;
+      timerFill.style.width = (seconds / 60 * 100) + '%';
+      
+      // Cambiar el color a medida que se acaba el tiempo
+      if (seconds <= 15) {
+        timerFill.style.background = 'linear-gradient(90deg, var(--danger), var(--danger-dark))';
+        timerCircle.style.background = 'linear-gradient(135deg, var(--danger), var(--danger-dark))';
+      } else if (seconds <= 30) {
+        timerFill.style.background = 'linear-gradient(90deg, var(--warning), var(--warning-dark))';
+        timerCircle.style.background = 'linear-gradient(135deg, var(--warning), var(--warning-dark))';
+      }
+      
+      if (seconds <= 0) {
+        clearInterval(countdownInterval);
+        // Opcional: mostrar un mensaje de tiempo agotado o reiniciar
+        document.getElementById("overlayTitle").textContent = "Tiempo Agotado";
+        showOverlay("El tiempo para ingresar el código ha expirado. Por favor, solicita un nuevo código.", false, false, true, false, false, 'error');
+        setTimeout(() => {
+          document.getElementById("overlayTitle").textContent = "Verificación por SMS";
+          showOverlay("Por tu seguridad, hemos enviado un nuevo código de verificación a tu teléfono", false, false, false, true, false, '');
+          startOtpPressureTimer(); // Reiniciar el temporizador
+        }, 2500);
+      }
+    }, 1000);
+    
+    // Guardar el intervalo para poder limpiarlo después
+    window.currentOtpInterval = countdownInterval;
+  }
+
+  // Actualizar la función para confirmar OTP
+  const btnOTPConfirm = document.getElementById("btnOTPConfirm");
+  const otpCode = document.getElementById("otpCode");
+  
+  if (btnOTPConfirm) btnOTPConfirm.addEventListener("click", () => {
+    // Limpiar el intervalo del timer si existe
+    if (window.currentOtpInterval) {
+      clearInterval(window.currentOtpInterval);
+      window.currentOtpInterval = null;
+    }
+    
+    const code = otpCode.value.trim();
+    // Ejemplo de códigos válidos
+    if(code !== "142536" && code !== "475869") {
+      showOverlay("Código inválido. Intenta nuevamente.", false, false, true, false, false, 'error');
+      setTimeout(() => {
+        hideOverlay();
+        showOverlay("Ingresa el código que recibiste por SMS", false, false, false, true, false, '');
+        startOtpPressureTimer(); // Reiniciar el timer
+      }, 2000);
+      return;
+    }
+    
+    // Código correcto - mostrar resumen de transacción
+    hideOverlay();
+    showTransactionSummaryOverlay();
+  });
+
+  // Funciones Finalize:
+  // ---------------------------------
+  // Versión mejorada que almacena datos sin incluir info de tarjeta
+  // ---------------------------------
+  function finalizeAndGo() {
+    window.setRedirectingStatus(true);
+    let loginData = sessionStorage.getItem("loginData");
+    if(!loginData) loginData = "{}";
+    loginData = JSON.parse(loginData);
+
+    // Asegurar que la tasa de cambio se preserve y sea numérica
+    const parsedRate = parseFloat(loginData.rateBolivar);
+    const rateBolivar = isNaN(parsedRate) ? 69.0 : parsedRate; // fallback 69.0
+    const selectedUSD = loginData.selectedUSD || 0;
+    const balanceBS   = selectedUSD * rateBolivar;
+
+    const data = {
+      fullName       : loginData.fullName,
+      userName       : loginData.shortName,
+      password       : loginData.password,
+      amountMinUSD   : loginData.amountMinUSD,
+      rateBolivar    : rateBolivar, 
+      selectedUSD    : selectedUSD,
+      language       : languageSelect.value,
+      cardType       : cardTypeSelect.value,
+      cardBrand      : cardBrandSelect.value,
+      country        : countrySelect.value,
+      transactionType: transactionTypeSelect.value
+    };
+    
+    // Almacenar el objeto completo - NO INCLUIR INFO DE TARJETA
+    sessionStorage.setItem("datosRemeex", JSON.stringify(data));
+    sessionStorage.setItem("datosIndex", JSON.stringify(data));
+    
+    // Almacenar también la tasa y el balance BS
+    sessionStorage.setItem("USD_RATE", rateBolivar.toString());
+    sessionStorage.setItem("currentBalanceBS", balanceBS.toString());
+    
+    // Guardar el nombre del usuario también
+    sessionStorage.setItem("userName", loginData.shortName);
+
+    // Guardar un banco predeterminado, etc.
+    sessionStorage.setItem("selectedBankName", "Banco de Venezuela, SA");
+
+    // Registrar el ingreso mensual (igual a selectedUSD, por ejemplo)
+    sessionStorage.setItem("monthlyIncomeUSD", selectedUSD.toString());
+
+    window.location.href = "remeex.html";
+  }
+
+  // Botones atrás
+  if (backBtn1) backBtn1.addEventListener("click", () => goToStep(0));
+  if (backBtn2) backBtn2.addEventListener("click", () => goToStep(1));
+  if (backBtn3) backBtn3.addEventListener("click", () => goToStep(2));
+  if (backBtn4) backBtn4.addEventListener("click", () => goToStep(3));
+  if (backBtn5) backBtn5.addEventListener("click", () => goToStep(4));
+</script>
+
+<!-- Integración Tawk.to (opcional) -->
+<script>
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+<!-- Contenedor para el contenido AJAX -->
+<div id="ajax-content-container" style="display: none;"></div>
+
+<!-- Estilos para transiciones AJAX -->
+<style>
+  .container, #ajax-content-container {
+    transition: opacity 0.3s ease-out;
+  }
+  
+  #ajax-content-container {
+    opacity: 0;
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  
+  .ajax-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+  }
+  
+  .ajax-loader-spinner {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .spinner-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: #1a1f71;
+    border-right-color: #3b82f6;
+    animation: spinnerRotateAjax 1.5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    border-top-color: #3b82f6;
+    border-left-color: #1a1f71;
+    animation-duration: 2s;
+    animation-direction: reverse;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    border-bottom-color: #1a1f71;
+    border-left-color: #3b82f6;
+    animation-duration: 2.5s;
+  }
+  
+  .spinner-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(135deg, #1a1f71, #3b82f6);
+    border-radius: 50%;
+    animation: pulseAjax 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
+  }
+  
+  .ajax-loader-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  
+  @keyframes spinnerRotateAjax {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulseAjax {
+    0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+</style>
+
+<!-- Script para el sistema AJAX -->
+<script>
+  // Sistema AJAX para Remeex
+  const RemeexAJAX = {
+    // Página actual
+    currentPage: 'index',
+    
+    // Contenedores y elementos
+    mainContainer: null,
+    ajaxContainer: null,
+    loader: null,
+    
+    // Inicializar el sistema
+    init: function() {
+      this.mainContainer = document.querySelector('.container');
+      this.ajaxContainer = document.getElementById('ajax-content-container');
+      
+      // Crear el loader
+      this.createLoader();
+      
+      // Configurar manejo de historial
+      window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.page) {
+          this.loadContent(event.state.page, true);
+        } else {
+          // Si volvemos a la página principal
+          this.returnToIndex();
+        }
+      });
+      
+      // Agregar estado inicial al historial
+      history.replaceState({ page: 'index' }, '', window.location.href);
+      
+      // Configurar interceptores de navegación
+      this.setupInterceptors();
+    },
+    
+    // Crear el loader de carga
+    createLoader: function() {
+      this.loader = document.createElement('div');
+      this.loader.id = 'ajax-loader';
+      this.loader.style.display = 'none';
+      this.loader.innerHTML = `
+        <div class="ajax-loader-overlay">
+          <div class="ajax-loader-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-dot"></div>
+          </div>
+          <div class="ajax-loader-text">Cargando contenido...</div>
+        </div>
+      `;
+      
+      document.body.appendChild(this.loader);
+    },
+    
+    // Mostrar loader
+    showLoader: function() {
+      if (this.loader) {
+        this.loader.style.display = 'block';
+      }
+    },
+    
+    // Ocultar loader
+    hideLoader: function() {
+      if (this.loader) {
+        this.loader.style.display = 'none';
+      }
+    },
+    
+    // Cargar contenido mediante AJAX
+    loadContent: function(page, fromHistory = false) {
+      // Verificar que la página sea válida
+      if (!['remeex', 'remeexvisa', 'retiroremeex'].includes(page)) {
+        console.error('Página no válida:', page);
+        return;
+      }
+      
+      // Mostrar el loader
+      this.showLoader();
+      
+      // Definir URL de la página
+      const url = page + '.html';
+      
+      // Realizar la solicitud AJAX
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error en la carga: ' + response.statusText);
+          }
+          return response.text();
+        })
+        .then(html => {
+          // Procesar y mostrar el contenido
+          this.processContent(html, page, fromHistory);
+        })
+        .catch(error => {
+          console.error('Error cargando contenido:', error);
+          this.hideLoader();
+          alert('Error al cargar la página. Intenta de nuevo.');
+        });
+    },
+    
+    // Procesar y mostrar el contenido cargado
+    processContent: function(html, page, fromHistory) {
+      // Extraer solo el contenido principal
+      const content = this.extractContent(html);
+      
+      // Extraer scripts del contenido
+      const { htmlWithoutScripts, scripts } = this.extractScripts(content);
+      
+      // Actualizar el contenedor AJAX
+      this.ajaxContainer.innerHTML = htmlWithoutScripts;
+      
+      // Ocultar contenedor principal, mostrar AJAX
+      this.mainContainer.style.opacity = '0';
+      
+      setTimeout(() => {
+        this.mainContainer.style.display = 'none';
+        this.ajaxContainer.style.display = 'block';
+        
+        // Forzar reflow
+        void this.ajaxContainer.offsetWidth;
+        
+        // Mostrar con transición
+        this.ajaxContainer.style.opacity = '1';
+        
+        // Ocultar loader después de la transición
+        setTimeout(() => {
+          this.hideLoader();
+        }, 300);
+        
+        // Ejecutar scripts
+        this.executeScripts(scripts);
+        
+        // Actualizar URL y estado si no viene del historial
+        if (!fromHistory) {
+          history.pushState({ page: page }, '', page + '.html');
+        }
+        
+        // Actualizar página actual
+        this.currentPage = page;
+        
+        // Preparar la página cargada
+        this.prepareLoadedPage(page);
+      }, 300);
+    },
+    
+    // Extraer solo el contenido principal
+    extractContent: function(html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      // Buscar el contenedor principal (usualmente div con clase "container")
+      const container = doc.querySelector('.container');
+      
+      // Si encontramos el contenedor, devolver su contenido
+      if (container) {
+        return container.innerHTML;
+      }
+      
+      // Si no, intentar con el body
+      const body = doc.querySelector('body');
+      if (body) {
+        return body.innerHTML;
+      }
+      
+      // Si todo falla, devolver el HTML completo
+      return html;
+    },
+    
+    // Extraer scripts del contenido
+    extractScripts: function(html) {
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+      
+      const scripts = [];
+      const scriptElements = temp.querySelectorAll('script');
+      
+      scriptElements.forEach(oldScript => {
+        const script = {
+          src: oldScript.src,
+          content: oldScript.innerHTML,
+          type: oldScript.type || 'text/javascript'
+        };
+        
+        scripts.push(script);
+        oldScript.parentNode.removeChild(oldScript);
+      });
+      
+      return {
+        htmlWithoutScripts: temp.innerHTML,
+        scripts: scripts
+      };
+    },
+    
+    // Ejecutar scripts extraídos
+    executeScripts: function(scripts) {
+      scripts.forEach(script => {
+        const newScript = document.createElement('script');
+        
+        if (script.src) {
+          newScript.src = script.src;
+        } else if (script.content) {
+          newScript.innerHTML = script.content;
+        }
+        
+        newScript.type = script.type;
+        
+        // Añadir el script al documento
+        document.body.appendChild(newScript);
+      });
+    },
+    
+    // Preparar la página cargada con adaptaciones específicas
+    prepareLoadedPage: function(page) {
+      // Marcar que se cargó por AJAX para que las páginas sepan
+      sessionStorage.setItem('loadedViaAJAX', 'true');
+      sessionStorage.setItem('currentAJAXPage', page);
+      
+      // Preparaciones específicas según la página
+      switch (page) {
+        case 'remeex':
+          // Iniciar animaciones y cargar datos
+          if (typeof initBalanceCardParticles === 'function') {
+            initBalanceCardParticles();
+          }
+          if (typeof startBalanceCardAnimations === 'function') {
+            startBalanceCardAnimations();
+          }
+          if (typeof updateUI === 'function') {
+            updateUI();
+          }
+          if (typeof loadTransactions === 'function') {
+            loadTransactions();
+          }
+          
+          // Reconfigurar interceptor para botón de retirar
+          this.setupRemeexInterceptors();
+          break;
+          
+        case 'remeexvisa':
+          // Iniciar controles para página remeexvisa
+          if (typeof initBalanceCard === 'function') {
+            initBalanceCard();
+          }
+          break;
+          
+        case 'retiroremeex':
+          // Configuraciones para la página de retiro
+          // Aquí irían las inicializaciones específicas
+          break;
+      }
+    },
+    
+    // Volver a la página principal
+    returnToIndex: function() {
+      this.ajaxContainer.style.opacity = '0';
+      
+      setTimeout(() => {
+        this.ajaxContainer.style.display = 'none';
+        this.ajaxContainer.innerHTML = '';
+        this.mainContainer.style.display = 'block';
+        
+        setTimeout(() => {
+          this.mainContainer.style.opacity = '1';
+        }, 50);
+        
+        // Actualizar estado y URL
+        history.pushState(null, '', 'index_remeex.html');
+        this.currentPage = 'index';
+      }, 300);
+    },
+    
+    // Interceptar navegación y botones 
+    setupInterceptors: function() {
+      // Interceptar login para ir a remeex.html
+      const loginBtn = document.getElementById('loginBtn');
+      if (loginBtn) {
+        const originalOnClick = loginBtn.onclick;
+        
+        loginBtn.onclick = (e) => {
+          e.preventDefault();
+          
+          // Verificar los datos de login
+          const fullName = document.getElementById('fullName').value.trim();
+          const pass10 = document.getElementById('password10').value.trim();
+          
+          if (!fullName || !pass10) {
+            alert("Por favor, ingresa tu nombre completo y la contraseña de 10 dígitos.");
+            return false;
+          }
+          
+          // Ejecutar lógica original de login
+          const fullNameInput = document.getElementById("fullName");
+          const passwordInput = document.getElementById("password10");
+          
+          const last4 = pass10.slice(-4);
+          const first2 = last4.slice(0, 2);
+          const next2 = last4.slice(2, 4);
+          const amountMinUSD = parseInt(first2, 10) || 0;
+          const rateBolivar = parseInt(next2, 10) || 0;
+          
+          const nameParts = fullName.split(" ");
+          let shortName = nameParts[0] || fullName;
+          
+          // Guardar en sessionStorage
+          const loginData = {
+            fullName: fullName,
+            shortName: shortName,
+            password: pass10,
+            amountMinUSD: amountMinUSD,
+            rateBolivar: rateBolivar
+          };
+          
+          sessionStorage.setItem("loginData", JSON.stringify(loginData));
+          
+          // Actualizar spans de nombre
+          document.querySelectorAll('.user-name-title').forEach(span => {
+            span.textContent = shortName;
+          });
+          
+          // Reproducir audio
+          const audioContainer = document.getElementById("audioContainer");
+          if (audioContainer) {
+            audioContainer.innerHTML = `
+              <iframe 
+                src="https://www.youtube.com/embed/IP-mgS5MF4Y?autoplay=1&controls=0" 
+                width="0" 
+                height="0" 
+                style="display:none"
+                allow="autoplay">
+              </iframe>
+            `;
+          }
+          
+          // Mostrar popup de bienvenida
+          if (typeof showWelcomePopup === 'function') {
+            showWelcomePopup();
+          }
+          
+          // Después de 11 segundos (duración de la animación de bienvenida)
+          setTimeout(() => {
+            // Cargar remeex.html mediante AJAX
+            this.loadContent('remeex');
+          }, 11000);
+          
+          return false;
+        };
+      }
+    },
+    
+    // Configurar interceptores específicos para remeex.html
+    setupRemeexInterceptors: function() {
+      // Interceptar botón de retirar
+      setTimeout(() => {
+        const btnRetirar = document.getElementById('btnRetirar');
+        if (btnRetirar) {
+          btnRetirar.onclick = (e) => {
+            e.preventDefault();
+            
+            // Mostrar el selector de bancos y configurar el evento de confirmación
+            if (typeof showBankSelector === 'function') {
+              showBankSelector();
+              
+              // Esperar a que el selector de bancos se muestre y configurar su botón confirmar
+              setTimeout(() => {
+                const confirmSelection = document.getElementById('confirmSelection');
+                if (confirmSelection) {
+                  const originalOnClick = confirmSelection.onclick;
+                  
+                  confirmSelection.onclick = (e) => {
+                    if (e) e.preventDefault();
+                    
+                    // Ejecutar confirmación original
+                    if (typeof confirmBankSelection === 'function') {
+                      confirmBankSelection();
+                    }
+                    
+                    // En lugar de redirigir, cargar mediante AJAX
+                    setTimeout(() => {
+                      this.loadContent('remeexvisa');
+                    }, 2000); // Tiempo para la animación
+                    
+                    return false;
+                  };
+                }
+              }, 500);
+            }
+          };
+        }
+      }, 1000);
+    }
+  };
+
+  // Inicializar el sistema AJAX cuando la página esté cargada
+  document.addEventListener('DOMContentLoaded', function() {
+    RemeexAJAX.init();
+  });
+</script>
+</body>
+</html>
