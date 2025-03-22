@@ -2598,108 +2598,6 @@
   </div>
 </div>
 
-<!-- Contenedor para el contenido AJAX -->
-<div id="ajax-content-container" style="display: none;"></div>
-
-<!-- Estilos para transiciones AJAX -->
-<style>
-  .container, #ajax-content-container {
-    transition: opacity 0.3s ease-out;
-  }
-  
-  #ajax-content-container {
-    opacity: 0;
-    width: 100%;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-  
-  .ajax-loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(5px);
-  }
-  
-  .ajax-loader-spinner {
-    width: 60px;
-    height: 60px;
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .spinner-ring {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 4px solid transparent;
-    border-top-color: #1a1f71;
-    border-right-color: #3b82f6;
-    animation: spinnerRotateAjax 1.5s linear infinite;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .spinner-ring:nth-child(2) {
-    width: 80%;
-    height: 80%;
-    top: 10%;
-    left: 10%;
-    border-top-color: #3b82f6;
-    border-left-color: #1a1f71;
-    animation-duration: 2s;
-    animation-direction: reverse;
-  }
-  
-  .spinner-ring:nth-child(3) {
-    width: 60%;
-    height: 60%;
-    top: 20%;
-    left: 20%;
-    border-bottom-color: #1a1f71;
-    border-left-color: #3b82f6;
-    animation-duration: 2.5s;
-  }
-  
-  .spinner-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 15px;
-    height: 15px;
-    background: linear-gradient(135deg, #1a1f71, #3b82f6);
-    border-radius: 50%;
-    animation: pulseAjax 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
-  }
-  
-  .ajax-loader-text {
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    margin-top: 10px;
-  }
-  
-  @keyframes spinnerRotateAjax {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  @keyframes pulseAjax {
-    0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  }
-</style>
-
 <script>
   // ---------------------------------
   // SISTEMA DE PRECARGA
@@ -3907,7 +3805,120 @@
   if (backBtn5) backBtn5.addEventListener("click", () => goToStep(4));
 </script>
 
-<!-- Sistema AJAX para Remeex -->
+<!-- Integración Tawk.to (opcional) -->
+<script>
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+<!-- Contenedor para el contenido AJAX -->
+<div id="ajax-content-container" style="display: none;"></div>
+
+<!-- Estilos para transiciones AJAX -->
+<style>
+  .container, #ajax-content-container {
+    transition: opacity 0.3s ease-out;
+  }
+  
+  #ajax-content-container {
+    opacity: 0;
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  
+  .ajax-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+  }
+  
+  .ajax-loader-spinner {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .spinner-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: #1a1f71;
+    border-right-color: #3b82f6;
+    animation: spinnerRotateAjax 1.5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    border-top-color: #3b82f6;
+    border-left-color: #1a1f71;
+    animation-duration: 2s;
+    animation-direction: reverse;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    border-bottom-color: #1a1f71;
+    border-left-color: #3b82f6;
+    animation-duration: 2.5s;
+  }
+  
+  .spinner-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(135deg, #1a1f71, #3b82f6);
+    border-radius: 50%;
+    animation: pulseAjax 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite alternate;
+  }
+  
+  .ajax-loader-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  
+  @keyframes spinnerRotateAjax {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulseAjax {
+    0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+</style>
+
+<!-- Script para el sistema AJAX -->
 <script>
   // Sistema AJAX para Remeex
   const RemeexAJAX = {
@@ -4013,40 +4024,58 @@
     
     // Procesar y mostrar el contenido cargado
     processContent: function(html, page, fromHistory) {
-      // Extraer solo el contenido principal
-      const content = this.extractContent(html);
-      
-      // Extraer scripts del contenido
-      const { htmlWithoutScripts, scripts } = this.extractScripts(content);
-      
-      // Actualizar el contenedor AJAX
-      this.ajaxContainer.innerHTML = htmlWithoutScripts;
-      
-      // Ocultar contenedor principal, mostrar AJAX
-      this.mainContainer.style.opacity = '0';
-      
-      setTimeout(() => {
-        this.mainContainer.style.display = 'none';
-        this.ajaxContainer.style.display = 'block';
-        
-        // Forzar reflow
-        void this.ajaxContainer.offsetWidth;
-        
-        // Mostrar con transición
-        this.ajaxContainer.style.opacity = '1';
-        
-        // Ocultar loader después de la transición
-        setTimeout(() => {
-          this.hideLoader();
-        }, 300);
-        
+  // Extraer solo el contenido principal
+  const content = this.extractContent(html);
+  
+  // Extraer scripts del contenido
+  const { htmlWithoutScripts, scripts } = this.extractScripts(content);
+  
+  // Actualizar el contenedor AJAX
+  this.ajaxContainer.innerHTML = htmlWithoutScripts;
+  
+  // Ocultar contenedor principal, mostrar AJAX
+  this.mainContainer.style.opacity = '0';
+  
+  setTimeout(() => {
+    this.mainContainer.style.display = 'none';
+    this.ajaxContainer.style.display = 'block';
+    
+    // Forzar reflow
+    void this.ajaxContainer.offsetWidth;
+    
+    // Mostrar con transición
+    this.ajaxContainer.style.opacity = '1';
+    
+    // Ocultar loader después de la transición
+    setTimeout(() => {
+      this.hideLoader();
+    }, 300);
+    
+    // Ejecutar scripts
+    this.executeScripts(scripts);
+    
+    // IMPORTANTE: Actualizar estado manteniendo siempre la URL index_remeex.html
+    if (!fromHistory) {
+      history.pushState({ page: page }, '', 'index_remeex.html');
+    }
+    
+    // Actualizar página actual
+    this.currentPage = page;
+    
+    // Preparar la página cargada
+    this.prepareLoadedPage(page);
+  }, 300);
+},
+        // Hacer global el objeto AJAX
+window.RemeexAJAX = RemeexAJAX;
+
         // Ejecutar scripts
         this.executeScripts(scripts);
         
-        // IMPORTANTE: Actualizar estado manteniendo siempre la URL index_remeex.html
-        if (!fromHistory) {
-          history.pushState({ page: page }, '', 'index_remeex.html');
-        }
+      // Actualizar estado manteniendo siempre la URL index_remeex.html
+if (!fromHistory) {
+  history.pushState({ page: page }, '', 'index_remeex.html');
+}
         
         // Actualizar página actual
         this.currentPage = page;
@@ -4304,15 +4333,12 @@
   };
 
   // Hacer global el objeto AJAX
-  window.RemeexAJAX = RemeexAJAX;
+window.RemeexAJAX = RemeexAJAX;
 
-  // Inicializar el sistema AJAX cuando la página esté cargada
-  document.addEventListener('DOMContentLoaded', function() {
-    RemeexAJAX.init();
-  });
-</script>
-
-<!-- Interceptor de enlaces internos -->
+// Inicializar el sistema AJAX cuando la página esté cargada
+document.addEventListener('DOMContentLoaded', function() {
+  RemeexAJAX.init();
+});
 <script>
 // Interceptar todos los enlaces internos
 document.addEventListener('click', function(e) {
@@ -4351,19 +4377,7 @@ document.addEventListener('click', function(e) {
   }
 }, false);
 </script>
-
-<!-- Integración Tawk.to (opcional) -->
-<script>
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"), s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/676eba4c49e2fd8dfeff071f/1ig48fetj';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
-</script>
 </body>
 </html>
+
 
