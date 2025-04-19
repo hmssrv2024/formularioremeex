@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remeex Visa - Servicio de Remesas Internacional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Variables globales */
+        :root {
+            --primary-color: #1A1F71; /* Azul Visa */
+            --primary-light: #4965cb; /* Azul Visa claro */
+            --primary-dark: #15184e; /* Azul Visa oscuro */
+            --secondary-color: #F7B600; /* Dorado Visa */
+            --secondary-light: #ffca3a; /* Dorado Visa claro */
+            --secondary-dark: #d99e00; /* Dorado Visa oscuro */
+            --accent-color: #4965cb; /* Azul Visa claro */
+            --text-color: #333;
+            --bg-light: #E4EBF5;
+            --bg-white: #FFFFFF;
+            --greyLight-1: #E4EBF5;
+            --greyLight-2: #c8d0e7;
+            --greyLight-3: #bec8e4;
+            --greyDark: #9baacf;
+            
+            /* Variables para efectos neumórficos */
+            --shadow-light: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--bg-white);
+            --shadow-dark: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            --shadow-inner-primary: inset 0.2rem 0.2rem 1rem rgba(26, 31, 113, 0.5), inset -0.2rem -0.2rem 1rem rgba(73, 101, 203, 0.5);
+        }
+
+        /* Estilos generales */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Animación interestelar mejorada */
+        #space-travel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background: #000;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .scene {
+            display: inline-block;
+            vertical-align: middle;
+            perspective: 5px;
+            perspective-origin: 50% 50%;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .wrap {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -500px;
+            transform-style: preserve-3d;
+            animation: move 12s infinite linear;
+            animation-fill-mode: forwards;
+        }
+
+        .wrap:nth-child(2) {
+            animation: move 12s infinite linear;
+            animation-delay: 6s;
+        }
+
+        .wall {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            animation: fade 12s infinite linear;
+            background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/18515/PIA09959-1280x800_copy.jpg);
+            background-size: cover;
+        }
+
+        .wrap:nth-child(2) .wall {
+            animation-delay: 6s;
+        }
+
+        .wall-right {
+            transform: rotateY(90deg) translateZ(500px);
+        }
+        
+        .wall-left {
+            transform: rotateY(-90deg) translateZ(500px);
+        }
+        
+        .wall-top {
+            transform: rotateX(90deg) translateZ(500px);
+        }
+        
+        .wall-bottom {
+            transform: rotateX(-90deg) translateZ(500px);
+        }
+        
+        .wall-back {
+            transform: rotateX(180deg) translateZ(500px);
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateZ(-500px) rotate(0deg);
+            }
+            100% {
+                transform: translateZ(500px) rotate(0deg);
+            }
+        }
+        
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Animación de colores Visa mejorada */
+        @property --a {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: true;
+        }
+        
+        .visa-colors {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 900;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .visa-colors.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .visa-colors .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            animation: main 4s cubic-bezier(0.83,-0.49, 0.15, 1.84) 1 forwards;
+        }
+        
+        @keyframes main {
+            from {
+                --a: 0deg;
+            }
+            to {
+                --a: 360deg;
+            }
+        }
+        
+        .visa-colors .col {
+            flex: 1;
+            --size: 140deg;
+            --count: 24;
+            --i: 0;
+            --a-per-item: calc(var(--size) / var(--count) * var(--i) - var(--a));
+            --pos1: calc(50% * cos(var(--a-per-item)));
+            background: linear-gradient(
+                to bottom,
+                var(--secondary-color),
+                var(--accent-color) var(--pos1),
+                var(--primary-color) 50%,
+                var(--accent-color) calc(100% - var(--pos1)),
+                var(--secondary-color)
+            );
+        }
+        
+        .visa-colors .col:nth-child(1) { --i: 0; }
+        .visa-colors .col:nth-child(2) { --i: 1; }
+        .visa-colors .col:nth-child(3) { --i: 2; }
+        .visa-colors .col:nth-child(4) { --i: 3; }
+        .visa-colors .col:nth-child(5) { --i: 4; }
+        .visa-colors .col:nth-child(6) { --i: 5; }
+        .visa-colors .col:nth-child(7) { --i: 6; }
+        .visa-colors .col:nth-child(8) { --i: 7; }
+        .visa-colors .col:nth-child(9) { --i: 8; }
+        .visa-colors .col:nth-child(10) { --i: 9; }
+        .visa-colors .col:nth-child(11) { --i: 10; }
+        .visa-colors .col:nth-child(12) { --i: 11; }
+        .visa-colors .col:nth-child(13) { --i: 12; }
+        .visa-colors .col:nth-child(14) { --i: 13; }
+        .visa-colors .col:nth-child(15) { --i: 14; }
+        .visa-colors .col:nth-child(16) { --i: 15; }
+        .visa-colors .col:nth-child(17) { --i: 16; }
+        .visa-colors .col:nth-child(18) { --i: 17; }
+        .visa-colors .col:nth-child(19) { --i: 18; }
+        .visa-colors .col:nth-child(20) { --i: 19; }
+        .visa-colors .col:nth-child(21) { --i: 20; }
+        .visa-colors .col:nth-child(22) { --i: 21; }
+        .visa-colors .col:nth-child(23) { --i: 22; }
+        .visa-colors .col:nth-child(24) { --i: 23; }
+
+        /* Fondo de burbujas mejorado */
+        @property --angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        .gradient-bg {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            overflow: hidden;
+            background: linear-gradient(40deg, #f0f0f0, #ffffff);
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .gradient-bg svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .gradients-container {
+            filter: url(#goo) blur(40px);
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        .g1, .g2, .g3, .g4, .g5 {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            width: 80%;
+            height: 80%;
+            transform-origin: center center;
+            opacity: 0.5;
+        }
+
+        .g1 {
+            background: radial-gradient(circle at center, rgba(26, 31, 113, 0.8) 0, rgba(26, 31, 113, 0) 50%) no-repeat;
+            top: calc(50% - 40%);
+            left: calc(50% - 40%);
+            animation: moveVertical 30s ease infinite;
+        }
+
+        .g2 {
+            background: radial-gradient(circle at center, rgba(247, 182, 0, 0.8) 0, rgba(247, 182, 0, 0) 50%) no-repeat;
+            top: calc(50% - 40%);
+            left: calc(50% - 40%);
+            transform-origin: calc(50% - 400px);
+            animation: moveInCircle 20s reverse infinite;
+        }
+
+        .g3 {
+            background: radial-gradient(circle at center, rgba(73, 101, 203, 0.8) 0, rgba(73, 101, 203, 0) 50%) no-repeat;
+            top: calc(50% - 40% + 200px);
+            left: calc(50% - 40% - 500px);
+            transform-origin: calc(50% + 400px);
+            animation: moveInCircle 40s linear infinite;
+        }
+
+        .g4 {
+            background: radial-gradient(circle at center, rgba(200, 50, 50, 0.8) 0, rgba(200, 50, 50, 0) 50%) no-repeat;
+            top: calc(50% - 40%);
+            left: calc(50% - 40%);
+            transform-origin: calc(50% - 200px);
+            animation: moveHorizontal 40s ease infinite;
+        }
+
+        .g5 {
+            background: radial-gradient(circle at center, rgba(180, 180, 50, 0.8) 0, rgba(180, 180, 50, 0) 50%) no-repeat;
+            width: 160%;
+            height: 160%;
+            top: calc(50% - 80%);
+            left: calc(50% - 80%);
+            transform-origin: calc(50% - 800px) calc(50% + 200px);
+            animation: moveInCircle 20s ease infinite;
+        }
+
+        @keyframes moveInCircle {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes moveVertical {
+            0% {
+                transform: translateY(-50%);
+            }
+            50% {
+                transform: translateY(50%);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        @keyframes moveHorizontal {
+            0% {
+                transform: translateX(-50%) translateY(-10%);
+            }
+            50% {
+                transform: translateX(50%) translateY(10%);
+            }
+            100% {
+                transform: translateX(-50%) translateY(-10%);
+            }
+        }
+
+        /* Contenedor principal de la aplicación */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        /* Logo mejorado */
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0.4rem 0.4rem 0.8rem var(--greyLight-2), 
+                        -0.3rem -0.3rem 0.6rem var(--bg-white);
+        }
+
+        .logo img {
+            width: 90%;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Títulos y subtítulos mejorados */
+        .welcome-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.1);
+            animation: fadeInDown 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            max-width: 600px;
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Carrusel de características mejorado */
+        .features-carousel {
+            width: 100%;
+            max-width: 600px;
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.9s;
+        }
+
+        .features-container {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .feature {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--bg-light);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--greyLight-3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        .indicator:hover {
+            background-color: var(--primary-light);
+            transform: scale(1.2);
+        }
+
+        /* Contenedor de botones mejorado */
+        .btn-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            animation-delay: 1.2s;
+        }
+
+        /* Botones mejorados según botones.txt */
+        button {
+            all: unset;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            position: relative;
+            border-radius: 999vw;
+            background-color: rgba(0, 0, 0, 0.75);
+            box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+                        0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            width: calc(100% + 0.3em);
+            height: calc(100% + 0.3em);
+            top: -0.15em;
+            left: -0.15em;
+            border-radius: inherit;
+            background: linear-gradient(-135deg,
+                    rgba(5, 5, 5, 0.5),
+                    transparent 20%,
+                    transparent 100%);
+            filter: blur(0.0125em);
+            opacity: 0.25;
+            mix-blend-mode: multiply;
+        }
+
+        button .button-outer {
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            transition: box-shadow 300ms ease;
+            will-change: box-shadow;
+            box-shadow: 0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
+                        0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+                        0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+        }
+
+        button:hover .button-outer {
+            box-shadow: 0 0 0 0 rgba(5, 5, 5, 1), 0 0 0 0 rgba(5, 5, 5, 0.5),
+                        0 0 0 0 rgba(5, 5, 5, 0.25);
+        }
+
+        .button-inner {
+            --inset: 0.035em;
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            padding: 0.7em 1.5em;
+            transition: box-shadow 300ms ease, clip-path 250ms ease,
+                      background-image 250ms ease, transform 250ms ease;
+            will-change: box-shadow, clip-path, background-image, transform;
+            overflow: clip;
+            clip-path: inset(0 0 0 0 round 999vw);
+        }
+
+        #register-btn .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(230, 240, 255, 1),
+                    rgba(180, 200, 240, 1));
+            box-shadow:
+                /* 1 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 2 */
+                -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+                /* 3 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 4 */
+                0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+                /* 5 */
+                0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+                /* 6 */
+                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+                /* 7 */
+                -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+        }
+
+        #login-btn .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(230, 230, 230, 1),
+                    rgba(180, 180, 180, 1));
+            box-shadow:
+                /* 1 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 2 */
+                -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+                /* 3 */
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                /* 4 */
+                0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+                /* 5 */
+                0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+                /* 6 */
+                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+                /* 7 */
+                -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+        }
+
+        button:hover .button-inner {
+            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 999vw);
+            box-shadow:
+                /* 1 */
+                0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+                /* 2 */
+                -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+                /* 3 */
+                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+                /* 4 */
+                0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+                /* 5 */
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                /* 6 */
+                0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+                /* 7 */
+                -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+        }
+
+        button .button-inner span {
+            position: relative;
+            z-index: 4;
+            font-family: "Inter", sans-serif;
+            letter-spacing: -0.05em;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0);
+            background-image: linear-gradient(135deg,
+                    rgba(25, 25, 25, 1),
+                    rgba(75, 75, 75, 1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: transform 250ms ease;
+            display: block;
+            will-change: transform;
+            text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+            -webkit-user-select: none; 
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        button:hover .button-inner span {
+            transform: scale(0.975);
+        }
+
+        button:active .button-inner {
+            transform: scale(0.975);
+        }
+
+        /* Formularios - Mejorados con efecto neumórfico */
+        .form-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background-color: var(--bg-light);
+            box-shadow: var(--shadow-light);
+            display: none;
+            animation: formSlideIn 0.5s ease forwards;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        @keyframes formSlideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--bg-light);
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            padding: 0 1.2rem;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), 
+                        -0.2rem -0.2rem 0.5rem var(--bg-white);
+        }
+
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            color: var(--primary-color);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--greyDark);
+            background: none;
+            border: none;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-color);
+        }
+
+        .form-select {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--bg-light);
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            padding: 0 1.2rem;
+            font-size: 1rem;
+            color: var(--text-color);
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%239baacf" stroke-width="2" strokestroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus {
+            outline: none;
+            box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), 
+                        -0.2rem -0.2rem 0.5rem var(--bg-white);
+        }
+
+        /* Checkbox neumórfico mejorado */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-checkbox {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding-left: 35px;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .checkbox-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: var(--bg-light);
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            transition: all 0.3s ease;
+        }
+
+        .form-checkbox:checked + .checkbox-label {
+            color: var(--primary-color);
+        }
+
+        .form-checkbox:checked + .checkbox-label::before {
+            background: var(--primary-color);
+            box-shadow: inset 0.2rem 0.2rem 1rem rgba(21, 24, 78, 0.7), 
+                        inset -0.2rem -0.2rem 1rem rgba(73, 101, 203, 0.7);
+        }
+
+        .checkbox-label::after {
+            content: "✓";
+            position: absolute;
+            top: 4px;
+            left: 7px;
+            color: white;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .form-checkbox:checked + .checkbox-label::after {
+            opacity: 1;
+        }
+
+        .checkbox-label a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .checkbox-label a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .checkbox-label a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .phone-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phone-prefix {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .phone-number {
+            flex-grow: 1;
+        }
+
+        /* Switch neumórfico para términos y condiciones */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-light);
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--greyDark);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .switch-slider {
+            background: linear-gradient(330deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+        }
+
+        input:checked + .switch-slider:before {
+            transform: translateX(30px);
+            background-color: var(--bg-light);
+        }
+
+        .switch-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            user-select: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        input:checked ~ .switch-label {
+            color: var(--primary-color);
+        }
+
+        .switch-label a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .switch-label a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .switch-label a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Selector de prefijo para Venezuela */
+        .venezuela-prefix-container {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .venezuela-prefix-container.active {
+            display: flex;
+            gap: 10px;
+        }
+
+        .venezuela-prefixes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .venezuela-prefix {
+            position: relative;
+        }
+
+        .venezuela-prefix input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .venezuela-prefix label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 30px;
+            border-radius: 6px;
+            background: var(--bg-light);
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            color: var(--greyDark);
+        }
+
+        .venezuela-prefix input:checked + label {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: inset 0.2rem 0.2rem 1rem rgba(21, 24, 78, 0.7), 
+                        inset -0.2rem -0.2rem 1rem rgba(73, 101, 203, 0.7);
+        }
+
+        /* Botón de envío mejorado con efecto neumórfico */
+        .btn-submit {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), 
+                      -0.2rem -0.2rem 0.5rem var(--bg-white);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0.2rem 0.2rem 0.3rem var(--greyLight-2), 
+                      -0.1rem -0.1rem 0.2rem var(--bg-white);
+            transform: translateY(1px);
+        }
+
+        .btn-submit:active {
+            box-shadow: inset 0.3rem 0.3rem 1.5rem rgba(21, 24, 78, 0.7), 
+                        inset -0.3rem -0.3rem 1.5rem rgba(73, 101, 203, 0.7);
+            transform: translateY(2px);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                     rgba(73, 101, 203, 0.8) 0%, 
+                     rgba(26, 31, 113, 0.8) 50%, 
+                     rgba(21, 24, 78, 0.8) 100%);
+            box-shadow: inset 0.2rem 0.2rem 1rem rgba(73, 101, 203, 0.7), 
+                        inset -0.2rem -0.2rem 1rem rgba(21, 24, 78, 0.7);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .form-footer a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .form-footer a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .password-requirements {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--greyDark);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 3px;
+            transition: color 0.3s ease;
+        }
+
+        .requirement-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--greyLight-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .requirement-icon.valid {
+            background-color: #4CAF50;
+            transform: scale(1.1);
+        }
+
+        /* Pasos de proceso - Estilo mejorado */
+        .steps-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(228, 235, 245, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .steps-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loading-steps {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            width: 90%;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background-color: var(--bg-light);
+            box-shadow: var(--shadow-light);
+            animation: scaleIn 0.5s ease forwards;
+            transform: scale(0.9);
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
+            border-radius: 2px;
+        }
+        
+        .steps {
+            position: relative;
+            padding-left: 50px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            position: relative;
+            padding-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .step:last-child {
+            padding-bottom: 0;
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--greyLight-3);
+            box-shadow: var(--shadow-light);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .step::after {
+            content: '';
+            position: absolute;
+            left: -21px;
+            top: 20px;
+            height: calc(100% - 20px);
+            width: 2px;
+            background-color: var(--greyLight-3);
+            transition: background-color 0.3s ease;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .step.active {
+            transform: scale(1.03);
+        }
+        
+        .step.active::before {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(26, 31, 113, 0.2);
+        }
+        
+        .step.done::before {
+            background-color: #4CAF50;
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
+        }
+        
+        .step.done::after {
+            background-color: #4CAF50;
+        }
+        
+        .step-info {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        
+        .step-desc {
+            font-size: 0.9rem;
+            color: var(--greyDark);
+            transition: color 0.3s ease;
+        }
+        
+        .step.active .step-info {
+            color: var(--primary-color);
+        }
+        
+        .step.done .step-info {
+            color: #4CAF50;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            width: 100%;
+            background-color: var(--greyLight-3);
+            border-radius: 5px;
+            margin-top: 2rem;
+            overflow: hidden;
+            box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2), 
+                        inset -0.2rem -0.2rem 0.5rem var(--bg-white);
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 5px rgba(26, 31, 113, 0.3);
+        }
+
+        /* Orb Spinner mejorado */
+        @property --angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(228, 235, 245, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .orb-container {
+            width: 180px;
+            height: 180px;
+            position: relative;
+        }
+        
+        .orb {
+            display: grid;
+            grid-template-areas: "stack";
+            inline-size: min(80vmin, 100%);
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform: scale(0.7);
+        }
+        
+        .orb::before,
+        .orb::after {
+            content: "";
+            display: block;
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translateZ(0);
+        }
+        
+        .orb::before {
+            background: conic-gradient(
+                    from calc(var(--angle) * 2) at 25% 70%,
+                    var(--primary-color),
+                    transparent 20% 80%,
+                    var(--primary-color)
+                ),
+                conic-gradient(
+                    from calc(var(--angle) * 2) at 45% 75%,
+                    var(--secondary-color),
+                    transparent 30% 60%,
+                    var(--secondary-color)
+                ),
+                conic-gradient(
+                    from calc(var(--angle) * -3) at 80% 20%,
+                    var(--accent-color),
+                    transparent 40% 60%,
+                    var(--accent-color)
+                ),
+                conic-gradient(
+                    from calc(var(--angle) * 2) at 15% 5%,
+                    var(--secondary-color),
+                    transparent 10% 90%,
+                    var(--secondary-color)
+                ),
+                conic-gradient(
+                    from calc(var(--angle) * 1) at 20% 80%,
+                    var(--accent-color),
+                    transparent 10% 90%,
+                    var(--accent-color)
+                ),
+                conic-gradient(
+                    from calc(var(--angle) * -2) at 85% 10%,
+                    var(--primary-color),
+                    transparent 20% 80%,
+                    var(--primary-color)
+                );
+            filter: blur(3vmin) contrast(5);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .orb::after {
+            --dot: 1.5px;
+            background-image: radial-gradient(
+                circle at center,
+                white var(--dot),
+                transparent var(--dot)
+            );
+            background-size: calc(var(--dot) * 2) calc(var(--dot) * 2);
+            mask-image: radial-gradient(black 25%, transparent 75%);
+            backdrop-filter: blur(8vmin) contrast(10);
+            mix-blend-mode: overlay;
+        }
+        
+        .loading-text {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        @keyframes rotate {
+            to {
+                --angle: 360deg;
+            }
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(228, 235, 245, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .success-message.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .success-container {
+            max-width: 500px;
+            width: 90%;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background-color: var(--bg-light);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transform: scale(0.5);
+        }
+        
+        @keyframes popIn {
+            from {
+                transform: scale(0.5);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 0 10px rgba(76, 175, 80, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+        
+        .success-icon i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .success-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-success {
+            width: 100%;
+            max-width: 250px;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), 
+                        -0.2rem -0.2rem 0.5rem var(--bg-white);
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success:active {
+            transform: translateY(1px);
+        }
+
+        /* Validación de formularios */
+        .error {
+            color: #d32f2f;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: errorShake 0.3s ease-in-out;
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .form-input.invalid {
+            box-shadow: 0 0 0 2px #d32f2f, var(--shadow-dark);
+        }
+
+        .form-input.invalid + .error {
+            display: block;
+        }
+
+        /* Responsive - Mejorado para adaptarse a todos los dispositivos */
+        @media (max-width: 992px) {
+            .welcome-text {
+                font-size: 2.2rem;
+            }
+            
+            .logo {
+                width: 110px;
+                height: 110px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-text {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .phone-container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .phone-prefix {
+                width: 100%;
+            }
+            
+            .app-container {
+                padding: 1.5rem;
+            }
+            
+            .feature-title {
+                font-size: 1.1rem;
+            }
+            
+            .feature-desc {
+                font-size: 0.85rem;
+            }
+            
+            .venezuela-prefixes {
+                justify-content: center;
+            }
+        }
+
+        /* Animaciones adicionales */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(26, 31, 113, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(26, 31, 113, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(26, 31, 113, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animación interestelar mejorada -->
+    <div id="space-travel">
+        <div class="scene">
+            <div class="wrap">
+                <div class="wall wall-right"></div>
+                <div class="wall wall-left"></div>   
+                <div class="wall wall-top"></div>
+                <div class="wall wall-bottom"></div> 
+                <div class="wall wall-back"></div>    
+            </div>
+            <div class="wrap">
+                <div class="wall wall-right"></div>
+                <div class="wall wall-left"></div>   
+                <div class="wall wall-top"></div>
+                <div class="wall wall-bottom"></div> 
+                <div class="wall wall-back"></div>    
+            </div>
+        </div>
+    </div>
+    
+    <!-- Animación de colores Visa para transiciones -->
+    <div class="visa-colors">
+        <div class="container">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+    
+    <!-- Background de burbujas -->
+    <div class="gradient-bg">
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+                    <feBlend in="SourceGraphic" in2="goo" />
+                </filter></defs>
+        </svg>
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+        </div>
+    </div>
+    
+    <!-- Contenedor principal de la aplicación -->
+    <div class="app-container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9HdCjKf6DQyzmo5VfUzJxzBFIkZlb9HrHjzhbx7dIAu8-sLUws-w4KWA3466xaCYSFKq90xVoDpiS86lo8kYNHXp7tngSGThx7srnpTREPluNMSsIHuOnCVXmibDpevOdy8IIoYRVJACa_TZfZb80-tEqasC4LoRO4aItqTZXwaAHo8FWfwL2Hb3ijtgC/s320/1000280079.png" alt="Visa Logo">
+        </div>
+        
+        <!-- Textos de bienvenida -->
+        <h1 class="welcome-text">Remeex Visa</h1>
+        <p class="subtitle">El nuevo método de remesas internacional que conecta personas a través del mundo.</p>
+        
+        <!-- Carrusel de características -->
+        <div class="features-carousel">
+            <div class="features-container">
+                <div class="feature">
+                    <div class="feature-title">Envío Global Inmediato</div>
+                    <div class="feature-desc">Transfiere dinero a cualquier cuenta del mundo en segundos</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Sin Comisiones Ocultas</div>
+                    <div class="feature-desc">Conoce el costo exacto de tu envío sin sorpresas</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Seguridad Garantizada</div>
+                    <div class="feature-desc">Protección de datos y transacciones con tecnología avanzada</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">Disponible 24/7</div>
+                    <div class="feature-desc">Realiza envíos a cualquier hora desde cualquier lugar</div>
+                </div>
+            </div>
+            <div class="carousel-indicators">
+                <div class="indicator active" data-index="0"></div>
+                <div class="indicator" data-index="1"></div>
+                <div class="indicator" data-index="2"></div>
+                <div class="indicator" data-index="3"></div>
+            </div>
+        </div>
+        
+        <!-- Botones principales mejorados -->
+        <div class="btn-container">
+            <button id="register-btn">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Registrarme</span>
+                    </div>
+                </div>
+            </button>
+            <button id="login-btn">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Iniciar sesión</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Formulario de registro -->
+        <div id="register-form" class="form-container">
+            <h2 class="form-title">Crear una cuenta</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="reg-email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="reg-email" class="form-input" placeholder="correo@ejemplo.com" required>
+                    <div class="error">Por favor, ingresa un correo electrónico válido</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-name" class="form-label">Nombre</label>
+                    <input type="text" id="reg-name" class="form-input" placeholder="Tu nombre" required>
+                    <div class="error">Por favor, ingresa tu nombre</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-lastname" class="form-label">Apellido</label>
+                    <input type="text" id="reg-lastname" class="form-input" placeholder="Tu apellido" required>
+                    <div class="error">Por favor, ingresa tu apellido</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-country" class="form-label">País</label>
+                    <select id="reg-country" class="form-select" required>
+                        <option value="" disabled selected>Selecciona tu país</option>
+                        <optgroup label="América del Norte">
+                            <option value="CA">Canadá (+1)</option>
+                            <option value="US">Estados Unidos (+1)</option>
+                            <option value="MX">México (+52)</option>
+                        </optgroup>
+                        <optgroup label="América Central y Caribe">
+                            <option value="BZ">Belice (+501)</option>
+                            <option value="CR">Costa Rica (+506)</option>
+                            <option value="CU">Cuba (+53)</option>
+                            <option value="SV">El Salvador (+503)</option>
+                            <option value="GT">Guatemala (+502)</option>
+                            <option value="HT">Haití (+509)</option>
+                            <option value="HN">Honduras (+504)</option>
+                            <option value="JM">Jamaica (+1-876)</option>
+                            <option value="NI">Nicaragua (+505)</option>
+                            <option value="PA">Panamá (+507)</option>
+                            <option value="DO">República Dominicana (+1-809)</option>
+                            <option value="TT">Trinidad y Tobago (+1-868)</option>
+                        </optgroup>
+                        <optgroup label="América del Sur">
+                            <option value="AR">Argentina (+54)</option>
+                            <option value="BO">Bolivia (+591)</option>
+                            <option value="BR">Brasil (+55)</option>
+                            <option value="CL">Chile (+56)</option>
+                            <option value="CO">Colombia (+57)</option>
+                            <option value="EC">Ecuador (+593)</option>
+                            <option value="GY">Guyana (+592)</option>
+                            <option value="PY">Paraguay (+595)</option>
+                            <option value="PE">Perú (+51)</option>
+                            <option value="SR">Surinam (+597)</option>
+                            <option value="UY">Uruguay (+598)</option>
+                            <option value="VE">Venezuela (+58)</option>
+                        </optgroup>
+                        <optgroup label="Europa Occidental">
+                            <option value="DE">Alemania (+49)</option>
+                            <option value="AT">Austria (+43)</option>
+                            <option value="BE">Bélgica (+32)</option>
+                            <option value="ES">España (+34)</option>
+                            <option value="FR">Francia (+33)</option>
+                            <option value="IE">Irlanda (+353)</option>
+                            <option value="IT">Italia (+39)</option>
+                            <option value="LU">Luxemburgo (+352)</option>
+                            <option value="NL">Países Bajos (+31)</option>
+                            <option value="PT">Portugal (+351)</option>
+                            <option value="GB">Reino Unido (+44)</option>
+                            <option value="CH">Suiza (+41)</option>
+                        </optgroup>
+                        <optgroup label="Europa del Este">
+                            <option value="BG">Bulgaria (+359)</option>
+                            <option value="HR">Croacia (+385)</option>
+                            <option value="SK">Eslovaquia (+421)</option>
+                            <option value="SI">Eslovenia (+386)</option>
+                            <option value="EE">Estonia (+372)</option>
+                            <option value="HU">Hungría (+36)</option>
+                            <option value="LV">Letonia (+371)</option>
+                            <option value="LT">Lituania (+370)</option>
+                            <option value="PL">Polonia (+48)</option>
+                            <option value="CZ">República Checa (+420)</option>
+                            <option value="RO">Rumania (+40)</option>
+                            <option value="RU">Rusia (+7)</option>
+                            <option value="UA">Ucrania (+380)</option>
+                        </optgroup>
+                        <optgroup label="Asia">
+                            <option value="SA">Arabia Saudita (+966)</option>
+                            <option value="CN">China (+86)</option>
+                            <option value="KR">Corea del Sur (+82)</option>
+                            <option value="AE">Emiratos Árabes Unidos (+971)</option>
+                            <option value="PH">Filipinas (+63)</option>
+                            <option value="HK">Hong Kong (+852)</option>
+                            <option value="IN">India (+91)</option>
+                            <option value="ID">Indonesia (+62)</option>
+                            <option value="IL">Israel (+972)</option>
+                            <option value="JP">Japón (+81)</option>
+                            <option value="MY">Malasia (+60)</option>
+                            <option value="SG">Singapur (+65)</option>
+                            <option value="TH">Tailandia (+66)</option>
+                            <option value="TW">Taiwán (+886)</option>
+                            <option value="TR">Turquía (+90)</option>
+                            <option value="VN">Vietnam (+84)</option>
+                        </optgroup>
+                        <optgroup label="África">
+                            <option value="DZ">Argelia (+213)</option>
+                            <option value="EG">Egipto (+20)</option>
+                            <option value="KE">Kenia (+254)</option>
+                            <option value="MA">Marruecos (+212)</option>
+                            <option value="NG">Nigeria (+234)</option>
+                            <option value="ZA">Sudáfrica (+27)</option>
+                            <option value="TZ">Tanzania (+255)</option>
+                            <option value="TN">Túnez (+216)</option>
+                        </optgroup>
+                        <optgroup label="Oceanía">
+                            <option value="AU">Australia (+61)</option>
+                            <option value="FJ">Fiyi (+679)</option>
+                            <option value="NZ">Nueva Zelanda (+64)</option>
+                            <option value="PG">Papúa Nueva Guinea (+675)</option>
+                        </optgroup>
+                    </select>
+                    <div class="error">Por favor, selecciona tu país</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-phone" class="form-label">Número de teléfono</label>
+                    <div class="phone-container">
+                        <select id="phone-prefix" class="form-select phone-prefix" required>
+                            <option value="" disabled selected>Prefijo</option>
+                            <!-- Los prefijos se cargarán automáticamente según el país seleccionado -->
+                        </select>
+                        <input type="tel" id="reg-phone" class="form-input phone-number" placeholder="Número telefónico" required>
+                    </div>
+                    <div class="error">Por favor, ingresa un número de teléfono válido</div>
+                    
+                    <!-- Contenedor de prefijos para Venezuela -->
+                    <div id="venezuela-prefix-container" class="venezuela-prefix-container">
+                        <label class="form-label">Selecciona el prefijo:</label>
+                        <div class="venezuela-prefixes">
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-414" name="ve-prefix" value="414">
+                                <label for="prefix-414">414</label>
+                            </div>
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-424" name="ve-prefix" value="424">
+                                <label for="prefix-424">424</label>
+                            </div>
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-412" name="ve-prefix" value="412">
+                                <label for="prefix-412">412</label>
+                            </div>
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-416" name="ve-prefix" value="416">
+                                <label for="prefix-416">416</label>
+                            </div>
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-426" name="ve-prefix" value="426">
+                                <label for="prefix-426">426</label>
+                            </div>
+                            <div class="venezuela-prefix">
+                                <input type="radio" id="prefix-212" name="ve-prefix" value="212">
+                                <label for="prefix-212">212</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-language" class="form-label">Idioma preferido</label>
+                    <select id="reg-language" class="form-select" required>
+                        <option value="" disabled selected>Selecciona tu idioma</option>
+                        <option value="es">Español</option>
+                        <option value="en" disabled>English (Inglés)</option>
+                        <option value="pt" disabled>Português (Portugués)</option>
+                        <option value="fr" disabled>Français (Francés)</option>
+                        <option value="de" disabled>Deutsch (Alemán)</option>
+                        <option value="it" disabled>Italiano</option>
+                        <option value="zh" disabled>中文 (Chino)</option>
+                        <option value="ja" disabled>日本語 (Japonés)</option>
+                        <option value="ru" disabled>Русский (Ruso)</option>
+                        <option value="ar" disabled>العربية (Árabe)</option>
+                    </select>
+                    <div class="error">Por favor, selecciona tu idioma preferido</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-password" class="form-label">Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="reg-password" class="form-input" placeholder="Crear contraseña" required>
+                        <button type="button" class="toggle-password">
+                            <i class="material-icons">visibility</i>
+                        </button>
+                    </div>
+                    <div class="error">La contraseña no cumple con los requisitos</div>
+                    <div class="password-requirements">
+                        <div class="requirement" id="req-length">
+                            <span class="requirement-icon">✓</span>
+                            <span>Entre 10 y 15 caracteres</span>
+                        </div>
+                        <div class="requirement" id="req-uppercase">
+                            <span class="requirement-icon">✓</span>
+                            <span>Al menos una letra mayúscula</span>
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="requirement-icon">✓</span>
+                            <span>Al menos un número</span>
+                        </div>
+                        <div class="requirement" id="req-symbol">
+                            <span class="requirement-icon">✓</span>
+                            <span>Al menos un símbolo especial</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-confirm-password" class="form-label">Confirmar contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="reg-confirm-password" class="form-input" placeholder="Confirmar contraseña" required>
+                        <button type="button" class="toggle-password">
+                            <i class="material-icons">visibility</i>
+                        </button>
+                    </div>
+                    <div class="error">Las contraseñas no coinciden</div>
+                </div>
+                
+                <!-- Términos y condiciones con switch neumórfico -->
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="reg-terms" required>
+                        <span class="switch-slider"></span>
+                    </label>
+                    <span class="switch-label">Acepto los <a href="https://www.visa.es/terminos-de-uso.html" target="_blank">términos y condiciones</a> de Remeex Visa</span>
+                </div>
+                
+                <!-- Marketing con switch neumórfico -->
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="reg-marketing">
+                        <span class="switch-slider"></span>
+                    </label>
+                    <span class="switch-label">Deseo recibir noticias y promociones de Remeex Visa</span>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <span>Crear cuenta</span>
+                </button>
+                
+                <div class="form-footer">
+                    ¿Ya tienes una cuenta? <a id="goto-login">Iniciar sesión</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Formulario de inicio de sesión -->
+        <div id="login-form" class="form-container">
+            <h2 class="form-title">Iniciar sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="login-email" class="form-input" placeholder="correo@ejemplo.com" required>
+                    <div class="error">Por favor, ingresa un correo electrónico válido</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="login-password" class="form-input" placeholder="Tu contraseña" required>
+                        <button type="button" class="toggle-password">
+                            <i class="material-icons">visibility</i>
+                        </button>
+                    </div>
+                    <div class="error">Por favor, ingresa tu contraseña</div>
+                </div>
+                
+                <!-- Recordarme con switch neumórfico -->
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="remember-me">
+                        <span class="switch-slider"></span>
+                    </label>
+                    <span class="switch-label">Recordarme</span>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <span>Iniciar sesión</span>
+                </button>
+                
+                <div class="form-footer">
+                    <div style="margin-bottom: 10px;">
+                        <a href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    ¿No tienes una cuenta? <a id="goto-register">Registrarme</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Loading overlay con orbe spinner mejorado -->
+    <div class="loading-overlay">
+        <div class="orb-container">
+            <div class="orb"></div>
+            <div class="loading-text">Procesando...</div>
+        </div>
+    </div>
+    
+    <!-- Contenedor de pasos de proceso -->
+    <div class="steps-container">
+        <div class="loading-steps">
+            <h2 class="step-title">Configurando tu cuenta</h2>
+            <div class="steps">
+                <div class="step done">
+                    <div class="step-info">Verificando datos</div>
+                    <div class="step-desc">Comprobando la información proporcionada</div>
+                </div>
+                <div class="step active">
+                    <div class="step-info">Creando perfil</div>
+                    <div class="step-desc" id="config-message">Configurando tu cuenta personal</div>
+                </div>
+                <div class="step">
+                    <div class="step-info">Conectando servicios</div>
+                    <div class="step-desc" id="connection-message">Enlazando con la red de Visa global</div>
+                </div>
+                <div class="step">
+                    <div class="step-info">Finalizando</div>
+                    <div class="step-desc">¡Casi listo para comenzar!</div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 38%;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mensaje de éxito -->
+    <div class="success-message">
+        <div class="success-container">
+            <div class="success-icon">
+                <i class="material-icons">check</i>
+            </div>
+            <h2 class="success-title">¡Cuenta creada exitosamente!</h2>
+            <p>Bienvenido a Remeex Visa. Tu cuenta ha sido configurada correctamente y ahora puedes comenzar a disfrutar de nuestros servicios.</p>
+            <button class="btn-success" id="btn-continue">Continuar</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias a los elementos principales
+            const spaceTravel = document.getElementById('space-travel');
+            const appContainer = document.querySelector('.app-container');
+            const registerBtn = document.getElementById('register-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const registerForm = document.getElementById('register-form');
+            const loginForm = document.getElementById('login-form');
+            const gotoLogin = document.getElementById('goto-login');
+            const gotoRegister = document.getElementById('goto-register');
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            const visaColors = document.querySelector('.visa-colors');
+            const stepsContainer = document.querySelector('.steps-container');
+            const successMessage = document.querySelector('.success-message');
+            const btnContinue = document.getElementById('btn-continue');
+            
+            // Referencias a elementos de formularios
+            const regCountry = document.getElementById('reg-country');
+            const phonePrefix = document.getElementById('phone-prefix');
+            const venezuelaPrefixContainer = document.getElementById('venezuela-prefix-container');
+            const regPhone = document.getElementById('reg-phone');
+            const regLanguage = document.getElementById('reg-language');
+            const regPassword = document.getElementById('reg-password');
+            const regConfirmPassword = document.getElementById('reg-confirm-password');
+            const passwordToggles = document.querySelectorAll('.toggle-password');
+            const configMessage = document.getElementById('config-message');
+            const connectionMessage = document.getElementById('connection-message');
+            
+            // Gestión del carrusel de características
+            const featuresContainer = document.querySelector('.features-container');
+            const features = document.querySelectorAll('.feature');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentFeature = 0;
+            const featureCount = features.length;
+            
+            function showFeature(index) {
+                featuresContainer.style.transform = `translateX(-${index * 100}%)`;
+                indicators.forEach((ind, i) => {
+                    ind.classList.toggle('active', i === index);
+                });
+                currentFeature = index;
+            }
+            
+            // Auto rotate features every 5 seconds
+            let featureInterval = setInterval(() => {
+                let nextFeature = (currentFeature + 1) % featureCount;
+                showFeature(nextFeature);
+            }, 5000);
+            
+            // Allow manual navigation via indicators
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    clearInterval(featureInterval);
+                    showFeature(index);
+                    // Restart auto-rotation after manual selection
+                    featureInterval = setInterval(() => {
+                        let nextFeature = (currentFeature + 1) % featureCount;
+                        showFeature(nextFeature);
+                    }, 5000);
+                });
+            });
+            
+            // Mostrar la app después de la animación de viaje interestelar
+            setTimeout(function() {
+                spaceTravel.style.opacity = '0';
+                setTimeout(function() {
+                    spaceTravel.style.display = 'none';
+                    appContainer.style.opacity = '1';
+                }, 1000);
+            }, 4000);
+            
+            // Eventos para cambiar entre formularios
+            registerBtn.addEventListener('click', function() {
+                showVisaColorsTransition();
+                setTimeout(function() {
+                    loginForm.classList.remove('active');
+                    registerForm.classList.add('active');
+                }, 500);
+            });
+            
+            loginBtn.addEventListener('click', function() {
+                showVisaColorsTransition();
+                setTimeout(function() {
+                    registerForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                }, 500);
+            });
+            
+            gotoLogin.addEventListener('click', function() {
+                showVisaColorsTransition();
+                setTimeout(function() {
+                    registerForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                }, 500);
+            });
+            
+            gotoRegister.addEventListener('click', function() {
+                showVisaColorsTransition();
+                setTimeout(function() {
+                    loginForm.classList.remove('active');
+                    registerForm.classList.add('active');
+                }, 500);
+            });
+            
+            // Botón Continuar después de registro exitoso
+            btnContinue.addEventListener('click', function() {
+                successMessage.classList.remove('active');
+                // Redirigir al dashboard o mostrar formulario de login
+                showVisaColorsTransition();
+                setTimeout(function() {
+                    registerForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                }, 500);
+            });
+            
+            // Función para mostrar la transición de colores Visa
+            function showVisaColorsTransition() {
+                visaColors.classList.add('active');
+                setTimeout(function() {
+                    visaColors.classList.remove('active');
+                }, 1000);
+            }
+            
+            // Actualizar prefijo telefónico según el país seleccionado
+            regCountry.addEventListener('change', function() {
+                const selectedOption = regCountry.options[regCountry.selectedIndex];
+                const selectedCountry = regCountry.value;
+                const prefixMatch = selectedOption.textContent.match(/\(\+(.*?)\)/);
+                
+                // Limpiar opciones actuales
+                phonePrefix.innerHTML = '';
+                
+                // Mostrar u ocultar el contenedor específico para Venezuela
+                if (selectedCountry === 'VE') {
+                    venezuelaPrefixContainer.classList.add('active');
+                    regPhone.placeholder = "Ejemplo: 1234567 (7 dígitos)";
+                    regPhone.maxLength = 7;
+                    
+                    // Actualizar mensajes para Venezuela
+                    configMessage.textContent = "Configurando tu cuenta en bolívares";
+                    connectionMessage.textContent = "Enlazando con redes bancarias en Venezuela";
+                    
+                    // Solo permitir español como idioma para Venezuela
+                    regLanguage.querySelectorAll('option').forEach(option => {
+                        if (option.value !== 'es' && option.value !== '') {
+                            option.disabled = true;
+                        }
+                    });
+                } else {
+                    venezuelaPrefixContainer.classList.remove('active');
+                    regPhone.placeholder = "Número telefónico";
+                    regPhone.maxLength = "";
+                    
+                    // Restaurar mensajes originales
+                    configMessage.textContent = "Configurando tu cuenta personal";
+                    connectionMessage.textContent = "Enlazando con la red de Visa global";
+                    
+                    // Habilitar otros idiomas si no es Venezuela
+                    regLanguage.querySelectorAll('option').forEach(option => {
+                        if (option.value !== 'es' && option.value !== '') {
+                            option.disabled = false;
+                        }
+                    });
+                }
+                
+                if (prefixMatch && prefixMatch[1]) {
+                    const countryPrefix = prefixMatch[1];
+                    
+                    // Agregar la nueva opción con el prefijo del país seleccionado
+                    const option = document.createElement('option');
+                    option.value = countryPrefix;
+                    option.textContent = `+${countryPrefix}`;
+                    option.selected = true;
+                    phonePrefix.appendChild(option);
+                }
+            });
+            
+            // Validación de contraseña en tiempo real
+            regPassword.addEventListener('input', validatePassword);
+            
+            function validatePassword() {
+                const password = regPassword.value;
+                
+                // Validar longitud (10-15 caracteres)
+                const lengthValid = password.length >= 10 && password.length <= 15;
+                updateRequirement('req-length', lengthValid);
+                
+                // Validar mayúsculas
+                const uppercaseValid = /[A-Z]/.test(password);
+                updateRequirement('req-uppercase', uppercaseValid);
+                
+                // Validar números
+                const numberValid = /[0-9]/.test(password);
+                updateRequirement('req-number', numberValid);
+                
+                // Validar símbolos especiales
+                const symbolValid = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+                updateRequirement('req-symbol', symbolValid);
+                
+                return lengthValid && uppercaseValid && numberValid && symbolValid;
+            }
+            
+            function updateRequirement(reqId, isValid) {
+                const requirement = document.getElementById(reqId);
+                const icon = requirement.querySelector('.requirement-icon');
+                const text = requirement.querySelector('span:last-child');
+                
+                if (isValid) {
+                    icon.classList.add('valid');
+                    requirement.style.color = '#4CAF50';
+                } else {
+                    icon.classList.remove('valid');
+                    requirement.style.color = '';
+                }
+            }
+            
+            // Mostrar/ocultar contraseñas
+            passwordToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const passwordInput = this.previousElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        icon.textContent = 'visibility_off';
+                    } else {passwordInput.type = 'password';
+                        icon.textContent = 'visibility';
+                    }
+                });
+            });
+            
+            // Prefijos de Venezuela - activación cuando se selecciona un prefijo
+            const venezuelaPrefixes = document.querySelectorAll('input[name="ve-prefix"]');
+            venezuelaPrefixes.forEach(prefix => {
+                prefix.addEventListener('change', function() {
+                    // Actualizar placeholder para indicar que se espera un número de 7 dígitos
+                    regPhone.placeholder = `${this.value}-1234567 (7 dígitos)`;
+                });
+            });
+            
+            // Función para simular progreso de pasos
+            function simulateSteps() {
+                const steps = document.querySelectorAll('.step');
+                const progressBar = document.querySelector('.progress');
+                let currentStep = 1; // Comenzamos con el paso 1 ya completado
+                
+                function updateProgress() {
+                    // Actualizar el porcentaje de la barra de progreso
+                    const progressPercent = (currentStep / (steps.length - 1)) * 100;
+                    progressBar.style.width = `${progressPercent}%`;
+                    
+                    // Actualizar el estado de los pasos
+                    steps.forEach((step, index) => {
+                        if (index < currentStep) {
+                            step.className = 'step done';
+                        } else if (index === currentStep) {
+                            step.className = 'step active';
+                        } else {
+                            step.className = 'step';
+                        }
+                    });
+                    
+                    // Avanzar al siguiente paso o finalizar
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        setTimeout(updateProgress, 1500);
+                    } else {
+                        // Proceso completado, cerrar el contenedor de pasos y mostrar el mensaje de éxito
+                        setTimeout(() => {
+                            stepsContainer.classList.remove('active');
+                            setTimeout(() => {
+                                successMessage.classList.add('active');
+                            }, 500);
+                        }, 1000);
+                    }
+                }
+                
+                // Iniciar el proceso
+                updateProgress();
+            }
+            
+            // Validación del número de teléfono de Venezuela
+            function validateVenezuelaPhone() {
+                if (regCountry.value === 'VE') {
+                    // Verificar que se ha seleccionado un prefijo
+                    let prefixSelected = false;
+                    venezuelaPrefixes.forEach(prefix => {
+                        if (prefix.checked) {
+                            prefixSelected = true;
+                        }
+                    });
+                    
+                    // Verificar que el número tiene 7 dígitos
+                    const phoneValid = /^\d{7}$/.test(regPhone.value);
+                    
+                    return prefixSelected && phoneValid;
+                }
+                
+                // Para otros países, simplemente verificar que hay un valor
+                return regPhone.value.trim() !== '';
+            }
+            
+            // Función para animar los botones
+            function animateButtons() {
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.addEventListener('mouseenter', () => {
+                        const buttonInner = button.querySelector('.button-inner');
+                        if (buttonInner) {
+                            buttonInner.style.animation = 'glow 1.5s infinite';
+                        }
+                    });
+                    
+                    button.addEventListener('mouseleave', () => {
+                        const buttonInner = button.querySelector('.button-inner');
+                        if (buttonInner) {
+                            buttonInner.style.animation = '';
+                        }
+                    });
+                });
+            }
+            
+            // Aplicar animación a los botones
+            animateButtons();
+            
+            // Validación de formularios antes de enviar
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar contraseña
+                const passwordValid = validatePassword();
+                
+                // Validar coincidencia de contraseñas
+                const passwordsMatch = regPassword.value === regConfirmPassword.value;
+                if (!passwordsMatch) {
+                    regConfirmPassword.classList.add('invalid');
+                    document.querySelector('#reg-confirm-password + .error').style.display = 'block';
+                } else {
+                    regConfirmPassword.classList.remove('invalid');
+                    document.querySelector('#reg-confirm-password + .error').style.display = 'none';
+                }
+                
+                // Validar número de teléfono para Venezuela
+                const phoneValid = validateVenezuelaPhone();
+                if (!phoneValid) {
+                    regPhone.classList.add('invalid');
+                    regPhone.nextElementSibling.style.display = 'block';
+                } else {
+                    regPhone.classList.remove('invalid');
+                    regPhone.nextElementSibling.style.display = 'none';
+                }
+                
+                // Validar términos y condiciones
+                const termsAccepted = document.getElementById('reg-terms').checked;
+                
+                if (passwordValid && passwordsMatch && termsAccepted && phoneValid) {
+                    // Mostrar loading
+                    loadingOverlay.classList.add('active');
+                    document.querySelector('.loading-text').textContent = 'Registrando...';
+                    
+                    // Simulación de registro (2 segundos)
+                    setTimeout(function() {
+                        // Ocultar loading y mostrar animación de pasos
+                        loadingOverlay.classList.remove('active');
+                        
+                        // Mostrar contenedor de pasos y comenzar simulación
+                        stepsContainer.classList.add('active');
+                        simulateSteps();
+                    }, 2000);
+                }
+            });
+            
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validación básica
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                let formValid = true;
+                
+                if (!email || !validateEmail(email)) {
+                    document.getElementById('login-email').classList.add('invalid');
+                    formValid = false;
+                } else {
+                    document.getElementById('login-email').classList.remove('invalid');
+                }
+                
+                if (!password) {
+                    document.getElementById('login-password').classList.add('invalid');
+                    formValid = false;
+                } else {
+                    document.getElementById('login-password').classList.remove('invalid');
+                }
+                
+                if (formValid) {
+                    // Mostrar loading
+                    loadingOverlay.classList.add('active');
+                    document.querySelector('.loading-text').textContent = 'Iniciando sesión...';
+                    
+                    // Simulación de inicio de sesión (2 segundos)
+                    setTimeout(function() {
+                        // Mostrar animación de colores Visa
+                        loadingOverlay.classList.remove('active');
+                        showVisaColorsTransition();
+                        
+                        // Redirigir o mostrar mensaje de éxito
+                        setTimeout(function() {
+                            alert('¡Inicio de sesión exitoso! Bienvenido a Remeex Visa.');
+                            // Aquí puedes redirigir a la página de dashboard o mostrar otro contenido
+                        }, 1000);
+                    }, 2000);
+                }
+            });
+            
+            // Función para validar formato de email
+            function validateEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            
+            // Eventos para validación en tiempo real
+            document.getElementById('reg-email').addEventListener('blur', function() {
+                if (!validateEmail(this.value) && this.value) {
+                    this.classList.add('invalid');
+                } else {
+                    this.classList.remove('invalid');
+                }
+            });
+            
+            document.getElementById('login-email').addEventListener('blur', function() {
+                if (!validateEmail(this.value) && this.value) {
+                    this.classList.add('invalid');
+                } else {
+                    this.classList.remove('invalid');
+                }
+            });
+            
+            // Validar que la confirmación de contraseña coincida
+            regConfirmPassword.addEventListener('input', function() {
+                if (this.value !== regPassword.value) {
+                    this.classList.add('invalid');
+                    document.querySelector('#reg-confirm-password + .error').style.display = 'block';
+                } else {
+                    this.classList.remove('invalid');
+                    document.querySelector('#reg-confirm-password + .error').style.display = 'none';
+                }
+            });
+            
+            // Efecto pulsante para el logo
+            const logo = document.querySelector('.logo');
+            setInterval(() => {
+                logo.style.animation = 'pulse 2s';
+                setTimeout(() => {
+                    logo.style.animation = '';
+                }, 2000);
+            }, 5000);
+            
+            // Eventos para los switches neumórficos
+            const switches = document.querySelectorAll('.switch input');
+            switches.forEach(switchElem => {
+                switchElem.addEventListener('change', function() {
+                    const label = this.closest('.switch-container').querySelector('.switch-label');
+                    if (this.checked) {
+                        label.style.color = 'var(--primary-color)';
+                    } else {
+                        label.style.color = 'var(--text-color)';
+                    }
+                });
+            });
+            
+            // Tooltip en los campos de formulario
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                tooltip.style.position = 'absolute';
+                tooltip.style.backgroundColor = 'var(--primary-color)';
+                tooltip.style.color = 'white';
+                tooltip.style.padding = '5px 10px';
+                tooltip.style.borderRadius = '5px';
+                tooltip.style.fontSize = '0.8rem';
+                tooltip.style.zIndex = '10';
+                tooltip.style.opacity = '0';
+                tooltip.style.transition = 'opacity 0.3s ease';
+                tooltip.style.pointerEvents = 'none';
+                
+                input.addEventListener('focus', function() {
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = rect.left + 'px';
+                    tooltip.style.top = (rect.bottom + 5) + 'px';
+                    tooltip.textContent = this.placeholder;
+                    document.body.appendChild(tooltip);
+                    setTimeout(() => {
+                        tooltip.style.opacity = '1';
+                    }, 300);
+                });
+                
+                input.addEventListener('blur', function() {
+                    tooltip.style.opacity = '0';
+                    setTimeout(() => {
+                        if (document.body.contains(tooltip)) {
+                            document.body.removeChild(tooltip);
+                        }
+                    }, 300);
+                });
+            });
+            
+            // Asegurarse de que el viaje interestelar sea visible
+            spaceTravel.style.display = 'block';
+            
+            // Aplicar efectos flotantes a los elementos principales
+            const elementsToFloat = document.querySelectorAll('.feature, .logo, .welcome-text, .subtitle');
+            elementsToFloat.forEach((element, index) => {
+                element.style.animation = `float ${2 + index * 0.5}s ease-in-out infinite`;
+                element.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>
