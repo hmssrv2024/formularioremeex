@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experiencia Interactiva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <title>Remeex VISA - Servicio de Remesas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Estilos generales */
         * {
@@ -38,25 +38,31 @@
         
         #interestelar-section {
             opacity: 1;
-            z-index: 30;
+            z-index: 40;
+        }
+        
+        #white-transition {
+            opacity: 0;
+            z-index: 35;
+            background-color: #FFFFFF;
         }
         
         #visa-section {
             opacity: 0;
-            z-index: 20;
+            z-index: 30;
             background-color: hsl(223, 90%, 95%);
-        }
-        
-        #buttons-section {
-            opacity: 0;
-            z-index: 10;
-            background-color: rgba(225, 225, 225, 1);
-            justify-content: center;
         }
         
         #onda-section {
             opacity: 0;
-            z-index: 0;
+            z-index: 20;
+        }
+        
+        #form-section {
+            opacity: 0;
+            z-index: 10;
+            background-color: hsl(223, 90%, 95%);
+            overflow-y: auto;
         }
         
         /* Viaje Interestelar */
@@ -144,6 +150,14 @@
         }
         
         /* Bola de nieve neuromorphic visa */
+        .visa-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+        
         .pl,
         .pl__ball,
         .pl__ball-inner-shadow,
@@ -347,15 +361,6 @@
             justify-content: center;
             z-index: 10;
             max-width: 800px;
-            margin-top: 2rem;
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #333;
-            text-align: center;
-            z-index: 10;
         }
         
         button {
@@ -484,7 +489,7 @@
                 0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
                 0 0 0 0 inset rgba(255, 255, 255, 1),
                 0.15em 0.15em 0.15em inset rgba(255, 255, 255, 0.25),
-                -0.09em -0.15em 0.25em 0.12em inset rgba(5, 5, 5, 0.25);
+                -0.09em -0.15em 0.25em 0.14em inset rgba(5, 5, 5, 0.25);
         }
         
         button.pressed .button-inner {
@@ -663,11 +668,11 @@
             --pos1: calc(50% * cos(var(--a-per-item)));
             background: linear-gradient(
                 to bottom,
-                orange,
-                magenta var(--pos1),
-                #03072c 50%,
-                magenta calc(100% - var(--pos1)),
-                orange
+                #1a1f71, /* Azul Visa */
+                #F7B600 var(--pos1), /* Amarillo Visa */
+                #FFFFFF 50%,
+                #F7B600 calc(100% - var(--pos1)),
+                #1a1f71
             );
         }
         
@@ -706,6 +711,335 @@
             pointer-events: none;
             filter: invert(1) brightness(5) saturate(.5);
         }
+
+        /* Form Styles */
+        .form-container {
+            width: 100%;
+            max-width: 550px;
+            padding: 2rem;
+            background-color: hsl(223, 90%, 95%);
+            border-radius: 1.5rem;
+            box-shadow: 
+                0.5rem 0.5rem 1rem rgba(166, 180, 200, 0.7),
+                -0.5rem -0.5rem 1rem rgba(255, 255, 255, 0.8);
+            margin: 2rem auto;
+        }
+
+        .form-heading {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #1a1f71;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 0.8rem;
+            background-color: hsl(223, 90%, 95%);
+            color: #333;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 
+                inset 0.2rem 0.2rem 0.5rem rgba(166, 180, 200, 0.7),
+                inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            box-shadow: 
+                inset 0.3rem 0.3rem 0.6rem rgba(166, 180, 200, 0.8),
+                inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input::placeholder {
+            color: #AAA;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 0.25rem;
+        }
+
+        .form-error {
+            font-size: 0.75rem;
+            color: #E53935;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .input-invalid .form-error {
+            display: block;
+        }
+
+        .input-invalid .form-input {
+            box-shadow: 
+                inset 0.2rem 0.2rem 0.5rem rgba(229, 57, 53, 0.2),
+                inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-switch label {
+            cursor: pointer;
+            margin-left: 0.75rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            display: block;
+            position: relative;
+            width: 3.5em;
+            height: 2em;
+        }
+
+        .switch__base-outer,
+        .switch__base-inner {
+            display: block;
+            position: absolute;
+        }
+
+        .switch__base-outer {
+            border-radius: 1em;
+            background-color: hsl(0,0%,94%);
+            box-shadow:
+                -0.125em -0.125em 0.25em hsl(0,0%,100%),
+                0.125em 0.125em 0.125em hsl(223,10%,85%) inset,
+                0.125em 0.125em 0.25em hsl(223,10%,70%),
+                -0.125em -0.125em 0.125em hsl(0,0%,100%) inset;
+            top: 0.125em;
+            left: 0.125em;
+            width: 3.25em;
+            height: 1.75em;
+        }
+
+        .switch__base-inner {
+            border-radius: 0.875em;
+            background-color: hsl(0,0%,96%);
+            box-shadow:
+                -0.25em -0.25em 0.25em hsl(0,0%,90%) inset,
+                0.0625em 0.0625em 0.125em hsla(223,10%,100%),
+                0.125em 0.25em 0.25em hsl(223,5%,85%) inset,
+                -0.0625em -0.0625em 0.125em hsla(0,0%,100%);
+            top: 0.25em;
+            left: 0.25em;
+            width: 3em;
+            height: 1.5em;
+        }
+
+        .switch__base-neon {
+            display: block;
+            overflow: visible;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+        }
+
+        .switch__base-neon path {
+            stroke-dasharray: 0 104.26 0;
+            transition: stroke-dasharray var(--trans-dur) var(--trans-timing);
+        }
+
+        .switch__input {
+            outline: transparent;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .switch__knob,
+        .switch__knob-container {
+            border-radius: 1em;
+            display: block;
+            position: absolute;
+        }
+
+        .switch__knob {
+            background-color: hsl(0,0%,99%);
+            background-image:
+                radial-gradient(88% 88% at 50% 50%, hsl(0,0%,100%) 47%, hsla(0,0%,100%,0) 50%),
+                radial-gradient(88% 88% at 47% 47%, hsl(0,0%,90%) 45%, hsla(0,0%,90%,0) 50%),
+                radial-gradient(65% 70% at 40% 60%, hsl(0,0%,95%) 46%, hsla(0,0%,95%,0) 50%);
+            box-shadow:
+                -0.0625em -0.0625em 0.0625em hsl(0,0%,100%) inset,
+                -0.125em -0.125em 0.0625em hsl(223,10%,95%) inset,
+                0.75em 0.25em 0.125em hsla(223,10%,85%, 0.5);
+            width: 1.5em;
+            height: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .switch__knob-container {
+            overflow: hidden;
+            top: 0.25em;
+            left: 0.25em;
+            width: 3em;
+            height: 1.5em;
+        }
+
+        .switch__led {
+            background-color: hsl(3,90%,70%);
+            border-radius: 50%;
+            box-shadow:
+                0 -0.0625em 0.0625em hsl(3,90%,40%) inset,
+                0 0 0.125em hsla(3,90%,70%,0.3),
+                0 0 0.125em hsla(3,90%,70%,0.3),
+                0.125em 0.125em 0.125em hsla(0,0%,0%,0.5);
+            display: block;
+            position: absolute;
+            top: 0.25em;
+            right: 0.25em;
+            width: 0.25em;
+            height: 0.25em;
+            transition:
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .switch__input:checked ~ .switch__led {
+            background-color: hsl(123,90%,70%);
+            box-shadow:
+                0 -0.0625em 0.0625em hsl(123,90%,40%) inset,
+                0 -0.125em 0.125em hsla(123,90%,70%,0.3),
+                0 0.125em 0.125em hsla(123,90%,70%,0.3),
+                0.125em 0.125em 0.125em hsla(0,0%,0%,0.5);
+        }
+
+        .switch__input:checked ~ .switch__knob-container .switch__knob {
+            transform: translateX(1.5em);
+        }
+
+        .form-submit-btn {
+            all: unset;
+            position: relative;
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            color: #FFF;
+            background: linear-gradient(135deg, #1a1f71, #4258b6);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            box-shadow: 
+                0.3rem 0.3rem 0.6rem rgba(166, 180, 200, 0.7),
+                -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .form-submit-btn:hover {
+            box-shadow: 
+                0.2rem 0.2rem 0.5rem rgba(166, 180, 200, 0.7),
+                -0.1rem -0.1rem 0.4rem rgba(255, 255, 255, 0.8);
+            transform: translateY(1px);
+        }
+
+        .form-submit-btn:active {
+            box-shadow: 
+                inset 0.2rem 0.2rem 0.5rem rgba(26, 31, 113, 0.5),
+                inset -0.1rem -0.1rem 0.3rem rgba(255, 255, 255, 0.5);
+            transform: translateY(2px);
+        }
+
+        .back-btn {
+            all: unset;
+            cursor: pointer;
+            color: #1a1f71;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 
+                0.2rem 0.2rem 0.5rem rgba(166, 180, 200, 0.7),
+                -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            box-shadow: 
+                0.1rem 0.1rem 0.3rem rgba(166, 180, 200, 0.7),
+                -0.1rem -0.1rem 0.3rem rgba(255, 255, 255, 0.8);
+        }
+
+        .back-btn:active {
+            box-shadow: 
+                inset 0.2rem 0.2rem 0.5rem rgba(166, 180, 200, 0.7),
+                inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .form-footer a {
+            color: #1a1f71;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-buttons {
+                flex-direction: column;
+            }
+            
+            .form-submit-btn {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            .back-btn {
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -728,50 +1062,52 @@
             </div>
         </div>
     </div>
+    
+    <!-- Transición Blanca -->
+    <div id="white-transition" class="section"></div>
 
-    <!-- Sección 2: VISA Loader Neuromorphic -->
+    <!-- Sección 2: VISA Loader Neuromorphic con botones -->
     <div id="visa-section" class="section">
-        <div class="pl">
-            <div class="pl__outer-ring"></div>
-            <div class="pl__inner-ring"></div>
-            <div class="pl__track-cover"></div>
-            <div class="pl__ball">
-                <div class="pl__ball-texture"></div>
-                <div class="pl__ball-outer-shadow"></div>
-                <div class="pl__ball-inner-shadow"></div>
-                <div class="pl__ball-side-shadows"></div>
+        <div class="visa-container">
+            <div class="pl">
+                <div class="pl__outer-ring"></div>
+                <div class="pl__inner-ring"></div>
+                <div class="pl__track-cover"></div>
+                <div class="pl__ball">
+                    <div class="pl__ball-texture"></div>
+                    <div class="pl__ball-outer-shadow"></div>
+                    <div class="pl__ball-inner-shadow"></div>
+                    <div class="pl__ball-side-shadows"></div>
+                </div>
+                <img class="pl__visa-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9HdCjKf6DQyzmo5VfUzJxzBFIkZlb9HrHjzhbx7dIAu8-sLUws-w4KWA3466xaCYSFKq90xVoDpiS86lo8kYNHXp7tngSGThx7srnpTREPluNMSsIHuOnCVXmibDpevOdy8IIoYRVJACa_TZfZb80-tEqasC4LoRO4aItqTZXwaAHo8FWfwL2Hb3ijtgC/s320/1000280079.png" alt="VISA Logo">
             </div>
-            <img class="pl__visa-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9HdCjKf6DQyzmo5VfUzJxzBFIkZlb9HrHjzhbx7dIAu8-sLUws-w4KWA3466xaCYSFKq90xVoDpiS86lo8kYNHXp7tngSGThx7srnpTREPluNMSsIHuOnCVXmibDpevOdy8IIoYRVJACa_TZfZb80-tEqasC4LoRO4aItqTZXwaAHo8FWfwL2Hb3ijtgC/s320/1000280079.png" alt="VISA Logo">
+
+            <!-- Botones colocados directamente debajo del logo de VISA -->
+            <div class="buttons-container">
+                <!-- Botón de Registrarme -->
+                <button class="register-btn" id="register-btn">
+                    <div class="button-outer">
+                        <div class="button-inner">
+                            <span>Registrarme</span>
+                            <div class="press-echo"></div>
+                        </div>
+                    </div>
+                </button>
+                
+                <!-- Botón de Iniciar Sesión -->
+                <button class="login-btn" id="login-btn">
+                    <div class="button-outer">
+                        <div class="button-inner">
+                            <span>Iniciar sesión</span>
+                            <div class="press-echo"></div>
+                        </div>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Sección 3: Botones -->
-    <div id="buttons-section" class="section">
-        <h1 class="title">Selecciona una opción</h1>
-        <div class="buttons-container">
-            <!-- Botón de Registrarme -->
-            <button class="register-btn">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>Registrarme</span>
-                        <div class="press-echo"></div>
-                    </div>
-                </div>
-            </button>
-            
-            <!-- Botón de Iniciar Sesión -->
-            <button class="login-btn">
-                <div class="button-outer">
-                    <div class="button-inner">
-                        <span>Iniciar sesión</span>
-                        <div class="press-echo"></div>
-                    </div>
-                </div>
-            </button>
-        </div>
-    </div>
-
-    <!-- Sección 4: Onda -->
+    <!-- Sección 3: Onda -->
     <div id="onda-section" class="section">
         <div class="onda-container">
             <div class="col"></div>
@@ -801,18 +1137,255 @@
         </div>
     </div>
 
-    <script>
-        // Crear un elemento de audio para efectos de sonido
-        const clickSound = new Audio();
-        clickSound.src = "data:audio/mp3;base64,SUQzAwAAAAAAJlRQRTEAAAAcAAAAU291bmRKYXkuY29tIFNvdW5kIEVmZmVjdHMA//uQxAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAADAAAGhgBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr///////////////////////////////////////////8AAAA5TEFNRTMuMTAwAc0AAAAAAAAAABSAJAJAQgAAgAAAA+aH7xsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQxAAD0oIBH9MQAAI3QCP6YgAARlRBRiDEGJSKM6jIQMPzguD5znOcEAQBAEDnOf//B/gQBAEAQOc/wQdgQDgQdgfB///BjP//wf///8Hwf///IIMA4Dhf/B8H///B////8H////B////wfB8Hwf//+D4Pg///g///+D4P//4Pg+D//+EIQhEIRiIQ3DcIRCIQiEIhCERCEIhDcRCEIhCIQiEQhCEQhEIhCIQiEIhCIQ3EIRCE4iE5zmIhCNw5znOYiIRCc5iIiEJxEITnMRCEJxEQhOc5iJznOYic5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOQhCEIQnOYiEQnOc5znOc5znOc5znOc5znOc5znOc5znOc5z//5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5zmf/BoMUUcaQ9CpyopaS+ykfCR8Zn1MYc5pKKnwsrQOlkUumUOBcLjWIKiGDBoBYHJkJRAVEFQbBEkQwQolPBYkUIkITY7Ozu40UToEQchYl4GgFBABAKiUSGicRIAyKTLGh//uSxC2P3Y4EvVmMAHlBwJjrGSAB2dnZ2dn5xhwjYnxlUjOBALBQMIZCA2EhQoHJc6u7EJKJsZ2FxnZ3d3bwVDkEAKFhaRCIAhILBoMUIRFAsWGEZVd3uRERERERJE8jOzu7u7y7y7/J554PB4PB4YOKCYnlUF6Z6IRERERERGDweDweDz5QsLCw1f+5e5ERERERET//xERERERESIAAAAAADdHGklpSpaklrSWpe/Xv++/32/ff993333a3Xta0lrpapJaUpNJSRxrQAAABW6O647cxUCy5jAXGZXnssA5gwzK+LGFXzHFZjOdVTGNWTXIRDDO/8Y0NxWuLMWYNWJjNEDPQfVs4MzgYYNPVfJeF3je/DqYxp6YYnj2RaBgbJeYuQGGKAJKYhmYQcGFn19QLYMBwVMBgEgcBgPMBANMLgHMWA0Bgy+qOw7DsKpjQKTd0DMf+7OvFMRQMMzjDMIA2YEQUBNwJdF7A2nG9Vuw7DsOwrCoKoqjuHYZZo/jCmRYX/f/oUKFChQoKChQUFCgoUKGR39l//l2HYdh2HYdi8Kw7DsPwyy7DsOwrCqKo/h2HYdh2H6VQrCuHYdheF4XheGYXheDweCwqFQrCsKw7DsPwrCoKoqiqKoqjuO47j+O47juP47DsOw7DsKoqiqKoqjsKoqiqKoqiqP47juO4/j+P4/j+P5/n+f5/n+f5/n+f5/n+fwAAAE1XaJDUx1BiDEGJiKKKKKiIiMzMz6Kqsz///uSxEeP2moEvVgYAHtJwJfrGAABEREREREZmZmZmZ/REREZmZmZ/REREZmZmfRVVVVmZnf/oiIiIiIz6Kqqqqqqsz/9ERGZmZmZn0VVXd3d3d3d3dzMzO7u7u7u7u7u7u7u7u7u7u7u7//////////VNSC2xJbEklsSSW5JJbkkltNttttvttttttttttttt0URRNFE0TRwAADdJbdbbbbbbbdE0TRRFE8cccccccccRERERERERGZmZmZmVVVVVVxERERERERVVVVVVVVVVXd3d3d3d3d3dzMzMzMzM7u7u7u7u7MzMzMzMzO7u7u7u7u7u1VVVVVVwiIiIiIiM+iqqqqqqqzP/0REREREZn96Iiv/siIiIiPZVVVVZ////zP//Xd3dVVVVVVWZmZVVVVV3dzMzO7u7u7v/+ZmZmZmZmZmZmf0VVVVVVVZmZn///////////O7u7u7u7u7mZmdVVVVVVVVVVVVVV3d3d3d3d3d3MzMzMzMzMzMzdocument";
+    <!-- Sección 4: Formularios -->
+    <div id="form-section" class="section">
+        <!-- Formulario de Registro -->
+        <div id="register-form-container" class="form-container">
+            <h2 class="form-heading">Crear su cuenta en Remeex VISA</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="ejemplo@correo.com" required>
+                    <div class="form-error">Por favor, ingrese un correo electrónico válido.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Ingrese su nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastname" class="form-label">Apellido</label>
+                    <input type="text" id="lastname" name="lastname" class="form-input" placeholder="Ingrese su apellido" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country" class="form-label">País</label>
+                    <select id="country" name="country" class="form-select" required>
+                        <option value="" selected disabled>Seleccione su país</option>
+                        <optgroup label="América del Norte">
+                            <option value="ca">Canadá (+1)</option>
+                            <option value="us">Estados Unidos (+1)</option>
+                            <option value="mx">México (+52)</option>
+                        </optgroup>
+                        <optgroup label="América Central y Caribe">
+                            <option value="bz">Belice (+501)</option>
+                            <option value="cr">Costa Rica (+506)</option>
+                            <option value="cu">Cuba (+53)</option>
+                            <option value="sv">El Salvador (+503)</option>
+                            <option value="gt">Guatemala (+502)</option>
+                            <option value="ht">Haití (+509)</option>
+                            <option value="hn">Honduras (+504)</option>
+                            <option value="jm">Jamaica (+1-876)</option>
+                            <option value="ni">Nicaragua (+505)</option>
+                            <option value="pa">Panamá (+507)</option>
+                            <option value="do">República Dominicana (+1-809)</option>
+                            <option value="tt">Trinidad y Tobago (+1-868)</option>
+                        </optgroup>
+                        <optgroup label="América del Sur">
+                            <option value="ar">Argentina (+54)</option>
+                            <option value="bo">Bolivia (+591)</option>
+                            <option value="br">Brasil (+55)</option>
+                            <option value="cl">Chile (+56)</option>
+                            <option value="co">Colombia (+57)</option>
+                            <option value="ec">Ecuador (+593)</option>
+                            <option value="gy">Guyana (+592)</option>
+                            <option value="py">Paraguay (+595)</option>
+                            <option value="pe">Perú (+51)</option>
+                            <option value="sr">Surinam (+597)</option>
+                            <option value="uy">Uruguay (+598)</option>
+                            <option value="ve">Venezuela (+58)</option>
+                        </optgroup>
+                        <optgroup label="Europa Occidental">
+                            <option value="de">Alemania (+49)</option>
+                            <option value="at">Austria (+43)</option>
+                            <option value="be">Bélgica (+32)</option>
+                            <option value="es">España (+34)</option>
+                            <option value="fr">Francia (+33)</option>
+                            <option value="ie">Irlanda (+353)</option>
+                            <option value="it">Italia (+39)</option>
+                            <option value="lu">Luxemburgo (+352)</option>
+                            <option value="nl">Países Bajos (+31)</option>
+                            <option value="pt">Portugal (+351)</option>
+                            <option value="gb">Reino Unido (+44)</option>
+                            <option value="ch">Suiza (+41)</option>
+                        </optgroup>
+                        <optgroup label="Europa del Este">
+                            <option value="bg">Bulgaria (+359)</option>
+                            <option value="hr">Croacia (+385)</option>
+                            <option value="sk">Eslovaquia (+421)</option>
+                            <option value="si">Eslovenia (+386)</option>
+                            <option value="ee">Estonia (+372)</option>
+                            <option value="hu">Hungría (+36)</option>
+                            <option value="lv">Letonia (+371)</option>
+                            <option value="lt">Lituania (+370)</option>
+                            <option value="pl">Polonia (+48)</option>
+                            <option value="cz">República Checa (+420)</option>
+                            <option value="ro">Rumania (+40)</option>
+                            <option value="ru">Rusia (+7)</option>
+                            <option value="ua">Ucrania (+380)</option>
+                        </optgroup>
+                        <optgroup label="Asia">
+                            <option value="sa">Arabia Saudita (+966)</option>
+                            <option value="cn">China (+86)</option>
+                            <option value="kr">Corea del Sur (+82)</option>
+                            <option value="ae">Emiratos Árabes Unidos (+971)</option>
+                            <option value="ph">Filipinas (+63)</option>
+                            <option value="hk">Hong Kong (+852)</option>
+                            <option value="in">India (+91)</option>
+                            <option value="id">Indonesia (+62)</option>
+                            <option value="il">Israel (+972)</option>
+                            <option value="jp">Japón (+81)</option>
+                            <option value="my">Malasia (+60)</option>
+                            <option value="sg">Singapur (+65)</option>
+                            <option value="th">Tailandia (+66)</option>
+                            <option value="tw">Taiwán (+886)</option>
+                            <option value="tr">Turquía (+90)</option>
+                            <option value="vn">Vietnam (+84)</option>
+                        </optgroup>
+                        <optgroup label="África">
+                            <option value="dz">Argelia (+213)</option>
+                            <option value="eg">Egipto (+20)</option>
+                            <option value="ke">Kenia (+254)</option>
+                            <option value="ma">Marruecos (+212)</option>
+                            <option value="ng">Nigeria (+234)</option>
+                            <option value="za">Sudáfrica (+27)</option>
+                            <option value="tz">Tanzania (+255)</option>
+                            <option value="tn">Túnez (+216)</option>
+                        </optgroup>
+                        <optgroup label="Oceanía">
+                            <option value="au">Australia (+61)</option>
+                            <option value="fj">Fiyi (+679)</option>
+                            <option value="nz">Nueva Zelanda (+64)</option>
+                            <option value="pg">Papúa Nueva Guinea (+675)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="form-label">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="Ingrese su número de teléfono" required>
+                    <div class="form-hint">Ingrese su número sin el prefijo del país.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Cree una contraseña segura" required>
+                    <div class="form-hint">Debe contener entre 10-15 caracteres, al menos 1 mayúscula, 1 número y 1 símbolo.</div>
+                    <div class="form-error">La contraseña debe cumplir con los requisitos mínimos de seguridad.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password-confirm" class="form-label">Confirmar contraseña</label>
+                    <input type="password" id="password-confirm" name="password-confirm" class="form-input" placeholder="Confirme su contraseña" required>
+                    <div class="form-error">Las contraseñas no coinciden.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-question1" class="form-label">Pregunta de seguridad 1</label>
+                    <select id="security-question1" name="security-question1" class="form-select" required>
+                        <option value="" selected disabled>Seleccione una pregunta</option>
+                        <option value="color">¿Cuál es su color favorito?</option>
+                        <option value="pet">¿Nombre de su primera mascota?</option>
+                        <option value="city">¿En qué ciudad nació?</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-answer1" class="form-label">Respuesta</label>
+                    <input type="text" id="security-answer1" name="security-answer1" class="form-input" placeholder="Su respuesta" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-question2" class="form-label">Pregunta de seguridad 2</label>
+                    <select id="security-question2" name="security-question2" class="form-select" required>
+                        <option value="" selected disabled>Seleccione una pregunta</option>
+                        <option value="food">¿Marca de alimentos favorita?</option>
+                        <option value="school">¿Nombre de su escuela primaria?</option>
+                        <option value="movie">¿Película favorita?</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-answer2" class="form-label">Respuesta</label>
+                    <input type="text" id="security-answer2" name="security-answer2" class="form-input" placeholder="Su respuesta" required>
+                </div>
+                
+                <div class="toggle-switch">
+                    <label class="switch">
+                        <input class="switch__input" type="checkbox" id="terms" name="terms" required>
+                        <span class="switch__base-outer"></span>
+                        <span class="switch__base-inner"></span>
+                        <span class="switch__led"></span>
+                        <span class="switch__knob-container">
+                            <span class="switch__knob"></span>
+                        </span>
+                    </label>
+                    <label for="terms">Acepto los términos y condiciones de VISA</label>
+                </div>
+                
+                <div class="toggle-switch">
+                    <label class="switch">
+                        <input class="switch__input" type="checkbox" id="communications" name="communications">
+                        <span class="switch__base-outer"></span>
+                        <span class="switch__base-inner"></span>
+                        <span class="switch__led"></span>
+                        <span class="switch__knob-container">
+                            <span class="switch__knob"></span>
+                        </span>
+                    </label>
+                    <label for="communications">Deseo recibir comunicaciones y mensajes vía WhatsApp</label>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" class="back-btn" id="back-to-options">Volver</button>
+                    <button type="submit" class="form-submit-btn">Crear cuenta</button>
+                </div>
+                
+                <div class="form-footer">
+                    ¿Ya tiene una cuenta? <a href="#" id="go-to-login">Iniciar sesión</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Formulario de Inicio de Sesión -->
+        <div id="login-form-container" class="form-container" style="display: none;">
+            <h2 class="form-heading">Iniciar sesión en Remeex VISA</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="login-email" name="login-email" class="form-input" placeholder="ejemplo@correo.com" required>
+                    <div class="form-error">Por favor, ingrese un correo electrónico válido.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Contraseña</label>
+                    <input type="password" id="login-password" name="login-password" class="form-input" placeholder="Su contraseña" required>
+                    <div class="form-error">Por favor, ingrese su contraseña.</div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" class="back-btn" id="back-to-options-login">Volver</button>
+                    <button type="submit" class="form-submit-btn">Iniciar sesión</button>
+                </div>
+                
+                <div class="form-footer">
+                    ¿No tiene una cuenta? <a href="#" id="go-to-register">Registrarse</a><br>
+                    <a href="#" id="forgot-password">¿Olvidó su contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <script>
         // Variables para el control de animaciones
         let currentSection = 1;
         const sections = [
             document.getElementById('interestelar-section'),
+            document.getElementById('white-transition'),
             document.getElementById('visa-section'),
-            document.getElementById('buttons-section'),
-            document.getElementById('onda-section')
+            document.getElementById('onda-section'),
+            document.getElementById('form-section')
         ];
         
         // Función para cambiar de sección
@@ -823,19 +1396,19 @@
             // Mostrar nueva sección después de un tiempo
             setTimeout(() => {
                 sections[currentSection - 1].style.zIndex = 0;
-                sections[sectionIndex - 1].style.zIndex = 30;
+                sections[sectionIndex - 1].style.zIndex = 40;
                 sections[sectionIndex - 1].style.opacity = 1;
                 currentSection = sectionIndex;
             }, 1000);
         }
         
-        // Iniciar secuencia automática: interestelar -> visa -> botones
+        // Iniciar secuencia automática: interestelar -> transición blanca -> visa con botones
         setTimeout(() => {
-            transitionToSection(2); // Cambiar a VISA después de 5 segundos
+            transitionToSection(2); // Primero mostrar la transición blanca
             
             setTimeout(() => {
-                transitionToSection(3); // Cambiar a botones después de 4 segundos más
-            }, 4000);
+                transitionToSection(3); // Luego cambiar a VISA
+            }, 1500);
         }, 5000);
         
         // Añadir evento para seguimiento del ratón en cada botón
@@ -918,6 +1491,11 @@
                 
                 // Aplicar efecto de hundimiento localizado
                 updatePressEffect(e);
+                
+                // Reproducir sonido
+                clickSound.currentTime = 0;
+                clickSound.volume = 0.2;
+                clickSound.play();
             });
             
             // Al liberar el botón
@@ -934,13 +1512,28 @@
                     this.classList.remove('released');
                 }, 300);
                 
-                // Toggle del estado activo y transición a la sección de onda
+                // Toggle del estado activo y procesamiento de acciones específicas
                 this.classList.add('active');
                 
-                // Transición a la onda después de un pequeño delay
-                setTimeout(() => {
-                    transitionToSection(4);
-                }, 500);
+                // Manejar acciones específicas según el botón
+                if (this.id === 'register-btn') {
+                    // Transición a la onda y luego al formulario de registro
+                    transitionToSection(4); // Primero la onda
+                    setTimeout(() => {
+                        transitionToSection(5); // Luego el formulario
+                        document.getElementById('register-form-container').style.display = 'block';
+                        document.getElementById('login-form-container').style.display = 'none';
+                    }, 2500);
+                }
+                else if (this.id === 'login-btn') {
+                    // Transición a la onda y luego al formulario de login
+                    transitionToSection(4); // Primero la onda
+                    setTimeout(() => {
+                        transitionToSection(5); // Luego el formulario
+                        document.getElementById('register-form-container').style.display = 'none';
+                        document.getElementById('login-form-container').style.display = 'block';
+                    }, 2500);
+                }
             });
             
             // Eliminar solo el efecto de hundimiento si el cursor sale durante la presión
@@ -974,6 +1567,11 @@
                 };
                 
                 updatePressEffect(simulatedEvent);
+                
+                // Reproducir sonido
+                clickSound.currentTime = 0;
+                clickSound.volume = 0.2;
+                clickSound.play();
             });
             
             button.addEventListener('touchend', function() {
@@ -989,14 +1587,113 @@
                     this.classList.remove('released');
                 }, 300);
                 
-                // Toggle del estado activo y transición a la sección de onda
+                // Toggle del estado activo y procesamiento de acciones específicas
                 this.classList.add('active');
                 
-                // Transición a la onda después de un pequeño delay
-                setTimeout(() => {
-                    transitionToSection(4);
-                }, 500);
+                // Manejar acciones específicas según el botón
+                if (this.id === 'register-btn') {
+                    // Transición a la onda y luego al formulario de registro
+                    transitionToSection(4); // Primero la onda
+                    setTimeout(() => {
+                        transitionToSection(5); // Luego el formulario
+                        document.getElementById('register-form-container').style.display = 'block';
+                        document.getElementById('login-form-container').style.display = 'none';
+                    }, 2500);
+                }
+                else if (this.id === 'login-btn') {
+                    // Transición a la onda y luego al formulario de login
+                    transitionToSection(4); // Primero la onda
+                    setTimeout(() => {
+                        transitionToSection(5); // Luego el formulario
+                        document.getElementById('register-form-container').style.display = 'none';
+                        document.getElementById('login-form-container').style.display = 'block';
+                    }, 2500);
+                }
             });
+        });
+
+        // Eventos para interactuar entre los formularios
+        document.getElementById('back-to-options').addEventListener('click', function() {
+            transitionToSection(3); // Volver a la sección VISA
+        });
+
+        document.getElementById('back-to-options-login').addEventListener('click', function() {
+            transitionToSection(3); // Volver a la sección VISA
+        });
+
+        document.getElementById('go-to-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-form-container').style.display = 'none';
+            document.getElementById('login-form-container').style.display = 'block';
+        });
+
+        document.getElementById('go-to-register').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form-container').style.display = 'none';
+            document.getElementById('register-form-container').style.display = 'block';
+        });
+
+        // Validaciones de formulario
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let valid = true;
+            
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const email = document.getElementById('email');
+            if (!emailRegex.test(email.value)) {
+                email.parentElement.classList.add('input-invalid');
+                valid = false;
+            } else {
+                email.parentElement.classList.remove('input-invalid');
+            }
+            
+            // Validar contraseña
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s]).{10,15}$/;
+            const password = document.getElementById('password');
+            const passwordConfirm = document.getElementById('password-confirm');
+            
+            if (!passwordRegex.test(password.value)) {
+                password.parentElement.classList.add('input-invalid');
+                valid = false;
+            } else {
+                password.parentElement.classList.remove('input-invalid');
+            }
+            
+            // Validar confirmación de contraseña
+            if (password.value !== passwordConfirm.value) {
+                passwordConfirm.parentElement.classList.add('input-invalid');
+                valid = false;
+            } else {
+                passwordConfirm.parentElement.classList.remove('input-invalid');
+            }
+            
+            // Si todo es válido, mostrar un mensaje de éxito
+            if (valid) {
+                alert('¡Registro exitoso! Ahora puede iniciar sesión en Remeex VISA.');
+                document.getElementById('register-form-container').style.display = 'none';
+                document.getElementById('login-form-container').style.display = 'block';
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulación de inicio de sesión exitoso
+            alert('¡Inicio de sesión exitoso! Bienvenido a Remeex VISA.');
+        });
+        
+        // Evento para cambio de país que actualiza el prefijo en el placeholder del teléfono
+        document.getElementById('country').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const optionText = selectedOption.text;
+            const prefixMatch = optionText.match(/\(\+(\d+(?:-\d+)?)\)/);
+            
+            if (prefixMatch && prefixMatch[1]) {
+                const prefix = prefixMatch[1];
+                document.getElementById('phone').placeholder = `Número sin prefijo +${prefix}`;
+            }
         });
     </script>
 </body>
