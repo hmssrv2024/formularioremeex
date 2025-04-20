@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiencia Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            background: #000;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        
+        /* Contenedores de secciones */
+        .section {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #interestelar-section {
+            opacity: 1;
+            z-index: 30;
+        }
+        
+        #visa-section {
+            opacity: 0;
+            z-index: 20;
+            background-color: hsl(223, 90%, 95%);
+        }
+        
+        #buttons-section {
+            opacity: 0;
+            z-index: 10;
+            background-color: rgba(225, 225, 225, 1);
+            justify-content: center;
+        }
+        
+        #onda-section {
+            opacity: 0;
+            z-index: 0;
+        }
+        
+        /* Viaje Interestelar */
+        .scene {
+            display: inline-block;
+            vertical-align: middle;
+            perspective: 5px;
+            perspective-origin: 50% 50%;
+            position: relative;
+        }
+        
+        .wrap {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            left: -500px;
+            top: -500px;
+            transform-style: preserve-3d;
+            animation: move 12s infinite linear;
+            animation-fill-mode: forwards;
+        }
+        
+        .wrap:nth-child(2) {
+            animation: move 12s infinite linear;
+            animation-delay: 6s;
+        }
+        
+        .wall {
+            background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/18515/PIA09959-1280x800_copy.jpg);
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            animation: fade 12s infinite linear;
+            animation-delay: 0;
+        }
+        
+        .wrap:nth-child(2) .wall {
+            animation-delay: 6s;
+        }
+        
+        .wall-right {
+            transform: rotateY(90deg) translateZ(500px);
+        }
+        
+        .wall-left {
+            transform: rotateY(-90deg) translateZ(500px);
+        }
+        
+        .wall-top {
+            transform: rotateX(90deg) translateZ(500px);
+        }
+        
+        .wall-bottom {
+            transform: rotateX(-90deg) translateZ(500px);
+        }
+        
+        .wall-back {
+            transform: rotateX(180deg) translateZ(500px);
+        }
+        
+        @keyframes move {
+            0% {
+                transform: translateZ(-500px) rotate(0deg);
+            }
+            100% {
+                transform: translateZ(500px) rotate(0deg);
+            }
+        }
+        
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        
+        /* Bola de nieve neuromorphic visa */
+        .pl,
+        .pl__ball,
+        .pl__ball-inner-shadow,
+        .pl__ball-side-shadows,
+        .pl__ball-texture,
+        .pl__inner-ring,
+        .pl__outer-ring,
+        .pl__track-cover {
+            border-radius: 50%;
+        }
+        
+        .pl {
+            position: relative;
+            width: 16em;
+            height: 16em;
+        }
+        
+        .pl__ball,
+        .pl__ball-inner-shadow,
+        .pl__ball-outer-shadow,
+        .pl__ball-side-shadows,
+        .pl__ball-texture,
+        .pl__ball-texture:before,
+        .pl__inner-ring,
+        .pl__outer-ring,
+        .pl__track-cover,
+        .pl__visa-logo {
+            position: absolute;
+        }
+        
+        .pl__ball,
+        .pl__ball-inner-shadow,
+        .pl__ball-outer-shadow,
+        .pl__ball-texture:before,
+        .pl__track-cover {
+            animation: ball 3s linear infinite;
+        }
+        
+        .pl__ball {
+            top: calc(50% - 1.25em);
+            left: calc(50% - 1.25em);
+            transform: rotate(0) translateY(-6.5em);
+            width: 2.5em;
+            height: 2.5em;
+        }
+        
+        .pl__ball-inner-shadow {
+            animation-name: ballInnerShadow;
+            box-shadow:
+                0 0.1em 0.2em hsla(0, 0%, 0%, 0.3),
+                0 0 0.2em hsla(0, 0%, 0%, 0.1) inset,
+                0 -1em 0.5em hsla(0, 0%, 0%, 0.15) inset;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .pl__ball-outer-shadow {
+            animation-name: ballOuterShadow;
+            background-image: linear-gradient(hsla(0, 0%, 0%, 0.15), hsla(0, 0%, 0%, 0));
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            filter: blur(2px);
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 250%;
+            transform: rotate(20deg);
+            transform-origin: 50% 0;
+            z-index: -2;
+        }
+        
+        .pl__ball-side-shadows {
+            background-color: hsla(0, 0%, 0%, 0.1);
+            filter: blur(2px);
+            width: 100%;
+            height: 100%;
+            transform: scale(0.75, 1.1);
+            z-index: -1;
+        }
+        
+        .pl__ball-texture {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .pl__ball-texture:before {
+            animation-name: ballTexture;
+            animation-duration: 0.25s;
+            background: url(https://assets.codepen.io/416221/snow.jpg) 0 0 / 50% 100%;
+            content: "";
+            display: block;
+            filter: brightness(1.05);
+            top: 0;
+            right: 0;
+            width: 200%;
+            height: 100%;
+        }
+        
+        .pl__inner-ring {
+            box-shadow:
+                0 -0.25em 0.5em hsla(0, 0%, 100%, 0.4),
+                0 0.5em 0.75em hsla(0, 0%, 100%, 0.4) inset,
+                0 0.5em 0.375em hsla(0, 0%, 0%, 0.15),
+                0 -0.5em 0.75em hsla(0, 0%, 0%, 0.15) inset;
+            top: 2.375em;
+            left: 2.375em;
+            width: calc(100% - 4.75em);
+            height: calc(100% - 4.75em);
+        }
+        
+        .pl__outer-ring {
+            box-shadow:
+                0 -0.45em 0.375em hsla(0, 0%, 0%, 0.15),
+                0 0.5em 0.75em hsla(0, 0%, 0%, 0.15) inset,
+                0 0.25em 0.5em hsla(0, 0%, 100%, 0.4),
+                0 -0.5em 0.75em hsla(0, 0%, 100%, 0.4) inset;
+            top: 0.75em;
+            left: 0.75em;
+            width: calc(100% - 1.5em);
+            height: calc(100% - 1.5em);
+        }
+        
+        .pl__track-cover {
+            animation-name: trackCover;
+            background-image: conic-gradient(hsla(223, 90%, 95%, 1) 210deg, hsla(223, 90%, 95%, 0) 270deg);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .pl__visa-logo {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: auto;
+            z-index: 10;
+        }
+        
+        @keyframes ball {
+            from {
+                transform: rotate(0) translateY(-6.5em);
+            }
+            50% {
+                transform: rotate(180deg) translateY(-6em);
+            }
+            to {
+                transform: rotate(360deg) translateY(-6.5em);
+            }
+        }
+        
+        @keyframes ballInnerShadow {
+            from {
+                transform: rotate(0);
+            }
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+        
+        @keyframes ballOuterShadow {
+            from {
+                transform: rotate(20deg);
+            }
+            to {
+                transform: rotate(-340deg);
+            }
+        }
+        
+        @keyframes ballTexture {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(50%);
+            }
+        }
+        
+        @keyframes trackCover {
+            from {
+                transform: rotate(0);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Botones */
+        @property --angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            z-index: 10;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+            z-index: 10;
+        }
+        
+        button {
+            all: unset;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            position: relative;
+            border-radius: 999vw;
+            background-color: rgba(0, 0, 0, 0.75);
+            box-shadow: -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+                0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+            margin-bottom: 1rem;
+            perspective: 800px;
+        }
+        
+        button::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            width: calc(100% + 0.3em);
+            height: calc(100% + 0.3em);
+            top: -0.15em;
+            left: -0.15em;
+            border-radius: inherit;
+            background: linear-gradient(-135deg,
+                    rgba(5, 5, 5, 0.5),
+                    transparent 20%,
+                    transparent 100%);
+            filter: blur(0.0125em);
+            opacity: 0.25;
+            mix-blend-mode: multiply;
+        }
+        
+        button .button-outer {
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            transition: box-shadow 300ms ease, transform 150ms ease;
+            will-change: box-shadow, transform;
+            box-shadow: 0 0.08em 0.08em -0.01em rgba(5, 5, 5, 1),
+                0 0.02em 0.02em -0.01em rgba(5, 5, 5, 0.5),
+                0.2em 0.4em 0.15em -0.01em rgba(5, 5, 5, 0.25);
+        }
+        
+        button:hover .button-outer {
+            box-shadow: 0 0 0 0 rgba(5, 5, 5, 1), 0 0 0 0 rgba(5, 5, 5, 0.5),
+                0 0 0 0 rgba(5, 5, 5, 0.25);
+        }
+        
+        button .button-inner {
+            --inset: 0.035em;
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            padding: 0.7em 1.5em;
+            background-image: linear-gradient(135deg,
+                    rgba(230, 230, 230, 1),
+                    rgba(180, 180, 180, 1));
+            transition: box-shadow 300ms ease, clip-path 250ms ease,
+                background-image 250ms ease, transform 250ms ease, filter 100ms ease;
+            will-change: box-shadow, clip-path, background-image, transform, filter;
+            overflow: hidden;
+            clip-path: inset(0 0 0 0 round 999vw);
+            box-shadow:
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                -0.08em -0.08em 0.08em 0 inset rgba(5, 5, 5, 0.25),
+                0 0 0 0 inset rgba(5, 5, 5, 0.1),
+                0 0 0.05em 0.25em inset rgba(255, 255, 255, 0.25),
+                0.04em 0.08em 0.12em 0 inset rgba(255, 255, 255, 1),
+                0.15em 0.15em 0.15em inset rgba(255, 255, 255, 0.25),
+                -0.1em -0.3em 0.3em 0.15em inset rgba(5, 5, 5, 0.25);
+            transform-style: preserve-3d;
+        }
+        
+        button .button-inner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle at var(--x, 50%) var(--y, 50%),
+                rgba(255, 255, 255, 0.8) 0%,
+                rgba(255, 255, 255, 0.2) 30%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            opacity: 0.15;
+            transition: opacity 300ms ease;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        
+        button:hover .button-inner::before {
+            opacity: 0.25;
+        }
+        
+        button .button-inner::after {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0) 70%
+            );
+            opacity: 0;
+            transform: rotate(var(--angle, 0deg));
+            pointer-events: none;
+            transition: opacity 300ms ease, transform 300ms ease;
+        }
+        
+        button:hover .button-inner::after {
+            opacity: 0.15;
+        }
+        
+        button:hover .button-inner {
+            clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 999vw);
+            box-shadow:
+                0.12em 0.18em 0.06em 0 inset rgba(5, 5, 5, 0.75),
+                -0.035em -0.04em 0.06em 0.03em inset rgba(5, 5, 5, 0.5),
+                0.3em 0.3em 0.25em 0 inset rgba(5, 5, 5, 0.5),
+                0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                0.15em 0.15em 0.15em inset rgba(255, 255, 255, 0.25),
+                -0.09em -0.15em 0.25em 0.12em inset rgba(5, 5, 5, 0.25);
+        }
+        
+        button.pressed .button-inner {
+            transform: var(--press-transform, scale(0.92));
+            transform-origin: var(--press-origin, center);
+            clip-path: inset(clamp(2px, 0.125em, 4px) clamp(2px, 0.125em, 4px) clamp(2px, 0.125em, 4px) clamp(2px, 0.125em, 4px) round 999vw);
+            box-shadow:
+                0.18em 0.22em 0.1em 0 inset rgba(5, 5, 5, 0.85),
+                -0.04em -0.05em 0.07em 0.04em inset rgba(5, 5, 5, 0.6),
+                0.35em 0.35em 0.3em 0 inset rgba(5, 5, 5, 0.6),
+                0 0 0.08em 0.6em inset rgba(255, 255, 255, 0.2),
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                0.16em 0.16em 0.16em inset rgba(255, 255, 255, 0.2),
+                -0.1em -0.16em 0.25em 0.14em inset rgba(5, 5, 5, 0.35);
+            transition: all 80ms ease;
+            filter: brightness(0.95);
+        }
+        
+        button.released .button-inner {
+            animation: buttonMemory 300ms ease-out forwards;
+        }
+        
+        @keyframes buttonMemory {
+            0% {
+                transform: var(--press-transform, scale(0.96));
+                transform-origin: var(--press-origin, center);
+                filter: brightness(0.97);
+            }
+            100% {
+                transform: scale(1);
+                transform-origin: center;
+                filter: brightness(1);
+            }
+        }
+        
+        button.pressed .button-outer {
+            transform: translateY(0.1em) translateZ(-0.05em);
+            box-shadow: 0 0.04em 0.04em -0.01em rgba(5, 5, 5, 1),
+                0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+                0.1em 0.2em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+            transition: all 80ms ease;
+        }
+        
+        button.active .button-inner {
+            filter: brightness(1.2) saturate(1.2);
+            transition: all 300ms ease;
+        }
+        
+        button .button-inner span {
+            position: relative;
+            z-index: 4;
+            font-family: "Inter", sans-serif;
+            letter-spacing: -0.05em;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0);
+            background-image: linear-gradient(135deg,
+                    rgba(25, 25, 25, 1),
+                    rgba(75, 75, 75, 1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: transform 250ms ease;
+            display: block;
+            will-change: transform;
+            text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        button:hover .button-inner span {
+            transform: scale(0.975);
+        }
+        
+        button.pressed .button-inner span {
+            transform: scale(0.95);
+        }
+        
+        .register-btn .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(230, 240, 255, 1),
+                    rgba(180, 200, 240, 1));
+        }
+        
+        .login-btn .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(230, 230, 230, 1),
+                    rgba(180, 180, 180, 1));
+        }
+        
+        .register-btn.active .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(200, 225, 255, 1),
+                    rgba(150, 180, 240, 1));
+            box-shadow:
+                0.10em 0.12em 0.08em 0 inset rgba(5, 5, 5, 0.75),
+                -0.03em -0.04em 0.05em 0.02em inset rgba(5, 5, 5, 0.5),
+                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+                0 0 0.08em 0.6em inset rgba(180, 200, 255, 0.4),
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                0.16em 0.16em 0.16em inset rgba(255, 255, 255, 0.2),
+                -0.1em -0.16em 0.25em 0.14em inset rgba(5, 5, 5, 0.35);
+        }
+        
+        .login-btn.active .button-inner {
+            background-image: linear-gradient(135deg,
+                    rgba(210, 210, 210, 1),
+                    rgba(160, 160, 160, 1));
+            box-shadow:
+                0.10em 0.12em 0.08em 0 inset rgba(5, 5, 5, 0.75),
+                -0.03em -0.04em 0.05em 0.02em inset rgba(5, 5, 5, 0.5),
+                0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+                0 0 0.08em 0.6em inset rgba(220, 220, 220, 0.4),
+                0 0 0 0 inset rgba(255, 255, 255, 1),
+                0.16em 0.16em 0.16em inset rgba(255, 255, 255, 0.2),
+                -0.1em -0.16em 0.25em 0.14em inset rgba(5, 5, 5, 0.35);
+        }
+        
+        .press-echo {
+            position: absolute;
+            border-radius: inherit;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--echo-x) var(--echo-y),
+                rgba(255, 255, 255, 0.5) 0%,
+                rgba(255, 255, 255, 0) 50%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        @keyframes echo {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+        
+        /* Onda */
+        @property --a {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: true;
+        }
+        
+        :root {
+            --size: 140deg;
+            --count: 24;
+            --per-item: calc(50% / 24);
+            --p-per-item: calc(1 / 24);
+        }
+        
+        .onda-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            animation: main 3s cubic-bezier(0.83, -0.49, 0.15, 1.84) infinite;
+        }
+        
+        @keyframes main {
+            from {
+                --a: 0deg;
+            }
+            to {
+                --a: 360deg;
+            }
+        }
+        
+        .col {
+            flex: 1;
+            --a-per-item: calc(var(--size) / var(--count) * var(--i) - var(--a));
+            --pos1: calc(50% * cos(var(--a-per-item)));
+            background: linear-gradient(
+                to bottom,
+                orange,
+                magenta var(--pos1),
+                #03072c 50%,
+                magenta calc(100% - var(--pos1)),
+                orange
+            );
+        }
+        
+        .col:nth-child(1) { --i: 0; }
+        .col:nth-child(2) { --i: 1; }
+        .col:nth-child(3) { --i: 2; }
+        .col:nth-child(4) { --i: 3; }
+        .col:nth-child(5) { --i: 4; }
+        .col:nth-child(6) { --i: 5; }
+        .col:nth-child(7) { --i: 6; }
+        .col:nth-child(8) { --i: 7; }
+        .col:nth-child(9) { --i: 8; }
+        .col:nth-child(10) { --i: 9; }
+        .col:nth-child(11) { --i: 10; }
+        .col:nth-child(12) { --i: 11; }
+        .col:nth-child(13) { --i: 12; }
+        .col:nth-child(14) { --i: 13; }
+        .col:nth-child(15) { --i: 14; }
+        .col:nth-child(16) { --i: 15; }
+        .col:nth-child(17) { --i: 16; }
+        .col:nth-child(18) { --i: 17; }
+        .col:nth-child(19) { --i: 18; }
+        .col:nth-child(20) { --i: 19; }
+        .col:nth-child(21) { --i: 20; }
+        .col:nth-child(22) { --i: 21; }
+        .col:nth-child(23) { --i: 22; }
+        .col:nth-child(24) { --i: 23; }
+        
+        .onda-container:after {
+            content: "";
+            opacity: .5;
+            position: absolute;
+            background: url(https://assets.codepen.io/907471/noise.svg);
+            mix-blend-mode: hue;
+            inset: 0;
+            pointer-events: none;
+            filter: invert(1) brightness(5) saturate(.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sección 1: Viaje Interestelar -->
+    <div id="interestelar-section" class="section">
+        <div class="scene">
+            <div class="wrap">
+                <div class="wall wall-right"></div>
+                <div class="wall wall-left"></div>
+                <div class="wall wall-top"></div>
+                <div class="wall wall-bottom"></div>
+                <div class="wall wall-back"></div>
+            </div>
+            <div class="wrap">
+                <div class="wall wall-right"></div>
+                <div class="wall wall-left"></div>
+                <div class="wall wall-top"></div>
+                <div class="wall wall-bottom"></div>
+                <div class="wall wall-back"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección 2: VISA Loader Neuromorphic -->
+    <div id="visa-section" class="section">
+        <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+                <div class="pl__ball-texture"></div>
+                <div class="pl__ball-outer-shadow"></div>
+                <div class="pl__ball-inner-shadow"></div>
+                <div class="pl__ball-side-shadows"></div>
+            </div>
+            <img class="pl__visa-logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9HdCjKf6DQyzmo5VfUzJxzBFIkZlb9HrHjzhbx7dIAu8-sLUws-w4KWA3466xaCYSFKq90xVoDpiS86lo8kYNHXp7tngSGThx7srnpTREPluNMSsIHuOnCVXmibDpevOdy8IIoYRVJACa_TZfZb80-tEqasC4LoRO4aItqTZXwaAHo8FWfwL2Hb3ijtgC/s320/1000280079.png" alt="VISA Logo">
+        </div>
+    </div>
+
+    <!-- Sección 3: Botones -->
+    <div id="buttons-section" class="section">
+        <h1 class="title">Selecciona una opción</h1>
+        <div class="buttons-container">
+            <!-- Botón de Registrarme -->
+            <button class="register-btn">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Registrarme</span>
+                        <div class="press-echo"></div>
+                    </div>
+                </div>
+            </button>
+            
+            <!-- Botón de Iniciar Sesión -->
+            <button class="login-btn">
+                <div class="button-outer">
+                    <div class="button-inner">
+                        <span>Iniciar sesión</span>
+                        <div class="press-echo"></div>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sección 4: Onda -->
+    <div id="onda-section" class="section">
+        <div class="onda-container">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <script>
+        // Crear un elemento de audio para efectos de sonido
+        const clickSound = new Audio();
+        clickSound.src = "data:audio/mp3;base64,SUQzAwAAAAAAJlRQRTEAAAAcAAAAU291bmRKYXkuY29tIFNvdW5kIEVmZmVjdHMA//uQxAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAADAAAGhgBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr///////////////////////////////////////////8AAAA5TEFNRTMuMTAwAc0AAAAAAAAAABSAJAJAQgAAgAAAA+aH7xsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQxAAD0oIBH9MQAAI3QCP6YgAARlRBRiDEGJSKM6jIQMPzguD5znOcEAQBAEDnOf//B/gQBAEAQOc/wQdgQDgQdgfB///BjP//wf///8Hwf///IIMA4Dhf/B8H///B////8H////B////wfB8Hwf//+D4Pg///g///+D4P//4Pg+D//+EIQhEIRiIQ3DcIRCIQiEIhCERCEIhDcRCEIhCIQiEQhCEQhEIhCIQiEIhCIQ3EIRCE4iE5zmIhCNw5znOYiIRCc5iIiEJxEITnMRCEJxEQhOc5iJznOYic5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOQhCEIQnOYiEQnOc5znOc5znOc5znOc5znOc5znOc5znOc5z//5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5znOc5zmf/BoMUUcaQ9CpyopaS+ykfCR8Zn1MYc5pKKnwsrQOlkUumUOBcLjWIKiGDBoBYHJkJRAVEFQbBEkQwQolPBYkUIkITY7Ozu40UToEQchYl4GgFBABAKiUSGicRIAyKTLGh//uSxC2P3Y4EvVmMAHlBwJjrGSAB2dnZ2dn5xhwjYnxlUjOBALBQMIZCA2EhQoHJc6u7EJKJsZ2FxnZ3d3bwVDkEAKFhaRCIAhILBoMUIRFAsWGEZVd3uRERERERJE8jOzu7u7y7y7/J554PB4PB4YOKCYnlUF6Z6IRERERERGDweDweDz5QsLCw1f+5e5ERERERET//xERERERESIAAAAAADdHGklpSpaklrSWpe/Xv++/32/ff993333a3Xta0lrpapJaUpNJSRxrQAAABW6O647cxUCy5jAXGZXnssA5gwzK+LGFXzHFZjOdVTGNWTXIRDDO/8Y0NxWuLMWYNWJjNEDPQfVs4MzgYYNPVfJeF3je/DqYxp6YYnj2RaBgbJeYuQGGKAJKYhmYQcGFn19QLYMBwVMBgEgcBgPMBANMLgHMWA0Bgy+qOw7DsKpjQKTd0DMf+7OvFMRQMMzjDMIA2YEQUBNwJdF7A2nG9Vuw7DsOwrCoKoqjuHYZZo/jCmRYX/f/oUKFChQoKChQUFCgoUKGR39l//l2HYdh2HYdi8Kw7DsPwyy7DsOwrCqKo/h2HYdh2H6VQrCuHYdheF4XheGYXheDweCwqFQrCsKw7DsPwrCoKoqiqKoqjuO47j+O47juP47DsOw7DsKoqiqKoqjsKoqiqKoqiqP47juO4/j+P4/j+P5/n+f5/n+f5/n+f5/n+fwAAAE1XaJDUx1BiDEGJiKKKKKiIiMzMz6Kqsz///uSxEeP2moEvVgYAHtJwJfrGAABEREREREZmZmZmZ/REREZmZmZ/REREZmZmfRVVVVmZnf/oiIiIiIz6Kqqqqqqsz/9ERGZmZmZn0VVXd3d3d3d3dzMzO7u7u7u7u7u7u7u7u7u7u7u7//////////VNSC2xJbEklsSSW5JJbkkltNttttvttttttttttttt0URRNFE0TRwAADdJbdbbbbbbbdE0TRRFE8cccccccccRERERERERGZmZmZmVVVVVVxERERERERVVVVVVVVVVXd3d3d3d3d3dzMzMzMzM7u7u7u7u7MzMzMzMzO7u7u7u7u7u1VVVVVVwiIiIiIiM+iqqqqqqqzP/0REREREZn96Iiv/siIiIiPZVVVVZ////zP//Xd3dVVVVVVWZmZVVVVV3dzMzO7u7u7v/+ZmZmZmZmZmZmf0VVVVVVVZmZn///////////O7u7u7u7u7mZmdVVVVVVVVVVVVVV3d3d3d3d3d3MzMzMzMzMzMzdocument";
+
+        // Variables para el control de animaciones
+        let currentSection = 1;
+        const sections = [
+            document.getElementById('interestelar-section'),
+            document.getElementById('visa-section'),
+            document.getElementById('buttons-section'),
+            document.getElementById('onda-section')
+        ];
+        
+        // Función para cambiar de sección
+        function transitionToSection(sectionIndex) {
+            // Ocultar sección actual
+            sections[currentSection - 1].style.opacity = 0;
+            
+            // Mostrar nueva sección después de un tiempo
+            setTimeout(() => {
+                sections[currentSection - 1].style.zIndex = 0;
+                sections[sectionIndex - 1].style.zIndex = 30;
+                sections[sectionIndex - 1].style.opacity = 1;
+                currentSection = sectionIndex;
+            }, 1000);
+        }
+        
+        // Iniciar secuencia automática: interestelar -> visa -> botones
+        setTimeout(() => {
+            transitionToSection(2); // Cambiar a VISA después de 5 segundos
+            
+            setTimeout(() => {
+                transitionToSection(3); // Cambiar a botones después de 4 segundos más
+            }, 4000);
+        }, 5000);
+        
+        // Añadir evento para seguimiento del ratón en cada botón
+        document.querySelectorAll('button').forEach(button => {
+            const buttonInner = button.querySelector('.button-inner');
+            const pressEcho = button.querySelector('.press-echo');
+            let isPressed = false;
+            let buttonRect;
+            let memoryTimer;
+            
+            // Seguimiento de movimiento del ratón para reflejos dinámicos
+            button.addEventListener('mousemove', function(e) {
+                if (!buttonRect) buttonRect = button.getBoundingClientRect();
+                
+                // Calcular posición relativa del cursor dentro del botón (0-100%)
+                const x = ((e.clientX - buttonRect.left) / buttonRect.width) * 100;
+                const y = ((e.clientY - buttonRect.top) / buttonRect.height) * 100;
+                
+                // Actualizar posición del reflejo
+                buttonInner.style.setProperty('--x', `${x}%`);
+                buttonInner.style.setProperty('--y', `${y}%`);
+                
+                // Rotar ligeramente el ángulo del gradiente basado en la posición del cursor
+                const angle = (x - 50) * 0.2; // Efecto sutil
+                buttonInner.style.setProperty('--angle', `${angle}deg`);
+                
+                // Si el botón está presionado, ajustar el efecto de hundimiento basado en la posición
+                if (isPressed) {
+                    updatePressEffect(e);
+                }
+            });
+            
+            // Función para calcular el efecto de hundimiento localizado
+            function updatePressEffect(e) {
+                if (!buttonRect) buttonRect = button.getBoundingClientRect();
+                
+                // Calcular la posición exacta del clic
+                const x = ((e.clientX - buttonRect.left) / buttonRect.width) * 100;
+                const y = ((e.clientY - buttonRect.top) / buttonRect.height) * 100;
+                
+                // Determinar el origen de la transformación basado en la posición
+                const originX = `${x}%`;
+                const originY = `${y}%`;
+                
+                // Crear una transformación que hunda más en el punto de presión
+                const scaleBase = 0.94; // Escala base para todo el botón
+                
+                // Calcular la distorsión basada en la posición (valores muy sutiles)
+                const distanceFromCenterX = (x - 50) / 100; // -0.5 a 0.5
+                const distanceFromCenterY = (y - 50) / 100; // -0.5 a 0.5
+                
+                // Crear una matriz de transformación más compleja que simula un hundimiento 3D realista
+                const transform = `scale(${scaleBase}) 
+                                   perspective(800px) 
+                                   rotateX(${distanceFromCenterY * 3}deg) 
+                                   rotateY(${distanceFromCenterX * -3}deg)`;
+                
+                // Aplicar los efectos
+                buttonInner.style.setProperty('--press-transform', transform);
+                buttonInner.style.setProperty('--press-origin', `${originX} ${originY}`);
+                
+                // Configurar el efecto de eco visual
+                pressEcho.style.setProperty('--echo-x', `${x}%`);
+                pressEcho.style.setProperty('--echo-y', `${y}%`);
+                
+                // Animar el eco
+                pressEcho.style.animation = 'none'; // Resetear la animación
+                setTimeout(() => {
+                    pressEcho.style.animation = 'echo 500ms ease-out forwards';
+                }, 10);
+            }
+            
+            // Manejo del evento de presionar físicamente el botón
+            button.addEventListener('mousedown', function(e) {
+                isPressed = true;
+                buttonRect = button.getBoundingClientRect();
+                
+                // Clase temporal para el efecto físico de hundimiento
+                this.classList.add('pressed');
+                
+                // Aplicar efecto de hundimiento localizado
+                updatePressEffect(e);
+            });
+            
+            // Al liberar el botón
+            button.addEventListener('mouseup', function() {
+                isPressed = false;
+                this.classList.remove('pressed');
+                
+                // Añadir efecto de memoria temporal
+                this.classList.add('released');
+                
+                // Eliminar la clase después de la animación
+                clearTimeout(memoryTimer);
+                memoryTimer = setTimeout(() => {
+                    this.classList.remove('released');
+                }, 300);
+                
+                // Toggle del estado activo y transición a la sección de onda
+                this.classList.add('active');
+                
+                // Transición a la onda después de un pequeño delay
+                setTimeout(() => {
+                    transitionToSection(4);
+                }, 500);
+            });
+            
+            // Eliminar solo el efecto de hundimiento si el cursor sale durante la presión
+            button.addEventListener('mouseleave', function() {
+                isPressed = false;
+                this.classList.remove('pressed');
+                buttonRect = null; // Resetear el rectángulo al salir
+            });
+            
+            // Restablecer el rectángulo cuando el cursor vuelve a entrar
+            button.addEventListener('mouseenter', function() {
+                buttonRect = null;
+            });
+            
+            // Soporte para dispositivos táctiles
+            button.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                isPressed = true;
+                
+                // Obtener la posición del toque
+                const touch = e.touches[0];
+                buttonRect = button.getBoundingClientRect();
+                
+                // Aplicar los mismos efectos que con el ratón
+                this.classList.add('pressed');
+                
+                // Crear un evento simulado para la función de efecto de presión
+                const simulatedEvent = {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                };
+                
+                updatePressEffect(simulatedEvent);
+            });
+            
+            button.addEventListener('touchend', function() {
+                isPressed = false;
+                this.classList.remove('pressed');
+                
+                // Añadir efecto de memoria temporal
+                this.classList.add('released');
+                
+                // Eliminar la clase después de la animación
+                clearTimeout(memoryTimer);
+                memoryTimer = setTimeout(() => {
+                    this.classList.remove('released');
+                }, 300);
+                
+                // Toggle del estado activo y transición a la sección de onda
+                this.classList.add('active');
+                
+                // Transición a la onda después de un pequeño delay
+                setTimeout(() => {
+                    transitionToSection(4);
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
