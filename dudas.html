@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Remeex VISA - Preguntas Frecuentes sobre Verificación</title>
+  <link rel="icon" href="https://w7.pngegg.com/pngs/400/28/png-transparent-credit-card-computer-icons-visa-electron-bank-curio-blue-text-rectangle-thumbnail.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      /* Paleta de colores moderna basada en estilo Revolut/N26 */
+      --primary: #1a1f71;
+      --primary-dark: #0c1045;
+      --primary-light: #3244b6;
+      --secondary: #00579f;
+      --accent: #f7b600;
+      --success: #00d34d;
+      --danger: #ff4d4d;
+      --warning: #ffad33;
+      --info: #0095ff;
+      --neutral-100: #ffffff;
+      --neutral-200: #f5f7fa;
+      --neutral-300: #eaecf0;
+      --neutral-400: #d0d5dd;
+      --neutral-500: #9da4b4;
+      --neutral-600: #6e7891;
+      --neutral-700: #4f5d75;
+      --neutral-800: #293249;
+      --neutral-900: #1a1f37;
+
+      /* Sombras y efectos */
+      --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1);
+      --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0 2px 4px -2px rgba(16, 24, 40, 0.06);
+      --shadow-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+      --shadow-xl: 0 20px 24px -4px rgba(16, 24, 40, 0.08), 0 8px 8px -4px rgba(16, 24, 40, 0.03);
+      
+      /* Border radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      /* Transiciones */
+      --transition-fast: all 0.2s ease;
+      --transition-base: all 0.3s ease;
+      --transition-slow: all 0.5s ease;
+      
+      /* Animaciones */
+      --animation-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--neutral-200);
+      color: var(--neutral-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      padding-top: 60px;
+    }
+    
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1.5rem;
+      background: var(--neutral-100);
+      border-bottom: 1px solid var(--neutral-300);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+      height: 60px;
+    }
+    
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .header-brand img {
+      height: 32px;
+      width: auto;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .header-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition-base);
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+    
+    .btn-outline {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background: rgba(26, 31, 113, 0.05);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 3rem 1.5rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .verification-explainer {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .explainer-card {
+      background: var(--neutral-100);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s var(--animation-bounce), box-shadow 0.3s ease;
+    }
+    
+    .explainer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-subtitle {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--neutral-600);
+    }
+    
+    .card-content {
+      font-size: 1rem;
+      color: var(--neutral-700);
+      line-height: 1.7;
+    }
+    
+    .highlighted-text {
+      background: rgba(247, 182, 0, 0.1);
+      border-left: 3px solid var(--accent);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: var(--radius-sm);
+    }
+    
+    .trust-signals {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--neutral-700);
+    }
+    
+    .trust-item i {
+      color: var(--success);
+    }
+    
+    .faq-section {
+      margin-bottom: 3rem;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .faq-item {
+      background: var(--neutral-100);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .faq-question {
+      padding: 1.25rem;
+      background: var(--neutral-100);
+      color: var(--neutral-900);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-base);
+    }
+    
+    .faq-question:hover {
+      background: var(--neutral-200);
+    }
+    
+    .faq-question.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .faq-answer {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    
+    .faq-answer.active {
+      padding: 1.25rem;
+      max-height: 1000px;
+    }
+    
+    .faq-answer-content {
+      font-size: 0.95rem;
+      color: var(--neutral-700);
+      line-height: 1.7;
+    }
+    
+    .testimonials-section {
+      margin-bottom: 3rem;
+    }
+    
+    .testimonials-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .testimonial-card {
+      background: var(--neutral-100);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s var(--animation-bounce), box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .testimonial-content {
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--neutral-700);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .testimonial-content::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem;
+      left: -0.5rem;
+      font-size: 4rem;
+      color: var(--neutral-300);
+      z-index: 0;
+      line-height: 1;
+    }
+    
+    .testimonial-content p {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .user-name {
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+    
+    .user-title {
+      font-size: 0.8rem;
+      color: var(--neutral-600);
+    }
+    
+    .security-section {
+      background: linear-gradient(135deg, rgba(0, 211, 77, 0.1) 0%, rgba(0, 211, 77, 0.05) 100%);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .security-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    
+    .security-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: white;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .security-title {
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+    
+    .security-description {
+      font-size: 0.9rem;
+      color: var(--neutral-700);
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .cta-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-description {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s var(--animation-bounce);
+    }
+    
+    .btn-primary-cta {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .btn-primary-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .btn-secondary-cta {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn-secondary-cta:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+    
+    .footer {
+      background: var(--neutral-100);
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--neutral-300);
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 300px;
+    }
+    
+    .footer-brand img {
+      height: 32px;
+      width: auto;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--neutral-600);
+    }
+    
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+    
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .footer-column h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-column a {
+      font-size: 0.9rem;
+      color: var(--neutral-600);
+      text-decoration: none;
+      transition: var(--transition-base);
+    }
+    
+    .footer-column a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--neutral-300);
+      font-size: 0.85rem;
+      color: var(--neutral-600);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--neutral-200);
+      color: var(--neutral-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-base);
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+    
+    /* Step process visualization */
+    .verification-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .step-container {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .step-content {
+      flex: 1;
+      background: var(--neutral-100);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .step-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .step-description {
+      font-size: 0.95rem;
+      color: var(--neutral-700);
+    }
+    
+    /* Stats counter */
+    .stats-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-label {
+      font-size: 1rem;
+      color: var(--neutral-600);
+    }
+    
+    /* Process flow visualization */
+    .process-flow {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      position: relative;
+    }
+    
+    .flow-track {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      bottom: 40px;
+      width: 3px;
+      background: var(--neutral-300);
+      z-index: 0;
+    }
+    
+    .flow-progress {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      width: 3px;
+      background: var(--primary);
+      z-index: 1;
+      height: 70%;
+      transition: height 1s ease;
+    }
+    
+    .flow-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+      padding: 1rem 0;
+    }
+    
+    .flow-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--neutral-100);
+      border: 3px solid var(--neutral-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neutral-600);
+      font-size: 1rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .flow-step.active .flow-indicator {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    
+    .flow-step.completed .flow-indicator {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+    
+    .flow-content {
+      flex: 1;
+      background: var(--neutral-100);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s var(--animation-bounce), box-shadow 0.3s ease;
+    }
+    
+    .flow-step.active .flow-content {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+      border-left: 3px solid var(--primary);
+    }
+    
+    .flow-step.completed .flow-content {
+      border-left: 3px solid var(--success);
+    }
+    
+    .flow-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--neutral-800);
+      margin-bottom: 0.5rem;
+    }
+    
+    .flow-step.active .flow-title {
+      color: var(--primary);
+    }
+    
+    .flow-step.completed .flow-title {
+      color: var(--success);
+    }
+    
+    .flow-description {
+      font-size: 0.95rem;
+      color: var(--neutral-700);
+    }
+    
+    /* Video section */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      margin: 2rem 0;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .video-container iframe,
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .card-header {
+        flex-direction: column;
+      }
+      
+      .card-title {
+        font-size: 1.2rem;
+      }
+      
+      .cta-title {
+        font-size: 1.5rem;
+      }
+      
+      .cta-description {
+        font-size: 1rem;
+      }
+      
+      .footer-top {
+        flex-direction: column;
+      }
+      
+      .verification-steps,
+      .process-flow {
+        margin: 1.5rem 0;
+      }
+      
+      .flow-track,
+      .flow-progress {
+        left: 20px;
+      }
+      
+      .step-number,
+      .flow-indicator {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
+      
+      .step-content,
+      .flow-content {
+        padding: 1rem;
+      }
+      
+      .step-title,
+      .flow-title {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 1rem;
+      }
+      
+      .explainer-card {
+        padding: 1.5rem;
+      }
+      
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      
+      .trust-signals {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .cta-section {
+        padding: 2rem 1rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+      
+      .stats-container {
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+      }
+      
+      .social-links {
+        margin-top: 1rem;
+      }
+    }
+    
+    /* Animation for counter */
+    @keyframes countUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .stat-number {
+      animation: countUp 1s ease forwards;
+    }
+    
+    /* Animation for process flow */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .flow-step {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    /* Class for active FAQ items */
+    .active .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+    
+    /* Additional helper classes */
+    .text-center {
+      text-align: center;
+    }
+    
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mt-4 { margin-top: 2rem; }
+    
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
+    .mb-4 { margin-bottom: 2rem; }
+    
+    .fw-bold { font-weight: 700; }
+    .fw-semi { font-weight: 600; }
+    .fw-medium { font-weight: 500; }
+    
+    .text-primary { color: var(--primary); }
+    .text-success { color: var(--success); }
+    .text-warning { color: var(--warning); }
+    .text-info { color: var(--info); }
+    .text-danger { color: var(--danger); }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    
+    .badge-primary {
+      background: rgba(26, 31, 113, 0.1);
+      color: var(--primary);
+    }
+    
+    .badge-success {
+      background: rgba(0, 211, 77, 0.1);
+      color: var(--success);
+    }
+    
+    .badge-warning {
+      background: rgba(255, 173, 51, 0.1);
+      color: var(--warning);
+    }
+
+    /* Add animation to icons */
+    .animated-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    .card-icon:hover .animated-icon,
+    .security-icon:hover .animated-icon {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="REMEEX">
+    </div>
+    
+    <div class="header-actions">
+      <a href="recarga.html" class="header-action-btn btn-outline">
+        <i class="fas fa-arrow-left"></i> Volver
+      </a>
+      <a href="https://wa.me/+17373018059" class="header-action-btn btn-primary" target="_blank">
+        <i class="fab fa-whatsapp"></i> Contactar Soporte
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Tu Seguridad es Nuestra Prioridad Absoluta</h1>
+        <p class="hero-subtitle">Entendemos tus dudas sobre el proceso de verificación de Remeex VISA. Te explicamos con total transparencia por qué existe y cómo protege tu dinero.</p>
+        <div class="hero-buttons">
+          <a href="#proceso" class="btn-cta btn-primary-cta">
+            <i class="fas fa-shield-alt"></i> Conocer el Proceso
+          </a>
+          <a href="#faq" class="btn-cta btn-secondary-cta">
+            <i class="fas fa-question-circle"></i> Ver Preguntas Frecuentes
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Explainer Cards -->
+    <section class="verification-explainer" id="proceso">
+      <div class="explainer-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-shield-alt animated-icon"></i>
+          </div>
+          <div>
+            <h2 class="card-title">¿Por qué es necesario el depósito de verificación?</h2>
+            <p class="card-subtitle">La seguridad ante todo</p>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <p>El depósito de $25 USD no es un cobro ni una comisión, es una medida de seguridad diseñada para <strong>proteger tu dinero y confirmar que la cuenta bancaria a la que deseas retirar fondos es realmente tuya</strong>.</p>
+          
+          <div class="highlighted-text">
+            <p><strong>Importante:</strong> Este depósito se suma completamente a tu saldo disponible en Remeex VISA. ¡No pierdes ni un centavo!</p>
+          </div>
+          
+          <p>Similar a como cuando confirmas tu dirección antes de recibir un paquete valioso, este proceso nos permite confirmar de forma segura que tú controlas la cuenta bancaria y así evitar que alguien intente desviar tu dinero a una cuenta desconocida o fraudulenta.</p>
+          
+          <div class="trust-signals">
+            <div class="trust-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Estándar de seguridad internacional</span>
+            </div>
+            <div class="trust-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Se realiza una sola vez por cuenta</span>
+            </div>
+            <div class="trust-item">
+              <i class="fas fa-check-circle"></i>
+              <span>El dinero se suma a tu saldo</span>
+            </div>
+            <div class="trust-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Protege contra fraudes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="explainer-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-exchange-alt animated-icon"></i>
+          </div>
+          <div>
+            <h2 class="card-title">Así Funciona el Proceso de Verificación</h2>
+            <p class="card-subtitle">Simple, seguro y único</p>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="verification-steps">
+            <div class="step-container">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3 class="step-title">Registras tu cuenta bancaria</h3>
+                <p class="step-description">Ingresas los datos de la cuenta bancaria a la que deseas retirar fondos desde Remeex VISA.</p>
+              </div>
+            </div>
+            
+            <div class="step-container">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3 class="step-title">Haces un depósito único de $25 USD</h3>
+                <p class="step-description">Desde tu cuenta bancaria personal, realizas un depósito de $25 USD (o su equivalente en bolívares: Bs. 2.845,50) a Remeex VISA.</p>
+              </div>
+            </div>
+            
+            <div class="step-container">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3 class="step-title">Los $25 se suman a tu saldo</h3>
+                <p class="step-description">El monto depositado se acredita instantáneamente a tu saldo disponible en Remeex VISA. ¡Sigue siendo tu dinero!</p>
+              </div>
+            </div>
+            
+            <div class="step-container">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3 class="step-title">Tu cuenta queda verificada</h3>
+                <p class="step-description">Al confirmar que la transferencia provino de tu cuenta, queda verificada de forma segura y ya puedes realizar retiros a ella cuantas veces quieras.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="highlighted-text">
+            <p><strong>Recuerda:</strong> Este proceso se realiza UNA SOLA VEZ por cada cuenta bancaria que quieras registrar. Una vez verificada, podrás retirar fondos a esa cuenta sin volver a hacer el depósito.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="explainer-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-check-double animated-icon"></i>
+          </div>
+          <div>
+            <h2 class="card-title">Beneficios de la Verificación</h2>
+            <p class="card-subtitle">Protección y funcionalidades extra</p>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <p>Al completar el proceso de verificación, no solo proteges tu dinero, sino que accedes a todas las funcionalidades de Remeex VISA:</p>
+          
+          <div class="security-grid">
+            <div class="security-item">
+              <div class="security-icon">
+                <i class="fas fa-university animated-icon"></i>
+              </div>
+              <h3 class="security-title">Retiros Seguros</h3>
+              <p class="security-description">Retira fondos de forma segura a tu cuenta bancaria verificada.</p>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-icon">
+                <i class="fas fa-credit-card animated-icon"></i>
+              </div>
+              <h3 class="security-title">Acceso a Zelle</h3>
+              <p class="security-description">Envía y recibe pagos internacionales a través de Zelle (si aplica).</p>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-icon">
+                <i class="fas fa-lock animated-icon"></i>
+              </div>
+              <h3 class="security-title">Protección de Datos</h3>
+              <p class="security-description">Tus datos bancarios quedan protegidos con encriptación de nivel bancario.</p>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-icon">
+                <i class="fas fa-sync-alt animated-icon"></i>
+              </div>
+              <h3 class="security-title">Transacciones Ilimitadas</h3>
+              <p class="security-description">Realiza múltiples transacciones sin necesidad de volver a verificar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number" id="users-count">18,945</div>
+        <div class="stat-label">Usuarios Verificados</div>
+      </div>
+      
+      <div class="stat-item">
+        <div class="stat-number" id="transactions-count">340,678</div>
+        <div class="stat-label">Transacciones Seguras</div>
+      </div>
+      
+      <div class="stat-item">
+        <div class="stat-number" id="satisfaction-rate">99.7%</div>
+        <div class="stat-label">Satisfacción de Usuarios</div>
+      </div>
+    </section>
+
+    <!-- Process Flow -->
+    <section>
+      <h2 class="section-title">Estatus de Tu Proceso de Verificación</h2>
+      
+      <div class="process-flow">
+        <div class="flow-track"></div>
+        <div class="flow-progress"></div>
+        
+        <div class="flow-step completed">
+          <div class="flow-indicator">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="flow-content">
+            <h3 class="flow-title">Registro de Usuario</h3>
+            <p class="flow-description">Has completado tu registro en Remeex VISA.</p>
+          </div>
+        </div>
+        
+        <div class="flow-step active">
+          <div class="flow-indicator">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="flow-content">
+            <h3 class="flow-title">Verificación de Cuenta Bancaria</h3>
+            <p class="flow-description">Necesitas realizar el depósito de verificación de $25 USD.</p>
+          </div>
+        </div>
+        
+        <div class="flow-step">
+          <div class="flow-indicator">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="flow-content">
+            <h3 class="flow-title">Activación de Retiros</h3>
+            <p class="flow-description">Podrás retirar fondos a tu cuenta bancaria verificada.</p>
+          </div>
+        </div>
+        
+        <div class="flow-step">
+          <div class="flow-indicator">
+            <i class="fas fa-check-double"></i>
+          </div>
+          <div class="flow-content">
+            <h3 class="flow-title">Acceso Completo</h3>
+            <p class="flow-description">Disfrutarás de todas las funcionalidades de Remeex VISA.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Video -->
+    <section>
+      <h2 class="section-title">Demostración del Proceso</h2>
+      
+      <div class="video-container">
+        <!-- Placeholder for video - in production, replace with actual video -->
+        <video controls poster="https://www.placecage.com/1280/720">
+          <source src="verification-demo.mp4" type="video/mp4">
+          Tu navegador no soporta videos HTML5.
+        </video>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <h2 class="section-title">Preguntas Frecuentes</h2>
+      
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Por qué Remeex VISA me pide depositar $25 si lo que quiero es RETIRAR mi plata?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>¡Excelente pregunta! Este depósito no es para que Remeex VISA se quede con tu dinero. Es la forma más segura que tenemos para <strong>confirmar al 100% que la cuenta bancaria a la que quieres enviar tus fondos es realmente TUYA</strong> y que tú tienes el control.</p>
+              <p>Imagínalo como cuando confirmas tu dirección antes de recibir un paquete valioso. Al hacer este pequeño depósito <em>desde</em> tu banco hacia Remeex VISA, nos demuestras que eres tú quien maneja esa cuenta. Esto es crucial para evitar que alguien intente desviar tu dinero a una cuenta desconocida o fraudulenta. ¡Es un escudo extra para proteger lo que es tuyo!</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Estos $25 son una comisión escondida o un cobro por usar Remeex VISA?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p><strong>¡Rotundamente NO!</strong> Queremos ser súper claros: los $25 <strong>NO son una comisión ni un cobro</strong>. Es únicamente un depósito de <em>verificación</em>. En el mismo instante en que lo recibimos, esos $25 se suman <strong>completitos a tu saldo disponible</strong> aquí en tu cuenta Remeex VISA. Sigue siendo tu dinero, listo para usarse.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            Entonces, ¿no voy a perder esos $25? ¿Qué pasa realmente con ese dinero?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>¡No los pierdes en absoluto! Como te comentamos, los $25 se acreditan inmediatamente a tu saldo en Remeex VISA. Los verás reflejados y podrás usarlos como parte de tu dinero total dentro de la app, o retirarlos junto con el resto de tus fondos una vez que la cuenta esté verificada. <strong>El dinero siempre, siempre sigue siendo tuyo</strong>.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Y por qué tienen que ser $25 exactamente? ¿No podría ser menos?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>Establecimos $25 USD como un monto estándar internacional. Es una cantidad suficiente para realizar una verificación bancaria efectiva y robusta, pero que intentamos sea lo más accesible posible. Nos permite confirmar la conexión entre Remeex VISA y tu banco de manera fiable, siguiendo prácticas comunes en la industria financiera segura.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            Ya les di mi número de cuenta, mi cédula y mis datos. ¿Por qué eso no basta? ¿Por qué necesitan un depósito?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>Dar tus datos es el primer paso, ¡pero no nos confirma que tú seas el dueño real y activo de la cuenta! Lamentablemente, los números de cuenta pueden caer en manos equivocadas. El depósito <em>desde</em> esa cuenta es la <strong>prueba activa e indiscutible</strong> de que tú tienes acceso y control sobre ella.</p>
+              <p>Es una práctica de seguridad estándar (a veces llamada "micro-depósito" o "depósito de activación") que vincula tu identidad verificada en Remeex VISA con tu cuenta bancaria, cumpliendo con normativas de seguridad (KYC/AML) que protegen todo el sistema financiero del fraude y lavado de dinero.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Tendré que hacer este depósito de $25 cada vez que quiera retirar dinero o usar Zelle?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p><strong>¡No, para nada!</strong> Este proceso de verificación con el depósito de $25 se realiza <strong>UNA SOLA VEZ por cada cuenta bancaria externa</strong> que quieras registrar y vincular a Remeex VISA. Una vez que tu cuenta bancaria está verificada y guardada de forma segura, podrás realizar retiros a esa cuenta y usar las funciones asociadas (como Zelle, si aplica) de manera rápida y sencilla, sin tener que repetir el depósito para esa cuenta específica.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Es seguro hacer esto? Me preocupa dar datos de mi cuenta bancaria.
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p><strong>¡Totalmente seguro!</strong> En Remeex VISA, la seguridad es sagrada. Usamos las medidas de seguridad más avanzadas, similares a las de los bancos internacionales, para proteger toda tu información. La conexión para verificar el depósito se hace a través de canales encriptados y seguros.</p>
+              <p>Remeex VISA <strong>NUNCA ve ni almacena tus claves de acceso a tu banco personal</strong>. Solo recibimos la confirmación de la transferencia y el origen a través de sistemas bancarios seguros. La información necesaria (como número de cuenta y nombre) se guarda bajo estrictos protocolos de seguridad, justamente para proteger tus futuros retiros. Este paso, de hecho, <strong>aumenta</strong> la seguridad de tus futuras operaciones.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Y qué pasa si decido no hacer el depósito de verificación?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>Entendemos tus dudas. Sin embargo, este paso de verificación es <strong>indispensable y obligatorio</strong> para poder activar los retiros a tu cuenta bancaria y otras funciones clave como Zelle. Sin completar esta verificación, no podremos procesar tus retiros a esa cuenta específica, precisamente porque no podemos confirmar de forma 100% segura que te pertenece y así protegerte del fraude. Es una medida necesaria para protegerte a ti, a todos nuestros usuarios y cumplir con las regulaciones financieras.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Cuánto tiempo tarda esta verificación después de hacer el depósito? ¿Cuándo veo los $25 en mi saldo?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>¡El proceso es bastante rápido! Una vez que realizas el depósito desde tu banco, generalmente se refleja en tu saldo de Remeex VISA casi <strong>instantáneamente</strong> o en cuestión de <strong>pocos minutos</strong>. Tan pronto recibimos la confirmación (que suele ser inmediata), tu cuenta queda verificada y los $25 aparecen disponibles en tu saldo. En casos muy raros, dependiendo de la conexión entre bancos, podría demorar un poquito más, pero no es lo común.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            ¿Este sistema de verificación funciona bien con mi banco aquí en Venezuela?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p><strong>¡Claro que sí!</strong> Nuestro sistema está diseñado para funcionar con <strong>todos los principales bancos operativos en Venezuela</strong>. Puedes hacer el depósito de verificación sin problemas desde Banesco, Mercantil, Provincial, Banco de Venezuela, Bancamiga, y la mayoría de los bancos del país. Simplemente sigue las instrucciones que te daremos para hacer la transferencia desde la plataforma online o móvil de tu banco.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            He usado otras apps o billeteras que no me pidieron este depósito. ¿Por qué Remeex VISA sí?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p><strong>¡Todo lo contrario!</strong> Que pidamos este paso extra demuestra nuestro <strong>altísimo compromiso con tu seguridad y la seriedad de nuestra plataforma</strong>. Diferentes servicios tienen distintos modelos y quizás asumen más riesgos o usan otros métodos de verificación menos robustos.</p>
+              <p>Nosotros hemos elegido este método porque es una de las formas <strong>más seguras y aceptadas internacionalmente</strong> para confirmar la propiedad real de la cuenta de destino. Es una señal de <strong>seriedad y máxima protección para tu dinero</strong>, no de desconfianza.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            Si Remeex VISA es similar a Wise, ¿Wise también pide este tipo de depósito?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>Sí, Wise (anteriormente TransferWise), una de las plataformas líderes en transferencias internacionales, también requiere un depósito inicial similar (generalmente £20 o su equivalente en euros/dólares) para activar completamente la funcionalidad de la cuenta multidivisa y obtener los datos bancarios para recibir dinero.</p>
+              <p>Esto demuestra que es una práctica estándar en la industria para plataformas serias que manejan dinero a nivel global, enfocada en la seguridad y el cumplimiento normativo.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            Si pierdo acceso a mi teléfono o a la app de Remeex VISA, ¿alguien podría retirar mi dinero?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>¡No! Una vez que tu cuenta bancaria está verificada y vinculada a tu perfil de Remeex VISA, los retiros SOLO pueden realizarse a ESA cuenta bancaria verificada a TU nombre.</p>
+              <p>Incluso si alguien lograra acceder a tu app (lo cual prevenimos con contraseñas, PIN, biometría, etc.), no podría cambiar la cuenta de retiro verificada por una suya sin pasar por rigurosos controles de seguridad adicionales o contactando a soporte para validar su identidad de nuevo. ¡Tu dinero solo puede ir a la cuenta que TÚ verificaste!</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            En Venezuela hay muchas estafas donde te piden depósitos. ¿Cómo sé que esto no es una estafa?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              <p>¡Entendemos esa desconfianza al 100%! La diferencia CLAVE es:</p>
+              <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                <li><strong>El Propósito:</strong> No te pedimos dinero para "liberar un premio", "pagar un impuesto falso" o "entrar en una lista". Es <em>específicamente</em> para <strong>verificar la conexión segura con TU PROPIA cuenta bancaria</strong> para TUS futuros retiros.</li>
+                <li><strong>El Dinero Vuelve a Ti:</strong> A diferencia de una estafa donde pierdes el dinero, aquí los $25 se <strong>acreditan INMEDIATAMENTE a tu saldo de Remeex VISA</strong>. Sigue siendo tuyo y totalmente disponible.</li>
+                <li><strong>Transparencia:</strong> Te explicamos claramente el por qué y el cómo, y ofrecemos soporte. Las estafas suelen ser opacas y presionarte.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+      <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
+      
+      <div class="testimonials-container">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>"Al principio tenía dudas sobre el depósito de verificación, pero al ver que el dinero se sumó a mi saldo instantáneamente y pude retirarlo todo junto después, entendí que era por seguridad. ¡Ahora puedo retirar fondos fácilmente sin problemas!"</p>
+          </div>
+          
+          <div class="testimonial-user">
+            <div class="user-avatar">MG</div>
+            <div class="user-info">
+              <div class="user-name">María González</div>
+              <div class="user-title">Cliente desde 2024</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>"Lo que más me gustó fue la transparencia. Me explicaron claramente por qué necesitaban verificar mi cuenta y cómo funcionaba el proceso. Los $25 aparecieron en mi saldo al instante y todo fue muy sencillo."</p>
+          </div>
+          
+          <div class="testimonial-user">
+            <div class="user-avatar">JR</div>
+            <div class="user-info">
+              <div class="user-name">Juan Rodríguez</div>
+              <div class="user-title">Cliente desde 2023</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>"Después de tantas estafas en Venezuela, uno se vuelve desconfiado. Pero con Remeex VISA el proceso fue transparente y profesional. Pude verificar mi cuenta sin problemas y ahora uso la app para todas mis transferencias."</p>
+          </div>
+          
+          <div class="testimonial-user">
+            <div class="user-avatar">LP</div>
+            <div class="user-info">
+              <div class="user-name">Laura Pérez</div>
+              <div class="user-title">Cliente desde 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="security-section">
+      <h2 class="section-title">Tecnología de Seguridad de Nivel Bancario</h2>
+      
+      <p class="text-center mb-3">Utilizamos múltiples capas de seguridad para proteger tus datos y garantizar transacciones seguras:</p>
+      
+      <div class="security-grid">
+        <div class="security-item">
+          <div class="security-icon">
+            <i class="fas fa-lock animated-icon"></i>
+          </div>
+          <h3 class="security-title">Encriptación de Extremo a Extremo</h3>
+          <p class="security-description">Toda la comunicación entre tu dispositivo y nuestros servidores viaja cifrada con protocolos SSL/TLS de nivel bancario.</p>
+        </div>
+        
+        <div class="security-item">
+          <div class="security-icon">
+            <i class="fas fa-fingerprint animated-icon"></i>
+          </div>
+          <h3 class="security-title">Tokenización</h3>
+          <p class="security-description">No almacenamos datos sensibles directamente, sino "tokens" seguros que solo nuestro sistema puede interpretar.</p>
+        </div>
+        
+        <div class="security-item">
+          <div class="security-icon">
+            <i class="fas fa-server animated-icon"></i>
+          </div>
+          <h3 class="security-title">Infraestructura Segura</h3>
+          <p class="security-description">Nuestros sistemas residen en servidores con altísimos estándares de seguridad física y digital, monitoreados 24/7.</p>
+        </div>
+        
+        <div class="security-item">
+          <div class="security-icon">
+            <i class="fas fa-shield-alt animated-icon"></i>
+          </div>
+          <h3 class="security-title">Cumplimiento Normativo</h3>
+          <p class="security-description">Adherimos a normativas internacionales de seguridad de datos financieros y anti-fraude (KYC y AML).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">¿Listo para activar todas las funciones de Remeex VISA?</h2>
+        <p class="cta-description">Completa tu proceso de verificación en minutos y accede a todas las ventajas de nuestra plataforma.</p>
+        
+        <div class="cta-buttons">
+          <a href="recarga.html" class="btn-cta btn-primary-cta">
+            <i class="fas fa-shield-alt"></i> Verificar mi Cuenta
+          </a>
+          
+          <a href="https://wa.me/+17373018059" class="btn-cta btn-secondary-cta" target="_blank">
+            <i class="fab fa-whatsapp"></i> Contáctanos
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnBzNdjl6bNp-nIdaiHVENczJhwlJNA7ocsyiOObMmzbu8at0dY5yGcZ9cLxLF39qI6gwNfqBxlkTDC0txVULEwQVwGkeEzN0Jq9MRTRagA48mh18UqTlR4WhsXOLAEZugUyhqJHB19xJgnkpe-S5VOWFgzpKFwctv3XP9XhH41vNTvq0ZS-nik58Qhr-O/s320/remeex.png" alt="REMEEX">
+          <p>REMEEX VISA: La plataforma segura para enviar y recibir dinero, diseñada pensando en las necesidades de los venezolanos.</p>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>Remeex VISA</h3>
+            <a href="#">Inicio</a>
+            <a href="#">Características</a>
+            <a href="#">Tarifas</a>
+            <a href="#">Seguridad</a>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Soporte</h3>
+            <a href="#">Preguntas Frecuentes</a>
+            <a href="#">Centro de Ayuda</a>
+            <a href="#">Contacto</a>
+            <a href="#">Tutoriales</a>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Legal</h3>
+            <a href="#">Términos de Uso</a>
+            <a href="#">Política de Privacidad</a>
+            <a href="#">Cumplimiento</a>
+            <a href="#">Seguridad</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div>© 2025 Remeex VISA. Todos los derechos reservados.</div>
+        
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Toggle FAQ answers
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const answer = this.nextElementSibling;
+        
+        if (this.classList.contains('active')) {
+          answer.classList.add('active');
+        } else {
+          answer.classList.remove('active');
+        }
+      });
+    });
+    
+    // Animate counting stats
+    function animateCounter(elementId, endValue, duration = 2000, startValue = 0) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      let startTime = null;
+      const step = timestamp => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const currentValue = Math.floor(progress * (endValue - startValue) + startValue);
+        
+        element.textContent = currentValue.toLocaleString();
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          element.textContent = endValue.toLocaleString();
+        }
+      };
+      
+      window.requestAnimationFrame(step);
+    }
+    
+    // Animate counters when they come into view
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Start animations
+          animateCounter('users-count', 18945);
+          animateCounter('transactions-count', 340678);
+          animateCounter('satisfaction-rate', 99.7, 2000, 90);
+          
+          // Stop observing after animation
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observe stats container
+    const statsContainer = document.querySelector('.stats-container');
+    if (statsContainer) {
+      observer.observe(statsContainer);
+    }
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
