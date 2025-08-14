@@ -1,0 +1,148 @@
+/*
+    GEMINI SUPPORT DASHBOARD - EXPERT CSS
+    Author: Gemini
+    Date: 2025-08-14
+    Description: A complete aesthetic overhaul focusing on micro-interactions,
+                 modern design patterns (glassmorphism), and a professional UI/UX.
+*/
+
+/* --- 1. Design System & CSS Variables --- */
+:root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    /* Light Theme */
+    --bg-light: #f7f8fc;
+    --sidebar-light: rgba(255, 255, 255, 0.7);
+    --card-light: #ffffff;
+    --text-primary-light: #1a202c;
+    --text-secondary-light: #718096;
+    --border-light: #e2e8f0;
+
+    /* Dark Theme */
+    --bg-dark: #121927;
+    --sidebar-dark: rgba(26, 32, 44, 0.7);
+    --card-dark: #1a202c;
+    --text-primary-dark: #e2e8f0;
+    --text-secondary-dark: #a0aec0;
+    --border-dark: #2d3748;
+
+    /* Universal */
+    --primary: #4f46e5;
+    --primary-light: #c7d2fe;
+    --primary-hover: #4338ca;
+    --accent: #10b981;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
+    --transition-fast: 0.2s ease-in-out;
+    --transition-slow: 0.4s ease-in-out;
+}
+
+/* --- 2. Base & Theming --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body.admin-body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-light);
+    color: var(--text-primary-light);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-primary-dark);
+}
+
+/* --- 3. Layout & Structure --- */
+.admin-app-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+.app-sidebar {
+    background: var(--sidebar-light);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid var(--border-light);
+    padding: 1.5rem;
+    transition: background-color var(--transition-slow);
+}
+
+body.dark-mode .app-sidebar {
+    background: var(--sidebar-dark);
+    border-right-color: var(--border-dark);
+}
+
+.app-main-content { padding: 2rem; overflow-y: auto; }
+
+/* --- 4. Components --- */
+
+/* Sidebar */
+.sidebar-header .logo { /* ... */ }
+.nav-item {
+    /* ... */
+    transition: all var(--transition-fast);
+}
+.nav-item:hover { transform: translateX(5px); background-color: var(--primary-light); }
+body.dark-mode .nav-item:hover { background-color: rgba(79, 70, 229, 0.3); }
+
+/* Views & Transitions */
+.view { display: none; animation: fadeIn 0.5s ease-in-out; }
+.view.active-view { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Stat Cards */
+.stat-card {
+    background: var(--card-light);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-slow);
+}
+body.dark-mode .stat-card { background: var(--card-dark); border-color: var(--border-dark); }
+.stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+/* Chat */
+.session-item.unread .session-id { font-weight: 800; color: var(--text-primary-light); }
+body.dark-mode .session-item.unread .session-id { color: var(--text-primary-dark); }
+
+.message.admin { background: linear-gradient(135deg, var(--primary-light), #e0e7ff); }
+body.dark-mode .message.admin { background: linear-gradient(135deg, #2d3748, #1f2937); }
+
+/* Skeleton Loaders */
+.skeleton {
+    background-color: #e2e8f0;
+    border-radius: var(--radius);
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+body.dark-mode .skeleton { background-color: #2d3748; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.session-list-skeleton .skeleton { height: 60px; margin-bottom: 1rem; }
+
+/* --- 5. Animations & Micro-interactions --- */
+@keyframes slide-in-bottom {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content {
+    animation: slide-in-bottom 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Staggered list animation */
+.stagger-in > * {
+    animation: fadeIn 0.5s ease-in-out both;
+}
+
+/* Generate staggered delays */
+.stagger-in > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.2s; }
+/* ... and so on */

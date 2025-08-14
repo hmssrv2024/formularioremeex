@@ -1,0 +1,56 @@
+{
+  "rules": {
+    // Allow public read access to project documents for RAG
+    "projectDocs": {
+      ".read": "true",
+      "$docId": {
+        // Only authenticated users (admins) can write/update project docs
+        ".write": "request.auth != null", // TODO: Restrict to admin UIDs in production
+        "chunks": {
+          "$chunkId": {
+            ".write": "request.auth != null" // TODO: Restrict to admin UIDs in production
+          }
+        }
+      }
+    },
+    "sessions": {
+      "$sessionId": {
+        // A user can create a session if the sessionId matches their UID
+        ".create": "request.auth != null && $sessionId == 'session_' + request.auth.uid",
+        // A user can read/write to their own session. An admin can read/write to any.
+        ".read": "request.auth != null && (request.auth.uid == resource.data.userId)", // TODO: Add admin read access rule
+        ".update": "request.auth != null && (request.auth.uid == resource.data.userId)", // TODO: Add admin write access rule
+        
+        "messages": {
+          "$messageId": {
+            // User can write messages to their own session.
+            // Admin can write messages to any session.
+            ".write": "request.auth != null && (request.auth.uid == get(/databases/(default)/documents/sessions/$(sessionId)).data.userId)" // TODO: Add admin write access rule
+          }
+        }
+      }
+    },
+    "status": {
+      "$uid": {
+        // Any authenticated user can write their own presence status
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "storage": {
+      "match": "/b/{bucket}/o": {
+        "match": "project/docs/{allPaths=**}": {
+          // Allow public read for project docs, only admins can write
+          "allow": "read;",
+          "allow": "write: if request.auth != null;" // TODO: Restrict to admin UIDs in production
+        },
+        "match": "sessions/{sessionId}/uploads/{fileName}": {
+          // User can write to their own session folder
+          // User and admin can read from the session folder
+          "allow": "read: if request.auth != null && (request.auth.uid == get(/databases/(default)/documents/sessions/$(sessionId)).data.userId);" // TODO: Add admin read access
+          "allow": "write: if request.auth != null && (request.auth.uid == get(/databases/(default)/documents/sessions/$(sessionId)).data.userId);"
+        }
+      }
+    }
+  }
+}

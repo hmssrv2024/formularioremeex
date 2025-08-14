@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Soporte</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <div class="admin-app-layout">
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">G</div>
+                <span>Gemini Support</span>
+            </div>
+            <nav class="app-nav">
+                <a href="#" class="nav-item active" data-view="dashboard-view">Dashboard</a>
+                <a href="#" class="nav-item" data-view="chats-view">Chats</a>
+                <a href="#" class="nav-item" data-view="responses-view">Respuestas</a>
+                <a href="#" class="nav-item" data-view="install-view">Instalar</a>
+            </nav>
+            <div class="sidebar-footer">
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span>Modo Oscuro</span>
+            </div>
+        </aside>
+
+        <main class="app-main-content">
+            <!-- View: Dashboard -->
+            <div id="dashboard-view" class="view active-view">
+                <header class="view-header">
+                    <h1>Dashboard</h1>
+                </header>
+                <div class="stat-cards-grid">
+                    <div class="stat-card"><div class="stat-title">Chats Activos</div><div id="stat-active-chats" class="stat-value">0</div></div>
+                    <div class="stat-card"><div class="stat-title">Sesiones Hoy</div><div id="stat-sessions-today" class="stat-value">0</div></div>
+                    <div class="stat-card"><div class="stat-title">País Principal</div><div id="stat-top-country" class="stat-value">-</div></div>
+                </div>
+                <!-- TODO: Add world map visualization -->
+            </div>
+
+            <!-- View: Chats -->
+            <div id="chats-view" class="view">
+                <div class="chat-layout">
+                    <aside class="session-sidebar">
+                        <input type="search" id="session-search" placeholder="Buscar sesión...">
+                        <div id="session-list-skeleton" class="session-list-skeleton">
+                            <div class="skeleton"></div>
+                            <div class="skeleton"></div>
+                            <div class="skeleton"></div>
+                        </div>
+                        <ul id="session-list" class="session-list hidden"></ul>
+                    </aside>
+                    <div class="chat-main-view">
+                        <!-- ... chat panel ... -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Canned Responses -->
+            <div id="responses-view" class="view">
+                <header class="view-header">
+                    <h1>Respuestas Rápidas</h1>
+                    <button id="add-response-btn">+ Nueva Respuesta</button>
+                </header>
+                <div id="canned-responses-list"></div>
+            </div>
+
+            <!-- View: Install -->
+            <div id="install-view" class="view">
+                <header class="view-header">
+                    <h1>Instalar Widget</h1>
+                </header>
+                <p>Copia y pega este código en tu sitio web antes de la etiqueta `</body>`.</p>
+                <textarea id="install-code" readonly></textarea>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast-notification" class="toast"></div>
+
+    <!-- Modal for Canned Response Form -->
+    <div id="response-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <form id="response-form">
+                <h3>Nueva Respuesta Rápida</h3>
+                <input type="hidden" id="response-id">
+                <input type="text" id="response-title" placeholder="Título (ej. Saludo)" required>
+                <textarea id="response-text" placeholder="Texto completo de la respuesta" required></textarea>
+                <div class="modal-actions">
+                    <button type="button" id="cancel-response-btn">Cancelar</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/admin.js"></script>
+</body>
+</html>

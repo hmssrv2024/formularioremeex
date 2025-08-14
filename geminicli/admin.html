@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Soporte</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <div class="admin-container">
+        <aside class="session-sidebar">
+            <header class="sidebar-header">
+                <h3>Sesiones Activas</h3>
+                <input type="search" id="session-search" placeholder="Buscar sesión...">
+            </header>
+            <ul id="session-list" class="session-list">
+                <!-- Session items will be populated by JS -->
+            </ul>
+        </aside>
+
+        <main class="chat-main-view">
+            <div id="welcome-panel" class="welcome-panel">
+                <h2>Bienvenido al Panel de Soporte</h2>
+                <p>Selecciona una sesión de la izquierda para comenzar.</p>
+            </div>
+
+            <div id="chat-panel" class="chat-panel hidden">
+                <header class="chat-panel-header">
+                    <h4 id="chat-header-title">Sesión con: <span id="session-user-id"></span></h4>
+                    <div id="admin-call-controls">
+                        <button id="admin-call-btn" class="call-btn-admin">Iniciar Llamada</button>
+                        <span id="admin-call-status"></span>
+                    </div>
+                </header>
+
+                <div id="admin-chat-messages" class="chat-messages"></div>
+
+                <div id="admin-call-ui" class="call-ui hidden">
+                    <video id="admin-local-video" autoplay muted playsinline></video>
+                    <video id="admin-remote-video" autoplay playsinline></video>
+                    <div class="call-controls">
+                        <button id="admin-mic-btn" class="call-control-btn">Mic</button>
+                        <button id="admin-video-btn" class="call-control-btn">Video</button>
+                        <button id="admin-hangup-btn" class="call-control-btn hangup">Colgar</button>
+                    </div>
+                </div>
+
+                <footer class="admin-chat-footer">
+                    <div class="writing-improver">
+                        <textarea id="draft-input" placeholder="Escribe una respuesta..."></textarea>
+                        <div class="improver-controls">
+                            <select id="improve-tone">
+                                <option value="profesional">Profesional</option>
+                                <option value="amable">Amable</option>
+                                <option value="claro">Claro y conciso</option>
+                            </select>
+                            <button id="improve-btn">Mejorar</button>
+                        </div>
+                    </div>
+                    <div class="admin-actions">
+                        <select id="response-mode">
+                            <option value="human">Modo Humano</option>
+                            <option value="bot">Modo Bot</option>
+                            <option value="mixed">Modo Mixto</option>
+                        </select>
+                        <button id="admin-send-btn" class="send-btn">Enviar</button>
+                    </div>
+                </footer>
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="tabs">
+                <button class="tab-link active" onclick="openTab(event, 'docs-tab')">Documentos</button>
+                <button class="tab-link" onclick="openTab(event, 'details-tab')">Detalles</button>
+            </div>
+
+            <div id="docs-tab" class="tab-content" style="display: block;">
+                <h5>Documentos del Proyecto (RAG)</h5>
+                <div class="file-upload-container">
+                    <label for="doc-upload-input">Subir PDF para RAG</label>
+                    <input type="file" id="doc-upload-input" accept=".pdf">
+                    <button id="upload-doc-btn">Subir e Indexar</button>
+                    <progress id="indexing-progress" value="0" max="100" class="hidden"></progress>
+                </div>
+                <ul id="project-docs-list" class="project-docs-list">
+                    <!-- Project documents will be listed here -->
+                </ul>
+            </div>
+
+            <div id="details-tab" class="tab-content">
+                <h5>Detalles de Sesión</h5>
+                <p><strong>Consentimiento:</strong> <span id="consent-status">No otorgado</span></p>
+                <p><strong>Página actual:</strong> <span id="user-current-page">/</span></p>
+                <div class="admin-controls">
+                    <label for="auto-transcribe-switch">Auto-transcribir notas de voz</label>
+                    <input type="checkbox" id="auto-transcribe-switch" role="switch" checked>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="toast-notification" class="toast"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+    <!-- PDF.js for client-side processing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script>pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;</script>
+
+    <!-- App Logic -->
+    <script src="aiAdapter.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

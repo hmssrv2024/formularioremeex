@@ -1,0 +1,27 @@
+{
+  "name": "hybrid-chat-vercel",
+  "version": "1.0.0",
+  "description": "A hybrid chatbot and human agent chat system for Vercel.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "chat",
+    "vercel",
+    "gemini",
+    "rag"
+  ],
+  "author": "Gemini",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/blob": "^0.23.4",
+    "@vercel/kv": "^2.0.0",
+    "nanoid": "^3.3.7",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "vercel": "^35.0.1"
+  }
+}
